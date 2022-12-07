@@ -3,20 +3,17 @@
     windows_subsystem = "windows"
 )]
 
+mod app;
 mod utils;
-mod wa;
 
+use app::{cmd, menu, setup};
 use tauri::SystemTray;
-use wa::{cmd, menu, setup};
 
 fn main() {
     let context = tauri::generate_context!();
 
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![
-            cmd::drag_window,
-            cmd::fullscreen,
-        ])
+        .invoke_handler(tauri::generate_handler![cmd::drag_window, cmd::fullscreen,])
         .setup(setup::init)
         .menu(menu::init(&context))
         .system_tray(SystemTray::new())

@@ -1,9 +1,8 @@
+use crate::utils;
 use tauri::{
     utils::assets::EmbeddedAssets, AboutMetadata, AppHandle, Context, CustomMenuItem, Manager,
     Menu, MenuItem, Submenu, SystemTrayEvent, WindowMenuEvent,
 };
-
-use crate::utils;
 
 // --- Menu
 pub fn init(context: &Context<EmbeddedAssets>) -> Menu {

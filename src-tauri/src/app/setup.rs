@@ -1,6 +1,5 @@
-use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, TitleBarStyle};
-
 use crate::utils;
+use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, TitleBarStyle};
 
 pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
     let conf = utils::get_tauri_conf().unwrap();
