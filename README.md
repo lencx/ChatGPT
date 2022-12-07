@@ -12,7 +12,9 @@
 - multi-platform: `macOS` `Linux` `Windows`
 - inject script
 - auto updater
-- hotkey
+- app menu
+- system tray
+- shortcut
 
 ## Preview
 
