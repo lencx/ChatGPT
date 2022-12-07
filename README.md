@@ -20,6 +20,7 @@
 
 <img width="600" src="./assets/install.png" alt="install">
 <img width="600" src="./assets/chat.png" alt="chat">
+<img width="600" src="./assets/auto-update.png" alt="auto update">
 
 ## TODO
 
