@@ -5,6 +5,8 @@
 
 > ChatGPT Desktop Application
 
+[🚀 Download ChatGPT](https://github.com/lencx/ChatGPT/releases)
+
 ## Features
 
 - multi-platform: `macOS` `Linux` `Windows`
