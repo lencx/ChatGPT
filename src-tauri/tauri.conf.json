@@ -19,7 +19,7 @@
     },
     "bundle": {
       "active": true,
-      "category": "WA",
+      "category": "ChatGPT",
       "copyright": "",
       "deb": {
         "depends": []
@@ -32,8 +32,8 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.lencx.wa",
-      "longDescription": "Web APP",
+      "identifier": "com.lencx.chatgpt",
+      "longDescription": "ChatGPT Desktop Application",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
@@ -41,7 +41,7 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "shortDescription": "WA",
+      "shortDescription": "ChatGPT",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
@@ -53,7 +53,10 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true,
+      "dialog": true,
+      "endpoints": ["https://lencx.github.io/ChatGPT/install.json"],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEIxMjY4OUI5MTVFNjBEMDUKUldRRkRlWVZ1WWttc1NGWEE0RFNSb0RqdnhsekRJZTkwK2hVLzhBZTZnaHExSEZ1ZEdzWkpXTHkK"
     }
   }
 }

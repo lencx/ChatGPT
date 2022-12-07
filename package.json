@@ -6,9 +6,13 @@
   "scripts": {
     "dev": "yarn tauri dev",
     "build": "yarn tauri build",
+    "updater": "tr updater",
+    "release": "tr release --git",
+    "tr": "tr",
     "tauri": "tauri"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.2.1"
+    "@tauri-apps/cli": "^1.2.1",
+    "@tauri-release/cli": "^0.2.0"
   }
 }
