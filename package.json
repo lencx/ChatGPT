@@ -1,0 +1,14 @@
+{
+  "name": "chatgpt",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "yarn tauri dev",
+    "build": "yarn tauri build",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.2.1"
+  }
+}
