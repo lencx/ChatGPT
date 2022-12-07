@@ -1,7 +1,9 @@
 .DS_Store
+*.lock
 
+package-lock.json
 node_modules/
-target/
-
-Cargo.lock
 yarn.lock
+
+target/
+Cargo.lock

@@ -28,7 +28,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: '${{ steps.get_version.outputs.VERSION }}'
-          release_name: 'WA+ ${{ steps.get_version.outputs.VERSION }}'
+          release_name: 'ChatGPT ${{ steps.get_version.outputs.VERSION }}'
           body: 'See the assets to download this version and install.'
 
   build-tauri:

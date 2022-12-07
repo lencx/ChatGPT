@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "../package.json"
+    "version": "0.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -19,7 +19,7 @@
     },
     "bundle": {
       "active": true,
-      "category": "ChatGPT",
+      "category": "DeveloperTool",
       "copyright": "",
       "deb": {
         "depends": []

@@ -1,8 +1,6 @@
 {
   "name": "chatgpt",
-  "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "yarn tauri dev",
     "build": "yarn tauri build",
@@ -11,8 +9,17 @@
     "tr": "tr",
     "tauri": "tauri"
   },
+  "license": "MIT",
+  "author": "lencx <cxin1314@gmail.com>",
+  "keywords": ["chatgpt", "app", "desktop", "tauri", "macos", "linux", "windows"],
+  "homepage": "https://github.com/lencx/ChatGPT",
+  "bugs": "https://github.com/lencx/ChatGPT/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lencx/ChatGPT"
+  },
   "devDependencies": {
     "@tauri-apps/cli": "^1.2.1",
-    "@tauri-release/cli": "^0.2.0"
+    "@tauri-release/cli": "^0.2.1"
   }
 }

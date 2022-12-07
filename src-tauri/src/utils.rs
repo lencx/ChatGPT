@@ -10,18 +10,6 @@ pub fn get_tauri_conf() -> Option<Config> {
     Some(config)
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
-pub struct WaJson {
-    pub url: String,
-    pub resizable: bool,
-    pub theme: tauri::Theme,
-    pub mode: String,
-    pub title: String,
-    pub always_on_top: bool,
-    pub hidden_title: bool,
-    pub hide_title_bar: bool,
-}
-
 pub fn exists(path: &Path) -> bool {
     Path::new(path).exists()
 }
