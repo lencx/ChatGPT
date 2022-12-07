@@ -7,7 +7,6 @@ mod app;
 mod utils;
 
 use app::{cmd, menu, setup};
-use tauri::SystemTray;
 
 fn main() {
     let context = tauri::generate_context!();
@@ -16,7 +15,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![cmd::drag_window, cmd::fullscreen])
         .setup(setup::init)
         .menu(menu::init(&context))
-        .system_tray(SystemTray::new())
+        .system_tray(menu::tray_menu())
         .on_menu_event(menu::menu_handler)
         .on_system_tray_event(menu::tray_handler)
         .run(context)

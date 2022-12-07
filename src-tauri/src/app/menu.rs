@@ -1,7 +1,8 @@
 use crate::utils;
 use tauri::{
     utils::assets::EmbeddedAssets, AboutMetadata, AppHandle, Context, CustomMenuItem, Manager,
-    Menu, MenuItem, Submenu, SystemTrayEvent, WindowMenuEvent,
+    Menu, MenuItem, Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem,
+    WindowMenuEvent,
 };
 
 // --- Menu
@@ -82,56 +83,35 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
 pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     let win = Some(event.window()).unwrap();
     let app = win.app_handle();
+    let script_path = utils::script_path().to_string_lossy().to_string();
+    let issues_url = "https://github.com/lencx/ChatGPT/issues".to_string();
 
     match event.menu_item_id() {
         // App
-        "inject_script" => {
-            tauri::api::shell::open(
-                &app.shell_scope(),
-                utils::script_path().to_string_lossy(),
-                None,
-            )
-            .unwrap();
-        }
+        "inject_script" => inject_script(&app, script_path),
         // View
-        "go_back" => {
-            win.eval("window.history.go(-1)").unwrap();
-        }
-        "go_forward" => {
-            win.eval("window.history.go(1)").unwrap();
-        }
-        "scroll_top" => {
-            win.eval(
+        "reload" => win.eval("window.location.reload()").unwrap(),
+        "go_back" => win.eval("window.history.go(-1)").unwrap(),
+        "go_forward" => win.eval("window.history.go(1)").unwrap(),
+        "scroll_top" => win
+            .eval(
                 r#"window.scroll({
                 top: 0,
                 left: 0,
                 behavior: "smooth"
-            })"#,
+                })"#,
             )
-            .unwrap();
-        }
-        "scroll_bottom" => {
-            win.eval(
+            .unwrap(),
+        "scroll_bottom" => win
+            .eval(
                 r#"window.scroll({
                 top: document.body.scrollHeight,
                 left: 0,
-                behavior: "smooth",
-            })"#,
+                behavior: "smooth"})"#,
             )
-            .unwrap();
-        }
-        "reload" => {
-            win.eval("window.location.reload()").unwrap();
-        }
+            .unwrap(),
         // Help
-        "report_bug" => {
-            tauri::api::shell::open(
-                &app.shell_scope(),
-                "https://github.com/lencx/ChatGPT/issues",
-                None,
-            )
-            .unwrap();
-        }
+        "report_bug" => inject_script(&app, issues_url),
         "dev_tools" => {
             win.open_devtools();
             win.close_devtools();
@@ -140,20 +120,37 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     }
 }
 
+// --- SystemTray Menu
+pub fn tray_menu() -> SystemTray {
+    SystemTray::new().with_menu(
+        SystemTrayMenu::new()
+            .add_item(CustomMenuItem::new("show".to_string(), "Show ChatGPT"))
+            .add_item(CustomMenuItem::new("hide".to_string(), "Hide ChatGPT"))
+            .add_item(CustomMenuItem::new(
+                "inject_script".to_string(),
+                "Inject Script",
+            ))
+            .add_native_item(SystemTrayMenuItem::Separator)
+            .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
+    )
+}
+
 // --- SystemTray Event
 pub fn tray_handler(app: &AppHandle, event: SystemTrayEvent) {
-    if let SystemTrayEvent::LeftClick {
-        position: _,
-        size: _,
-        ..
-    } = event
-    {
-        let win = app.get_window("core").unwrap();
-        if win.is_visible().unwrap() {
-            win.hide().unwrap();
-        } else {
-            win.show().unwrap();
-            win.set_focus().unwrap();
+    let script_path = utils::script_path().to_string_lossy().to_string();
+    let win = app.get_window("core").unwrap();
+
+    if let SystemTrayEvent::MenuItemClick { id, .. } = event {
+        match id.as_str() {
+            "quit" => std::process::exit(0),
+            "show" => win.show().unwrap(),
+            "hide" => win.hide().unwrap(),
+            "inject_script" => inject_script(app, script_path),
+            _ => (),
         }
     }
+}
+
+pub fn inject_script(app: &AppHandle, path: String) {
+    tauri::api::shell::open(&app.shell_scope(), path, None).unwrap();
 }
