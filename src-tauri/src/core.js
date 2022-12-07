@@ -36,16 +36,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  const topStyleDom = document.createElement("style");
-  topStyleDom.innerHTML = `#chatgpt-app-window-top{position:fixed;top:0;z-index:999999999;width:100%;height:24px;background:transparent;cursor:grab;cursor:-webkit-grab;user-select:none;-webkit-user-select:none;}#chatgpt-app-window-top:active {cursor:grabbing;cursor:-webkit-grabbing;}`;
-  document.head.appendChild(topStyleDom);
-  const topDom = document.createElement("div");
-  topDom.id = "chatgpt-app-window-top";
-  document.body.appendChild(topDom);
+  async function platform() {
+    return invoke('platform', {
+      __tauriModule: 'Os',
+      message: { cmd: 'platform' }
+    });
+  }
 
-  topDom.addEventListener("mousedown", () => invoke("drag_window"));
-  topDom.addEventListener("touchstart", () => invoke("drag_window"));
-  topDom.addEventListener("dblclick", () => invoke("fullscreen"));
+  const _platform = await platform();
+  if (/darwin/.test(_platform)) {
+    const topStyleDom = document.createElement("style");
+    topStyleDom.innerHTML = `#chatgpt-app-window-top{position:fixed;top:0;z-index:999999999;width:100%;height:24px;background:transparent;cursor:grab;cursor:-webkit-grab;user-select:none;-webkit-user-select:none;}#chatgpt-app-window-top:active {cursor:grabbing;cursor:-webkit-grabbing;}`;
+    document.head.appendChild(topStyleDom);
+    const topDom = document.createElement("div");
+    topDom.id = "chatgpt-app-window-top";
+    document.body.appendChild(topDom);
+
+    topDom.addEventListener("mousedown", () => invoke("drag_window"));
+    topDom.addEventListener("touchstart", () => invoke("drag_window"));
+    topDom.addEventListener("dblclick", () => invoke("fullscreen"));
+  }
 
   document.addEventListener("click", (e) => {
     const origin = e.target.closest("a");
