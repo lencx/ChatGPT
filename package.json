@@ -20,6 +20,6 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.2.1",
-    "@tauri-release/cli": "^0.2.1"
+    "@tauri-release/cli": "^0.2.2"
   }
 }
