@@ -55,7 +55,9 @@
     "updater": {
       "active": true,
       "dialog": true,
-      "endpoints": ["https://lencx.github.io/ChatGPT/install.json"],
+      "endpoints": [
+        "https://lencx.github.io/ChatGPT/install.json"
+      ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEIxMjY4OUI5MTVFNjBEMDUKUldRRkRlWVZ1WWttc1NGWEE0RFNSb0RqdnhsekRJZTkwK2hVLzhBZTZnaHExSEZ1ZEdzWkpXTHkK"
     }
   }
