@@ -1,5 +1,9 @@
 # UPDATE LOG
 
+## v0.1.5
+
+fix: mac can't use shortcut keys
+
 ## v0.1.4
 
 feat:
