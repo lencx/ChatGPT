@@ -26,3 +26,10 @@ default = [ "custom-protocol" ]
 # this feature is used used for production builds where `devPath` points to the filesystem
 # DO NOT remove this
 custom-protocol = [ "tauri/custom-protocol" ]
+
+# fix: mac v1.2.0 can not copy/paste
+# https://github.com/tauri-apps/tauri/issues/5669
+[profile.release]
+strip = true
+lto = true
+opt-level = "z"
