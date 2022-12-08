@@ -41,7 +41,7 @@
 
 ### Is it safe?
 
-It's safe, just a wrapper around openai, no other data transfer exists (you can check the source code).
+It's safe, just a wrapper for [OpenAI ChatGPT](https://chat.openai.com) website, no other data transfer exists (you can check the source code).
 
 ### How do i build it?
 
