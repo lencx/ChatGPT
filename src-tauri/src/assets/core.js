@@ -1,4 +1,4 @@
-// *** Core Script ***
+// *** Core Script - IPC ***
 document.addEventListener('DOMContentLoaded', async () => {
   const uid = () => window.crypto.getRandomValues(new Uint32Array(1))[0];
   function transformCallback(callback = () => {}, once = false) {
