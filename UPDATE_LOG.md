@@ -1,5 +1,11 @@
 # UPDATE LOG
 
+## v0.1.6
+
+feat:
+- always on top
+- export ChatGPT history
+
 ## v0.1.5
 
 fix: mac can't use shortcut keys

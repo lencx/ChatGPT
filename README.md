@@ -13,15 +13,17 @@
 
 **Latest:**
 
-- `Mac`: [ChatGPT_0.1.5_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.1.5/ChatGPT_0.1.5_x64.dmg)
-- `Linux`: [chat-gpt_0.1.5_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.1.5/chat-gpt_0.1.5_amd64.deb)
-- `Windows`: [ChatGPT_0.1.5_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.1.5/ChatGPT_0.1.5_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.1.6_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.1.5/ChatGPT_0.1.6_x64.dmg)
+- `Linux`: [chat-gpt_0.1.6_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.1.5/chat-gpt_0.1.6_amd64.deb)
+- `Windows`: [ChatGPT_0.1.6_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.1.5/ChatGPT_0.1.6_x64_en-US.msi)
 
 [Other version...](https://github.com/lencx/ChatGPT/releases)
 
 ## Features
 
 - multi-platform: `macOS` `Linux` `Windows`
+- export ChatGPT history (PNG, PDF and Share Link)
+- always on top (whether the window should always be on top of other windows)
 - inject script
 - auto updater
 - app menu
@@ -30,20 +32,18 @@
 
 ## Preview
 
-<img width="600" src="./assets/install.png" alt="install">
-<img width="600" src="./assets/chat.png" alt="chat">
-<img width="600" src="./assets/auto-update.png" alt="auto update">
-
-## TODO
-
-- [ ] export chat history
-- [ ] ...
+<img width="360" src="./assets/install.png" alt="install"> <img width="360" src="./assets/chat.png" alt="chat">
+<img width="360" src="./assets/export.png" alt="export"> <img width="360" src="./assets/auto-update.png" alt="auto update">
 
 ## FAQ
 
 ### Is it safe?
 
 It's safe, just a wrapper for [OpenAI ChatGPT](https://chat.openai.com) website, no other data transfer exists (you can check the source code).
+
+### Developer cannot be verified?
+
+- [Open a Mac app from an unidentified developer](https://support.apple.com/en-sg/guide/mac-help/mh40616/mac)
 
 ### How do i build it?
 
@@ -73,3 +73,7 @@ yarn dev
 # bundle path: src-tauri/target/release/bundle
 yarn build
 ```
+
+## Related
+
+- [ChatGPT Export and Share](https://github.com/liady/ChatGPT-pdf) - A Chrome extension for downloading your ChatGPT history to PNG, PDF or creating a sharable link
