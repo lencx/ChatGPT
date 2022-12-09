@@ -34,15 +34,15 @@
 <img width="600" src="./assets/chat.png" alt="chat">
 <img width="600" src="./assets/auto-update.png" alt="auto update">
 
-## Related
-
-- [ChatGPT Export and Share](https://github.com/liady/ChatGPT-pdf) - A Chrome extension for downloading your ChatGPT history to PNG, PDF or creating a sharable link
-
 ## FAQ
 
 ### Is it safe?
 
 It's safe, just a wrapper for [OpenAI ChatGPT](https://chat.openai.com) website, no other data transfer exists (you can check the source code).
+
+### Developer cannot be verified?
+
+- [Open a Mac app from an unidentified developer](https://support.apple.com/en-sg/guide/mac-help/mh40616/mac)
 
 ### How do i build it?
 
@@ -72,3 +72,7 @@ yarn dev
 # bundle path: src-tauri/target/release/bundle
 yarn build
 ```
+
+## Related
+
+- [ChatGPT Export and Share](https://github.com/liady/ChatGPT-pdf) - A Chrome extension for downloading your ChatGPT history to PNG, PDF or creating a sharable link
