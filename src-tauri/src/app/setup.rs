@@ -23,7 +23,7 @@ pub fn init(
         .initialization_script(include_str!("../assets/html2canvas.js"))
         .initialization_script(include_str!("../assets/jspdf.js"))
         .initialization_script(include_str!("../assets/core.js"))
-        .initialization_script(include_str!("../assets/import.js"))
+        .initialization_script(include_str!("../assets/export.js"))
         .user_agent(conf::USER_AGENT)
         .build()?;
 
@@ -38,7 +38,7 @@ pub fn init(
         .initialization_script(include_str!("../assets/html2canvas.js"))
         .initialization_script(include_str!("../assets/jspdf.js"))
         .initialization_script(include_str!("../assets/core.js"))
-        .initialization_script(include_str!("../assets/import.js"))
+        .initialization_script(include_str!("../assets/export.js"))
         .user_agent(conf::USER_AGENT)
         .build()?;
 

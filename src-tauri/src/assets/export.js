@@ -1,4 +1,4 @@
-// *** Core Script - Import***
+// *** Core Script - Export ***
 // @ref: https://github.com/liady/ChatGPT-pdf/blob/main/src/content_script.js
 
 async function init() {
