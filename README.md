@@ -5,6 +5,8 @@
 
 > ChatGPT Desktop Application
 
+[Awesome ChatGPT](./AWESOME.md)
+
 ## Downloads
 
 [![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
