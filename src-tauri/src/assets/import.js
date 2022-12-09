@@ -109,15 +109,7 @@ function handleImg(imgData) {
   for (let i = 0; i < binaryData.length; i++) {
     data.push(binaryData.charCodeAt(i));
   }
-  const blob = new Blob([new Uint8Array(data)], { type: "image/png" });
-  const url = URL.createObjectURL(blob);
-
-  // window.open(url, "_blank");
-
-  //   const a = document.createElement("a");
-  //   a.href = url;
-  //   a.download = "chat-gpt-image.png";
-  //   a.click();
+  invoke('download', { name: `chatgpt-${Date.now()}.png`, blob: Array.from(new Uint8Array(data)) });
 }
 
 function handlePdf(imgData, canvas, pixelRatio) {
@@ -130,7 +122,9 @@ function handlePdf(imgData, canvas, pixelRatio) {
   var pdfWidth = pdf.internal.pageSize.getWidth();
   var pdfHeight = pdf.internal.pageSize.getHeight();
   pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-  pdf.save("chat-gpt.pdf");
+
+  const data = pdf.__private__.getArrayBuffer(pdf.__private__.buildDocument());
+  invoke('download', { name: `chatgpt-${Date.now()}.pdf`, blob: Array.from(new Uint8Array(data)) });
 }
 
 class Elements {
@@ -206,7 +200,7 @@ async function sendRequest() {
   })
     .then((response) => response.json())
     .then((data) => {
-      window.open(data.url, "_blank");
+      invoke('open_link', { url: data.url });
     });
 }
 

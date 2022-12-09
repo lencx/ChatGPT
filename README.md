@@ -11,15 +11,17 @@
 
 **Latest:**
 
-- `Mac`: [ChatGPT_0.1.5_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.1.5/ChatGPT_0.1.5_x64.dmg)
-- `Linux`: [chat-gpt_0.1.5_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.1.5/chat-gpt_0.1.5_amd64.deb)
-- `Windows`: [ChatGPT_0.1.5_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.1.5/ChatGPT_0.1.5_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.1.6_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.1.5/ChatGPT_0.1.6_x64.dmg)
+- `Linux`: [chat-gpt_0.1.6_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.1.5/chat-gpt_0.1.6_amd64.deb)
+- `Windows`: [ChatGPT_0.1.6_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.1.5/ChatGPT_0.1.6_x64_en-US.msi)
 
 [Other version...](https://github.com/lencx/ChatGPT/releases)
 
 ## Features
 
 - multi-platform: `macOS` `Linux` `Windows`
+- export ChatGPT history (PNG, PDF and Share Link)
+- always on top (whether the window should always be on top of other windows)
 - inject script
 - auto updater
 - app menu
@@ -32,10 +34,9 @@
 <img width="600" src="./assets/chat.png" alt="chat">
 <img width="600" src="./assets/auto-update.png" alt="auto update">
 
-## TODO
+## Related
 
-- [ ] export chat history
-- [ ] ...
+- [ChatGPT Export and Share](https://github.com/liady/ChatGPT-pdf) - A Chrome extension for downloading your ChatGPT history to PNG, PDF or creating a sharable link
 
 ## FAQ
 

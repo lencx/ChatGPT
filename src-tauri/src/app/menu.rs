@@ -1,28 +1,45 @@
-use crate::utils;
+use crate::{conf, utils};
 use tauri::{
     utils::assets::EmbeddedAssets, AboutMetadata, AppHandle, Context, CustomMenuItem, Manager,
-    Menu, MenuItem, Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem,
-    WindowMenuEvent,
+    Menu, MenuItem, Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, WindowMenuEvent,
 };
 
 // --- Menu
-pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
+pub fn init(chat_conf: &conf::ChatConfJson, context: &Context<EmbeddedAssets>) -> Menu {
     let name = &context.package_info().name;
     let app_menu = Submenu::new(
         name,
         Menu::new()
             .add_native_item(MenuItem::About(name.into(), AboutMetadata::default()))
             .add_native_item(MenuItem::Separator)
-            .add_item(
-                CustomMenuItem::new("inject_script".to_string(), "Inject Script")
-                    .accelerator("CmdOrCtrl+J"),
-            )
             .add_native_item(MenuItem::Separator)
             .add_native_item(MenuItem::Hide)
             .add_native_item(MenuItem::HideOthers)
             .add_native_item(MenuItem::ShowAll)
             .add_native_item(MenuItem::Separator)
             .add_native_item(MenuItem::Quit),
+    );
+
+    let always_on_top = CustomMenuItem::new("always_on_top".to_string(), "Always On Top")
+        .accelerator("CmdOrCtrl+T");
+
+    let preferences_menu = Submenu::new(
+        "Preferences",
+        Menu::new()
+            .add_item(
+                CustomMenuItem::new("inject_script".to_string(), "Inject Script")
+                    .accelerator("CmdOrCtrl+J"),
+            )
+            .add_item(if chat_conf.always_on_top {
+                always_on_top.selected()
+            } else {
+                always_on_top
+            })
+            .add_native_item(MenuItem::Separator)
+            .add_item(
+                CustomMenuItem::new("awesome".to_string(), "Awesome ChatGPT")
+                    .accelerator("CmdOrCtrl+Z"),
+            ),
     );
 
     let edit_menu = Submenu::new(
@@ -74,6 +91,7 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
 
     Menu::new()
         .add_submenu(app_menu)
+        .add_submenu(preferences_menu)
         .add_submenu(edit_menu)
         .add_submenu(view_menu)
         .add_submenu(help_menu)
@@ -83,12 +101,27 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
 pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     let win = Some(event.window()).unwrap();
     let app = win.app_handle();
+    let state: tauri::State<conf::ChatState> = app.state();
     let script_path = utils::script_path().to_string_lossy().to_string();
-    let issues_url = "https://github.com/lencx/ChatGPT/issues".to_string();
+    let menu_id = event.menu_item_id();
 
-    match event.menu_item_id() {
-        // App
-        "inject_script" => inject_script(&app, script_path),
+    let core_window = app.get_window("core").unwrap();
+    let menu_handle = core_window.menu_handle();
+
+    match menu_id {
+        // Preferences
+        "inject_script" => open(&app, script_path),
+        "awesome" => open(&app, conf::AWESOME_URL.to_string()),
+        "always_on_top" => {
+            let mut always_on_top = state.always_on_top.lock().unwrap();
+            *always_on_top = !*always_on_top;
+            menu_handle
+                .get_item(menu_id)
+                .set_selected(*always_on_top)
+                .unwrap();
+            win.set_always_on_top(*always_on_top).unwrap();
+            conf::ChatConfJson::update_chat_conf(*always_on_top);
+        }
         // View
         "reload" => win.eval("window.location.reload()").unwrap(),
         "go_back" => win.eval("window.history.go(-1)").unwrap(),
@@ -111,7 +144,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             )
             .unwrap(),
         // Help
-        "report_bug" => inject_script(&app, issues_url),
+        "report_bug" => open(&app, conf::ISSUES_URL.to_string()),
         "dev_tools" => {
             win.open_devtools();
             win.close_devtools();
@@ -122,35 +155,24 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
 
 // --- SystemTray Menu
 pub fn tray_menu() -> SystemTray {
-    SystemTray::new().with_menu(
-        SystemTrayMenu::new()
-            .add_item(CustomMenuItem::new("show".to_string(), "Show ChatGPT"))
-            .add_item(CustomMenuItem::new("hide".to_string(), "Hide ChatGPT"))
-            .add_item(CustomMenuItem::new(
-                "inject_script".to_string(),
-                "Inject Script",
-            ))
-            .add_native_item(SystemTrayMenuItem::Separator)
-            .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
-    )
+    SystemTray::new().with_menu(SystemTrayMenu::new())
 }
 
 // --- SystemTray Event
 pub fn tray_handler(app: &AppHandle, event: SystemTrayEvent) {
-    let script_path = utils::script_path().to_string_lossy().to_string();
     let win = app.get_window("core").unwrap();
 
-    if let SystemTrayEvent::MenuItemClick { id, .. } = event {
-        match id.as_str() {
-            "quit" => std::process::exit(0),
-            "show" => win.show().unwrap(),
-            "hide" => win.hide().unwrap(),
-            "inject_script" => inject_script(app, script_path),
-            _ => (),
+    if let SystemTrayEvent::LeftClick { .. } = event {
+        // TODO: tray window
+        if win.is_visible().unwrap() {
+            win.hide().unwrap();
+        } else {
+            win.show().unwrap();
+            win.set_focus().unwrap();
         }
     }
 }
 
-pub fn inject_script(app: &AppHandle, path: String) {
+pub fn open(app: &AppHandle, path: String) {
     tauri::api::shell::open(&app.shell_scope(), path, None).unwrap();
 }
