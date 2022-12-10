@@ -1,5 +1,9 @@
 # UPDATE LOG
 
+## v0.1.7
+
+feat: tray window
+
 ## v0.1.6
 
 feat:

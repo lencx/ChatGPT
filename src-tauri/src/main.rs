@@ -25,6 +25,7 @@ fn main() {
             cmd::open_link
         ])
         .setup(|app| setup::init(app, chat_conf2))
+        .plugin(tauri_plugin_positioner::init())
         .menu(menu::init(&chat_conf, &context))
         .system_tray(menu::tray_menu())
         .on_menu_event(menu::menu_handler)

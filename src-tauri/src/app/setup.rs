@@ -1,5 +1,5 @@
-use crate::{conf, utils};
-use tauri::{utils::config::WindowUrl, window::WindowBuilder, App};
+use crate::{app::window, conf, utils};
+use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, Manager};
 
 #[cfg(target_os = "macos")]
 use tauri::TitleBarStyle;
@@ -10,6 +10,7 @@ pub fn init(
 ) -> std::result::Result<(), Box<dyn std::error::Error>> {
     let conf = utils::get_tauri_conf().unwrap();
     let url = conf.build.dev_path.to_string();
+    window::mini_window(&app.app_handle());
 
     #[cfg(target_os = "macos")]
     WindowBuilder::new(app, "core", WindowUrl::App(url.into()))

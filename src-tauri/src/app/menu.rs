@@ -3,6 +3,7 @@ use tauri::{
     utils::assets::EmbeddedAssets, AboutMetadata, AppHandle, Context, CustomMenuItem, Manager,
     Menu, MenuItem, Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, WindowMenuEvent,
 };
+use tauri_plugin_positioner::{on_tray_event, Position, WindowExt};
 
 // --- Menu
 pub fn init(chat_conf: &conf::ChatConfJson, context: &Context<EmbeddedAssets>) -> Menu {
@@ -159,16 +160,19 @@ pub fn tray_menu() -> SystemTray {
 }
 
 // --- SystemTray Event
-pub fn tray_handler(app: &AppHandle, event: SystemTrayEvent) {
-    let win = app.get_window("core").unwrap();
+pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
+    let core_win = handle.get_window("core").unwrap();
+    on_tray_event(handle, &event);
 
     if let SystemTrayEvent::LeftClick { .. } = event {
-        // TODO: tray window
-        if win.is_visible().unwrap() {
-            win.hide().unwrap();
+        core_win.minimize().unwrap();
+        let mini_win = handle.get_window("mini").unwrap();
+        mini_win.move_window(Position::TrayCenter).unwrap();
+
+        if mini_win.is_visible().unwrap() {
+            mini_win.hide().unwrap();
         } else {
-            win.show().unwrap();
-            win.set_focus().unwrap();
+            mini_win.show().unwrap();
         }
     }
 }
