@@ -6,6 +6,7 @@
     "build": "yarn tauri build",
     "updater": "tr updater",
     "release": "tr release --git",
+    "download": "node ./scripts/download.js",
     "tr": "tr",
     "tauri": "tauri"
   },

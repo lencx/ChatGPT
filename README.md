@@ -11,6 +11,8 @@
 
 [![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
 
+<!-- download start -->
+
 **Latest:**
 
 - `Mac`: [ChatGPT_0.1.6_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.1.6/ChatGPT_0.1.6_x64.dmg)
@@ -18,6 +20,8 @@
 - `Windows`: [ChatGPT_0.1.6_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.1.6/ChatGPT_0.1.6_x64_en-US.msi)
 
 [Other version...](https://github.com/lencx/ChatGPT/releases)
+
+<!-- download end -->
 
 ## Features
 
