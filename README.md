@@ -23,6 +23,23 @@
 
 <!-- download end -->
 
+## Install
+
+Easily install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
+
+~~~ sh
+brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
+brew install --cask chatgpt --no-quarantine
+~~~
+
+Also, if you keep a _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_, you can add something like this:
+
+~~~ rb
+repo = "lencx/chatgpt"
+tap repo, "https://github.com/#{repo}.git"
+cask "popcorn-time", args: { "no-quarantine": true }
+~~~
+
 ## Features
 
 - multi-platform: `macOS` `Linux` `Windows`
