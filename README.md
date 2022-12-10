@@ -5,11 +5,12 @@
 
 > ChatGPT Desktop Application
 
+[![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
+[![lencx](https://img.shields.io/twitter/follow/lencx_.svg?style=social)](https://twitter.com/lencx_)
+
 [Awesome ChatGPT](./AWESOME.md)
 
 ## Downloads
-
-[![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
 
 <!-- download start -->
 
@@ -56,6 +57,10 @@ cask "popcorn-time", args: { "no-quarantine": true }
 <img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chat.png" alt="chat">
 <img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
 <img width="320" src="./assets/auto-update.png" alt="auto update">
+
+---
+
+<a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 ## FAQ
 
