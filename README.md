@@ -36,9 +36,10 @@
 
 ## Preview
 
-<img width="360" src="./assets/install.png" alt="install"> <img width="360" src="./assets/chat.png" alt="chat">
-<img width="360" src="./assets/export.png" alt="export"> <img width="360" src="./assets/tray.png" alt="tray">
-<img width="360" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chat.png" alt="chat">
+<img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
+<img width="320" src="./assets/auto-update.png" alt="auto update">
+
 ## FAQ
 
 ### Is it safe?
