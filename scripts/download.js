@@ -1,12 +1,8 @@
 const fs = require('fs');
-const path = require('path');
 
 const argv = process.argv.slice(2);
 
-console.log('«6» /ChatGPT/scripts/download.js ~> ', argv[0]);
-
-
-function init() {
+async function init() {
   const content = fs.readFileSync('README.md', 'utf8').split('\n');
   const startRe = /<!-- download start -->/;
   const endRe = /<!-- download end -->/;
@@ -27,4 +23,4 @@ function init() {
   fs.writeFileSync('README.md', content.join('\n'), 'utf8');
 }
 
-init();
+init().catch(console.error);
