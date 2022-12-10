@@ -76,4 +76,6 @@ yarn build
 
 ## Related
 
-- [ChatGPT Export and Share](https://github.com/liady/ChatGPT-pdf) - A Chrome extension for downloading your ChatGPT history to PNG, PDF or creating a sharable link
+- [Tauri](https://tauri.app) - Build an optimized, secure, and frontend-independent application for multi-platform deployment.
+- [ChatGPT](https://openai.com/blog/chatgpt) - ChatGPT: Optimizing Language Models for Dialogue.
+- [ChatGPT Export and Share](https://github.com/liady/ChatGPT-pdf) - A Chrome extension for downloading your ChatGPT history to PNG, PDF or creating a sharable link.
