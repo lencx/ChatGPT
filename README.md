@@ -15,9 +15,9 @@
 
 **Latest:**
 
-- `Mac`: [ChatGPT_0.1.6_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.1.6/ChatGPT_0.1.6_x64.dmg)
-- `Linux`: [chat-gpt_0.1.6_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.1.6/chat-gpt_0.1.6_amd64.deb)
-- `Windows`: [ChatGPT_0.1.6_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.1.6/ChatGPT_0.1.6_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.1.7_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.1.7/ChatGPT_0.1.7_x64.dmg)
+- `Linux`: [chat-gpt_0.1.7_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.1.7/chat-gpt_0.1.7_amd64.deb)
+- `Windows`: [ChatGPT_0.1.7_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.1.7/ChatGPT_0.1.7_x64_en-US.msi)
 
 [Other version...](https://github.com/lencx/ChatGPT/releases)
 
@@ -31,13 +31,14 @@
 - inject script
 - auto updater
 - app menu
-- system tray
+- tray window
 - shortcut
 
 ## Preview
 
-<img width="360" src="./assets/install.png" alt="install"> <img width="360" src="./assets/chat.png" alt="chat">
-<img width="360" src="./assets/export.png" alt="export"> <img width="360" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chat.png" alt="chat">
+<img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
+<img width="320" src="./assets/auto-update.png" alt="auto update">
 
 ## FAQ
 

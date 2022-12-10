@@ -40,6 +40,12 @@ window.invoke = invoke;
 window.transformCallback = transformCallback;
 
 async function init() {
+  if (__TAURI_METADATA__.__currentWindow.label === 'mini') {
+    document.getElementsByTagName('html')[0].style['font-size'] = '70%';
+  }
+
+  if (__TAURI_METADATA__.__currentWindow.label !== 'core') return;
+
   async function platform() {
     return invoke('platform', {
       __tauriModule: 'Os',
