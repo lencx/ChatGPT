@@ -16,9 +16,9 @@
 
 **Latest:**
 
-- `Mac`: [ChatGPT_0.1.7_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.1.7/ChatGPT_0.1.7_x64.dmg)
-- `Linux`: [chat-gpt_0.1.7_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.1.7/chat-gpt_0.1.7_amd64.deb)
-- `Windows`: [ChatGPT_0.1.7_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.1.7/ChatGPT_0.1.7_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.1.8_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.1.8/ChatGPT_0.1.8_x64.dmg)
+- `Linux`: [chat-gpt_0.1.8_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.1.8/chat-gpt_0.1.8_amd64.deb)
+- `Windows`: [ChatGPT_0.1.8_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.1.8/ChatGPT_0.1.8_x64_en-US.msi)
 
 [Other version...](https://github.com/lencx/ChatGPT/releases)
 
