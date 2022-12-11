@@ -10,6 +10,9 @@ function init() {
     justify-content: center;
     font-family: Söhne,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,Helvetica Neue,Arial,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
   }
+  h3 {
+    margin-bottom: 20px;
+  }
   input {
     all: unset;
     width: 280px;
@@ -17,6 +20,9 @@ function init() {
     margin-bottom: 10px;
     padding: 0 5px;
     border: solid 2px #d8d8d8;
+    background-color: #fff;
+    border-radius: 5px !important;
+    color: #4a4a4a;
   }
   button {
     all: unset;
@@ -37,7 +43,7 @@ function init() {
   }
   </style>
   <h3>Switch Origin</h3>
-  <input id="input" type="text" />
+  <input id="input" type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autofocus placeholder="https://chat.openai.com" />
   <div class="btns">
     <button id="cancel">Cancel</button>
     <button id="confirm">Confirm</button>
