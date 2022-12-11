@@ -8,25 +8,28 @@ mod conf;
 mod utils;
 
 use app::{cmd, menu, setup};
-use conf::ChatConfJson;
+use conf::{ChatConfJson, ChatState};
 
 fn main() {
     ChatConfJson::init();
-    let context = tauri::generate_context!();
     let chat_conf = ChatConfJson::get_chat_conf();
-    let chat_conf2 = chat_conf.clone();
+    let context = tauri::generate_context!();
 
     tauri::Builder::default()
-        .manage(conf::ChatState::default(&chat_conf))
+        .manage(ChatState::default(chat_conf))
         .invoke_handler(tauri::generate_handler![
             cmd::drag_window,
             cmd::fullscreen,
             cmd::download,
-            cmd::open_link
+            cmd::open_link,
+            cmd::get_chat_conf,
+            cmd::form_cancel,
+            cmd::form_confirm,
+            cmd::form_msg,
         ])
-        .setup(|app| setup::init(app, chat_conf2))
+        .setup(setup::init)
         .plugin(tauri_plugin_positioner::init())
-        .menu(menu::init(&chat_conf, &context))
+        .menu(menu::init(&context))
         .system_tray(menu::tray_menu())
         .on_menu_event(menu::menu_handler)
         .on_system_tray_event(menu::tray_handler)

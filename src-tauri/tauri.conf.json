@@ -2,20 +2,20 @@
   "build": {
     "beforeDevCommand": "",
     "beforeBuildCommand": "",
-    "devPath": "https://chat.openai.com/",
+    "devPath": "../dist",
     "distDir": "../dist"
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.1.7"
+    "version": "0.1.8"
   },
   "tauri": {
     "allowlist": {
       "all": true
     },
     "systemTray": {
-      "iconPath": "icons/icon.png",
-      "iconAsTemplate": false
+      "iconPath": "icons/tray-icon.png",
+      "iconAsTemplate": true
     },
     "bundle": {
       "active": true,

@@ -1,5 +1,11 @@
 # UPDATE LOG
 
+## v0.1.8
+
+feat:
+- menu enhancement: theme, titlebar
+- modify website address
+
 ## v0.1.7
 
 feat: tray window

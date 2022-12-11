@@ -12,7 +12,15 @@
   },
   "license": "MIT",
   "author": "lencx <cxin1314@gmail.com>",
-  "keywords": ["chatgpt", "app", "desktop", "tauri", "macos", "linux", "windows"],
+  "keywords": [
+    "chatgpt",
+    "app",
+    "desktop",
+    "tauri",
+    "macos",
+    "linux",
+    "windows"
+  ],
   "homepage": "https://github.com/lencx/ChatGPT",
   "bugs": "https://github.com/lencx/ChatGPT/issues",
   "repository": {

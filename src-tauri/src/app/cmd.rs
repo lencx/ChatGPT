@@ -1,4 +1,4 @@
-use crate::utils;
+use crate::{conf::ChatConfJson, utils};
 use std::fs;
 use tauri::{api, command, AppHandle, Manager};
 
@@ -27,4 +27,36 @@ pub fn download(_app: AppHandle, name: String, blob: Vec<u8>) {
 #[command]
 pub fn open_link(app: AppHandle, url: String) {
     api::shell::open(&app.shell_scope(), url, None).unwrap();
+}
+
+#[command]
+pub fn get_chat_conf() -> ChatConfJson {
+    ChatConfJson::get_chat_conf()
+}
+
+#[command]
+pub fn form_confirm(app: AppHandle, data: serde_json::Value) {
+    ChatConfJson::amend(&serde_json::json!(data)).unwrap();
+    tauri::api::process::restart(&app.env());
+}
+
+#[command]
+pub fn form_cancel(app: AppHandle, label: &str, title: &str, msg: &str) {
+    let win = app.app_handle().get_window(label).unwrap();
+    tauri::api::dialog::ask(
+        app.app_handle().get_window(label).as_ref(),
+        title,
+        msg,
+        move |is_cancel| {
+            if is_cancel {
+                win.close().unwrap();
+            }
+        },
+    );
+}
+
+#[command]
+pub fn form_msg(app: AppHandle, label: &str, title: &str, msg: &str) {
+    let win = app.app_handle().get_window(label);
+    tauri::api::dialog::message(win.as_ref(), title, msg);
 }

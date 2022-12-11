@@ -2,6 +2,7 @@
 // @ref: https://github.com/liady/ChatGPT-pdf/blob/main/src/content_script.js
 
 async function init() {
+  const chatConf = await invoke('get_chat_conf') || {};
   if (window.buttonsInterval) {
     clearInterval(window.buttonsInterval);
   }
@@ -16,7 +17,7 @@ async function init() {
     });
     if (hasTryAgainButton && buttons.length === 1) {
       const TryAgainButton = actionsArea.querySelector("button");
-      addActionsButtons(actionsArea, TryAgainButton);
+      addActionsButtons(actionsArea, TryAgainButton, chatConf);
     } else if (!hasTryAgainButton) {
       removeButtons();
     }
@@ -28,7 +29,7 @@ const Format = {
   PDF: "pdf",
 };
 
-function addActionsButtons(actionsArea, TryAgainButton) {
+function addActionsButtons(actionsArea, TryAgainButton, chatConf) {
   const downloadButton = TryAgainButton.cloneNode(true);
   downloadButton.id = "download-png-button";
   downloadButton.innerText = "Generate PNG";
@@ -36,6 +37,7 @@ function addActionsButtons(actionsArea, TryAgainButton) {
     downloadThread();
   };
   actionsArea.appendChild(downloadButton);
+
   const downloadPdfButton = TryAgainButton.cloneNode(true);
   downloadPdfButton.id = "download-pdf-button";
   downloadPdfButton.innerText = "Download PDF";
@@ -43,13 +45,16 @@ function addActionsButtons(actionsArea, TryAgainButton) {
     downloadThread({ as: Format.PDF });
   };
   actionsArea.appendChild(downloadPdfButton);
-  const exportHtml = TryAgainButton.cloneNode(true);
-  exportHtml.id = "download-html-button";
-  exportHtml.innerText = "Share Link";
-  exportHtml.onclick = () => {
-    sendRequest();
-  };
-  actionsArea.appendChild(exportHtml);
+
+  if (new RegExp('//chat.openai.com').test(chatConf.origin)) {
+    const exportHtml = TryAgainButton.cloneNode(true);
+    exportHtml.id = "download-html-button";
+    exportHtml.innerText = "Share Link";
+    exportHtml.onclick = () => {
+      sendRequest();
+    };
+    actionsArea.appendChild(exportHtml);
+  }
 }
 
 function removeButtons() {
