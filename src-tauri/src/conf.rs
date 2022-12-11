@@ -1,7 +1,8 @@
 use crate::utils::{chat_root, create_file, exists};
-use std::fs;
-use std::path::PathBuf;
-use std::sync::Mutex;
+use anyhow::Result;
+use serde_json::Value;
+use std::{collections::BTreeMap, fs, path::PathBuf, sync::Mutex};
+use tauri::{Theme, TitleBarStyle};
 
 pub const USER_AGENT: &str = "5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36";
 pub const PHONE_USER_AGENT: &str = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1";
@@ -13,7 +14,7 @@ pub struct ChatState {
 }
 
 impl ChatState {
-    pub fn default(chat_conf: &ChatConfJson) -> Self {
+    pub fn default(chat_conf: ChatConfJson) -> Self {
         ChatState {
             always_on_top: Mutex::new(chat_conf.always_on_top),
         }
@@ -23,6 +24,8 @@ impl ChatState {
 #[derive(serde::Serialize, serde::Deserialize, Debug, Clone)]
 pub struct ChatConfJson {
     pub always_on_top: bool,
+    pub theme: String,
+    pub titlebar: bool,
 }
 
 impl ChatConfJson {
@@ -32,7 +35,22 @@ impl ChatConfJson {
         let conf_file = ChatConfJson::conf_path();
         if !exists(&conf_file) {
             create_file(&conf_file).unwrap();
-            fs::write(&conf_file, r#"{"always_on_top": false}"#).unwrap();
+
+            #[cfg(target_os = "macos")]
+            let content = r#"{
+                "always_on_top": false,
+                "theme": "Light",
+                "titlebar": false
+            }"#;
+
+            #[cfg(not(target_os = "macos"))]
+            let content = r#"{
+                "always_on_top": false,
+                "theme": "Light",
+                "titlebar": true
+            }"#;
+
+            fs::write(&conf_file, content).unwrap();
         }
         conf_file
     }
@@ -43,24 +61,49 @@ impl ChatConfJson {
 
     pub fn get_chat_conf() -> Self {
         let config_file = fs::read_to_string(ChatConfJson::conf_path()).unwrap();
-        let config: serde_json::Value =
+        let config: Value =
             serde_json::from_str(&config_file).expect("failed to parse chat.conf.json");
         serde_json::from_value(config).unwrap_or_else(|_| ChatConfJson::chat_conf_default())
     }
 
-    pub fn update_chat_conf(always_on_top: bool) {
-        let mut conf = ChatConfJson::get_chat_conf();
-        conf.always_on_top = always_on_top;
-        fs::write(
-            ChatConfJson::conf_path(),
-            serde_json::to_string(&conf).unwrap(),
-        )
-        .unwrap();
+    // https://users.rust-lang.org/t/updating-object-fields-given-dynamic-json/39049/3
+    pub fn amend(new_rules: &Value) -> Result<()> {
+        let config = ChatConfJson::get_chat_conf();
+        let config: Value = serde_json::to_value(&config)?;
+        let mut config: BTreeMap<String, Value> = serde_json::from_value(config)?;
+        let new_rules: BTreeMap<String, Value> = serde_json::from_value(new_rules.clone())?;
+
+        for (k, v) in new_rules {
+            config.insert(k, v);
+        }
+
+        fs::write(ChatConfJson::conf_path(), serde_json::to_string(&config)?)?;
+        Ok(())
+    }
+
+    pub fn theme() -> Option<Theme> {
+        let conf = ChatConfJson::get_chat_conf();
+        if conf.theme == "Dark" {
+            Some(Theme::Dark)
+        } else {
+            Some(Theme::Light)
+        }
+    }
+
+    pub fn titlebar() -> TitleBarStyle {
+        let conf = ChatConfJson::get_chat_conf();
+        if conf.titlebar {
+            TitleBarStyle::Transparent
+        } else {
+            TitleBarStyle::Overlay
+        }
     }
 
     pub fn chat_conf_default() -> Self {
         serde_json::from_value(serde_json::json!({
             "always_on_top": false,
+            "theme": "Light",
+            "titlebar": true
         }))
         .unwrap()
     }

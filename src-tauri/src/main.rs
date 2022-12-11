@@ -17,12 +17,13 @@ fn main() {
     let chat_conf2 = chat_conf.clone();
 
     tauri::Builder::default()
-        .manage(conf::ChatState::default(&chat_conf))
+        .manage(conf::ChatState::default(chat_conf.clone()))
         .invoke_handler(tauri::generate_handler![
             cmd::drag_window,
             cmd::fullscreen,
             cmd::download,
-            cmd::open_link
+            cmd::open_link,
+            cmd::get_chat_conf,
         ])
         .setup(|app| setup::init(app, chat_conf2))
         .plugin(tauri_plugin_positioner::init())

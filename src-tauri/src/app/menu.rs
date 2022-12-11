@@ -1,4 +1,7 @@
-use crate::{conf, utils};
+use crate::{
+    conf::{self, ChatConfJson},
+    utils,
+};
 use tauri::{
     utils::assets::EmbeddedAssets, AboutMetadata, AppHandle, Context, CustomMenuItem, Manager,
     Menu, MenuItem, Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, WindowMenuEvent,
@@ -13,6 +16,11 @@ pub fn init(chat_conf: &conf::ChatConfJson, context: &Context<EmbeddedAssets>) -
         Menu::new()
             .add_native_item(MenuItem::About(name.into(), AboutMetadata::default()))
             .add_native_item(MenuItem::Separator)
+            .add_item(
+                CustomMenuItem::new("restart".to_string(), "Restart ChatGPT")
+                    .accelerator("CmdOrCtrl+Shift+R"),
+            )
+            .add_native_item(MenuItem::Services)
             .add_native_item(MenuItem::Separator)
             .add_native_item(MenuItem::Hide)
             .add_native_item(MenuItem::HideOthers)
@@ -23,24 +31,52 @@ pub fn init(chat_conf: &conf::ChatConfJson, context: &Context<EmbeddedAssets>) -
 
     let always_on_top = CustomMenuItem::new("always_on_top".to_string(), "Always On Top")
         .accelerator("CmdOrCtrl+T");
+    let titlebar =
+        CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
+    let theme_light = CustomMenuItem::new("theme_light".to_string(), "Light");
+    let theme_dark = CustomMenuItem::new("theme_dark".to_string(), "Dark");
+    let is_dark = chat_conf.theme == "Dark";
+
+    let always_on_top_menu = if chat_conf.always_on_top {
+        always_on_top.selected()
+    } else {
+        always_on_top
+    };
+    let titlebar_menu = if chat_conf.titlebar {
+        titlebar.selected()
+    } else {
+        titlebar
+    };
 
     let preferences_menu = Submenu::new(
         "Preferences",
-        Menu::new()
-            .add_item(
-                CustomMenuItem::new("inject_script".to_string(), "Inject Script")
-                    .accelerator("CmdOrCtrl+J"),
+        Menu::with_items([
+            Submenu::new(
+                "Theme",
+                Menu::new()
+                    .add_item(if is_dark {
+                        theme_light
+                    } else {
+                        theme_light.selected()
+                    })
+                    .add_item(if is_dark {
+                        theme_dark.selected()
+                    } else {
+                        theme_dark
+                    }),
             )
-            .add_item(if chat_conf.always_on_top {
-                always_on_top.selected()
-            } else {
-                always_on_top
-            })
-            .add_native_item(MenuItem::Separator)
-            .add_item(
-                CustomMenuItem::new("awesome".to_string(), "Awesome ChatGPT")
-                    .accelerator("CmdOrCtrl+Z"),
-            ),
+            .into(),
+            always_on_top_menu.into(),
+            #[cfg(target_os = "macos")]
+            titlebar_menu.into(),
+            CustomMenuItem::new("inject_script".to_string(), "Inject Script")
+                .accelerator("CmdOrCtrl+J")
+                .into(),
+            MenuItem::Separator.into(),
+            CustomMenuItem::new("awesome".to_string(), "Awesome ChatGPT")
+                .accelerator("CmdOrCtrl+Z")
+                .into(),
+        ]),
     );
 
     let edit_menu = Submenu::new(
@@ -73,6 +109,7 @@ pub fn init(chat_conf: &conf::ChatConfJson, context: &Context<EmbeddedAssets>) -
                 CustomMenuItem::new("scroll_bottom".to_string(), "Scroll to Bottom of Screen")
                     .accelerator("CmdOrCtrl+Down"),
             )
+            .add_native_item(MenuItem::Zoom)
             .add_native_item(MenuItem::Separator)
             .add_item(
                 CustomMenuItem::new("reload".to_string(), "Refresh the Screen")
@@ -110,9 +147,25 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     let menu_handle = core_window.menu_handle();
 
     match menu_id {
+        // App
+        "restart" => tauri::api::process::restart(&app.env()),
         // Preferences
         "inject_script" => open(&app, script_path),
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
+        "titlebar" => {
+            let chat_conf = conf::ChatConfJson::get_chat_conf();
+            ChatConfJson::amend(&serde_json::json!({ "titlebar": !chat_conf.titlebar })).unwrap();
+            tauri::api::process::restart(&app.env());
+        }
+        "theme_light" | "theme_dark" => {
+            let theme = if menu_id == "theme_dark" {
+                "Dark"
+            } else {
+                "Light"
+            };
+            ChatConfJson::amend(&serde_json::json!({ "theme": theme })).unwrap();
+            tauri::api::process::restart(&app.env());
+        }
         "always_on_top" => {
             let mut always_on_top = state.always_on_top.lock().unwrap();
             *always_on_top = !*always_on_top;
@@ -121,7 +174,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
                 .set_selected(*always_on_top)
                 .unwrap();
             win.set_always_on_top(*always_on_top).unwrap();
-            conf::ChatConfJson::update_chat_conf(*always_on_top);
+            ChatConfJson::amend(&serde_json::json!({ "always_on_top": *always_on_top })).unwrap();
         }
         // View
         "reload" => win.eval("window.location.reload()").unwrap(),

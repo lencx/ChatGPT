@@ -1,4 +1,4 @@
-use crate::utils;
+use crate::{conf::ChatConfJson, utils};
 use std::fs;
 use tauri::{api, command, AppHandle, Manager};
 
@@ -27,4 +27,9 @@ pub fn download(_app: AppHandle, name: String, blob: Vec<u8>) {
 #[command]
 pub fn open_link(app: AppHandle, url: String) {
     api::shell::open(&app.shell_scope(), url, None).unwrap();
+}
+
+#[command]
+pub fn get_chat_conf() -> ChatConfJson {
+    ChatConfJson::get_chat_conf()
 }
