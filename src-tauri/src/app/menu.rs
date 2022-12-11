@@ -10,7 +10,8 @@ use tauri::{
 use tauri_plugin_positioner::{on_tray_event, Position, WindowExt};
 
 // --- Menu
-pub fn init(chat_conf: &conf::ChatConfJson, context: &Context<EmbeddedAssets>) -> Menu {
+pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
+    let chat_conf = ChatConfJson::get_chat_conf();
     let name = &context.package_info().name;
     let app_menu = Submenu::new(
         name,

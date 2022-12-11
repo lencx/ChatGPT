@@ -12,7 +12,8 @@ pub const DEFAULT_CHAT_CONF: &str = r#"{
     "always_on_top": false,
     "theme": "Light",
     "titlebar": true,
-    "origin": "https://chat.openai.com/"
+    "default_origin": "https://chat.openai.com",
+    "origin": "https://chat.openai.com"
 }"#;
 
 pub struct ChatState {
@@ -32,6 +33,7 @@ pub struct ChatConfJson {
     pub always_on_top: bool,
     pub theme: String,
     pub titlebar: bool,
+    pub default_origin: String,
     pub origin: String,
 }
 
@@ -42,10 +44,22 @@ impl ChatConfJson {
         let conf_file = ChatConfJson::conf_path();
         if !exists(&conf_file) {
             create_file(&conf_file).unwrap();
-            fs::write(&conf_file, DEFAULT_CHAT_CONF).unwrap();
 
             #[cfg(target_os = "macos")]
-            ChatConfJson::amend(&serde_json::json!({ "titlebar": false })).unwrap();
+            fs::write(
+                &conf_file,
+                r#"{
+                "always_on_top": false,
+                "theme": "Light",
+                "titlebar": false,
+                "default_origin": "https://chat.openai.com",
+                "origin": "https://chat.openai.com"
+            }"#,
+            )
+            .unwrap();
+
+            #[cfg(not(target_os = "macos"))]
+            fs::write(&conf_file, DEFAULT_CHAT_CONF).unwrap();
         }
         conf_file
     }

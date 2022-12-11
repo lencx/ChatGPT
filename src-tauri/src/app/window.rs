@@ -25,14 +25,17 @@ pub fn mini_window(handle: &tauri::AppHandle) {
 }
 
 pub fn origin_window(handle: &tauri::AppHandle) {
-    let theme = conf::ChatConfJson::theme();
-
-    WindowBuilder::new(handle, "main", WindowUrl::External("/".parse().unwrap()))
+    let chat_conf = conf::ChatConfJson::get_chat_conf();
+    // tauri://localhost/origin
+    // let url = chat_conf.origin;
+    WindowBuilder::new(handle, "origin", WindowUrl::App(chat_conf.origin.into()))
         .resizable(false)
         .fullscreen(false)
         .inner_size(400.0, 300.0)
         .always_on_top(true)
-        .theme(theme)
+        .decorations(false)
+        .initialization_script(include_str!("../assets/core.js"))
+        .initialization_script(include_str!("../assets/origin.js"))
         .build()
         .unwrap();
 }

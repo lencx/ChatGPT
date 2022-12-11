@@ -5,10 +5,8 @@ use crate::{
 };
 use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, Manager};
 
-pub fn init(
-    app: &mut App,
-    chat_conf: ChatConfJson,
-) -> std::result::Result<(), Box<dyn std::error::Error>> {
+pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    let chat_conf = ChatConfJson::get_chat_conf();
     let url = chat_conf.origin.to_string();
     let theme = ChatConfJson::theme();
     window::mini_window(&app.app_handle());
