@@ -8,6 +8,12 @@ pub const USER_AGENT: &str = "5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKi
 pub const PHONE_USER_AGENT: &str = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1";
 pub const ISSUES_URL: &str = "https://github.com/lencx/ChatGPT/issues";
 pub const AWESOME_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/AWESOME.md";
+pub const DEFAULT_CHAT_CONF: &str = r#"{
+    "always_on_top": false,
+    "theme": "Light",
+    "titlebar": true,
+    "origin": "https://chat.openai.com/"
+}"#;
 
 pub struct ChatState {
     pub always_on_top: Mutex<bool>,
@@ -26,6 +32,7 @@ pub struct ChatConfJson {
     pub always_on_top: bool,
     pub theme: String,
     pub titlebar: bool,
+    pub origin: String,
 }
 
 impl ChatConfJson {
@@ -35,22 +42,10 @@ impl ChatConfJson {
         let conf_file = ChatConfJson::conf_path();
         if !exists(&conf_file) {
             create_file(&conf_file).unwrap();
+            fs::write(&conf_file, DEFAULT_CHAT_CONF).unwrap();
 
             #[cfg(target_os = "macos")]
-            let content = r#"{
-                "always_on_top": false,
-                "theme": "Light",
-                "titlebar": false
-            }"#;
-
-            #[cfg(not(target_os = "macos"))]
-            let content = r#"{
-                "always_on_top": false,
-                "theme": "Light",
-                "titlebar": true
-            }"#;
-
-            fs::write(&conf_file, content).unwrap();
+            ChatConfJson::amend(&serde_json::json!({ "titlebar": false })).unwrap();
         }
         conf_file
     }
@@ -77,7 +72,10 @@ impl ChatConfJson {
             config.insert(k, v);
         }
 
-        fs::write(ChatConfJson::conf_path(), serde_json::to_string(&config)?)?;
+        fs::write(
+            ChatConfJson::conf_path(),
+            serde_json::to_string_pretty(&config)?,
+        )?;
         Ok(())
     }
 
@@ -100,11 +98,6 @@ impl ChatConfJson {
     }
 
     pub fn chat_conf_default() -> Self {
-        serde_json::from_value(serde_json::json!({
-            "always_on_top": false,
-            "theme": "Light",
-            "titlebar": true
-        }))
-        .unwrap()
+        serde_json::from_value(serde_json::json!(DEFAULT_CHAT_CONF)).unwrap()
     }
 }

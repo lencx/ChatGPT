@@ -1,13 +1,16 @@
-use crate::{app::window, conf, utils};
+use crate::{
+    app::window,
+    conf::{ChatConfJson, USER_AGENT},
+    utils,
+};
 use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, Manager};
 
 pub fn init(
     app: &mut App,
-    chat_conf: conf::ChatConfJson,
+    chat_conf: ChatConfJson,
 ) -> std::result::Result<(), Box<dyn std::error::Error>> {
-    let tauri_conf = utils::get_tauri_conf().unwrap();
-    let url = tauri_conf.build.dev_path.to_string();
-    let theme = conf::ChatConfJson::theme();
+    let url = chat_conf.origin.to_string();
+    let theme = ChatConfJson::theme();
     window::mini_window(&app.app_handle());
 
     #[cfg(target_os = "macos")]
@@ -18,13 +21,13 @@ pub fn init(
         .hidden_title(true)
         .theme(theme)
         .always_on_top(chat_conf.always_on_top)
-        .title_bar_style(conf::ChatConfJson::titlebar())
+        .title_bar_style(ChatConfJson::titlebar())
         .initialization_script(&utils::user_script())
         .initialization_script(include_str!("../assets/html2canvas.js"))
         .initialization_script(include_str!("../assets/jspdf.js"))
         .initialization_script(include_str!("../assets/core.js"))
         .initialization_script(include_str!("../assets/export.js"))
-        .user_agent(conf::USER_AGENT)
+        .user_agent(USER_AGENT)
         .build()?;
 
     #[cfg(not(target_os = "macos"))]
@@ -40,7 +43,7 @@ pub fn init(
         .initialization_script(include_str!("../assets/jspdf.js"))
         .initialization_script(include_str!("../assets/core.js"))
         .initialization_script(include_str!("../assets/export.js"))
-        .user_agent(conf::USER_AGENT)
+        .user_agent(USER_AGENT)
         .build()?;
 
     Ok(())

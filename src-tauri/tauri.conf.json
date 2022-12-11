@@ -2,7 +2,7 @@
   "build": {
     "beforeDevCommand": "",
     "beforeBuildCommand": "",
-    "devPath": "https://chat.openai.com/",
+    "devPath": "../dist",
     "distDir": "../dist"
   },
   "package": {

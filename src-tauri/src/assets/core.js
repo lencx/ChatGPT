@@ -71,7 +71,7 @@ async function init() {
   document.addEventListener("click", (e) => {
     const origin = e.target.closest("a");
     if (origin && origin.href && origin.target !== '_self') {
-      origin.target = "_self";
+      invoke('open_link', { url: origin.href });
     }
   });
 

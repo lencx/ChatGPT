@@ -2,12 +2,10 @@ use crate::{conf, utils};
 use tauri::{utils::config::WindowUrl, window::WindowBuilder};
 
 pub fn mini_window(handle: &tauri::AppHandle) {
-    let tauri_conf = utils::get_tauri_conf().unwrap();
-    let url = tauri_conf.build.dev_path.to_string();
-    // let chat_conf = conf::ChatConfJson::get_chat_conf();
+    let chat_conf = conf::ChatConfJson::get_chat_conf();
     let theme = conf::ChatConfJson::theme();
 
-    WindowBuilder::new(handle, "mini", WindowUrl::App(url.into()))
+    WindowBuilder::new(handle, "mini", WindowUrl::App(chat_conf.origin.into()))
         .resizable(false)
         .fullscreen(false)
         .inner_size(360.0, 540.0)
@@ -23,5 +21,18 @@ pub fn mini_window(handle: &tauri::AppHandle) {
         .build()
         .unwrap()
         .hide()
+        .unwrap();
+}
+
+pub fn origin_window(handle: &tauri::AppHandle) {
+    let theme = conf::ChatConfJson::theme();
+
+    WindowBuilder::new(handle, "main", WindowUrl::External("/".parse().unwrap()))
+        .resizable(false)
+        .fullscreen(false)
+        .inner_size(400.0, 300.0)
+        .always_on_top(true)
+        .theme(theme)
+        .build()
         .unwrap();
 }
