@@ -1,5 +1,9 @@
 # UPDATE LOG
 
+## v0.2.1
+
+feat: menu optimization
+
 ## v0.2.0
 
 feat: menu enhancement

@@ -17,11 +17,6 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
         name,
         Menu::new()
             .add_native_item(MenuItem::About(name.into(), AboutMetadata::default()))
-            .add_native_item(MenuItem::Separator)
-            .add_item(
-                CustomMenuItem::new("restart".to_string(), "Restart ChatGPT")
-                    .accelerator("CmdOrCtrl+Shift+R"),
-            )
             .add_native_item(MenuItem::Services)
             .add_native_item(MenuItem::Separator)
             .add_native_item(MenuItem::Hide)
@@ -71,6 +66,7 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
             always_on_top_menu.into(),
             #[cfg(target_os = "macos")]
             titlebar_menu.into(),
+            MenuItem::Separator.into(),
             // fix: Checking if the site connection is secure
             // @link: https://github.com/lencx/ChatGPT/issues/17
             CustomMenuItem::new("user_agent".to_string(), "User Agent")
@@ -82,8 +78,12 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
             CustomMenuItem::new("inject_script".to_string(), "Inject Script")
                 .accelerator("CmdOrCtrl+J")
                 .into(),
+            MenuItem::Separator.into(),
             CustomMenuItem::new("clear_conf".to_string(), "Clear Config")
                 .accelerator("CmdOrCtrl+D")
+                .into(),
+            CustomMenuItem::new("restart".to_string(), "Restart ChatGPT")
+                .accelerator("CmdOrCtrl+Shift+R")
                 .into(),
             MenuItem::Separator.into(),
             CustomMenuItem::new("awesome".to_string(), "Awesome ChatGPT")
@@ -133,6 +133,7 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
     let help_menu = Submenu::new(
         "Help",
         Menu::new()
+            .add_item(CustomMenuItem::new("update_log".to_string(), "Update Log"))
             .add_item(CustomMenuItem::new("report_bug".to_string(), "Report Bug"))
             .add_item(
                 CustomMenuItem::new("dev_tools".to_string(), "Toggle Developer Tools")
@@ -160,9 +161,8 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     let menu_handle = core_window.menu_handle();
 
     match menu_id {
-        // App
-        "restart" => tauri::api::process::restart(&app.env()),
         // Preferences
+        "restart" => tauri::api::process::restart(&app.env()),
         "inject_script" => open(&app, script_path),
         "clear_conf" => utils::clear_conf(&app),
         "switch_origin" => window::origin_window(&app),
@@ -214,6 +214,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             )
             .unwrap(),
         // Help
+        "update_log" => open(&app, conf::UPDATE_LOG_URL.to_string()),
         "report_bug" => open(&app, conf::ISSUES_URL.to_string()),
         "dev_tools" => {
             win.open_devtools();
