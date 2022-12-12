@@ -60,7 +60,9 @@ cask "popcorn-time", args: { "no-quarantine": true }
   - `Theme` - `Light`, `Dark` (Only macOS and Windows are supported).
   - `Always On Top`: Window is always on top of other windows.
   - `Titlebar`: Only supports macOS.
+  - `User Agent` ([#17](https://github.com/lencx/ChatGPT/issues/17)): Customize `user agent` to prevent security detection interception.
   - `Switch Origin` ([#14](https://github.com/lencx/ChatGPT/issues/14)): Modify website address, the default is `https://chat.openai.com`. Please ensure that the mirror address is consistent with the UI of the original URL, otherwise the export function will fail.
+  - `Clear Config`: Clear all chatgpt configuration files (`path: ~/.chatgpt/*`), dangerous operation, please backup data.
   - `Inject Script`: User scripts that can modify web pages.
   - `Awesome ChatGPT`: Related resources recommended.
 - **Edit** - `Undo`, `Redo`, `Cut`, `Copy`, `SelectAll`, ...
@@ -80,6 +82,10 @@ cask "popcorn-time", args: { "no-quarantine": true }
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 ## FAQ
+
+## Can't open ChatGPT
+
+If the application cannot be opened after the upgrade, please try to clear the configuration file, which is in the `~/.chatgpt/*` directory.
 
 ### Is it safe?
 
