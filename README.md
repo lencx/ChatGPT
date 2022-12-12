@@ -128,7 +128,7 @@ yarn build
 
 ## ❤️ Thanks
 
-- The share buttons code is copied directly from [@liady](https://github.com/liady/ChatGPT-pdf) extension with minor modifications.
+- The share buttons code is copied directly from [@liady](https://github.com/liady) extension with minor modifications.
 
 ## Related
 
