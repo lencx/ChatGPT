@@ -7,7 +7,11 @@ use tauri::Theme;
 #[cfg(target_os = "macos")]
 use tauri::TitleBarStyle;
 
+// pub const USER_AGENT: &str = "5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36";
+// pub const PHONE_USER_AGENT: &str = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1";
+
 pub const ISSUES_URL: &str = "https://github.com/lencx/ChatGPT/issues";
+pub const UPDATE_LOG_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/UPDATE_LOG.md";
 pub const AWESOME_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/AWESOME.md";
 pub const DEFAULT_CHAT_CONF: &str = r#"{
     "always_on_top": false,
@@ -15,8 +19,8 @@ pub const DEFAULT_CHAT_CONF: &str = r#"{
     "titlebar": true,
     "default_origin": "https://chat.openai.com",
     "origin": "https://chat.openai.com",
-    "ua_pc": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
-    "ua_phone": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
+    "ua_pc": "",
+    "ua_phone": ""
 }"#;
 pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
     "always_on_top": false,
@@ -24,8 +28,8 @@ pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
     "titlebar": false,
     "default_origin": "https://chat.openai.com",
     "origin": "https://chat.openai.com",
-    "ua_pc": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
-    "ua_phone": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
+    "ua_pc": "",
+    "ua_phone": ""
 }"#;
 
 pub struct ChatState {

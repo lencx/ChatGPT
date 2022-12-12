@@ -1,5 +1,6 @@
 # Awesome ChatGPT
 
+- [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts) - This repo includes ChatGPT promt curation to use ChatGPT better.
 - [Awesome ChatGPT](https://github.com/humanloop/awesome-chatgpt) - Curated list of awesome tools, demos, docs for ChatGPT and GPT-3
 
 ## Extension

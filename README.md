@@ -18,9 +18,9 @@
 
 **Latest:**
 
-- `Mac`: [ChatGPT_0.2.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.2.0/ChatGPT_0.2.0_x64.dmg)
-- `Linux`: [chat-gpt_0.2.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.2.0/chat-gpt_0.2.0_amd64.deb)
-- `Windows`: [ChatGPT_0.2.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.2.0/ChatGPT_0.2.0_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.2.1_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.2.1/ChatGPT_0.2.1_x64.dmg)
+- `Linux`: [chat-gpt_0.2.1_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.2.1/chat-gpt_0.2.1_amd64.deb)
+- `Windows`: [ChatGPT_0.2.1_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.2.1/ChatGPT_0.2.1_x64_en-US.msi)
 
 [Other version...](https://github.com/lencx/ChatGPT/releases)
 
@@ -56,22 +56,27 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 ### Menu
 
-- **ChatGPT**
-  - `Restart ChatGPT`: After editing the injection script file, you can restart the application through this menu item to make the script take effect.
 - **Preferences**
   - `Theme` - `Light`, `Dark` (Only macOS and Windows are supported).
   - `Always On Top`: Window is always on top of other windows.
   - `Titlebar`: Only supports macOS.
-  - `User Agent` ([#17](https://github.com/lencx/ChatGPT/issues/17)): Customize `user agent` to prevent security detection interception.
+  - `User Agent` ([#17](https://github.com/lencx/ChatGPT/issues/17)): Customize `user agent` to prevent security detection interception. Default is empty string.
+  - `Inject Script`: User scripts that can modify web pages.
   - `Switch Origin` ([#14](https://github.com/lencx/ChatGPT/issues/14)): Modify website address, the default is `https://chat.openai.com`. Please ensure that the mirror address is consistent with the UI of the original URL, otherwise the export function will fail.
   - `Clear Config`: Clear all chatgpt configuration files (`path: ~/.chatgpt/*`), dangerous operation, please backup data.
-  - `Inject Script`: User scripts that can modify web pages.
+  - `Restart ChatGPT`: After editing the injection script file, you can restart the application through this menu item to make the script take effect.
   - `Awesome ChatGPT`: Related resources recommended.
 - **Edit** - `Undo`, `Redo`, `Cut`, `Copy`, `SelectAll`, ...
 - **View** - `Go Back`, `Go Forward`, `Scroll to Top of Screen`, `Scroll to Bottom of Screen`, `Refresh the Screen`, ...
 - **Help**
+  - `Update Log`: ChatGPT app changelog.
   - `Report Bug`: Defects and Suggestions Feedback.
   - `Toggle Developer Tools`: Developer tools for debugging web pages.
+
+## TODO
+
+- web access capability ([#20](https://github.com/lencx/ChatGPT/issues/20))
+- ...
 
 ## 👀 Preview
 
