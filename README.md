@@ -12,6 +12,8 @@
 
 ## Downloads
 
+[📝 Update Log](./UPDATE_LOG.md)
+
 <!-- download start -->
 
 **Latest:**
@@ -41,7 +43,7 @@ tap repo, "https://github.com/#{repo}.git"
 cask "popcorn-time", args: { "no-quarantine": true }
 ~~~
 
-## Features
+## ✨ Features
 
 - multi-platform: `macOS` `Linux` `Windows`
 - export ChatGPT history (PNG, PDF and Share Link)
@@ -75,7 +77,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 <img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chat.png" alt="chat">
 <img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
-<img width="320" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/chat-ua.png" alt="user agent"> <img width="320" src="./assets/auto-update.png" alt="auto update">
 
 ---
 
