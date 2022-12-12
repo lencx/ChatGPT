@@ -71,11 +71,19 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
             always_on_top_menu.into(),
             #[cfg(target_os = "macos")]
             titlebar_menu.into(),
+            // fix: Checking if the site connection is secure
+            // @link: https://github.com/lencx/ChatGPT/issues/17
+            CustomMenuItem::new("user_agent".to_string(), "User Agent")
+                .accelerator("CmdOrCtrl+U")
+                .into(),
             CustomMenuItem::new("switch_origin".to_string(), "Switch Origin")
                 .accelerator("CmdOrCtrl+O")
                 .into(),
             CustomMenuItem::new("inject_script".to_string(), "Inject Script")
                 .accelerator("CmdOrCtrl+J")
+                .into(),
+            CustomMenuItem::new("clear_conf".to_string(), "Clear Config")
+                .accelerator("CmdOrCtrl+D")
                 .into(),
             MenuItem::Separator.into(),
             CustomMenuItem::new("awesome".to_string(), "Awesome ChatGPT")
@@ -156,11 +164,10 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         "restart" => tauri::api::process::restart(&app.env()),
         // Preferences
         "inject_script" => open(&app, script_path),
+        "clear_conf" => utils::clear_conf(&app),
+        "switch_origin" => window::origin_window(&app),
+        "user_agent" => window::ua_window(&app),
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
-        "switch_origin" => {
-            window::origin_window(&app);
-            // app.get_window("origin").unwrap().show();
-        }
         "titlebar" => {
             let chat_conf = conf::ChatConfJson::get_chat_conf();
             ChatConfJson::amend(&serde_json::json!({ "titlebar": !chat_conf.titlebar })).unwrap();

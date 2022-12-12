@@ -1,8 +1,4 @@
-use crate::{
-    app::window,
-    conf::{ChatConfJson, USER_AGENT},
-    utils,
-};
+use crate::{app::window, conf::ChatConfJson, utils};
 use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, Manager};
 
 pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
@@ -25,7 +21,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         .initialization_script(include_str!("../assets/jspdf.js"))
         .initialization_script(include_str!("../assets/core.js"))
         .initialization_script(include_str!("../assets/export.js"))
-        .user_agent(USER_AGENT)
+        .user_agent(&chat_conf.ua_pc)
         .build()?;
 
     #[cfg(not(target_os = "macos"))]
@@ -41,7 +37,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         .initialization_script(include_str!("../assets/jspdf.js"))
         .initialization_script(include_str!("../assets/core.js"))
         .initialization_script(include_str!("../assets/export.js"))
-        .user_agent(USER_AGENT)
+        .user_agent(&chat_conf.ua_pc)
         .build()?;
 
     Ok(())
