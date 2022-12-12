@@ -1,5 +1,11 @@
 # UPDATE LOG
 
+## v0.2.0
+
+feat: menu enhancement
+- customize user-agent to prevent security detection interception
+- clear all chatgpt configuration files
+
 ## v0.1.8
 
 feat:
