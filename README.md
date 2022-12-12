@@ -10,7 +10,7 @@
 
 [Awesome ChatGPT](./AWESOME.md)
 
-## Downloads
+## 📦 Downloads
 
 [📝 Update Log](./UPDATE_LOG.md)
 
@@ -26,7 +26,7 @@
 
 <!-- download end -->
 
-## Install
+### Install
 
 Easily install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
 
@@ -73,7 +73,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
   - `Report Bug`: Defects and Suggestions Feedback.
   - `Toggle Developer Tools`: Developer tools for debugging web pages.
 
-## Preview
+## 👀 Preview
 
 <img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chat.png" alt="chat">
 <img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
@@ -83,7 +83,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-## FAQ
+## ❓FAQ
 
 ### Can't open ChatGPT
 
@@ -125,6 +125,10 @@ yarn dev
 # bundle path: src-tauri/target/release/bundle
 yarn build
 ```
+
+## ❤️ Thanks
+
+- The share buttons code is copied directly from [@liady](https://github.com/liady/ChatGPT-pdf) extension with minor modifications.
 
 ## Related
 
