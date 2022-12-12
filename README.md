@@ -16,9 +16,9 @@
 
 **Latest:**
 
-- `Mac`: [ChatGPT_0.1.8_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.1.8/ChatGPT_0.1.8_x64.dmg)
-- `Linux`: [chat-gpt_0.1.8_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.1.8/chat-gpt_0.1.8_amd64.deb)
-- `Windows`: [ChatGPT_0.1.8_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.1.8/ChatGPT_0.1.8_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.2.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.2.0/ChatGPT_0.2.0_x64.dmg)
+- `Linux`: [chat-gpt_0.2.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.2.0/chat-gpt_0.2.0_amd64.deb)
+- `Windows`: [ChatGPT_0.2.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.2.0/ChatGPT_0.2.0_x64_en-US.msi)
 
 [Other version...](https://github.com/lencx/ChatGPT/releases)
 
@@ -83,7 +83,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 ## FAQ
 
-## Can't open ChatGPT
+### Can't open ChatGPT
 
 If the application cannot be opened after the upgrade, please try to clear the configuration file, which is in the `~/.chatgpt/*` directory.
 
