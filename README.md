@@ -60,11 +60,12 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 - **Preferences**
   - `Theme` - `Light`, `Dark` (Only macOS and Windows are supported).
-  - `Always On Top`: Window is always on top of other windows.
+  - `Always on Top`: Window is always on top of other windows.
   - `Titlebar`: Only supports macOS.
   - `User Agent` ([#17](https://github.com/lencx/ChatGPT/issues/17)): Customize `user agent` to prevent security detection interception. Default is empty string.
   - `Inject Script`: User scripts that can modify web pages.
   - `Switch Origin` ([#14](https://github.com/lencx/ChatGPT/issues/14)): Modify website address, the default is `https://chat.openai.com`. Please ensure that the mirror address is consistent with the UI of the original URL, otherwise the export function will fail.
+  - `Go to Config`: Open the configuration file directory (`path: ~/.chatgpt/*`).
   - `Clear Config`: Clear all chatgpt configuration files (`path: ~/.chatgpt/*`), dangerous operation, please backup data.
   - `Restart ChatGPT`: After editing the injection script file, you can restart the application through this menu item to make the script take effect.
   - `Awesome ChatGPT`: Related resources recommended.

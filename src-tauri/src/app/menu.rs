@@ -26,7 +26,7 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
             .add_native_item(MenuItem::Quit),
     );
 
-    let always_on_top = CustomMenuItem::new("always_on_top".to_string(), "Always On Top")
+    let always_on_top = CustomMenuItem::new("always_on_top".to_string(), "Always on Top")
         .accelerator("CmdOrCtrl+T");
     let titlebar =
         CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
@@ -79,15 +79,18 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
                 .accelerator("CmdOrCtrl+J")
                 .into(),
             MenuItem::Separator.into(),
+            CustomMenuItem::new("go_conf".to_string(), "Go to Config")
+                .accelerator("CmdOrCtrl+Shift+G")
+                .into(),
             CustomMenuItem::new("clear_conf".to_string(), "Clear Config")
-                .accelerator("CmdOrCtrl+D")
+                .accelerator("CmdOrCtrl+Shift+D")
                 .into(),
             CustomMenuItem::new("restart".to_string(), "Restart ChatGPT")
                 .accelerator("CmdOrCtrl+Shift+R")
                 .into(),
             MenuItem::Separator.into(),
             CustomMenuItem::new("awesome".to_string(), "Awesome ChatGPT")
-                .accelerator("CmdOrCtrl+Z")
+                .accelerator("CmdOrCtrl+Shift+A")
                 .into(),
         ]),
     );
@@ -164,6 +167,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         // Preferences
         "restart" => tauri::api::process::restart(&app.env()),
         "inject_script" => open(&app, script_path),
+        "go_conf" => utils::open_file(utils::chat_root()),
         "clear_conf" => utils::clear_conf(&app),
         "switch_origin" => window::origin_window(&app),
         "user_agent" => window::ua_window(&app),

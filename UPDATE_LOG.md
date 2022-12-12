@@ -1,5 +1,10 @@
 # UPDATE LOG
 
+## v0.2.2
+
+feat:
+- menu: go to config
+
 ## v0.2.1
 
 feat: menu optimization
