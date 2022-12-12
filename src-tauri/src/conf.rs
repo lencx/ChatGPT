@@ -7,8 +7,6 @@ use tauri::Theme;
 #[cfg(target_os = "macos")]
 use tauri::TitleBarStyle;
 
-pub const USER_AGENT: &str = "5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36";
-pub const PHONE_USER_AGENT: &str = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1";
 pub const ISSUES_URL: &str = "https://github.com/lencx/ChatGPT/issues";
 pub const AWESOME_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/AWESOME.md";
 pub const DEFAULT_CHAT_CONF: &str = r#"{
@@ -16,7 +14,18 @@ pub const DEFAULT_CHAT_CONF: &str = r#"{
     "theme": "Light",
     "titlebar": true,
     "default_origin": "https://chat.openai.com",
-    "origin": "https://chat.openai.com"
+    "origin": "https://chat.openai.com",
+    "ua_pc": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
+    "ua_phone": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
+}"#;
+pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
+    "always_on_top": false,
+    "theme": "Light",
+    "titlebar": false,
+    "default_origin": "https://chat.openai.com",
+    "origin": "https://chat.openai.com",
+    "ua_pc": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
+    "ua_phone": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
 }"#;
 
 pub struct ChatState {
@@ -33,11 +42,13 @@ impl ChatState {
 
 #[derive(serde::Serialize, serde::Deserialize, Debug, Clone)]
 pub struct ChatConfJson {
+    pub titlebar: bool,
     pub always_on_top: bool,
     pub theme: String,
-    pub titlebar: bool,
     pub default_origin: String,
     pub origin: String,
+    pub ua_pc: String,
+    pub ua_phone: String,
 }
 
 impl ChatConfJson {
@@ -49,17 +60,7 @@ impl ChatConfJson {
             create_file(&conf_file).unwrap();
 
             #[cfg(target_os = "macos")]
-            fs::write(
-                &conf_file,
-                r#"{
-                "always_on_top": false,
-                "theme": "Light",
-                "titlebar": false,
-                "default_origin": "https://chat.openai.com",
-                "origin": "https://chat.openai.com"
-            }"#,
-            )
-            .unwrap();
+            fs::write(&conf_file, DEFAULT_CHAT_CONF_MAC).unwrap();
 
             #[cfg(not(target_os = "macos"))]
             fs::write(&conf_file, DEFAULT_CHAT_CONF).unwrap();
@@ -72,7 +73,8 @@ impl ChatConfJson {
     }
 
     pub fn get_chat_conf() -> Self {
-        let config_file = fs::read_to_string(ChatConfJson::conf_path()).unwrap();
+        let config_file = fs::read_to_string(ChatConfJson::conf_path())
+            .unwrap_or_else(|_| DEFAULT_CHAT_CONF.to_string());
         let config: Value =
             serde_json::from_str(&config_file).expect("failed to parse chat.conf.json");
         serde_json::from_value(config).unwrap_or_else(|_| ChatConfJson::chat_conf_default())

@@ -4,6 +4,7 @@ use std::{
     path::{Path, PathBuf},
     process::Command,
 };
+use tauri::Manager;
 // use tauri::utils::config::Config;
 
 pub fn chat_root() -> PathBuf {
@@ -60,4 +61,21 @@ pub fn open_file(path: PathBuf) {
     // https://askubuntu.com/a/31071
     #[cfg(target_os = "linux")]
     Command::new("xdg-open").arg(path).spawn().unwrap();
+}
+
+pub fn clear_conf(app: &tauri::AppHandle) {
+    let root = chat_root();
+    let app2 = app.clone();
+    let msg = format!("Path: {}\nAre you sure to clear all ChatGPT configurations? Please backup in advance if necessary!", root.to_string_lossy());
+    tauri::api::dialog::ask(
+        app.get_window("core").as_ref(),
+        "Clear Config",
+        msg,
+        move |is_ok| {
+            if is_ok {
+                fs::remove_dir_all(root).unwrap();
+                tauri::api::process::restart(&app2.env());
+            }
+        },
+    );
 }

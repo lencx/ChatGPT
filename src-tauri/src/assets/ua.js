@@ -13,12 +13,12 @@ function init() {
   h3 {
     margin-bottom: 20px;
   }
-  input {
+  textarea {
     all: unset;
-    width: 280px;
-    height: 30px;
+    width: 300px;
+    height: 60px;
     margin-bottom: 10px;
-    padding: 0 5px;
+    padding: 10px;
     border: solid 2px #d8d8d8;
     background-color: #fff;
     border-radius: 5px !important;
@@ -41,27 +41,39 @@ function init() {
   #confirm {
     background-color: #10a37f;
   }
+  .item {
+    display: flex;
+    align-items: center;
+  }
+  label {
+    width: 120px;
+    margin-right: 10px;
+  }
   </style>
-  <h3>Switch Origin</h3>
-  <input id="input" type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autofocus placeholder="https://chat.openai.com" />
+  <h3>User Agent</h3>
+  <div class="item">
+    <label>Main Window (PC)</label>
+    <textarea id="ua_pc" type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autofocus placeholder="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) ..."></textarea>
+  </div>
+  <div class="item">
+    <label>Tray Window (Phone)</label>
+    <textarea id="ua_phone" type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autofocus placeholder="Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS ..."></textarea>
+  </div>
   <div class="btns">
     <button id="cancel">Cancel</button>
     <button id="confirm">Confirm</button>
   </div>`;
 
   const srcipt = document.createElement('script');
-  srcipt.innerHTML = `const input = document.getElementById('input');
+  srcipt.innerHTML = `const ua_pc = document.getElementById('ua_pc');
+  const ua_phone = document.getElementById('ua_phone');
   const cancelBtn = document.getElementById('cancel');
   const confirmBtn = document.getElementById('confirm');
   cancelBtn.addEventListener('click', () => {
-    window.invoke('form_cancel', { label: 'origin', title: 'Switch Origin', msg: 'Are you sure you want to cancel editing?' });
+    window.invoke('form_cancel', { label: 'ua', title: 'User Agent', msg: 'Are you sure you want to cancel editing?' });
   })
   confirmBtn.addEventListener('click', () => {
-    if (/^https?:\\/\\//.test(input.value)) {
-      window.invoke('form_confirm', { data: { origin: input.value } });
-    } else {
-      window.invoke('form_msg', { label: 'origin', title: 'Switch Origin', msg: 'Invalid URL!' });
-    }
+    window.invoke('form_confirm', { data: { ua_pc: ua_pc.value, ua_phone: ua_phone.value } });
   })`;
   document.head.appendChild(srcipt);
 }
