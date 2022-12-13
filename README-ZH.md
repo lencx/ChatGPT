@@ -146,4 +146,4 @@ yarn build
 
 ## License
 
-MIT License © lencx
+Apache License
