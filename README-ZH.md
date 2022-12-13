@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="180" src="./logo.png" alt="ChatGPT">
+  <img width="180" src="./public/logo.png" alt="ChatGPT">
   <h1 align="center">ChatGPT</h1>
 </p>
 
@@ -49,14 +49,12 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 - 跨平台: `macOS` `Linux` `Windows`
 - 导出 ChatGPT 聊天记录 (支持 PNG, PDF 和生成分享链接)
-- 窗口置顶 (永远在其他窗口之上)
-- 注入脚本
 - 应用自动升级通知
-- 应用菜单功能强大
-- 系统托盘打开小窗口
 - 丰富的快捷键
+- 系统托盘悬浮窗
+- 应用菜单功能强大
 
-### 菜单功能
+### 菜单项
 
 - **Preferences (喜好)**
   - `Theme` - `Light`, `Dark` (仅支持 macOS 和 Windows)
