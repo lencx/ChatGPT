@@ -1,3 +1,5 @@
+// *** Core Script - User Agent ***
+
 function init() {
   document.body.innerHTML = `<style>
   body {

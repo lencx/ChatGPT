@@ -75,7 +75,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install app dependencies and build it
-        run: yarn
+        run: yarn && yarn build:fe
 
       - uses: tauri-apps/tauri-action@v0.3
         env:

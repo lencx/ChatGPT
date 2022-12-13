@@ -1,3 +1,5 @@
+// *** Core Script - Origin ***
+
 function init() {
   document.body.innerHTML = `<style>
   body {

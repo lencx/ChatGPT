@@ -1,4 +1,5 @@
 // *** Core Script - IPC ***
+
 const uid = () => window.crypto.getRandomValues(new Uint32Array(1))[0];
 function transformCallback(callback = () => {}, once = false) {
   const identifier = uid();
