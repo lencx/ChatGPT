@@ -36,10 +36,15 @@ fn main() {
         .on_window_event(|event| {
             // https://github.com/tauri-apps/tauri/discussions/2684
             if let tauri::WindowEvent::CloseRequested { api, .. } = event.event() {
-                // TODO: https://github.com/tauri-apps/tauri/issues/3084
-                // event.window().hide().unwrap();
-                // https://github.com/tauri-apps/tao/pull/517
-                event.window().minimize().unwrap();
+                let win = event.window();
+                if win.label() == "main" {
+                    win.hide().unwrap();
+                } else {
+                    // TODO: https://github.com/tauri-apps/tauri/issues/3084
+                    // event.window().hide().unwrap();
+                    // https://github.com/tauri-apps/tao/pull/517
+                    event.window().minimize().unwrap();
+                }
                 api.prevent_close();
             }
         })

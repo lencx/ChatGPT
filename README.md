@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="180" src="./logo.png" alt="ChatGPT">
+  <img width="180" src="./public/logo.png" alt="ChatGPT">
   <h1 align="center">ChatGPT</h1>
 </p>
 

@@ -1,11 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import { StrictMode, Suspense } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import ReactDOM from 'react-dom/client';
 
-import App from "./App";
-import "./style.css";
+import Routes from './routes';
+import './main.scss';
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <StrictMode>
+    <Suspense fallback={null}>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    </Suspense>
+  </StrictMode>
 );

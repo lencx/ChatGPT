@@ -48,6 +48,10 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
     let preferences_menu = Submenu::new(
         "Preferences",
         Menu::with_items([
+            CustomMenuItem::new("dashboard".to_string(), "Dashboard")
+                .accelerator("CmdOrCtrl+D")
+                .into(),
+            MenuItem::Separator.into(),
             Submenu::new(
                 "Theme",
                 Menu::new()
@@ -165,6 +169,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
 
     match menu_id {
         // Preferences
+        "dashboard" => app.get_window("main").unwrap().show().unwrap(),
         "restart" => tauri::api::process::restart(&app.env()),
         "inject_script" => open(&app, script_path),
         "go_conf" => utils::open_file(utils::chat_root()),

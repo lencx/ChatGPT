@@ -2,7 +2,7 @@
   "build": {
     "beforeDevCommand": "npm run dev:fe",
     "beforeBuildCommand": "npm run build:fe",
-    "devPath": "http://localhost:1420/",
+    "devPath": "http://localhost:1420",
     "distDir": "../dist"
   },
   "package": {
@@ -68,6 +68,7 @@
       {
         "label": "main",
         "url": "index.html",
+        "title": "ChatGPT",
         "visible": false
       }
     ]
