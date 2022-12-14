@@ -1,12 +1,21 @@
 import { useEffect, useState } from 'react';
-import { Form, Radio, Switch, Input, Button, Space, message } from 'antd';
+import { Form, Radio, Switch, Input, Button, Space, message, Tooltip } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import { invoke } from '@tauri-apps/api';
 import { platform } from '@tauri-apps/api/os';
 import { ask } from '@tauri-apps/api/dialog';
 import { relaunch } from '@tauri-apps/api/process';
 import { clone, pick, isEqual } from 'lodash';
 
-const restartNames = ['origin', 'ua_window', 'ua_tray']
+const restartNames = ['theme', 'titlebar', 'origin', 'ua_window', 'ua_tray'];
+
+const OriginLabel = ({ url }: { url: string }) => {
+  return (
+    <span>
+      Switch Origin <Tooltip title={`Default: ${url}`}><QuestionCircleOutlined /></Tooltip>
+    </span>
+  )
+}
 
 export default function General() {
   const [form] = Form.useForm();
@@ -27,17 +36,12 @@ export default function General() {
     form.setFieldsValue(clone(chatConf));
   }, [chatConf])
 
-  console.log('«28» /src/view/General.tsx ~> ', chatConf);
-
-
   const onCancel = () => {
     form.setFieldsValue(chatConf);
   };
 
   const onFinish = async (values: any) => {
     await invoke('form_confirm', { data: values, label: 'main' });
-    console.log('«33» /src/view/General.tsx ~> ', pick(chatConf, restartNames), pick(values, restartNames));
-
     if (!isEqual(pick(chatConf, restartNames), pick(values, restartNames))) {
       const isOk = await ask(`Configuration saved successfully, whether to restart?`, {
         title: 'ChatGPT Preferences'
@@ -71,13 +75,13 @@ export default function General() {
           <Switch />
         </Form.Item>
       )}
-      <Form.Item label="Switch Origin" name="origin">
+      <Form.Item label={<OriginLabel url={chatConf?.default_origin} />} name="origin">
         <Input placeholder="https://chat.openai.com" />
       </Form.Item>
       <Form.Item label="User Agent (Window)" name="ua_window">
         <Input.TextArea autoSize={{ minRows: 2, maxRows: 4 }} placeholder="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" />
       </Form.Item>
-      <Form.Item label="User Agent (Tray)" name="ua_tray">
+      <Form.Item label="User Agent (SystemTray)" name="ua_tray">
         <Input.TextArea autoSize={{ minRows: 2, maxRows: 4 }} placeholder="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" />
       </Form.Item>
       <Form.Item>

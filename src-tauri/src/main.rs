@@ -9,6 +9,7 @@ mod utils;
 
 use app::{cmd, menu, setup};
 use conf::{ChatConfJson, ChatState};
+use tauri::Manager;
 
 fn main() {
     ChatConfJson::init();

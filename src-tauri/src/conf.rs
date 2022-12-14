@@ -19,8 +19,8 @@ pub const DEFAULT_CHAT_CONF: &str = r#"{
     "titlebar": true,
     "default_origin": "https://chat.openai.com",
     "origin": "https://chat.openai.com",
-    "ua_pc": "",
-    "ua_phone": ""
+    "ua_window": "",
+    "ua_tray": ""
 }"#;
 pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
     "always_on_top": false,
@@ -28,8 +28,8 @@ pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
     "titlebar": false,
     "default_origin": "https://chat.openai.com",
     "origin": "https://chat.openai.com",
-    "ua_pc": "",
-    "ua_phone": ""
+    "ua_window": "",
+    "ua_tray": ""
 }"#;
 
 pub struct ChatState {
@@ -51,8 +51,8 @@ pub struct ChatConfJson {
     pub theme: String,
     pub default_origin: String,
     pub origin: String,
-    pub ua_pc: String,
-    pub ua_phone: String,
+    pub ua_window: String,
+    pub ua_tray: String,
 }
 
 impl ChatConfJson {

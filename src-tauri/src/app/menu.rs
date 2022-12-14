@@ -47,10 +47,6 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
     let preferences_menu = Submenu::new(
         "Preferences",
         Menu::with_items([
-            CustomMenuItem::new("dashboard".to_string(), "Dashboard")
-                .accelerator("CmdOrCtrl+D")
-                .into(),
-            MenuItem::Separator.into(),
             Submenu::new(
                 "Theme",
                 Menu::new()
@@ -72,6 +68,9 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
             MenuItem::Separator.into(),
             CustomMenuItem::new("inject_script".to_string(), "Inject Script")
                 .accelerator("CmdOrCtrl+J")
+                .into(),
+            CustomMenuItem::new("control_center".to_string(), "Control Center")
+                .accelerator("CmdOrCtrl+Shift+P")
                 .into(),
             MenuItem::Separator.into(),
             CustomMenuItem::new("go_conf".to_string(), "Go to Config")
@@ -160,7 +159,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
 
     match menu_id {
         // Preferences
-        "dashboard" => app.get_window("main").unwrap().show().unwrap(),
+        "control_center" => app.get_window("main").unwrap().show().unwrap(),
         "restart" => tauri::api::process::restart(&app.env()),
         "inject_script" => open(&app, script_path),
         "go_conf" => utils::open_file(utils::chat_root()),

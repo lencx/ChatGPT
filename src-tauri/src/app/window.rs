@@ -17,7 +17,7 @@ pub fn mini_window(handle: &tauri::AppHandle) {
         .initialization_script(include_str!("../assets/jspdf.js"))
         .initialization_script(include_str!("../assets/core.js"))
         .initialization_script(include_str!("../assets/export.js"))
-        .user_agent(&chat_conf.ua_phone)
+        .user_agent(&chat_conf.ua_tray)
         .build()
         .unwrap()
         .hide()
