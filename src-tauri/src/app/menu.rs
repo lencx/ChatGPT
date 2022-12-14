@@ -1,5 +1,4 @@
 use crate::{
-    app::window,
     conf::{self, ChatConfJson},
     utils,
 };
@@ -71,14 +70,6 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
             #[cfg(target_os = "macos")]
             titlebar_menu.into(),
             MenuItem::Separator.into(),
-            // fix: Checking if the site connection is secure
-            // @link: https://github.com/lencx/ChatGPT/issues/17
-            CustomMenuItem::new("user_agent".to_string(), "User Agent")
-                .accelerator("CmdOrCtrl+U")
-                .into(),
-            CustomMenuItem::new("switch_origin".to_string(), "Switch Origin")
-                .accelerator("CmdOrCtrl+O")
-                .into(),
             CustomMenuItem::new("inject_script".to_string(), "Inject Script")
                 .accelerator("CmdOrCtrl+J")
                 .into(),
@@ -174,8 +165,6 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         "inject_script" => open(&app, script_path),
         "go_conf" => utils::open_file(utils::chat_root()),
         "clear_conf" => utils::clear_conf(&app),
-        "switch_origin" => window::origin_window(&app),
-        "user_agent" => window::ua_window(&app),
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
         "titlebar" => {
             let chat_conf = conf::ChatConfJson::get_chat_conf();

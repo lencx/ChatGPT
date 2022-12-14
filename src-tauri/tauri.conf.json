@@ -69,7 +69,9 @@
         "label": "main",
         "url": "index.html",
         "title": "ChatGPT",
-        "visible": false
+        "visible": false,
+        "width": 800,
+        "height": 600
       }
     ]
   }

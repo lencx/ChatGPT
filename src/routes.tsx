@@ -1,22 +1,44 @@
-import { useLayoutEffect } from 'react';
-import { useLocation, useRoutes } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
+import {
+  DesktopOutlined,
+  BulbOutlined
+} from '@ant-design/icons';
 import type { RouteObject } from 'react-router-dom';
+import type { MenuProps } from 'antd';
 
-import App from '@view/App';
+import General from '@view/General';
+import ChatGPTPrompts from '@view/ChatGPTPrompts';
 
-const routes: RouteObject[] = [
+export type ChatRouteObject = {
+  label: string;
+  icon?: React.ReactNode,
+};
+
+export const routes: Array<RouteObject & { meta: ChatRouteObject }> = [
   {
     path: '/',
-    element: <App />
-  }
+    element: <General />,
+    meta: {
+      label: 'General',
+      icon: <DesktopOutlined />,
+    },
+  },
+  {
+    path: '/chatgpt-prompts',
+    element: <ChatGPTPrompts />,
+    meta: {
+      label: 'ChatGPT Prompts',
+      icon: <BulbOutlined />,
+    },
+  },
 ];
 
+type MenuItem = Required<MenuProps>['items'][number];
+export const menuItems: MenuItem[] = routes.map(i => ({
+  ...i.meta,
+  key: i.path || '',
+}));
+
 export default () => {
-  const location = useLocation();
-  const pathname = location.pathname;
-  useLayoutEffect(() => {
-    const name = pathname.substring(1).replace(/\//gi, '_');
-    document.body.className = `${name ? name : 'main'}_screen`
-  }, [pathname]);
   return useRoutes(routes);
 };
