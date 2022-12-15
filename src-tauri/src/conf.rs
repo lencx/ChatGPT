@@ -60,19 +60,19 @@ impl ChatConfJson {
     /// path: ~/.chatgpt/chat.conf.json
     pub fn init() -> PathBuf {
         let conf_file = ChatConfJson::conf_path();
+        let content = if cfg!(target_os = "macos") {
+            DEFAULT_CHAT_CONF_MAC
+        } else {
+            DEFAULT_CHAT_CONF
+        };
 
         if !exists(&conf_file) {
             create_file(&conf_file).unwrap();
-
-            #[cfg(target_os = "macos")]
-            fs::write(conf_file.clone(), DEFAULT_CHAT_CONF_MAC).unwrap();
-
-            #[cfg(not(target_os = "macos"))]
-            fs::write(conf_file.clone(), DEFAULT_CHAT_CONF).unwrap();
-
+            fs::write(&conf_file, content).unwrap();
             return conf_file;
         }
 
+        let conf_file = ChatConfJson::conf_path();
         let file_content = fs::read_to_string(&conf_file).unwrap();
         match serde_json::from_str(&file_content) {
             Ok(v) => v,
@@ -80,14 +80,10 @@ impl ChatConfJson {
                 if err.to_string() == "invalid type: map, expected unit at line 1 column 0" {
                     return conf_file;
                 }
-
-                #[cfg(target_os = "macos")]
-                fs::write(&conf_file, DEFAULT_CHAT_CONF_MAC).unwrap();
-
-                #[cfg(not(target_os = "macos"))]
-                fs::write(&conf_file, DEFAULT_CHAT_CONF).unwrap();
+                fs::write(&conf_file, content).unwrap();
             }
         };
+
         conf_file
     }
 
@@ -96,11 +92,27 @@ impl ChatConfJson {
     }
 
     pub fn get_chat_conf() -> Self {
-        let config_file = fs::read_to_string(ChatConfJson::conf_path())
-            .unwrap_or_else(|_| DEFAULT_CHAT_CONF.to_string());
-        let config: Value =
-            serde_json::from_str(&config_file).expect("failed to parse chat.conf.json");
-        serde_json::from_value(config).unwrap()
+        let conf_file = ChatConfJson::conf_path();
+        let file_content = fs::read_to_string(&conf_file).unwrap();
+        let content = if cfg!(target_os = "macos") {
+            DEFAULT_CHAT_CONF_MAC
+        } else {
+            DEFAULT_CHAT_CONF
+        };
+
+        match serde_json::from_value(match serde_json::from_str(&file_content) {
+            Ok(v) => v,
+            Err(_) => {
+                fs::write(&conf_file, content).unwrap();
+                serde_json::from_str(content).unwrap()
+            }
+        }) {
+            Ok(v) => v,
+            Err(_) => {
+                fs::write(&conf_file, content).unwrap();
+                serde_json::from_value(serde_json::from_str(content).unwrap()).unwrap()
+            }
+        }
     }
 
     // https://users.rust-lang.org/t/updating-object-fields-given-dynamic-json/39049/3
