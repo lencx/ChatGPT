@@ -30,6 +30,7 @@
     "url": "https://github.com/lencx/ChatGPT"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.8.0",
     "@tauri-apps/api": "^1.2.0",
     "antd": "^5.0.6",
     "lodash": "^4.17.21",
