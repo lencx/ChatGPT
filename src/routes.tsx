@@ -7,7 +7,7 @@ import type { RouteObject } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 
 import General from '@view/General';
-import ChatGPTPrompts from '@view/ChatGPTPrompts';
+import ChatGPTPrompts from '@/view/ChatGPTPrompts';
 
 export type ChatRouteObject = {
   label: string;

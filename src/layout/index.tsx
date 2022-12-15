@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { Layout, Menu } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import Routes, { menuItems } from '@/routes';
 
@@ -14,13 +14,14 @@ interface ChatLayoutProps {
 
 const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
   const go = useNavigate();
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider theme="light" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className="chat-logo"><img src="/logo.png" /></div>
-        <Menu defaultSelectedKeys={['/']} mode="vertical" items={menuItems} onClick={(i) => go(i.key)} />
+        <Menu defaultSelectedKeys={[location.pathname]} mode="vertical" items={menuItems} onClick={(i) => go(i.key)} />
       </Sider>
       <Layout className="chat-layout">
         <Content className="chat-container">
