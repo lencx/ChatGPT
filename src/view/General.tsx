@@ -5,9 +5,7 @@ import { invoke } from '@tauri-apps/api';
 import { platform } from '@tauri-apps/api/os';
 import { ask } from '@tauri-apps/api/dialog';
 import { relaunch } from '@tauri-apps/api/process';
-import { clone, pick, isEqual } from 'lodash';
-
-const restartNames = ['theme', 'titlebar', 'origin', 'ua_window', 'ua_tray'];
+import { clone, omit, isEqual } from 'lodash';
 
 const OriginLabel = ({ url }: { url: string }) => {
   return (
@@ -15,6 +13,12 @@ const OriginLabel = ({ url }: { url: string }) => {
       Switch Origin <Tooltip title={`Default: ${url}`}><QuestionCircleOutlined /></Tooltip>
     </span>
   )
+}
+
+const disableAuto = {
+  autoCapitalize: 'off',
+  autoComplete: 'off',
+  spellCheck: false
 }
 
 export default function General() {
@@ -41,16 +45,17 @@ export default function General() {
   };
 
   const onFinish = async (values: any) => {
-    await invoke('form_confirm', { data: values, label: 'main' });
-    if (!isEqual(pick(chatConf, restartNames), pick(values, restartNames))) {
+    if (!isEqual(omit(chatConf, ['default_origin']), values)) {
+      await invoke('form_confirm', { data: values, label: 'main' });
       const isOk = await ask(`Configuration saved successfully, whether to restart?`, {
         title: 'ChatGPT Preferences'
       });
-      if (isOk) relaunch();
-      return;
+      if (isOk) {
+        relaunch();
+        return;
+      }
+      message.success('Configuration saved successfully');
     }
-
-    message.success('Configuration saved successfully');
   };
 
   return (
@@ -76,13 +81,13 @@ export default function General() {
         </Form.Item>
       )}
       <Form.Item label={<OriginLabel url={chatConf?.default_origin} />} name="origin">
-        <Input placeholder="https://chat.openai.com" />
+        <Input placeholder="https://chat.openai.com" {...disableAuto} />
       </Form.Item>
       <Form.Item label="User Agent (Window)" name="ua_window">
-        <Input.TextArea autoSize={{ minRows: 2, maxRows: 4 }} placeholder="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" />
+        <Input.TextArea autoSize={{ minRows: 4, maxRows: 4 }} {...disableAuto} placeholder="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" />
       </Form.Item>
       <Form.Item label="User Agent (SystemTray)" name="ua_tray">
-        <Input.TextArea autoSize={{ minRows: 2, maxRows: 4 }} placeholder="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" />
+        <Input.TextArea autoSize={{ minRows: 4, maxRows: 4 }} {...disableAuto} placeholder="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" />
       </Form.Item>
       <Form.Item>
         <Space size={20}>

@@ -36,7 +36,7 @@ pub fn get_chat_conf() -> ChatConfJson {
 
 #[command]
 pub fn form_confirm(_app: AppHandle, data: serde_json::Value) {
-    ChatConfJson::amend(&serde_json::json!(data)).unwrap();
+    ChatConfJson::amend(&serde_json::json!(data), None).unwrap();
 }
 
 #[command]

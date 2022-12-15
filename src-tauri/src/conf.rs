@@ -2,7 +2,7 @@ use crate::utils::{chat_root, create_file, exists};
 use anyhow::Result;
 use serde_json::Value;
 use std::{collections::BTreeMap, fs, path::PathBuf, sync::Mutex};
-use tauri::Theme;
+use tauri::{Manager, Theme};
 
 #[cfg(target_os = "macos")]
 use tauri::TitleBarStyle;
@@ -60,15 +60,34 @@ impl ChatConfJson {
     /// path: ~/.chatgpt/chat.conf.json
     pub fn init() -> PathBuf {
         let conf_file = ChatConfJson::conf_path();
+
         if !exists(&conf_file) {
             create_file(&conf_file).unwrap();
 
             #[cfg(target_os = "macos")]
-            fs::write(&conf_file, DEFAULT_CHAT_CONF_MAC).unwrap();
+            fs::write(conf_file.clone(), DEFAULT_CHAT_CONF_MAC).unwrap();
 
             #[cfg(not(target_os = "macos"))]
-            fs::write(&conf_file, DEFAULT_CHAT_CONF).unwrap();
+            fs::write(conf_file.clone(), DEFAULT_CHAT_CONF).unwrap();
+
+            return conf_file;
         }
+
+        let file_content = fs::read_to_string(&conf_file).unwrap();
+        match serde_json::from_str(&file_content) {
+            Ok(v) => v,
+            Err(err) => {
+                if err.to_string() == "invalid type: map, expected unit at line 1 column 0" {
+                    return conf_file;
+                }
+
+                #[cfg(target_os = "macos")]
+                fs::write(&conf_file, DEFAULT_CHAT_CONF_MAC).unwrap();
+
+                #[cfg(not(target_os = "macos"))]
+                fs::write(&conf_file, DEFAULT_CHAT_CONF).unwrap();
+            }
+        };
         conf_file
     }
 
@@ -81,11 +100,11 @@ impl ChatConfJson {
             .unwrap_or_else(|_| DEFAULT_CHAT_CONF.to_string());
         let config: Value =
             serde_json::from_str(&config_file).expect("failed to parse chat.conf.json");
-        serde_json::from_value(config).unwrap_or_else(|_| ChatConfJson::chat_conf_default())
+        serde_json::from_value(config).unwrap()
     }
 
     // https://users.rust-lang.org/t/updating-object-fields-given-dynamic-json/39049/3
-    pub fn amend(new_rules: &Value) -> Result<()> {
+    pub fn amend(new_rules: &Value, app: Option<tauri::AppHandle>) -> Result<()> {
         let config = ChatConfJson::get_chat_conf();
         let config: Value = serde_json::to_value(&config)?;
         let mut config: BTreeMap<String, Value> = serde_json::from_value(config)?;
@@ -99,6 +118,20 @@ impl ChatConfJson {
             ChatConfJson::conf_path(),
             serde_json::to_string_pretty(&config)?,
         )?;
+
+        if let Some(handle) = app {
+            tauri::api::process::restart(&handle.env());
+            // tauri::api::dialog::ask(
+            //     handle.get_window("core").as_ref(),
+            //     "ChatGPT Restart",
+            //     "Whether to restart immediately?",
+            //     move |is_restart| {
+            //         if is_restart {
+            //         }
+            //     },
+            // );
+        }
+
         Ok(())
     }
 
@@ -119,9 +152,5 @@ impl ChatConfJson {
         } else {
             TitleBarStyle::Overlay
         }
-    }
-
-    pub fn chat_conf_default() -> Self {
-        serde_json::from_value(serde_json::json!(DEFAULT_CHAT_CONF)).unwrap()
     }
 }

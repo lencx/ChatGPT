@@ -167,7 +167,11 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
         "titlebar" => {
             let chat_conf = conf::ChatConfJson::get_chat_conf();
-            ChatConfJson::amend(&serde_json::json!({ "titlebar": !chat_conf.titlebar })).unwrap();
+            ChatConfJson::amend(
+                &serde_json::json!({ "titlebar": !chat_conf.titlebar }),
+                None,
+            )
+            .unwrap();
             tauri::api::process::restart(&app.env());
         }
         "theme_light" | "theme_dark" => {
@@ -176,8 +180,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             } else {
                 "Light"
             };
-            ChatConfJson::amend(&serde_json::json!({ "theme": theme })).unwrap();
-            tauri::api::process::restart(&app.env());
+            ChatConfJson::amend(&serde_json::json!({ "theme": theme }), Some(app)).unwrap();
         }
         "always_on_top" => {
             let mut always_on_top = state.always_on_top.lock().unwrap();
@@ -187,7 +190,11 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
                 .set_selected(*always_on_top)
                 .unwrap();
             win.set_always_on_top(*always_on_top).unwrap();
-            ChatConfJson::amend(&serde_json::json!({ "always_on_top": *always_on_top })).unwrap();
+            ChatConfJson::amend(
+                &serde_json::json!({ "always_on_top": *always_on_top }),
+                None,
+            )
+            .unwrap();
         }
         // View
         "reload" => win.eval("window.location.reload()").unwrap(),
