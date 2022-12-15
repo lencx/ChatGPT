@@ -84,9 +84,9 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 ## 👀 Preview
 
-<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chat-control-center.png" alt="chat control center">
+<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/control-center.png" alt="control center">
 <img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
-<img width="320" src="./assets/chat-tray-login.png" alt="chat tray login"> <img width="320" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/tray-login.png" alt="tray login"> <img width="320" src="./assets/auto-update.png" alt="auto update">
 
 ---
 
