@@ -78,9 +78,9 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 ## 👀 预览
 
-<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chat.png" alt="chat">
+<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chat-control-center.png" alt="chat control center">
 <img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
-<img width="320" src="./assets/chat-ua.png" alt="user agent"> <img width="320" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/chat-tray-login.png" alt="chat tray login"> <img width="320" src="./assets/auto-update.png" alt="auto update">
 
 ---
 
@@ -97,6 +97,10 @@ cask "popcorn-time", args: { "no-quarantine": true }
 ### 不能打开 ChatGPT
 
 如果升级应用后无法打开，请尝试清除配置，它位于此目录 `~/.chatgpt/*`。
+
+### 主窗口已经登录，但是系统托盘窗口显示未登录
+
+可通过菜单项里的 `Restart ChatGPT` 重启应用来修复这个问题（`Menu -> Preferences -> Restart ChatGPT`）。
 
 ### 它是否安全？
 

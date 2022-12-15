@@ -84,9 +84,9 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 ## 👀 Preview
 
-<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chat.png" alt="chat">
+<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chat-control-center.png" alt="chat control center">
 <img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
-<img width="320" src="./assets/chat-ua.png" alt="user agent"> <img width="320" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/chat-tray-login.png" alt="chat tray login"> <img width="320" src="./assets/auto-update.png" alt="auto update">
 
 ---
 
@@ -97,6 +97,10 @@ cask "popcorn-time", args: { "no-quarantine": true }
 ### Can't open ChatGPT
 
 If you cannot open the application after the upgrade, please try to clear the configuration file, which is in the `~/.chatgpt/*` directory.
+
+## Out of sync login status between multiple windows
+
+If you have already logged in in the main window, but the system tray window shows that you are not logged in, you can fix it by restarting the application (`Menu -> Preferences -> Restart ChatGPT`).
 
 ### Is it safe?
 
