@@ -20,9 +20,9 @@
 
 **Latest:**
 
-- `Mac`: [ChatGPT_0.2.1_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.2.1/ChatGPT_0.2.1_x64.dmg)
-- `Linux`: [chat-gpt_0.2.1_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.2.1/chat-gpt_0.2.1_amd64.deb)
-- `Windows`: [ChatGPT_0.2.1_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.2.1/ChatGPT_0.2.1_x64_en-US.msi)
+- `Mac`: [ChatGPT_vv0.3.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/vvv0.3.0/ChatGPT_vv0.3.0_x64.dmg)
+- `Linux`: [chat-gpt_vv0.3.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/vvv0.3.0/chat-gpt_vv0.3.0_amd64.deb)
+- `Windows`: [ChatGPT_vv0.3.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/vvv0.3.0/ChatGPT_vv0.3.0_x64_en-US.msi)
 
 [Other version...](https://github.com/lencx/ChatGPT/releases)
 
@@ -60,9 +60,12 @@ cask "popcorn-time", args: { "no-quarantine": true }
   - `Theme` - `Light`, `Dark` (Only macOS and Windows are supported).
   - `Always on Top`: The window is always on top of other windows.
   - `Titlebar`: Whether to display the titlebar, supported by macOS only.
-  - `User Agent` ([#17](https://github.com/lencx/ChatGPT/issues/17)): Custom `user agent`, which may be required in some scenarios. The default value is the empty string.
   - `Inject Script`: Using scripts to modify pages.
-  - `Switch Origin` ([#14](https://github.com/lencx/ChatGPT/issues/14)): Switch the site source address, the default is `https://chat.openai.com`, please make sure the mirror site UI is the same as the original address. Otherwise, some functions may not be available.
+  - `Control Center`: The control center of ChatGPT application, it will give unlimited imagination to the application.
+    - `Theme`, `Always on Top`, `Titlebar`, ...
+    - `User Agent` ([#17](https://github.com/lencx/ChatGPT/issues/17)): Custom `user agent`, which may be required in some scenarios. The default value is the empty string.
+    - `Switch Origin` ([#14](https://github.com/lencx/ChatGPT/issues/14)): Switch the site source address, the default is `https://chat.openai.com`, please make sure the mirror site UI is the same as the original address. Otherwise, some functions may not be available.
+  - `Go to Config`: Open the configuration file directory (`path: ~/.chatgpt/*`).
   - `Clear Config`: Clear the configuration file (`path: ~/.chatgpt/*`), dangerous operation, please backup the data in advance.
   - `Restart ChatGPT`: Restart the application, for example: the program is stuck or the injection script can take effect by restarting the application after editing.
   - `Awesome ChatGPT`: Recommended Related Resources.
@@ -81,9 +84,9 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 ## 👀 Preview
 
-<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chat.png" alt="chat">
+<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/control-center.png" alt="control center">
 <img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
-<img width="320" src="./assets/chat-ua.png" alt="user agent"> <img width="320" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/tray-login.png" alt="tray login"> <img width="320" src="./assets/auto-update.png" alt="auto update">
 
 ---
 
@@ -94,6 +97,10 @@ cask "popcorn-time", args: { "no-quarantine": true }
 ### Can't open ChatGPT
 
 If you cannot open the application after the upgrade, please try to clear the configuration file, which is in the `~/.chatgpt/*` directory.
+
+### Out of sync login status between multiple windows
+
+If you have already logged in in the main window, but the system tray window shows that you are not logged in, you can fix it by restarting the application (`Menu -> Preferences -> Restart ChatGPT`).
 
 ### Is it safe?
 

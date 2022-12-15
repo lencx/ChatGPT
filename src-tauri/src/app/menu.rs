@@ -1,5 +1,4 @@
 use crate::{
-    app::window,
     conf::{self, ChatConfJson},
     utils,
 };
@@ -26,7 +25,7 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
             .add_native_item(MenuItem::Quit),
     );
 
-    let always_on_top = CustomMenuItem::new("always_on_top".to_string(), "Always On Top")
+    let always_on_top = CustomMenuItem::new("always_on_top".to_string(), "Always on Top")
         .accelerator("CmdOrCtrl+T");
     let titlebar =
         CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
@@ -67,27 +66,25 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
             #[cfg(target_os = "macos")]
             titlebar_menu.into(),
             MenuItem::Separator.into(),
-            // fix: Checking if the site connection is secure
-            // @link: https://github.com/lencx/ChatGPT/issues/17
-            CustomMenuItem::new("user_agent".to_string(), "User Agent")
-                .accelerator("CmdOrCtrl+U")
-                .into(),
-            CustomMenuItem::new("switch_origin".to_string(), "Switch Origin")
-                .accelerator("CmdOrCtrl+O")
-                .into(),
             CustomMenuItem::new("inject_script".to_string(), "Inject Script")
                 .accelerator("CmdOrCtrl+J")
                 .into(),
+            CustomMenuItem::new("control_center".to_string(), "Control Center")
+                .accelerator("CmdOrCtrl+Shift+P")
+                .into(),
             MenuItem::Separator.into(),
+            CustomMenuItem::new("go_conf".to_string(), "Go to Config")
+                .accelerator("CmdOrCtrl+Shift+G")
+                .into(),
             CustomMenuItem::new("clear_conf".to_string(), "Clear Config")
-                .accelerator("CmdOrCtrl+D")
+                .accelerator("CmdOrCtrl+Shift+D")
                 .into(),
             CustomMenuItem::new("restart".to_string(), "Restart ChatGPT")
                 .accelerator("CmdOrCtrl+Shift+R")
                 .into(),
             MenuItem::Separator.into(),
             CustomMenuItem::new("awesome".to_string(), "Awesome ChatGPT")
-                .accelerator("CmdOrCtrl+Z")
+                .accelerator("CmdOrCtrl+Shift+A")
                 .into(),
         ]),
     );
@@ -162,15 +159,19 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
 
     match menu_id {
         // Preferences
+        "control_center" => app.get_window("main").unwrap().show().unwrap(),
         "restart" => tauri::api::process::restart(&app.env()),
         "inject_script" => open(&app, script_path),
+        "go_conf" => utils::open_file(utils::chat_root()),
         "clear_conf" => utils::clear_conf(&app),
-        "switch_origin" => window::origin_window(&app),
-        "user_agent" => window::ua_window(&app),
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
         "titlebar" => {
             let chat_conf = conf::ChatConfJson::get_chat_conf();
-            ChatConfJson::amend(&serde_json::json!({ "titlebar": !chat_conf.titlebar })).unwrap();
+            ChatConfJson::amend(
+                &serde_json::json!({ "titlebar": !chat_conf.titlebar }),
+                None,
+            )
+            .unwrap();
             tauri::api::process::restart(&app.env());
         }
         "theme_light" | "theme_dark" => {
@@ -179,8 +180,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             } else {
                 "Light"
             };
-            ChatConfJson::amend(&serde_json::json!({ "theme": theme })).unwrap();
-            tauri::api::process::restart(&app.env());
+            ChatConfJson::amend(&serde_json::json!({ "theme": theme }), Some(app)).unwrap();
         }
         "always_on_top" => {
             let mut always_on_top = state.always_on_top.lock().unwrap();
@@ -190,7 +190,11 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
                 .set_selected(*always_on_top)
                 .unwrap();
             win.set_always_on_top(*always_on_top).unwrap();
-            ChatConfJson::amend(&serde_json::json!({ "always_on_top": *always_on_top })).unwrap();
+            ChatConfJson::amend(
+                &serde_json::json!({ "always_on_top": *always_on_top }),
+                None,
+            )
+            .unwrap();
         }
         // View
         "reload" => win.eval("window.location.reload()").unwrap(),

@@ -20,9 +20,9 @@
 
 **最新版:**
 
-- `Mac`: [ChatGPT_0.2.1_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.2.1/ChatGPT_0.2.1_x64.dmg)
-- `Linux`: [chat-gpt_0.2.1_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.2.1/chat-gpt_0.2.1_amd64.deb)
-- `Windows`: [ChatGPT_0.2.1_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.2.1/ChatGPT_0.2.1_x64_en-US.msi)
+- `Mac`: [ChatGPT_v0.3.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/vv0.3.0/ChatGPT_v0.3.0_x64.dmg)
+- `Linux`: [chat-gpt_v0.3.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/vv0.3.0/chat-gpt_v0.3.0_amd64.deb)
+- `Windows`: [ChatGPT_v0.3.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/vv0.3.0/ChatGPT_v0.3.0_x64_en-US.msi)
 
 [其他版本...](https://github.com/lencx/ChatGPT/releases)
 
@@ -60,9 +60,12 @@ cask "popcorn-time", args: { "no-quarantine": true }
   - `Theme` - `Light`, `Dark` (仅支持 macOS 和 Windows)
   - `Always On Top`: 窗口置顶
   - `Titlebar`: 是否显示 `Titlebar`，仅 macOS 支持
-  - `User Agent` ([#17](https://github.com/lencx/ChatGPT/issues/17)): 自定义 `user agent` 防止网站安全检测，默认值为空。
   - `Inject Script`: 用于修改网站的用户自定义脚本
-  - `Switch Origin` ([#14](https://github.com/lencx/ChatGPT/issues/14)): 切换网站源地址，默认为 `https://chat.openai.com`。需要注意的是镜像网站的 UI 需要和原网站一致，否则可能会导致某些功能不工作
+  - `Control Center`: ChatGPT 应用的控制中心，它将为应用提供无限的可能
+    - 设置 `Theme`，`Always on Top`，`Titlebar` 等
+    - `User Agent` ([#17](https://github.com/lencx/ChatGPT/issues/17)): 自定义 `user agent` 防止网站安全检测，默认值为空
+    - `Switch Origin` ([#14](https://github.com/lencx/ChatGPT/issues/14)): 切换网站源地址，默认为 `https://chat.openai.com`。需要注意的是镜像网站的 UI 需要和原网站一致，否则可能会导致某些功能不工作
+  - `Go to Config`: 打开 ChatGPT 配置目录 (`path: ~/.chatgpt/*`)
   - `Clear Config`: 清除 ChatGPT 配置数据 (`path: ~/.chatgpt/*`), 这是危险操作，请提前备份数据
   - `Restart ChatGPT`: 重启应用。如果注入脚本编辑完成，或者应用可卡死可以通过此菜单重新启动应用
   - `Awesome ChatGPT`: 一个很棒的 ChatGPT 推荐列表
@@ -75,9 +78,10 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 ## 👀 预览
 
-<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chat.png" alt="chat">
+<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/control-center.png" alt="control center">
 <img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
-<img width="320" src="./assets/chat-ua.png" alt="user agent"> <img width="320" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/tray-login.png" alt="tray login"> <img width="320" src="./assets/auto-update.png" alt="auto update">
+
 
 ---
 
@@ -94,6 +98,10 @@ cask "popcorn-time", args: { "no-quarantine": true }
 ### 不能打开 ChatGPT
 
 如果升级应用后无法打开，请尝试清除配置，它位于此目录 `~/.chatgpt/*`。
+
+### 主窗口已经登录，但是系统托盘窗口显示未登录
+
+可通过菜单项里的 `Restart ChatGPT` 重启应用来修复这个问题（`Menu -> Preferences -> Restart ChatGPT`）。
 
 ### 它是否安全？
 

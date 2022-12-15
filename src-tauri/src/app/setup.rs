@@ -21,7 +21,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         .initialization_script(include_str!("../assets/jspdf.js"))
         .initialization_script(include_str!("../assets/core.js"))
         .initialization_script(include_str!("../assets/export.js"))
-        .user_agent(&chat_conf.ua_pc)
+        .user_agent(&chat_conf.ua_window)
         .build()?;
 
     #[cfg(not(target_os = "macos"))]
@@ -37,7 +37,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         .initialization_script(include_str!("../assets/jspdf.js"))
         .initialization_script(include_str!("../assets/core.js"))
         .initialization_script(include_str!("../assets/export.js"))
-        .user_agent(&chat_conf.ua_pc)
+        .user_agent(&chat_conf.ua_window)
         .build()?;
 
     Ok(())

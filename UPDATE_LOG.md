@@ -1,5 +1,18 @@
 # UPDATE LOG
 
+## v0.3.0
+
+fix: can't open ChatGPT
+
+feat: menu enhancement
+- the control center of ChatGPT application
+- open the configuration file directory
+
+## v0.2.2
+
+feat:
+- menu: go to config
+
 ## v0.2.1
 
 feat: menu optimization

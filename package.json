@@ -2,6 +2,8 @@
   "name": "chatgpt",
   "version": "0.0.0",
   "scripts": {
+    "dev:fe": "vite",
+    "build:fe": "tsc && vite build",
     "dev": "yarn tauri dev",
     "build": "yarn tauri build",
     "updater": "tr updater",
@@ -27,8 +29,25 @@
     "type": "git",
     "url": "https://github.com/lencx/ChatGPT"
   },
+  "dependencies": {
+    "@tauri-apps/api": "^1.2.0",
+    "antd": "^5.0.6",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.5"
+  },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.2.1",
-    "@tauri-release/cli": "^0.2.3"
+    "@tauri-apps/cli": "^1.2.2",
+    "@tauri-release/cli": "^0.2.3",
+    "@types/lodash": "^4.14.191",
+    "@types/node": "^18.7.10",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^3.0.0",
+    "sass": "^1.56.2",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.0",
+    "vite-tsconfig-paths": "^4.0.2"
   }
 }

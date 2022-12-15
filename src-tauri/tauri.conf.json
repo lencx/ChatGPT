@@ -1,13 +1,13 @@
 {
   "build": {
-    "beforeDevCommand": "",
-    "beforeBuildCommand": "",
-    "devPath": "../dist",
+    "beforeDevCommand": "npm run dev:fe",
+    "beforeBuildCommand": "npm run build:fe",
+    "devPath": "http://localhost:1420",
     "distDir": "../dist"
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.2.1"
+    "version": "0.3.0"
   },
   "tauri": {
     "allowlist": {
@@ -63,6 +63,16 @@
         "https://lencx.github.io/ChatGPT/install.json"
       ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEIxMjY4OUI5MTVFNjBEMDUKUldRRkRlWVZ1WWttc1NGWEE0RFNSb0RqdnhsekRJZTkwK2hVLzhBZTZnaHExSEZ1ZEdzWkpXTHkK"
-    }
+    },
+    "windows": [
+      {
+        "label": "main",
+        "url": "index.html",
+        "title": "ChatGPT",
+        "visible": false,
+        "width": 800,
+        "height": 600
+      }
+    ]
   }
 }
