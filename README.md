@@ -61,11 +61,13 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 - **Preferences**
   - `Theme` - `Light`, `Dark` (Only macOS and Windows are supported).
-  - `Always on Top`: The window is always on top of other windows.
+  - `Stay On Top`: The window is stay on top of other windows.
   - `Titlebar`: Whether to display the titlebar, supported by macOS only.
+  - `Hide Dock Icon` ([#35](https://github.com/lencx/ChatGPT/issues/35)): Hide application icons from the Dock(support macOS only).
+    - Right-click on the system tray icon to show or hide the application icons in the Dock
   - `Inject Script`: Using scripts to modify pages.
   - `Control Center`: The control center of ChatGPT application, it will give unlimited imagination to the application.
-    - `Theme`, `Always on Top`, `Titlebar`, ...
+    - `Theme`, `Stay On Top`, `Titlebar`, ...
     - `User Agent` ([#17](https://github.com/lencx/ChatGPT/issues/17)): Custom `user agent`, which may be required in some scenarios. The default value is the empty string.
     - `Switch Origin` ([#14](https://github.com/lencx/ChatGPT/issues/14)): Switch the site source address, the default is `https://chat.openai.com`, please make sure the mirror site UI is the same as the original address. Otherwise, some functions may not be available.
   - `Go to Config`: Open the configuration file directory (`path: ~/.chatgpt/*`).

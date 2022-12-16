@@ -72,7 +72,7 @@ export default function General() {
           <Radio value="Dark">Dark</Radio>
         </Radio.Group>
       </Form.Item>
-      <Form.Item label="Always on Top" name="always_on_top" valuePropName="checked">
+      <Form.Item label="Stay On Top" name="stay_on_top" valuePropName="checked">
         <Switch />
       </Form.Item>
       {platformInfo === 'darwin' && (

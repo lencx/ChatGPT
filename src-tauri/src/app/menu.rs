@@ -3,15 +3,15 @@ use crate::{
     utils,
 };
 use tauri::{
-    utils::assets::EmbeddedAssets, AboutMetadata, AppHandle, Context, CustomMenuItem, Manager,
-    Menu, MenuItem, Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, WindowMenuEvent,
+    AboutMetadata, AppHandle, CustomMenuItem, Manager, Menu, MenuItem, Submenu, SystemTray,
+    SystemTrayEvent, SystemTrayMenu, WindowMenuEvent,
 };
 use tauri_plugin_positioner::{on_tray_event, Position, WindowExt};
 
 // --- Menu
-pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
+pub fn init() -> Menu {
     let chat_conf = ChatConfJson::get_chat_conf();
-    let name = &context.package_info().name;
+    let name = "ChatGPT";
     let app_menu = Submenu::new(
         name,
         Menu::new()
@@ -25,18 +25,18 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
             .add_native_item(MenuItem::Quit),
     );
 
-    let always_on_top = CustomMenuItem::new("always_on_top".to_string(), "Always on Top")
-        .accelerator("CmdOrCtrl+T");
+    let stay_on_top =
+        CustomMenuItem::new("stay_on_top".to_string(), "Stay On Top").accelerator("CmdOrCtrl+T");
     let titlebar =
         CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
     let theme_light = CustomMenuItem::new("theme_light".to_string(), "Light");
     let theme_dark = CustomMenuItem::new("theme_dark".to_string(), "Dark");
     let is_dark = chat_conf.theme == "Dark";
 
-    let always_on_top_menu = if chat_conf.always_on_top {
-        always_on_top.selected()
+    let stay_on_top_menu = if chat_conf.stay_on_top {
+        stay_on_top.selected()
     } else {
-        always_on_top
+        stay_on_top
     };
     let titlebar_menu = if chat_conf.titlebar {
         titlebar.selected()
@@ -62,9 +62,11 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
                     }),
             )
             .into(),
-            always_on_top_menu.into(),
+            stay_on_top_menu.into(),
             #[cfg(target_os = "macos")]
             titlebar_menu.into(),
+            #[cfg(target_os = "macos")]
+            CustomMenuItem::new("hide_dock_icon".to_string(), "Hide Dock Icon").into(),
             MenuItem::Separator.into(),
             CustomMenuItem::new("inject_script".to_string(), "Inject Script")
                 .accelerator("CmdOrCtrl+J")
@@ -119,12 +121,18 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
                 CustomMenuItem::new("scroll_bottom".to_string(), "Scroll to Bottom of Screen")
                     .accelerator("CmdOrCtrl+Down"),
             )
-            .add_native_item(MenuItem::Zoom)
             .add_native_item(MenuItem::Separator)
             .add_item(
                 CustomMenuItem::new("reload".to_string(), "Refresh the Screen")
                     .accelerator("CmdOrCtrl+R"),
             ),
+    );
+
+    let window_menu = Submenu::new(
+        "Window",
+        Menu::new()
+            .add_native_item(MenuItem::Minimize)
+            .add_native_item(MenuItem::Zoom),
     );
 
     let help_menu = Submenu::new(
@@ -143,6 +151,7 @@ pub fn init(context: &Context<EmbeddedAssets>) -> Menu {
         .add_submenu(preferences_menu)
         .add_submenu(edit_menu)
         .add_submenu(view_menu)
+        .add_submenu(window_menu)
         .add_submenu(help_menu)
 }
 
@@ -165,6 +174,9 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         "go_conf" => utils::open_file(utils::chat_root()),
         "clear_conf" => utils::clear_conf(&app),
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
+        "hide_dock_icon" => {
+            ChatConfJson::amend(&serde_json::json!({ "hide_dock_icon": true }), Some(app)).unwrap()
+        }
         "titlebar" => {
             let chat_conf = conf::ChatConfJson::get_chat_conf();
             ChatConfJson::amend(
@@ -182,19 +194,15 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             };
             ChatConfJson::amend(&serde_json::json!({ "theme": theme }), Some(app)).unwrap();
         }
-        "always_on_top" => {
-            let mut always_on_top = state.always_on_top.lock().unwrap();
-            *always_on_top = !*always_on_top;
+        "stay_on_top" => {
+            let mut stay_on_top = state.stay_on_top.lock().unwrap();
+            *stay_on_top = !*stay_on_top;
             menu_handle
                 .get_item(menu_id)
-                .set_selected(*always_on_top)
+                .set_selected(*stay_on_top)
                 .unwrap();
-            win.set_always_on_top(*always_on_top).unwrap();
-            ChatConfJson::amend(
-                &serde_json::json!({ "always_on_top": *always_on_top }),
-                None,
-            )
-            .unwrap();
+            win.set_always_on_top(*stay_on_top).unwrap();
+            ChatConfJson::amend(&serde_json::json!({ "stay_on_top": *stay_on_top }), None).unwrap();
         }
         // View
         "reload" => win.eval("window.location.reload()").unwrap(),
@@ -235,20 +243,70 @@ pub fn tray_menu() -> SystemTray {
 
 // --- SystemTray Event
 pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
-    let core_win = handle.get_window("core").unwrap();
     on_tray_event(handle, &event);
 
-    if let SystemTrayEvent::LeftClick { .. } = event {
-        core_win.minimize().unwrap();
-        let mini_win = handle.get_window("mini").unwrap();
-        mini_win.move_window(Position::TrayCenter).unwrap();
+    match event {
+        SystemTrayEvent::LeftClick { .. } => {
+            let chat_conf = conf::ChatConfJson::get_chat_conf();
 
-        if mini_win.is_visible().unwrap() {
-            mini_win.hide().unwrap();
-        } else {
-            mini_win.show().unwrap();
+            if !chat_conf.hide_dock_icon {
+                let core_win = handle.get_window("core").unwrap();
+                core_win.minimize().unwrap();
+            }
+
+            let tray_win = handle.get_window("tray").unwrap();
+            tray_win.move_window(Position::TrayCenter).unwrap();
+
+            if tray_win.is_visible().unwrap() {
+                tray_win.hide().unwrap();
+            } else {
+                tray_win.show().unwrap();
+            }
         }
+        SystemTrayEvent::RightClick { .. } => {
+            let chat_conf = conf::ChatConfJson::get_chat_conf();
+            let hide_dock = !chat_conf.hide_dock_icon;
+            let title;
+            let msg;
+
+            if !hide_dock {
+                title = "Show Dock Icon";
+                msg = "Are you sure you want to show the ChatGPT icon in the Dock?";
+            } else {
+                title = "Hide Dock Icon";
+                msg = "Are you sure you want to hide the ChatGPT icon in the Dock?";
+            }
+
+            let app = handle.clone();
+            tauri::api::dialog::ask(
+                handle.get_window("tray").as_ref(),
+                title,
+                msg,
+                move |is_ok| {
+                    if is_ok {
+                        ChatConfJson::amend(
+                            &serde_json::json!({ "hide_dock_icon": hide_dock }),
+                            Some(app),
+                        )
+                        .unwrap();
+                    }
+                },
+            );
+        }
+        _ => (),
     }
+
+    // if let SystemTrayEvent::LeftClick { .. } = event {
+    //     core_win.minimize().unwrap();
+    //     let tray_win = handle.get_window("tray").unwrap();
+    //     tray_win.move_window(Position::TrayCenter).unwrap();
+
+    //     if tray_win.is_visible().unwrap() {
+    //         tray_win.hide().unwrap();
+    //     } else {
+    //         tray_win.show().unwrap();
+    //     }
+    // }
 }
 
 pub fn open(app: &AppHandle, path: String) {
