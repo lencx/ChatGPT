@@ -147,6 +147,7 @@ yarn build
 ## ❤️ Thanks
 
 - The core implementation of the share button code was copied from the [@liady](https://github.com/liady) extension with some modifications.
+<!-- - [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts) -->
 
 ---
 

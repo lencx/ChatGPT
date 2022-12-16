@@ -7,18 +7,14 @@ import { ask } from '@tauri-apps/api/dialog';
 import { relaunch } from '@tauri-apps/api/process';
 import { clone, omit, isEqual } from 'lodash';
 
+import { DISABLE_AUTO_COMPLETE } from '@/utils';
+
 const OriginLabel = ({ url }: { url: string }) => {
   return (
     <span>
       Switch Origin <Tooltip title={`Default: ${url}`}><QuestionCircleOutlined /></Tooltip>
     </span>
   )
-}
-
-const disableAuto = {
-  autoCapitalize: 'off',
-  autoComplete: 'off',
-  spellCheck: false
 }
 
 export default function General() {
@@ -81,13 +77,13 @@ export default function General() {
         </Form.Item>
       )}
       <Form.Item label={<OriginLabel url={chatConf?.default_origin} />} name="origin">
-        <Input placeholder="https://chat.openai.com" {...disableAuto} />
+        <Input placeholder="https://chat.openai.com" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
       <Form.Item label="User Agent (Window)" name="ua_window">
-        <Input.TextArea autoSize={{ minRows: 4, maxRows: 4 }} {...disableAuto} placeholder="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" />
+        <Input.TextArea autoSize={{ minRows: 4, maxRows: 4 }} {...DISABLE_AUTO_COMPLETE} placeholder="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" />
       </Form.Item>
       <Form.Item label="User Agent (SystemTray)" name="ua_tray">
-        <Input.TextArea autoSize={{ minRows: 4, maxRows: 4 }} {...disableAuto} placeholder="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" />
+        <Input.TextArea autoSize={{ minRows: 4, maxRows: 4 }} {...DISABLE_AUTO_COMPLETE} placeholder="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" />
       </Form.Item>
       <Form.Item>
         <Space size={20}>

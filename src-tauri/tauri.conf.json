@@ -11,7 +11,11 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": true,
+      "fs": {
+        "all": true,
+        "scope": ["$HOME/.chatgpt/*"]
+      }
     },
     "systemTray": {
       "iconPath": "icons/tray-icon.png",
