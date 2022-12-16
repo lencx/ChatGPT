@@ -8,8 +8,12 @@ export const DISABLE_AUTO_COMPLETE = {
   spellCheck: false
 };
 
-const chatRoot = async () => {
+export const chatRoot = async () => {
   return join(await homeDir(), '.chatgpt')
+}
+
+export const chatModelPath = async () => {
+  return join(await chatRoot(), CHAT_MODEL_JSON);
 }
 
 export const readJSON = async (path: string, defaultVal = {}) => {

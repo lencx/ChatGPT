@@ -26,6 +26,7 @@ fn main() {
             cmd::form_cancel,
             cmd::form_confirm,
             cmd::form_msg,
+            cmd::open_file,
         ])
         .setup(setup::init)
         .plugin(tauri_plugin_positioner::init())

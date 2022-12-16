@@ -47,7 +47,7 @@ const LanguageModel: ForwardRefRenderFunction<FormProps, LanguageModelProps> = (
         <Input placeholder="Please input act" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
       <Form.Item label="Tags" name="tags">
-        <Tags />
+        <Tags value={record?.tags} />
       </Form.Item>
       <Form.Item label="Enable" name="enable" valuePropName="checked">
         <Switch />

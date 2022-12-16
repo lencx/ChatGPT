@@ -17,6 +17,10 @@ const Tags: FC<TagsProps> = ({ value = [], onChange }) => {
   const inputRef = useRef<InputRef>(null);
 
   useEffect(() => {
+    setTags(value);
+  }, [value])
+
+  useEffect(() => {
     if (inputVisible) {
       inputRef.current?.focus();
     }

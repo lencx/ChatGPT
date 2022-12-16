@@ -3,7 +3,6 @@ import { Layout, Menu } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import Routes, { menuItems } from '@/routes';
-
 import './index.scss';
 
 const { Content, Footer, Sider } = Layout;
