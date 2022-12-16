@@ -33,6 +33,13 @@ const LanguageModel: ForwardRefRenderFunction<FormProps, LanguageModelProps> = (
       initialValues={initFormValue}
     >
       <Form.Item
+        label="/{cmd}"
+        name="cmd"
+        rules={[{ required: true, message: 'Please input {cmd}!' }]}
+      >
+        <Input placeholder="Please input {cmd}" {...DISABLE_AUTO_COMPLETE} />
+      </Form.Item>
+      <Form.Item
         label="Act"
         name="act"
         rules={[{ required: true, message: 'Please input act!' }]}

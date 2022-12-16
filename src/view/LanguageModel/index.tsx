@@ -52,7 +52,8 @@ export default function LanguageModel() {
     <div>
       <Button className="add-btn" type="primary" onClick={opInfo.opNew}>Add Model</Button>
       <Table
-        rowKey="act"
+        key={opInfo.opTime}
+        rowKey="cmd"
         columns={columns}
         dataSource={opData}
         pagination={{

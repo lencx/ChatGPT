@@ -2,6 +2,14 @@ import { Tag, Switch, Tooltip, Space } from 'antd';
 
 export const modelColumns = () => [
   {
+    title: '/{cmd}',
+    dataIndex: 'cmd',
+    fixed: 'left',
+    width: 40,
+    key: 'cmd',
+    render: (v: string) => <Tag color="#2a2a2a">/{v}</Tag>
+  },
+  {
     title: 'Act',
     dataIndex: 'act',
     key: 'act',
