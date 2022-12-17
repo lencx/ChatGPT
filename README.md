@@ -61,6 +61,8 @@ You can look at [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-p
 
 After the data import is done, you can restart the app to make the configuration take effect (`Menu -> Preferences -> Restart ChatGPT`).
 
+The project maintains a list of common commands, or you can copy [chat.model.json](https://github.com/lencx/ChatGPT/blob/main/chat.model.json) directly to your local directory `~/.chatgpt/chat.model.json`
+
 In the chatgpt text input area, type a character starting with `/` to bring up the command prompt, press the spacebar, and it will fill the input area with the text associated with the command by default (note: if it contains multiple command prompts, it will only select the first one as the fill, you can keep typing until the first prompted command is the one you want, then press the spacebar. Or use the mouse to click on one of the multiple commands). When the fill is complete, you simply press the Enter key.
 
 ![chatgpt](assets/chatgpt.gif)
