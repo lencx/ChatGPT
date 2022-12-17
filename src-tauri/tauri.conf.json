@@ -7,14 +7,16 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.3.0"
+    "version": "0.4.0"
   },
   "tauri": {
     "allowlist": {
       "all": true,
       "fs": {
         "all": true,
-        "scope": ["$HOME/.chatgpt/*"]
+        "scope": [
+          "$HOME/.chatgpt/*"
+        ]
       }
     },
     "systemTray": {
