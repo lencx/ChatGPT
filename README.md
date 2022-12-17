@@ -79,7 +79,7 @@ In the chatgpt text input area, type a character starting with `/` to bring up t
   - `Stay On Top`: The window is stay on top of other windows.
   - `Titlebar`: Whether to display the titlebar, supported by macOS only.
   - `Hide Dock Icon` ([#35](https://github.com/lencx/ChatGPT/issues/35)): Hide application icons from the Dock(support macOS only).
-    - Right-click on the system tray icon to show or hide the application icons in the Dock
+    - Right-click on the SystemTray to open the menu, then click `Show Dock Icon` in the menu item to re-display the application icon in the Dock (`SystemTrayMenu -> Show Dock Icon`).
   - `Inject Script`: Using scripts to modify pages.
   - `Control Center`: The control center of ChatGPT application, it will give unlimited imagination to the application.
     - `Theme`, `Stay On Top`, `Titlebar`, ...

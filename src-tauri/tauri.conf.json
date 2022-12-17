@@ -19,7 +19,8 @@
     },
     "systemTray": {
       "iconPath": "icons/tray-icon.png",
-      "iconAsTemplate": true
+      "iconAsTemplate": true,
+      "menuOnLeftClick": false
     },
     "bundle": {
       "active": true,

@@ -79,7 +79,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
   - `Titlebar`: 是否显示 `Titlebar`，仅 macOS 支持
   - `Inject Script`: 用于修改网站的用户自定义脚本
   - `Hide Dock Icon` ([#35](https://github.com/lencx/ChatGPT/issues/35)): 隐藏 Dock 中的应用图标 (仅 macOS 支持)
-    - 右键单击系统托盘图标来显示或隐藏在 Dock 里的应用图标
+    - 系统图盘右键单击打开菜单，然后在菜单项中点击 `Show Dock Icon` 可以重新将应用图标显示在 Dock（`SystemTrayMenu -> Show Dock Icon`）
   - `Control Center`: ChatGPT 应用的控制中心，它将为应用提供无限的可能
     - 设置 `Theme`，`Stay On Top`，`Titlebar` 等
     - `User Agent` ([#17](https://github.com/lencx/ChatGPT/issues/17)): 自定义 `user agent` 防止网站安全检测，默认值为空

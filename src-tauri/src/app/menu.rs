@@ -4,7 +4,7 @@ use crate::{
 };
 use tauri::{
     AboutMetadata, AppHandle, CustomMenuItem, Manager, Menu, MenuItem, Submenu, SystemTray,
-    SystemTrayEvent, SystemTrayMenu, WindowMenuEvent,
+    SystemTrayEvent, SystemTrayMenu, WindowMenuEvent, SystemTrayMenuItem,
 };
 use tauri_plugin_positioner::{on_tray_event, Position, WindowExt};
 
@@ -238,12 +238,21 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
 
 // --- SystemTray Menu
 pub fn tray_menu() -> SystemTray {
-    SystemTray::new().with_menu(SystemTrayMenu::new())
+    SystemTray::new().with_menu(
+        SystemTrayMenu::new()
+            .add_item(CustomMenuItem::new("control_center".to_string(), "Control Center"))
+            .add_item(CustomMenuItem::new("show_dock_icon".to_string(), "Show Dock Icon"))
+            .add_item(CustomMenuItem::new("hide_dock_icon".to_string(), "Hide Dock Icon"))
+            .add_native_item(SystemTrayMenuItem::Separator)
+            .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT"))
+    )
 }
 
 // --- SystemTray Event
 pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
     on_tray_event(handle, &event);
+
+    let app = handle.clone();
 
     match event {
         SystemTrayEvent::LeftClick { .. } => {
@@ -263,36 +272,59 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
                 tray_win.show().unwrap();
             }
         }
-        SystemTrayEvent::RightClick { .. } => {
-            let chat_conf = conf::ChatConfJson::get_chat_conf();
-            let hide_dock = !chat_conf.hide_dock_icon;
-            let title;
-            let msg;
-
-            if !hide_dock {
-                title = "Show Dock Icon";
-                msg = "Are you sure you want to show the ChatGPT icon in the Dock?";
-            } else {
-                title = "Hide Dock Icon";
-                msg = "Are you sure you want to hide the ChatGPT icon in the Dock?";
-            }
-
-            let app = handle.clone();
-            tauri::api::dialog::ask(
-                handle.get_window("tray").as_ref(),
-                title,
-                msg,
-                move |is_ok| {
-                    if is_ok {
-                        ChatConfJson::amend(
-                            &serde_json::json!({ "hide_dock_icon": hide_dock }),
-                            Some(app),
-                        )
-                        .unwrap();
-                    }
-                },
-            );
+        SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
+            "control_center" => app.get_window("main").unwrap().show().unwrap(),
+            "restart" => tauri::api::process::restart(&handle.env()),
+            "show_dock_icon" => {
+                ChatConfJson::amend(
+                    &serde_json::json!({ "hide_dock_icon": false }),
+                    Some(app),
+                )
+                .unwrap();
+            },
+            "hide_dock_icon" => {
+                let chat_conf = conf::ChatConfJson::get_chat_conf();
+                if !chat_conf.hide_dock_icon {
+                    ChatConfJson::amend(
+                        &serde_json::json!({ "hide_dock_icon": true }),
+                        Some(app),
+                    )
+                    .unwrap();
+                }
+            },
+            "quit" => std::process::exit(0),
+            _ => (),
         }
+        // SystemTrayEvent::RightClick { tray_id, .. } => {
+        //     let chat_conf = conf::ChatConfJson::get_chat_conf();
+        //     let hide_dock = !chat_conf.hide_dock_icon;
+        //     let title;
+        //     let msg;
+
+        //     if !hide_dock {
+        //         title = "Show Dock Icon";
+        //         msg = "Are you sure you want to show the ChatGPT icon in the Dock?";
+        //     } else {
+        //         title = "Hide Dock Icon";
+        //         msg = "Are you sure you want to hide the ChatGPT icon in the Dock?";
+        //     }
+
+        //     let app = handle.clone();
+        //     tauri::api::dialog::ask(
+        //         handle.get_window("tray").as_ref(),
+        //         title,
+        //         msg,
+        //         move |is_ok| {
+        //             if is_ok {
+        //                 ChatConfJson::amend(
+        //                     &serde_json::json!({ "hide_dock_icon": hide_dock }),
+        //                     Some(app),
+        //                 )
+        //                 .unwrap();
+        //             }
+        //         },
+        //     );
+        // }
         _ => (),
     }
 

@@ -66,29 +66,65 @@ async function cmdTip() {
   const itemDom = (v) => `<div class="cmd-item" data-prompt="${encodeURIComponent(v.prompt)}"><b>/${v.cmd}</b><i>${v.act}</i></div>`;
   const searchInput = document.querySelector('form textarea');
 
-  searchInput.addEventListener('input', debounce(function() {
-    const query = this.value;
-    console.log(query);
+  // const handle = debounce(function() {
+  //   console.log('«70» /src/assets/cmd.js ~> ', 5667);
+
+  //   const query = this.value;
+  //   console.log(query);
+  //   if (!query || !/^\//.test(query)) {
+  //     modelDom.innerHTML = '';
+  //     return;
+  //   }
+  //   const result = data.filter(i => i.enable && new RegExp(query.substring(1)).test(i.cmd));
+  //   if (result.length > 0) {
+  //     modelDom.innerHTML = `<div>${result.map(itemDom).join('')}</div>`;
+  //   }
+  // }, 250);
+
+
+  // Enter a command starting with `/` and press a space to automatically fill `chatgpt prompt`.
+  // If more than one command appears in the search results, the first one will be used by default.
+  searchInput.addEventListener('keydown', (event) => {
+    if (!window.__CHAT_MODEL_CMD__) {
+      return;
+    }
+
+    if (event.keyCode === 32) {
+      searchInput.value = window.__CHAT_MODEL_CMD__;
+      modelDom.innerHTML = '';
+      delete window.__CHAT_MODEL_CMD__;
+    }
+    if (event.keyCode === 13) {
+      modelDom.innerHTML = '';
+      delete window.__CHAT_MODEL_CMD__;
+    }
+  });
+
+  searchInput.addEventListener('input', (event) => {
+    const query = searchInput.value;
+    // console.log(query);
     if (!query || !/^\//.test(query)) {
       modelDom.innerHTML = '';
       return;
     }
+
+    // all cmd result
+    if (query === '/') {
+      const result = data.filter(i => i.enable);
+      modelDom.innerHTML = `<div>${result.map(itemDom).join('')}</div>`;
+      window.__CHAT_MODEL_CMD__ = result[0]?.prompt.trim();
+      return;
+    }
+
     const result = data.filter(i => i.enable && new RegExp(query.substring(1)).test(i.cmd));
     if (result.length > 0) {
       modelDom.innerHTML = `<div>${result.map(itemDom).join('')}</div>`;
+      window.__CHAT_MODEL_CMD__ = result[0]?.prompt.trim();
+    } else {
+      modelDom.innerHTML = '';
+      delete window.__CHAT_MODEL_CMD__;
     }
-    // Enter a command starting with `/` and press a space to automatically fill `chatgpt prompt`.
-    // If more than one command appears in the search results, the first one will be used by default.
-    searchInput.addEventListener('keydown', (event) => {
-      if (event.keyCode === 32) {
-        searchInput.value = result[0]?.prompt.trim();
-      }
-      if (event.keyCode = 13) {
-        modelDom.innerHTML = '';
-      }
-    });
-  }, 250),
-  {
+  }, {
     capture: false,
     passive: true,
     once: false
@@ -105,9 +141,16 @@ async function cmdTip() {
       // .cmd-item
       const item = event.target.closest("div");
       if (item) {
-        document.querySelector('form textarea').value = decodeURIComponent(item.getAttribute('data-prompt'));
+        const val = decodeURIComponent(item.getAttribute('data-prompt'));
+        searchInput.value = val;
         document.querySelector('form textarea').focus();
+        window.__CHAT_MODEL_CMD__ = val;
+        modelDom.innerHTML = '';
       }
+    }, {
+      capture: false,
+      passive: true,
+      once: false
     });
   }, 200);
 }
