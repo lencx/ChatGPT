@@ -158,6 +158,7 @@ yarn build
 ## ❤️ 感谢
 
 - 分享按钮的代码从 [@liady](https://github.com/liady) 的插件获得，并做了一些本地化修改
+- 感谢 [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts) 项目为这个应用自定义指令功能所带来的启发
 
 ---
 

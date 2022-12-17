@@ -1,3 +1,5 @@
+// *** Core Script - CMD ***
+
 function init() {
   const styleDom = document.createElement('style');
   styleDom.innerHTML = `form {
@@ -66,22 +68,6 @@ async function cmdTip() {
   const itemDom = (v) => `<div class="cmd-item" data-prompt="${encodeURIComponent(v.prompt)}"><b>/${v.cmd}</b><i>${v.act}</i></div>`;
   const searchInput = document.querySelector('form textarea');
 
-  // const handle = debounce(function() {
-  //   console.log('«70» /src/assets/cmd.js ~> ', 5667);
-
-  //   const query = this.value;
-  //   console.log(query);
-  //   if (!query || !/^\//.test(query)) {
-  //     modelDom.innerHTML = '';
-  //     return;
-  //   }
-  //   const result = data.filter(i => i.enable && new RegExp(query.substring(1)).test(i.cmd));
-  //   if (result.length > 0) {
-  //     modelDom.innerHTML = `<div>${result.map(itemDom).join('')}</div>`;
-  //   }
-  // }, 250);
-
-
   // Enter a command starting with `/` and press a space to automatically fill `chatgpt prompt`.
   // If more than one command appears in the search results, the first one will be used by default.
   searchInput.addEventListener('keydown', (event) => {
@@ -102,7 +88,6 @@ async function cmdTip() {
 
   searchInput.addEventListener('input', (event) => {
     const query = searchInput.value;
-    // console.log(query);
     if (!query || !/^\//.test(query)) {
       modelDom.innerHTML = '';
       return;
@@ -153,14 +138,6 @@ async function cmdTip() {
       once: false
     });
   }, 200);
-}
-
-function debounce(fn, delay) {
-  let timeoutId;
-  return function(...args) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn.apply(this, args), delay);
-  };
 }
 
 if (

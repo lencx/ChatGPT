@@ -2,8 +2,9 @@
 
 ## v0.4.0
 
-feat: menu enhancement
-- hide application icons from the Dock (support macOS only)
+feat:
+- customize the ChatGPT prompts command (https://github.com/lencx/ChatGPT#-announcement)
+- menu enhancement: hide application icons from the Dock (support macOS only)
 
 ## v0.3.0
 
