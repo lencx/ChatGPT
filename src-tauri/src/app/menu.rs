@@ -295,50 +295,8 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
             "quit" => std::process::exit(0),
             _ => (),
         }
-        // SystemTrayEvent::RightClick { tray_id, .. } => {
-        //     let chat_conf = conf::ChatConfJson::get_chat_conf();
-        //     let hide_dock = !chat_conf.hide_dock_icon;
-        //     let title;
-        //     let msg;
-
-        //     if !hide_dock {
-        //         title = "Show Dock Icon";
-        //         msg = "Are you sure you want to show the ChatGPT icon in the Dock?";
-        //     } else {
-        //         title = "Hide Dock Icon";
-        //         msg = "Are you sure you want to hide the ChatGPT icon in the Dock?";
-        //     }
-
-        //     let app = handle.clone();
-        //     tauri::api::dialog::ask(
-        //         handle.get_window("tray").as_ref(),
-        //         title,
-        //         msg,
-        //         move |is_ok| {
-        //             if is_ok {
-        //                 ChatConfJson::amend(
-        //                     &serde_json::json!({ "hide_dock_icon": hide_dock }),
-        //                     Some(app),
-        //                 )
-        //                 .unwrap();
-        //             }
-        //         },
-        //     );
-        // }
         _ => (),
     }
-
-    // if let SystemTrayEvent::LeftClick { .. } = event {
-    //     core_win.minimize().unwrap();
-    //     let tray_win = handle.get_window("tray").unwrap();
-    //     tray_win.move_window(Position::TrayCenter).unwrap();
-
-    //     if tray_win.is_visible().unwrap() {
-    //         tray_win.hide().unwrap();
-    //     } else {
-    //         tray_win.show().unwrap();
-    //     }
-    // }
 }
 
 pub fn open(app: &AppHandle, path: String) {
