@@ -48,6 +48,21 @@ tap repo, "https://github.com/#{repo}.git"
 cask "popcorn-time", args: { "no-quarantine": true }
 ~~~
 
+## 📢 Announcement
+
+This is a major and exciting update. It works like a `Telegram bot command` and helps you quickly populate custom models to make chatgpt work the way you want it to. This project has taken a lot of my spare time, so if it helps you, please help spread the word or star it would be a great encouragement to me. I hope I can keep updating it and adding more interesting features.
+
+### How does it work?
+
+You can look at [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) to find interesting features to import into the app.
+
+![chat cmd](./assets/chat-cmd-1.png)
+![chat cmd](./assets/chat-cmd-2.png)
+
+After the data import is done, you can restart the app to make the configuration take effect (`Menu -> Preferences -> Restart ChatGPT`).
+
+In the chatgpt text input area, type a character starting with `/` to bring up the command prompt, press the spacebar, and it will fill the input area with the text associated with the command by default (note: if it contains multiple command prompts, it will only select the first one as the fill, you can keep typing until the first prompted command is the one you want, then press the spacebar. Or use the mouse to click on one of the multiple commands). When the fill is complete, you simply press the Enter key.
+
 ## ✨ Features
 
 - Multi-platform: `macOS` `Linux` `Windows`

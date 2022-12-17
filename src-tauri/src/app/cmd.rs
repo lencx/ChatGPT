@@ -64,3 +64,10 @@ pub fn form_msg(app: AppHandle, label: &str, title: &str, msg: &str) {
 pub fn open_file(path: PathBuf) {
     utils::open_file(path);
 }
+
+#[command]
+pub fn get_chat_model() -> serde_json::Value {
+    let path = utils::chat_root().join("chat.model.json");
+    let content = fs::read_to_string(path).unwrap_or_else(|_| r#"{"data":[]}"#.to_string());
+    serde_json::from_str(&content).unwrap()
+}

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Table, Button, Modal } from 'antd';
+import { Table, Button, Modal, message } from 'antd';
 import { invoke } from '@tauri-apps/api';
 
 import useChatModel from '@/hooks/useChatModel';
@@ -38,6 +38,10 @@ export default function LanguageModel() {
   const handleOk = () => {
     formRef.current?.form?.validateFields()
       .then((vals: Record<string, any>) => {
+        if (modelData.map((i: any) => i.cmd).includes(vals.cmd) && opInfo?.opRecord?.cmd !== vals.cmd) {
+          message.warning(`"cmd: /${vals.cmd}" already exists, please change the "${vals.cmd}" name and resubmit.`);
+          return;
+        }
         let data = [];
         switch (opInfo.opType) {
           case 'new': data = opAdd(vals); break;

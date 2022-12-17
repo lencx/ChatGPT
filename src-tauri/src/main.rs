@@ -27,6 +27,7 @@ fn main() {
             cmd::form_confirm,
             cmd::form_msg,
             cmd::open_file,
+            cmd::get_chat_model,
         ])
         .setup(setup::init)
         .plugin(tauri_plugin_positioner::init())

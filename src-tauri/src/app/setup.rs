@@ -19,6 +19,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         std::thread::spawn(move || {
             #[cfg(target_os = "macos")]
             WindowBuilder::new(&app, "core", WindowUrl::App(url.into()))
+                .title("ChatGPT")
                 .resizable(true)
                 .fullscreen(false)
                 .inner_size(800.0, 600.0)
@@ -31,6 +32,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
                 .initialization_script(include_str!("../assets/jspdf.js"))
                 .initialization_script(include_str!("../assets/core.js"))
                 .initialization_script(include_str!("../assets/export.js"))
+                .initialization_script(include_str!("../assets/cmd.js"))
                 .user_agent(&chat_conf.ua_window)
                 .build().unwrap();
 
@@ -47,6 +49,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
                 .initialization_script(include_str!("../assets/jspdf.js"))
                 .initialization_script(include_str!("../assets/core.js"))
                 .initialization_script(include_str!("../assets/export.js"))
+                .initialization_script(include_str!("../assets/cmd.js"))
                 .user_agent(&chat_conf.ua_window)
                 .build().unwrap();
         });

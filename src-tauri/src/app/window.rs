@@ -8,6 +8,7 @@ pub fn tray_window(handle: &tauri::AppHandle) {
 
     std::thread::spawn(move || {
         WindowBuilder::new(&app, "tray", WindowUrl::App(chat_conf.origin.into()))
+            .title("ChatGPT")
             .resizable(false)
             .fullscreen(false)
             .inner_size(360.0, 540.0)
@@ -19,6 +20,7 @@ pub fn tray_window(handle: &tauri::AppHandle) {
             .initialization_script(include_str!("../assets/jspdf.js"))
             .initialization_script(include_str!("../assets/core.js"))
             .initialization_script(include_str!("../assets/export.js"))
+            .initialization_script(include_str!("../assets/cmd.js"))
             .user_agent(&chat_conf.ua_tray)
             .build()
             .unwrap()
