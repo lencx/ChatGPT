@@ -1,5 +1,11 @@
 # UPDATE LOG
 
+## v0.4.0
+
+feat:
+- customize the ChatGPT prompts command (https://github.com/lencx/ChatGPT#-announcement)
+- menu enhancement: hide application icons from the Dock (support macOS only)
+
 ## v0.3.0
 
 fix: can't open ChatGPT
@@ -36,7 +42,7 @@ feat: tray window
 ## v0.1.6
 
 feat:
-- always on top
+- stay on top
 - export ChatGPT history
 
 ## v0.1.5

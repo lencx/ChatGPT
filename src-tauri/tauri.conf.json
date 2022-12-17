@@ -7,15 +7,22 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.3.0"
+    "version": "0.4.0"
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": true,
+      "fs": {
+        "all": true,
+        "scope": [
+          "$HOME/.chatgpt/*"
+        ]
+      }
     },
     "systemTray": {
       "iconPath": "icons/tray-icon.png",
-      "iconAsTemplate": true
+      "iconAsTemplate": true,
+      "menuOnLeftClick": false
     },
     "bundle": {
       "active": true,
@@ -71,7 +78,9 @@
         "title": "ChatGPT",
         "visible": false,
         "width": 800,
-        "height": 600
+        "height": 600,
+        "minWidth": 800,
+        "minHeight": 600
       }
     ]
   }

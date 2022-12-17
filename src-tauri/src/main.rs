@@ -26,10 +26,12 @@ fn main() {
             cmd::form_cancel,
             cmd::form_confirm,
             cmd::form_msg,
+            cmd::open_file,
+            cmd::get_chat_model,
         ])
         .setup(setup::init)
         .plugin(tauri_plugin_positioner::init())
-        .menu(menu::init(&context))
+        .menu(menu::init())
         .system_tray(menu::tray_menu())
         .on_menu_event(menu::menu_handler)
         .on_system_tray_event(menu::tray_handler)

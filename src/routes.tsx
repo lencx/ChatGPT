@@ -1,13 +1,13 @@
 import { useRoutes } from 'react-router-dom';
 import {
   DesktopOutlined,
-  BulbOutlined
+  BulbOutlined,
 } from '@ant-design/icons';
 import type { RouteObject } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 
 import General from '@view/General';
-import ChatGPTPrompts from '@view/ChatGPTPrompts';
+import LanguageModel from '@/view/LanguageModel';
 
 export type ChatRouteObject = {
   label: string;
@@ -24,10 +24,10 @@ export const routes: Array<RouteObject & { meta: ChatRouteObject }> = [
     },
   },
   {
-    path: '/chatgpt-prompts',
-    element: <ChatGPTPrompts />,
+    path: '/language-model',
+    element: <LanguageModel />,
     meta: {
-      label: 'ChatGPT Prompts',
+      label: 'Language Model',
       icon: <BulbOutlined />,
     },
   },

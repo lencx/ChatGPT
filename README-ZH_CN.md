@@ -22,9 +22,9 @@
 
 **最新版:**
 
-- `Mac`: [ChatGPT_0.3.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.3.0/ChatGPT_0.3.0_x64.dmg)
-- `Linux`: [chat-gpt_0.3.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.3.0/chat-gpt_0.3.0_amd64.deb)
-- `Windows`: [ChatGPT_0.3.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.3.0/ChatGPT_0.3.0_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.4.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.4.0/ChatGPT_0.4.0_x64.dmg)
+- `Linux`: [chat-gpt_0.4.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.4.0/chat-gpt_0.4.0_amd64.deb)
+- `Windows`: [ChatGPT_0.4.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.4.0/ChatGPT_0.4.0_x64_en-US.msi)
 
 [其他版本...](https://github.com/lencx/ChatGPT/releases)
 
@@ -47,6 +47,25 @@ tap repo, "https://github.com/#{repo}.git"
 cask "popcorn-time", args: { "no-quarantine": true }
 ~~~
 
+## 📢 公告
+
+这是一个令人兴奋的重大更新。像 `Telegram 机器人指令` 那样工作，帮助你快速填充自定模型，来让 ChatGPT 按照你想要的方式去工作。这个项目倾注了我大量业余时间，如果它对你有所帮助，宣传转发，或者 star 都是对我的巨大鼓励。我希望我可以持续更新下去，加入更多有趣的功能。
+
+### 如何使用指令？
+
+你可以从 [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) 来寻找有趣的功能来导入到应用。
+
+![chat cmd](./assets/chat-cmd-1.png)
+![chat cmd](./assets/chat-cmd-2.png)
+
+数据导入完成后，可以重新启动应用来使配置生效（`Menu -> Preferences -> Restart ChatGPT`）。
+
+项目会维护一份常用命令，您也可以直接将 [chat.model.json](https://github.com/lencx/ChatGPT/blob/main/chat.model.json) 复制到你的本地目录 `~/.chatgpt/chat.model.json`。
+
+在 ChatGPT 文本输入区域，键入 `/` 开头的字符，则会弹出指令提示，按下空格键，它会默认将命令关联的文本填充到输入区域（注意：如果包含多个指令提示，它只会选择第一个作为填充，你可以持续输入，直到第一个提示命令为你想要时，再按下空格键。或者使用鼠标来点击多条指令中的某一个）。填充完成后，你只需要按下回车键即可。
+
+![chatgpt](assets/chatgpt.gif)
+
 ## ✨ 功能概览
 
 - 跨平台: `macOS` `Linux` `Windows`
@@ -60,11 +79,13 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 - **Preferences (喜好)**
   - `Theme` - `Light`, `Dark` (仅支持 macOS 和 Windows)
-  - `Always On Top`: 窗口置顶
+  - `Stay On Top`: 窗口置顶
   - `Titlebar`: 是否显示 `Titlebar`，仅 macOS 支持
   - `Inject Script`: 用于修改网站的用户自定义脚本
+  - `Hide Dock Icon` ([#35](https://github.com/lencx/ChatGPT/issues/35)): 隐藏 Dock 中的应用图标 (仅 macOS 支持)
+    - 系统图盘右键单击打开菜单，然后在菜单项中点击 `Show Dock Icon` 可以重新将应用图标显示在 Dock（`SystemTrayMenu -> Show Dock Icon`）
   - `Control Center`: ChatGPT 应用的控制中心，它将为应用提供无限的可能
-    - 设置 `Theme`，`Always on Top`，`Titlebar` 等
+    - 设置 `Theme`，`Stay On Top`，`Titlebar` 等
     - `User Agent` ([#17](https://github.com/lencx/ChatGPT/issues/17)): 自定义 `user agent` 防止网站安全检测，默认值为空
     - `Switch Origin` ([#14](https://github.com/lencx/ChatGPT/issues/14)): 切换网站源地址，默认为 `https://chat.openai.com`。需要注意的是镜像网站的 UI 需要和原网站一致，否则可能会导致某些功能不工作
   - `Go to Config`: 打开 ChatGPT 配置目录 (`path: ~/.chatgpt/*`)
@@ -141,6 +162,7 @@ yarn build
 ## ❤️ 感谢
 
 - 分享按钮的代码从 [@liady](https://github.com/liady) 的插件获得，并做了一些本地化修改
+- 感谢 [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts) 项目为这个应用自定义指令功能所带来的启发
 
 ---
 

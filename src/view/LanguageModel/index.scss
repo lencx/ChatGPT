@@ -1,0 +1,39 @@
+.chat-prompts-val {
+  display: inline-block;
+  width: 100%;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.chat-prompts-tags {
+  .ant-tag {
+    margin: 2px;
+  }
+}
+
+.add-btn {
+  margin-bottom: 5px;
+}
+
+.chat-model-path {
+  font-size: 12px;
+  font-weight: bold;
+  color: #888;
+  margin-bottom: 5px;
+
+  span {
+    display: inline-block;
+    // background-color: #d8d8d8;
+    color: #4096ff;
+    padding: 0 8px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

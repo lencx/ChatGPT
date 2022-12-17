@@ -14,18 +14,20 @@ pub const ISSUES_URL: &str = "https://github.com/lencx/ChatGPT/issues";
 pub const UPDATE_LOG_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/UPDATE_LOG.md";
 pub const AWESOME_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/AWESOME.md";
 pub const DEFAULT_CHAT_CONF: &str = r#"{
-    "always_on_top": false,
+    "stay_on_top": false,
     "theme": "Light",
     "titlebar": true,
+    "hide_dock_icon": false,
     "default_origin": "https://chat.openai.com",
     "origin": "https://chat.openai.com",
     "ua_window": "",
     "ua_tray": ""
 }"#;
 pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
-    "always_on_top": false,
+    "stay_on_top": false,
     "theme": "Light",
     "titlebar": false,
+    "hide_dock_icon": false,
     "default_origin": "https://chat.openai.com",
     "origin": "https://chat.openai.com",
     "ua_window": "",
@@ -33,22 +35,27 @@ pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
 }"#;
 
 pub struct ChatState {
-    pub always_on_top: Mutex<bool>,
+    pub stay_on_top: Mutex<bool>,
 }
 
 impl ChatState {
     pub fn default(chat_conf: ChatConfJson) -> Self {
         ChatState {
-            always_on_top: Mutex::new(chat_conf.always_on_top),
+            stay_on_top: Mutex::new(chat_conf.stay_on_top),
         }
     }
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Debug, Clone)]
 pub struct ChatConfJson {
+    // support macOS only
     pub titlebar: bool,
-    pub always_on_top: bool,
+    pub hide_dock_icon: bool,
+
+    // macOS and Windows
     pub theme: String,
+
+    pub stay_on_top: bool,
     pub default_origin: String,
     pub origin: String,
     pub ua_window: String,

@@ -1,5 +1,5 @@
 use crate::{conf::ChatConfJson, utils};
-use std::fs;
+use std::{fs, path::PathBuf};
 use tauri::{api, command, AppHandle, Manager};
 
 #[command]
@@ -58,4 +58,16 @@ pub fn form_cancel(app: AppHandle, label: &str, title: &str, msg: &str) {
 pub fn form_msg(app: AppHandle, label: &str, title: &str, msg: &str) {
     let win = app.app_handle().get_window(label);
     tauri::api::dialog::message(win.as_ref(), title, msg);
+}
+
+#[command]
+pub fn open_file(path: PathBuf) {
+    utils::open_file(path);
+}
+
+#[command]
+pub fn get_chat_model() -> serde_json::Value {
+    let path = utils::chat_root().join("chat.model.json");
+    let content = fs::read_to_string(path).unwrap_or_else(|_| r#"{"data":[]}"#.to_string());
+    serde_json::from_str(&content).unwrap()
 }
