@@ -75,6 +75,7 @@ In the chatgpt text input area, type a character starting with `/` to bring up t
 - Common shortcut keys
 - System tray hover window
 - Powerful menu items
+- Shortcut command typing chatgpt prompt
 
 ### MenuItem
 
@@ -103,7 +104,7 @@ In the chatgpt text input area, type a character starting with `/` to bring up t
 ## TODO
 
 - Web access capability ([#20](https://github.com/lencx/ChatGPT/issues/20))
-- Shortcut command typing chatgpt prompt
+- `Control Center` - Feature Enhancements
 - ...
 
 ## 👀 Preview
