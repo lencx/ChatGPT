@@ -25,7 +25,7 @@ async function rewrite(filename) {
 
 async function init() {
   rewrite('README.md');
-  rewrite('README-ZH.md');
+  rewrite('README-ZH_CN.md');
 }
 
 init().catch(console.error);
