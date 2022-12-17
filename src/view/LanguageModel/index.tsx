@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Table, Button, Modal, message } from 'antd';
 import { invoke } from '@tauri-apps/api';
 
+import useInit from '@/hooks/useInit';
 import useChatModel from '@/hooks/useChatModel';
 import useColumns from '@/hooks/useColumns';
 import useData from '@/hooks/useData';
@@ -30,6 +31,11 @@ export default function LanguageModel() {
     }
   }, [opInfo.opType, formRef]);
 
+  useInit(async () => {
+    const path = await chatModelPath();
+    setChatModelPath(path);
+  })
+
   const hide = () => {
     setVisible(false);
     opInfo.resetRecord();
@@ -53,10 +59,8 @@ export default function LanguageModel() {
       })
   };
 
-  const handleOpenFile = async () => {
-    const path = await chatModelPath();
-    setChatModelPath(path);
-    invoke('open_file', { path });
+  const handleOpenFile = () => {
+    invoke('open_file', { path: modelPath });
   };
 
   const modalTitle = `${({ new: 'Create', edit: 'Edit' })[opInfo.opType]} Language Model`;
