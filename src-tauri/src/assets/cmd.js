@@ -7,7 +7,6 @@ function init() {
   }
   .chat-model-cmd-list {
     position: absolute;
-    width: 400px;
     bottom: 60px;
     max-height: 100px;
     overflow: auto;
@@ -31,13 +30,17 @@ function init() {
   }
   .chat-model-cmd-list .cmd-item b {
     display: inline-block;
-    width: 120px;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     border-radius: 4px;
     margin-right: 10px;
     color: #2a2a2a;
   }
   .chat-model-cmd-list .cmd-item i {
-    width: 270px;
+    width: 100%;
+    max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -64,6 +67,12 @@ async function cmdTip() {
 
   const modelDom = document.createElement('div');
   modelDom.classList.add('chat-model-cmd-list');
+
+  // fix: tray window
+  if (__TAURI_METADATA__.__currentWindow.label === 'tray') {
+    modelDom.style.bottom = '40px';
+  }
+
   document.querySelector('form').appendChild(modelDom);
   const itemDom = (v) => `<div class="cmd-item" data-prompt="${encodeURIComponent(v.prompt)}"><b>/${v.cmd}</b><i>${v.act}</i></div>`;
   const searchInput = document.querySelector('form textarea');

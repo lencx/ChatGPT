@@ -1,5 +1,10 @@
 # UPDATE LOG
 
+## v0.4.1
+
+fix:
+- tray window style optimization
+
 ## v0.4.0
 
 feat:
