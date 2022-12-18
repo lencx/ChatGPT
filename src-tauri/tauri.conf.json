@@ -51,13 +51,16 @@
       "shortDescription": "ChatGPT",
       "targets": "all",
       "windows": {
-        "webviewInstallMode": {
-          "silent": true,
-          "type": "downloadBootstrapper"
-        },
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+        "webviewInstallMode": {
+          "silent": true,
+          "type": "embedBootstrapper"
+        },
+        "wix": {
+          "language": ["zh-CN", "en-US"]
+        }
       }
     },
     "security": {
