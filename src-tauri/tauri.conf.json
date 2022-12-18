@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.4.2"
+    "version": "0.5.0"
   },
   "tauri": {
     "allowlist": {
@@ -64,7 +64,10 @@
           "type": "embedBootstrapper"
         },
         "wix": {
-          "language": ["zh-CN", "en-US"]
+          "language": [
+            "zh-CN",
+            "en-US"
+          ]
         }
       }
     },
