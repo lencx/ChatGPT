@@ -4,7 +4,7 @@ use crate::{
 };
 use tauri::{
     AboutMetadata, AppHandle, CustomMenuItem, Manager, Menu, MenuItem, Submenu, SystemTray,
-    SystemTrayEvent, SystemTrayMenu, WindowMenuEvent, SystemTrayMenuItem,
+    SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowMenuEvent,
 };
 use tauri_plugin_positioner::{on_tray_event, Position, WindowExt};
 
@@ -138,6 +138,10 @@ pub fn init() -> Menu {
     let help_menu = Submenu::new(
         "Help",
         Menu::new()
+            .add_item(CustomMenuItem::new(
+                "chatgpt_log".to_string(),
+                "ChatGPT Log",
+            ))
             .add_item(CustomMenuItem::new("update_log".to_string(), "Update Log"))
             .add_item(CustomMenuItem::new("report_bug".to_string(), "Report Bug"))
             .add_item(
@@ -226,6 +230,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             )
             .unwrap(),
         // Help
+        "chatgpt_log" => utils::open_file(utils::chat_root().join("chatgpt.log")),
         "update_log" => open(&app, conf::UPDATE_LOG_URL.to_string()),
         "report_bug" => open(&app, conf::ISSUES_URL.to_string()),
         "dev_tools" => {
@@ -240,11 +245,20 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
 pub fn tray_menu() -> SystemTray {
     SystemTray::new().with_menu(
         SystemTrayMenu::new()
-            .add_item(CustomMenuItem::new("control_center".to_string(), "Control Center"))
-            .add_item(CustomMenuItem::new("show_dock_icon".to_string(), "Show Dock Icon"))
-            .add_item(CustomMenuItem::new("hide_dock_icon".to_string(), "Hide Dock Icon"))
+            .add_item(CustomMenuItem::new(
+                "control_center".to_string(),
+                "Control Center",
+            ))
+            .add_item(CustomMenuItem::new(
+                "show_dock_icon".to_string(),
+                "Show Dock Icon",
+            ))
+            .add_item(CustomMenuItem::new(
+                "hide_dock_icon".to_string(),
+                "Hide Dock Icon",
+            ))
             .add_native_item(SystemTrayMenuItem::Separator)
-            .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT"))
+            .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
     )
 }
 
@@ -276,25 +290,19 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
             "control_center" => app.get_window("main").unwrap().show().unwrap(),
             "restart" => tauri::api::process::restart(&handle.env()),
             "show_dock_icon" => {
-                ChatConfJson::amend(
-                    &serde_json::json!({ "hide_dock_icon": false }),
-                    Some(app),
-                )
-                .unwrap();
-            },
+                ChatConfJson::amend(&serde_json::json!({ "hide_dock_icon": false }), Some(app))
+                    .unwrap();
+            }
             "hide_dock_icon" => {
                 let chat_conf = conf::ChatConfJson::get_chat_conf();
                 if !chat_conf.hide_dock_icon {
-                    ChatConfJson::amend(
-                        &serde_json::json!({ "hide_dock_icon": true }),
-                        Some(app),
-                    )
-                    .unwrap();
+                    ChatConfJson::amend(&serde_json::json!({ "hide_dock_icon": true }), Some(app))
+                        .unwrap();
                 }
-            },
+            }
             "quit" => std::process::exit(0),
             _ => (),
-        }
+        },
         _ => (),
     }
 }

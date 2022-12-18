@@ -1,5 +1,9 @@
 # UPDATE LOG
 
+## v0.4.2
+
+add chatgpt log (path: `~/.chatgpt/chatgpt.log`)
+
 ## v0.4.1
 
 fix:

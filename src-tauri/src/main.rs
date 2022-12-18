@@ -9,13 +9,29 @@ mod utils;
 
 use app::{cmd, menu, setup};
 use conf::{ChatConfJson, ChatState};
+use tauri::api::path;
+use tauri_plugin_log::{fern::colors::ColoredLevelConfig, LogTarget, LoggerBuilder};
 
 fn main() {
     ChatConfJson::init();
     let chat_conf = ChatConfJson::get_chat_conf();
     let context = tauri::generate_context!();
+    let colors = ColoredLevelConfig::default();
 
     tauri::Builder::default()
+        // https://github.com/tauri-apps/tauri/pull/2736
+        .plugin(
+            LoggerBuilder::new()
+                .with_colors(colors)
+                .targets([
+                    // LogTarget::LogDir,
+                    // LOG PATH: ~/.chatgpt/ChatGPT.log
+                    LogTarget::Folder(path::home_dir().unwrap().join(".chatgpt")),
+                    LogTarget::Stdout,
+                    LogTarget::Webview,
+                ])
+                .build(),
+        )
         .manage(ChatState::default(chat_conf))
         .invoke_handler(tauri::generate_handler![
             cmd::drag_window,

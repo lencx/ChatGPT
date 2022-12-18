@@ -34,7 +34,8 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
                 .initialization_script(include_str!("../assets/export.js"))
                 .initialization_script(include_str!("../assets/cmd.js"))
                 .user_agent(&chat_conf.ua_window)
-                .build().unwrap();
+                .build()
+                .unwrap();
 
             #[cfg(not(target_os = "macos"))]
             WindowBuilder::new(&app, "core", WindowUrl::App(url.into()))
@@ -51,7 +52,8 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
                 .initialization_script(include_str!("../assets/export.js"))
                 .initialization_script(include_str!("../assets/cmd.js"))
                 .user_agent(&chat_conf.ua_window)
-                .build().unwrap();
+                .build()
+                .unwrap();
         });
     }
 
