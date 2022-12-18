@@ -71,3 +71,20 @@ pub fn get_chat_model() -> serde_json::Value {
     let content = fs::read_to_string(path).unwrap_or_else(|_| r#"{"data":[]}"#.to_string());
     serde_json::from_str(&content).unwrap()
 }
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct PromptRecord {
+    pub act: String,
+    pub prompt: String,
+}
+
+#[command]
+pub fn parse_prompt(data: String) -> Vec<PromptRecord> {
+    let mut rdr = csv::Reader::from_reader(data.as_bytes());
+    let mut list = vec![];
+    for result in rdr.deserialize() {
+        let record: PromptRecord = result.unwrap();
+        list.push(record);
+    }
+    list
+}

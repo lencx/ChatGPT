@@ -14,7 +14,7 @@ import './index.scss';
 export default function LanguageModel() {
   const [isVisible, setVisible] = useState(false);
   const [modelPath, setChatModelPath] = useState('');
-  const { modelData, modelSet } = useChatModel();
+  const { modelData, modelSet } = useChatModel('user_custom');
   const { opData, opAdd, opRemove, opReplace, opSafeKey } = useData(modelData);
   const { columns, ...opInfo } = useColumns(modelColumns());
   const formRef = useRef<any>(null);

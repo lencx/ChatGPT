@@ -62,8 +62,10 @@ function init() {
 
 async function cmdTip() {
   const chatModelJson = await invoke('get_chat_model') || {};
-  if (!chatModelJson.data && chatModelJson.data.length <= 0) return;
-  const data = chatModelJson.data || [];
+  const user_custom = chatModelJson.user_custom || [];
+  const sys_sync_prompts = chatModelJson.sys_sync_prompts || [];
+  const data = [...user_custom, ...sys_sync_prompts];
+  if (data.length <= 0) return;
 
   const modelDom = document.createElement('div');
   modelDom.classList.add('chat-model-cmd-list');
@@ -74,7 +76,7 @@ async function cmdTip() {
   }
 
   document.querySelector('form').appendChild(modelDom);
-  const itemDom = (v) => `<div class="cmd-item" data-prompt="${encodeURIComponent(v.prompt)}"><b>/${v.cmd}</b><i>${v.act}</i></div>`;
+  const itemDom = (v) => `<div class="cmd-item" title="${v.prompt}" data-prompt="${encodeURIComponent(v.prompt)}"><b title="${v.cmd}">/${v.cmd}</b><i>${v.act}</i></div>`;
   const searchInput = document.querySelector('form textarea');
 
   // Enter a command starting with `/` and press a space to automatically fill `chatgpt prompt`.

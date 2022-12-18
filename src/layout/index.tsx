@@ -17,13 +17,32 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
   const go = useNavigate();
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider theme="light" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+    <Layout style={{ minHeight: '100vh' }} hasSider>
+      <Sider
+        theme="light"
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+        style={{
+          overflow: 'auto',
+          height: '100vh',
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          bottom: 0,
+          zIndex: 999,
+        }}
+      >
         <div className="chat-logo"><img src="/logo.png" /></div>
         <Menu defaultSelectedKeys={[location.pathname]} mode="vertical" items={menuItems} onClick={(i) => go(i.key)} />
       </Sider>
-      <Layout className="chat-layout">
-        <Content className="chat-container">
+      <Layout className="chat-layout" style={{ marginLeft: collapsed ? 80 : 200, transition: 'margin-left 300ms ease-out' }}>
+        <Content
+          className="chat-container"
+          style={{
+            overflow: 'inherit'
+          }}
+        >
           <Routes />
         </Content>
         <Footer style={{ textAlign: 'center' }}>

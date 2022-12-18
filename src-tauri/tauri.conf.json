@@ -7,11 +7,16 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.4.2"
+    "version": "0.5.0"
   },
   "tauri": {
     "allowlist": {
       "all": true,
+      "http": {
+        "scope": [
+          "https://raw.githubusercontent.com/*"
+        ]
+      },
       "fs": {
         "all": true,
         "scope": [
@@ -51,13 +56,19 @@
       "shortDescription": "ChatGPT",
       "targets": "all",
       "windows": {
-        "webviewInstallMode": {
-          "silent": true,
-          "type": "downloadBootstrapper"
-        },
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+        "webviewInstallMode": {
+          "silent": true,
+          "type": "embedBootstrapper"
+        },
+        "wix": {
+          "language": [
+            "zh-CN",
+            "en-US"
+          ]
+        }
       }
     },
     "security": {
