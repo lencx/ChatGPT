@@ -1,4 +1,5 @@
 use anyhow::Result;
+use log::info;
 use std::{
     fs::{self, File},
     path::{Path, PathBuf},
@@ -48,6 +49,7 @@ pub fn user_script() -> String {
 }
 
 pub fn open_file(path: PathBuf) {
+    info!("open_file: {}", path.to_string_lossy());
     #[cfg(target_os = "macos")]
     Command::new("open").arg("-R").arg(path).spawn().unwrap();
 
