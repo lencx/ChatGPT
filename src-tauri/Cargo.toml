@@ -20,6 +20,8 @@ serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.2.2", features = ["api-all", "devtools", "system-tray", "updater"] }
 tauri-plugin-positioner = { version = "1.0.4", features = ["system-tray"] }
 log = "0.4.17"
+csv = "1.1.6"
+thiserror = "1.0.38"
 
 [dependencies.tauri-plugin-log]
 git = "https://github.com/tauri-apps/tauri-plugin-log"

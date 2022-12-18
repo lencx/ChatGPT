@@ -12,6 +12,11 @@
   "tauri": {
     "allowlist": {
       "all": true,
+      "http": {
+        "scope": [
+          "https://raw.githubusercontent.com/*"
+        ]
+      },
       "fs": {
         "all": true,
         "scope": [

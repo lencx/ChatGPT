@@ -7,7 +7,7 @@ mod app;
 mod conf;
 mod utils;
 
-use app::{cmd, menu, setup};
+use app::{cmd, fs_extra, menu, setup};
 use conf::{ChatConfJson, ChatState};
 use tauri::api::path;
 use tauri_plugin_log::{fern::colors::ColoredLevelConfig, LogTarget, LoggerBuilder};
@@ -22,6 +22,7 @@ fn main() {
         // https://github.com/tauri-apps/tauri/pull/2736
         .plugin(
             LoggerBuilder::new()
+                // .level(log::LevelFilter::Error)
                 .with_colors(colors)
                 .targets([
                     // LogTarget::LogDir,
@@ -44,6 +45,8 @@ fn main() {
             cmd::form_msg,
             cmd::open_file,
             cmd::get_chat_model,
+            cmd::parse_prompt,
+            fs_extra::metadata,
         ])
         .setup(setup::init)
         .plugin(tauri_plugin_positioner::init())

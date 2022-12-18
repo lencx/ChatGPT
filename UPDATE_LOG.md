@@ -1,5 +1,9 @@
 # UPDATE LOG
 
+## v0.5.0
+
+feat: `Control Center` added `chatgpt-prompts` synchronization
+
 ## v0.4.2
 
 add chatgpt log (path: `~/.chatgpt/chatgpt.log`)
