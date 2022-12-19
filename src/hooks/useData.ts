@@ -7,14 +7,18 @@ export default function useData(oData: any[]) {
   const [opData, setData] = useState<any[]>([]);
 
   useEffect(() => {
-    const nData = oData.map(i => ({ [safeKey]: v4(), ...i }));
-    setData(nData);
-  }, [oData])
+    opInit(oData);
+  }, [])
 
   const opAdd = (val: any) => {
     const v = [val, ...opData];
     setData(v);
     return v;
+  };
+
+  const opInit = (val: any[] = []) => {
+    const nData = val.map(i => ({ [safeKey]: v4(), ...i }));
+    setData(nData);
   };
 
   const opRemove = (id: string) => {
@@ -31,5 +35,5 @@ export default function useData(oData: any[]) {
     return nData;
   };
 
-  return { opSafeKey: safeKey, opReplace, opAdd, opRemove, opData };
+  return { opSafeKey: safeKey, opInit, opReplace, opAdd, opRemove, opData };
 }

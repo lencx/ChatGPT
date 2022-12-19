@@ -19,6 +19,8 @@
 }
 
 .ant-menu {
+  user-select: none;
+  -webkit-user-select: none;
   .ant-menu-item {
     background-color: #f8f8f8;
   }

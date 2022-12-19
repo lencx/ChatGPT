@@ -10,19 +10,32 @@ mod utils;
 use app::{cmd, fs_extra, menu, setup};
 use conf::{ChatConfJson, ChatState};
 use tauri::api::path;
-use tauri_plugin_log::{fern::colors::ColoredLevelConfig, LogTarget, LoggerBuilder};
+use tauri_plugin_log::{
+    fern::colors::{Color, ColoredLevelConfig},
+    LogTarget, LoggerBuilder,
+};
 
 fn main() {
     ChatConfJson::init();
     let chat_conf = ChatConfJson::get_chat_conf();
     let context = tauri::generate_context!();
-    let colors = ColoredLevelConfig::default();
+    let colors = ColoredLevelConfig {
+        error: Color::Red,
+        warn: Color::Yellow,
+        debug: Color::Blue,
+        info: Color::BrightGreen,
+        trace: Color::Cyan,
+    };
 
     tauri::Builder::default()
         // https://github.com/tauri-apps/tauri/pull/2736
         .plugin(
             LoggerBuilder::new()
-                // .level(log::LevelFilter::Error)
+                .level(if cfg!(debug_assertions) {
+                    log::LevelFilter::Debug
+                } else {
+                    log::LevelFilter::Trace
+                })
                 .with_colors(colors)
                 .targets([
                     // LogTarget::LogDir,

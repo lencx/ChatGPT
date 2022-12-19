@@ -1,4 +1,4 @@
-import { Tag } from 'antd';
+import { Switch, Tag, Tooltip } from 'antd';
 
 export const genCmd = (act: string) => act.replace(/\s+|\/+/g, '_').replace(/[^\d\w]/g, '').toLocaleLowerCase();
 
@@ -26,20 +26,22 @@ export const modelColumns = () => [
     // width: 150,
     render: () => <Tag>chatgpt-prompts</Tag>,
   },
-  // {
-  //   title: 'Enable',
-  //   dataIndex: 'enable',
-  //   key: 'enable',
-  //   width: 80,
-  //   render: (v: boolean = false) => <Switch checked={v} disabled />,
-  // },
+  {
+    title: 'Enable',
+    dataIndex: 'enable',
+    key: 'enable',
+    // width: 80,
+    render: (v: boolean = false, row: Record<string, any>, action: Record<string, any>) => (
+      <Switch checked={v} onChange={(v) => action.setRecord({ ...row, enable: v }, 'enable')} />
+    ),
+  },
   {
     title: 'Prompt',
     dataIndex: 'prompt',
     key: 'prompt',
     // width: 300,
-    // render: (v: string) => (
-    //   <Tooltip overlayInnerStyle={{ width: 350 }} title={v}><span className="chat-prompts-val">{v}</span></Tooltip>
-    // ),
+    render: (v: string) => (
+      <Tooltip overlayInnerStyle={{ width: 350 }} title={v}><span className="chat-prompts-val">{v}</span></Tooltip>
+    ),
   },
 ];

@@ -34,7 +34,13 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
         }}
       >
         <div className="chat-logo"><img src="/logo.png" /></div>
-        <Menu defaultSelectedKeys={[location.pathname]} mode="vertical" items={menuItems} onClick={(i) => go(i.key)} />
+        <Menu
+          defaultSelectedKeys={[location.pathname]}
+          mode="inline"
+          inlineIndent={12}
+          items={menuItems}
+          onClick={(i) => go(i.key)}
+        />
       </Sider>
       <Layout className="chat-layout" style={{ marginLeft: collapsed ? 80 : 200, transition: 'margin-left 300ms ease-out' }}>
         <Content

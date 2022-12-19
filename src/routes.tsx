@@ -3,20 +3,27 @@ import {
   DesktopOutlined,
   BulbOutlined,
   SyncOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
-import type { RouteObject } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 
 import General from '@view/General';
 import LanguageModel from '@/view/LanguageModel';
 import SyncPrompts from '@/view/SyncPrompts';
 
-export type ChatRouteObject = {
+export type ChatRouteMetaObject = {
   label: string;
   icon?: React.ReactNode,
 };
 
-export const routes: Array<RouteObject & { meta: ChatRouteObject }> = [
+type ChatRouteObject = {
+  path: string;
+  element?: JSX.Element;
+  meta: ChatRouteMetaObject;
+  children?: ChatRouteObject[];
+}
+
+export const routes: Array<ChatRouteObject> = [
   {
     path: '/',
     element: <General />,
@@ -27,19 +34,28 @@ export const routes: Array<RouteObject & { meta: ChatRouteObject }> = [
   },
   {
     path: '/language-model',
-    element: <LanguageModel />,
     meta: {
       label: 'Language Model',
       icon: <BulbOutlined />,
     },
-  },
-  {
-    path: '/sync-prompts',
-    element: <SyncPrompts />,
-    meta: {
-      label: 'Sync Prompts',
-      icon: <SyncOutlined />,
-    },
+    children: [
+      {
+        path: 'user-custom',
+        element: <LanguageModel />,
+        meta: {
+          label: 'User Custom',
+          icon: <UserOutlined />,
+        },
+      },
+      {
+        path: 'sync-prompts',
+        element: <SyncPrompts />,
+        meta: {
+          label: 'Sync Prompts',
+          icon: <SyncOutlined />,
+        },
+      },
+    ]
   },
 ];
 
@@ -47,6 +63,8 @@ type MenuItem = Required<MenuProps>['items'][number];
 export const menuItems: MenuItem[] = routes.map(i => ({
   ...i.meta,
   key: i.path || '',
+  children: i?.children?.map((j) =>
+    ({ ...j.meta, key: `${i.path}/${j.path}` || ''})),
 }));
 
 export default () => {

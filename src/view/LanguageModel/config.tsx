@@ -1,4 +1,4 @@
-import { Tag, Switch, Tooltip, Space } from 'antd';
+import { Tag, Switch, Tooltip, Space, Popconfirm } from 'antd';
 
 export const modelColumns = () => [
   {
@@ -29,7 +29,9 @@ export const modelColumns = () => [
     dataIndex: 'enable',
     key: 'enable',
     width: 80,
-    render: (v: boolean = false) => <Switch checked={v} disabled />,
+    render: (v: boolean = false, row: Record<string, any>, action: Record<string, any>) => (
+      <Switch checked={v} onChange={(v) => action.setRecord({ ...row, enable: v }, 'enable')} />
+    ),
   },
   {
     title: 'Prompt',
@@ -48,7 +50,14 @@ export const modelColumns = () => [
     render: (_: any, row: any, actions: any) => (
       <Space size="middle">
         <a onClick={() => actions.setRecord(row, 'edit')}>Edit</a>
-        <a onClick={() => actions.setRecord(row, 'delete')}>Delete</a>
+        <Popconfirm
+          title="Are you sure to delete this model?"
+          onConfirm={() => actions.setRecord(row, 'delete')}
+          okText="Yes"
+          cancelText="No"
+        >
+          <a>Delete</a>
+        </Popconfirm>
       </Space>
     ),
   }

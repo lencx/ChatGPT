@@ -3,9 +3,9 @@ import { Table, Button, Modal, message } from 'antd';
 import { invoke } from '@tauri-apps/api';
 
 import useInit from '@/hooks/useInit';
+import useData from '@/hooks/useData';
 import useChatModel from '@/hooks/useChatModel';
 import useColumns from '@/hooks/useColumns';
-import useData from '@/hooks/useData';
 import { chatModelPath } from '@/utils';
 import { modelColumns } from './config';
 import LanguageModelForm from './Form';
@@ -15,9 +15,14 @@ export default function LanguageModel() {
   const [isVisible, setVisible] = useState(false);
   const [modelPath, setChatModelPath] = useState('');
   const { modelData, modelSet } = useChatModel('user_custom');
-  const { opData, opAdd, opRemove, opReplace, opSafeKey } = useData(modelData);
+  const { opData, opInit, opAdd, opRemove, opReplace, opSafeKey } = useData([]);
   const { columns, ...opInfo } = useColumns(modelColumns());
   const formRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (modelData.length <= 0) return;
+    opInit(modelData);
+  }, [modelData])
 
   useEffect(() => {
     if (!opInfo.opType) return;
@@ -30,6 +35,13 @@ export default function LanguageModel() {
       opInfo.resetRecord();
     }
   }, [opInfo.opType, formRef]);
+
+  useEffect(() => {
+    if (opInfo.opType === 'enable') {
+      const data = opReplace(opInfo?.opRecord?.[opSafeKey], opInfo?.opRecord);
+      modelSet(data);
+    }
+  }, [opInfo.opTime])
 
   useInit(async () => {
     const path = await chatModelPath();
