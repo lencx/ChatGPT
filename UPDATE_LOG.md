@@ -1,5 +1,9 @@
 # UPDATE LOG
 
+## v0.5.1
+
+some optimization
+
 ## v0.5.0
 
 feat: `Control Center` added `chatgpt-prompts` synchronization
