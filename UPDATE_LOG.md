@@ -1,5 +1,10 @@
 # UPDATE LOG
 
+## v0.5.2
+
+feat:
+- optimize the generated pdf file size
+
 ## v0.5.1
 
 some optimization

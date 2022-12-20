@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { Table, Button, message } from 'antd';
 import { invoke } from '@tauri-apps/api';
 import { fetch, ResponseType } from '@tauri-apps/api/http';
-import { writeTextFile, readTextFile } from '@tauri-apps/api/fs';
+import { writeTextFile } from '@tauri-apps/api/fs';
 
-import useInit from '@/hooks/useInit';
 import useColumns from '@/hooks/useColumns';
 import useData from '@/hooks/useData';
 import useChatModel from '@/hooks/useChatModel';
@@ -21,21 +20,13 @@ export default function LanguageModel() {
   const { opData, opInit, opReplace, opSafeKey } = useData([]);
   const { columns, ...opInfo } = useColumns(modelColumns());
 
-  // useInit(async () => {
-  //   // const filename = await chatPromptsPath();
-  //   // const data = await readTextFile(filename);
-  //   // const list: Record<string, string>[] = await invoke('parse_prompt', { data });
-  //   // const fileData: Record<string, any> = await invoke('metadata', { path: filename });
-  //   // setLastUpdated(fileData.accessedAtMs);
-  //   // opInit(list);
-  //   console.log('«31» /view/SyncPrompts/index.tsx ~> ', modelJson);
-
-  //   opInit([]);
-  // })
-
   useEffect(() => {
     if (!modelJson?.sys_sync_prompts) return;
-    opInit(modelJson?.sys_sync_prompts)
+    opInit(modelJson?.sys_sync_prompts);
+    (async () => {
+      const fileData: Record<string, any> = await invoke('metadata', { path: await chatPromptsPath() });
+      setLastUpdated(fileData.accessedAtMs);
+    })();
   }, [modelJson?.sys_sync_prompts])
 
   const handleSync = async () => {
