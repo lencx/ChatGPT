@@ -13,8 +13,10 @@
     "allowlist": {
       "all": true,
       "http": {
+        "all": true,
         "scope": [
-          "https://raw.githubusercontent.com/*"
+          "https://**",
+          "http://**"
         ]
       },
       "fs": {

@@ -6,6 +6,7 @@ import useInit from '@/hooks/useInit';
 import useData from '@/hooks/useData';
 import useChatModel from '@/hooks/useChatModel';
 import useColumns from '@/hooks/useColumns';
+import { TABLE_PAGINATION } from '@/hooks/useTable';
 import { chatModelPath } from '@/utils';
 import { modelColumns } from './config';
 import LanguageModelForm from './Form';
@@ -87,14 +88,7 @@ export default function LanguageModel() {
         columns={columns}
         scroll={{ x: 'auto' }}
         dataSource={opData}
-        pagination={{
-          hideOnSinglePage: true,
-          showSizeChanger: true,
-          showQuickJumper: true,
-          defaultPageSize: 5,
-          pageSizeOptions: [5, 10, 15, 20],
-          showTotal: (total) => <span>Total {total} items</span>,
-        }}
+        pagination={TABLE_PAGINATION}
       />
       <Modal
         open={isVisible}

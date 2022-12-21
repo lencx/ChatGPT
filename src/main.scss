@@ -18,3 +18,8 @@ html, body {
   padding: 0;
   margin: 0;
 }
+
+.ant-table-selection-column {
+  width: 50px !important;
+  min-width: 50px !important;
+}

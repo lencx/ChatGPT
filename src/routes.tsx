@@ -3,6 +3,7 @@ import {
   DesktopOutlined,
   BulbOutlined,
   SyncOutlined,
+  FileSyncOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -10,6 +11,7 @@ import type { MenuProps } from 'antd';
 import General from '@view/General';
 import LanguageModel from '@/view/LanguageModel';
 import SyncPrompts from '@/view/SyncPrompts';
+import SyncMore from '@/view/SyncMore';
 
 export type ChatRouteMetaObject = {
   label: string;
@@ -53,6 +55,14 @@ export const routes: Array<ChatRouteObject> = [
         meta: {
           label: 'Sync Prompts',
           icon: <SyncOutlined />,
+        },
+      },
+      {
+        path: 'sync-more',
+        element: <SyncMore />,
+        meta: {
+          label: 'Sync More',
+          icon: <FileSyncOutlined />,
         },
       },
     ]
