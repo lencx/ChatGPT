@@ -15,7 +15,6 @@ const setTag = (data: Record<string, any>[]) => data.map((i) => ({ ...i, tags: [
 
 export default function SyncMore() {
   const [isVisible, setVisible] = useState(false);
-  // const [modelPath, setChatModelPath] = useState('');
   const { modelData, modelSet } = useChatModel('sync_url', CHAT_MODEL_SYNC_JSON);
   const { opData, opInit, opAdd, opRemove, opReplace, opSafeKey } = useData([]);
   const { columns, ...opInfo } = useColumns(pathColumns());
