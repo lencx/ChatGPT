@@ -86,12 +86,8 @@ async function cmdTip() {
       return;
     }
 
-    if (event.keyCode === 32) {
+    if (event.keyCode === 13 && window.__CHAT_MODEL_CMD__) {
       searchInput.value = window.__CHAT_MODEL_CMD__;
-      modelDom.innerHTML = '';
-      delete window.__CHAT_MODEL_CMD__;
-    }
-    if (event.keyCode === 13) {
       modelDom.innerHTML = '';
       delete window.__CHAT_MODEL_CMD__;
     }
