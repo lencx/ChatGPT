@@ -39,6 +39,7 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
           mode="inline"
           inlineIndent={12}
           items={menuItems}
+          defaultOpenKeys={['/model']}
           onClick={(i) => go(i.key)}
         />
       </Sider>

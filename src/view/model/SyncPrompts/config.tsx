@@ -1,6 +1,6 @@
 import { Switch, Tag, Tooltip } from 'antd';
 
-export const genCmd = (act: string) => act.replace(/\s+|\/+/g, '_').replace(/[^\d\w]/g, '').toLocaleLowerCase();
+import { genCmd } from '@/utils';
 
 export const modelColumns = () => [
   {

@@ -15,7 +15,8 @@ use tauri_plugin_log::{
     LogTarget, LoggerBuilder,
 };
 
-fn main() {
+#[tokio::main]
+async fn main() {
     ChatConfJson::init();
     let chat_conf = ChatConfJson::get_chat_conf();
     let context = tauri::generate_context!();
@@ -59,6 +60,7 @@ fn main() {
             cmd::open_file,
             cmd::get_chat_model,
             cmd::parse_prompt,
+            cmd::window_reload,
             fs_extra::metadata,
         ])
         .setup(setup::init)

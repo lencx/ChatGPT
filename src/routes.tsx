@@ -9,9 +9,9 @@ import {
 import type { MenuProps } from 'antd';
 
 import General from '@view/General';
-import LanguageModel from '@/view/LanguageModel';
-import SyncPrompts from '@/view/SyncPrompts';
-import SyncMore from '@/view/SyncMore';
+import UserCustom from '@/view/model/UserCustom';
+import SyncPrompts from '@/view/model/SyncPrompts';
+import SyncMore from '@/view/model/SyncMore';
 
 export type ChatRouteMetaObject = {
   label: string;
@@ -35,7 +35,7 @@ export const routes: Array<ChatRouteObject> = [
     },
   },
   {
-    path: '/language-model',
+    path: '/model',
     meta: {
       label: 'Language Model',
       icon: <BulbOutlined />,
@@ -43,7 +43,7 @@ export const routes: Array<ChatRouteObject> = [
     children: [
       {
         path: 'user-custom',
-        element: <LanguageModel />,
+        element: <UserCustom />,
         meta: {
           label: 'User Custom',
           icon: <UserOutlined />,

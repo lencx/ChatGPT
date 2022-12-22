@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Table, Button, message } from 'antd';
+import { Table, Button, message, Popconfirm } from 'antd';
 import { invoke } from '@tauri-apps/api';
 import { fetch, ResponseType } from '@tauri-apps/api/http';
 import { writeTextFile } from '@tauri-apps/api/fs';
@@ -8,15 +8,14 @@ import useColumns from '@/hooks/useColumns';
 import useData from '@/hooks/useData';
 import useChatModel from '@/hooks/useChatModel';
 import useTable, { TABLE_PAGINATION } from '@/hooks/useTable';
-import { fmtDate, chatPromptsPath, GITHUB_PROMPTS_CSV_URL } from '@/utils';
-import { modelColumns, genCmd } from './config';
+import { fmtDate, chatPromptsPath, GITHUB_PROMPTS_CSV_URL, genCmd } from '@/utils';
+import { modelColumns } from './config';
 import './index.scss';
 
 const promptsURL = 'https://github.com/f/awesome-chatgpt-prompts/blob/main/prompts.csv';
 
 export default function LanguageModel() {
   const { rowSelection, selectedRowIDs } = useTable();
-  const [loading, setLoading] = useState(false);
   const [lastUpdated, setLastUpdated] = useState();
   const { modelJson, modelSet } = useChatModel('sys_sync_prompts');
   const { opData, opInit, opReplace, opReplaceItems, opSafeKey } = useData([]);
@@ -35,7 +34,6 @@ export default function LanguageModel() {
   }, [modelJson?.sys_sync_prompts])
 
   const handleSync = async () => {
-    setLoading(true);
     const res = await fetch(GITHUB_PROMPTS_CSV_URL, {
       method: 'GET',
       responseType: ResponseType.Text,
@@ -52,7 +50,6 @@ export default function LanguageModel() {
     } else {
       message.error('ChatGPT Prompts data sync failed, please try again!');
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -79,7 +76,15 @@ export default function LanguageModel() {
             </>
           )}
         </div>
-        <Button type="primary" loading={loading} onClick={handleSync}>Sync</Button>
+        <Popconfirm
+          title={<span>Data sync will enable all prompts,<br/>are you sure you want to sync?</span>}
+          placement="topLeft"
+          onConfirm={handleSync}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button type="primary">Sync</Button>
+        </Popconfirm>
       </div>
       <div className="chat-table-tip">
         <span className="chat-model-path">URL: <a href={promptsURL} target="_blank" title={promptsURL}>f/awesome-chatgpt-prompts/prompts.csv</a></span>

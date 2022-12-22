@@ -9,7 +9,7 @@ export default function SyncMore() {
       <Button className="add-btn" type="primary">Add URL</Button>
       <Table
         key="id"
-        rowKey="act"
+        rowKey="url"
         columns={[]}
         scroll={{ x: 'auto' }}
         dataSource={[]}

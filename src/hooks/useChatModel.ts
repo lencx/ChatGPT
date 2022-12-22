@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { clone } from 'lodash';
+import { invoke } from '@tauri-apps/api';
 
 import { CHAT_MODEL_JSON, readJSON, writeJSON } from '@/utils';
 import useInit from '@/hooks/useInit';
@@ -16,6 +17,7 @@ export default function useChatModel(key: string) {
     const oData = clone(modelJson);
     oData[key] = data;
     await writeJSON(CHAT_MODEL_JSON, oData);
+    await invoke('window_reload', { label: 'core' });
     setModelJson(oData);
   }
 

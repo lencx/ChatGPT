@@ -7,7 +7,7 @@ import useData from '@/hooks/useData';
 import useChatModel from '@/hooks/useChatModel';
 import useColumns from '@/hooks/useColumns';
 import { TABLE_PAGINATION } from '@/hooks/useTable';
-import { chatModelPath } from '@/utils';
+import { chatModelPath, genCmd } from '@/utils';
 import { modelColumns } from './config';
 import LanguageModelForm from './Form';
 import './index.scss';

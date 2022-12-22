@@ -88,3 +88,12 @@ pub fn parse_prompt(data: String) -> Vec<PromptRecord> {
     }
     list
 }
+
+#[command]
+pub fn window_reload(app: AppHandle, label: &str) {
+    app.app_handle()
+        .get_window(label)
+        .unwrap()
+        .eval("window.location.reload()")
+        .unwrap();
+}

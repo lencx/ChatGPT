@@ -49,3 +49,5 @@ export const writeJSON = async (path: string, data: Record<string, any>) => {
 }
 
 export const fmtDate = (date: any) => dayjs(date).format('YYYY-MM-DD HH:mm:ss');
+
+export const genCmd = (act: string) => act.replace(/\s+|\/+/g, '_').replace(/[^\d\w]/g, '').toLocaleLowerCase();
