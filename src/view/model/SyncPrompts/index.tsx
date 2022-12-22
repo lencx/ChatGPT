@@ -9,17 +9,17 @@ import useData from '@/hooks/useData';
 import useChatModel from '@/hooks/useChatModel';
 import useTable, { TABLE_PAGINATION } from '@/hooks/useTable';
 import { fmtDate, chatPromptsPath, GITHUB_PROMPTS_CSV_URL, genCmd } from '@/utils';
-import { modelColumns } from './config';
+import { syncColumns } from './config';
 import './index.scss';
 
 const promptsURL = 'https://github.com/f/awesome-chatgpt-prompts/blob/main/prompts.csv';
 
-export default function LanguageModel() {
+export default function SyncPrompts() {
   const { rowSelection, selectedRowIDs } = useTable();
   const [lastUpdated, setLastUpdated] = useState();
   const { modelJson, modelSet } = useChatModel('sys_sync_prompts');
   const { opData, opInit, opReplace, opReplaceItems, opSafeKey } = useData([]);
-  const { columns, ...opInfo } = useColumns(modelColumns());
+  const { columns, ...opInfo } = useColumns(syncColumns());
 
   const selectedItems = rowSelection.selectedRowKeys || [];
 

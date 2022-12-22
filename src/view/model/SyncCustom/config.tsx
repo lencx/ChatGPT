@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Tag, Space, Popconfirm } from 'antd';
+import { HistoryOutlined } from '@ant-design/icons';
 import { shell, path } from '@tauri-apps/api';
+import { Link } from 'react-router-dom';
 
 import useInit from '@/hooks/useInit';
 import { chatRoot, fmtDate } from '@/utils';
 
-export const pathColumns = () => [
+export const syncColumns = () => [
   {
     title: 'Name',
     dataIndex: 'name',
@@ -31,16 +33,22 @@ export const pathColumns = () => [
     dataIndex: 'last_updated',
     key: 'last_updated',
     width: 140,
-    render: fmtDate,
+    render: (v: number) => (
+      <div style={{ textAlign: 'center' }}>
+        <HistoryOutlined style={{ marginRight: 5, color: v ? '#52c41a' : '#ff4d4f' }} />
+        { v ? fmtDate(v) : ''}
+      </div>
+    ),
   },
   {
     title: 'Action',
     fixed: 'right',
-    width: 140,
+    width: 150,
     render: (_: any, row: any, actions: any) => {
       return (
         <Space>
           <a onClick={() => actions.setRecord(row, 'sync')}>Sync</a>
+          {row.last_updated && <Link to={`${row.id}`} state={row}>View</Link>}
           <a onClick={() => actions.setRecord(row, 'edit')}>Edit</a>
           <Popconfirm
             title="Are you sure to delete this path?"

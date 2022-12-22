@@ -11,7 +11,8 @@ import type { MenuProps } from 'antd';
 import General from '@view/General';
 import UserCustom from '@/view/model/UserCustom';
 import SyncPrompts from '@/view/model/SyncPrompts';
-import SyncMore from '@/view/model/SyncMore';
+import SyncCustom from '@/view/model/SyncCustom';
+import SyncRecord from '@/view/model/SyncRecord';
 
 export type ChatRouteMetaObject = {
   label: string;
@@ -21,7 +22,8 @@ export type ChatRouteMetaObject = {
 type ChatRouteObject = {
   path: string;
   element?: JSX.Element;
-  meta: ChatRouteMetaObject;
+  hideMenu?: boolean;
+  meta?: ChatRouteMetaObject;
   children?: ChatRouteObject[];
 }
 
@@ -58,24 +60,32 @@ export const routes: Array<ChatRouteObject> = [
         },
       },
       {
-        path: 'sync-more',
-        element: <SyncMore />,
+        path: 'sync-custom',
+        element: <SyncCustom />,
         meta: {
-          label: 'Sync More',
+          label: 'Sync Custom',
           icon: <FileSyncOutlined />,
         },
+      },
+      {
+        path: 'sync-custom/:id',
+        element: <SyncRecord />,
+        hideMenu: true,
       },
     ]
   },
 ];
 
 type MenuItem = Required<MenuProps>['items'][number];
-export const menuItems: MenuItem[] = routes.map(i => ({
-  ...i.meta,
-  key: i.path || '',
-  children: i?.children?.map((j) =>
-    ({ ...j.meta, key: `${i.path}/${j.path}` || ''})),
-}));
+export const menuItems: MenuItem[] = routes
+  .filter((j) => !j.hideMenu)
+  .map(i => ({
+    ...i.meta,
+    key: i.path || '',
+    children: i?.children
+      ?.filter((j) => !j.hideMenu)
+      ?.map((j) => ({ ...j.meta, key: `${i.path}/${j.path}` || ''})),
+  }));
 
 export default () => {
   return useRoutes(routes);

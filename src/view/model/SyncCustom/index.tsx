@@ -7,17 +7,17 @@ import useChatModel from '@/hooks/useChatModel';
 import useColumns from '@/hooks/useColumns';
 import { TABLE_PAGINATION } from '@/hooks/useTable';
 import { CHAT_MODEL_SYNC_JSON, chatRoot, writeJSON, readJSON, genCmd } from '@/utils';
-import { pathColumns, getPath } from './config';
+import { syncColumns, getPath } from './config';
 import SyncForm from './Form';
 import './index.scss';
 
 const setTag = (data: Record<string, any>[]) => data.map((i) => ({ ...i, tags: ['user-sync'], enable: true }))
 
-export default function SyncMore() {
+export default function SyncCustom() {
   const [isVisible, setVisible] = useState(false);
   const { modelData, modelSet } = useChatModel('sync_url', CHAT_MODEL_SYNC_JSON);
   const { opData, opInit, opAdd, opRemove, opReplace, opSafeKey } = useData([]);
-  const { columns, ...opInfo } = useColumns(pathColumns());
+  const { columns, ...opInfo } = useColumns(syncColumns());
   const formRef = useRef<any>(null);
 
   const hide = () => {
@@ -36,8 +36,6 @@ export default function SyncMore() {
       const filename = `${opInfo?.opRecord?.id}.json`;
       handleSync(filename).then(() => {
         const data = opReplace(opInfo?.opRecord?.[opSafeKey], { ...opInfo?.opRecord, last_updated: Date.now() });
-        console.log('«38» /model/SyncMore/index.tsx ~> ', data);
-
         modelSet(data);
         opInfo.resetRecord();
       });
@@ -103,10 +101,7 @@ export default function SyncMore() {
           case 'edit': data = opReplace(opInfo?.opRecord?.[opSafeKey], vals); break;
           default: break;
         }
-        console.log('«95» /model/SyncMore/index.tsx ~> ', data);
-
         modelSet(data);
-        opInfo.setExtra(Date.now());
         hide();
       })
   };
