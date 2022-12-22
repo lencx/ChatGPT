@@ -7,9 +7,9 @@ import useData from '@/hooks/useData';
 import useChatModel from '@/hooks/useChatModel';
 import useColumns from '@/hooks/useColumns';
 import { TABLE_PAGINATION } from '@/hooks/useTable';
-import { chatModelPath, genCmd } from '@/utils';
+import { chatModelPath } from '@/utils';
 import { modelColumns } from './config';
-import LanguageModelForm from './Form';
+import UserCustomForm from './Form';
 import './index.scss';
 
 export default function LanguageModel() {
@@ -23,7 +23,7 @@ export default function LanguageModel() {
   useEffect(() => {
     if (modelData.length <= 0) return;
     opInit(modelData);
-  }, [modelData])
+  }, [modelData]);
 
   useEffect(() => {
     if (!opInfo.opType) return;
@@ -67,7 +67,8 @@ export default function LanguageModel() {
           case 'edit': data = opReplace(opInfo?.opRecord?.[opSafeKey], vals); break;
           default: break;
         }
-        modelSet(data)
+        modelSet(data);
+        opInfo.setExtra(Date.now());
         hide();
       })
   };
@@ -76,14 +77,14 @@ export default function LanguageModel() {
     invoke('open_file', { path: modelPath });
   };
 
-  const modalTitle = `${({ new: 'Create', edit: 'Edit' })[opInfo.opType]} Language Model`;
+  const modalTitle = `${({ new: 'Create', edit: 'Edit' })[opInfo.opType]} Model`;
 
   return (
     <div>
       <Button className="add-btn" type="primary" onClick={opInfo.opNew}>Add Model</Button>
       <div className="chat-model-path">PATH: <span onClick={handleOpenFile}>{modelPath}</span></div>
       <Table
-        key={opInfo.opTime}
+        key={opInfo.opExtra}
         rowKey="cmd"
         columns={columns}
         scroll={{ x: 'auto' }}
@@ -98,7 +99,7 @@ export default function LanguageModel() {
         destroyOnClose
         maskClosable={false}
       >
-        <LanguageModelForm record={opInfo?.opRecord} ref={formRef} />
+        <UserCustomForm record={opInfo?.opRecord} ref={formRef} />
       </Modal>
     </div>
   )

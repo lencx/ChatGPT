@@ -74,6 +74,7 @@ pub fn get_chat_model() -> serde_json::Value {
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct PromptRecord {
+    pub cmd: Option<String>,
     pub act: String,
     pub prompt: String,
 }

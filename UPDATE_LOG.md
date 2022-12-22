@@ -2,8 +2,13 @@
 
 ## v0.5.2
 
+fix:
+- windows show Chinese when upgrading
+
 feat:
 - optimize the generated pdf file size
+- menu added `Sync Prompts`
+- the slash command is triggered by the enter key
 
 ## v0.5.1
 

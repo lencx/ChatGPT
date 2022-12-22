@@ -44,7 +44,7 @@ export default function LanguageModel() {
       await writeTextFile(await chatPromptsPath(), data);
       const list: Record<string, string>[] = await invoke('parse_prompt', { data });
       opInit(list);
-      modelSet(list.map(i => ({ cmd: genCmd(i.act), enable: true, tags: ['chatgpt-prompts'], ...i })));
+      modelSet(list.map(i => ({ ...i, cmd: i.cmd ? i.cmd : genCmd(i.act), enable: true, tags: ['chatgpt-prompts'] })));
       setLastUpdated(fmtDate(Date.now()) as any);
       message.success('ChatGPT Prompts data has been synchronized!');
     } else {
@@ -88,7 +88,7 @@ export default function LanguageModel() {
       </div>
       <div className="chat-table-tip">
         <span className="chat-model-path">URL: <a href={promptsURL} target="_blank" title={promptsURL}>f/awesome-chatgpt-prompts/prompts.csv</a></span>
-        {lastUpdated && <span style={{ marginLeft: 10, color: '#999' }}>Last updated on {fmtDate(lastUpdated)}</span>}
+        {lastUpdated && <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>Last updated on {fmtDate(lastUpdated)}</span>}
       </div>
       <Table
         key={lastUpdated}

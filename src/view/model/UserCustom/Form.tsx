@@ -5,7 +5,7 @@ import type { FormProps } from 'antd';
 import Tags from '@comps/Tags';
 import { DISABLE_AUTO_COMPLETE } from '@/utils';
 
-interface LanguageModelProps {
+interface UserCustomFormProps {
   record?: Record<string|symbol, any> | null;
 }
 
@@ -16,7 +16,7 @@ const initFormValue = {
   prompt: '',
 };
 
-const LanguageModel: ForwardRefRenderFunction<FormProps, LanguageModelProps> = ({ record }, ref) => {
+const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> = ({ record }, ref) => {
   const [form] = Form.useForm();
   useImperativeHandle(ref, () => ({ form }));
 
@@ -63,4 +63,4 @@ const LanguageModel: ForwardRefRenderFunction<FormProps, LanguageModelProps> = (
   )
 }
 
-export default forwardRef(LanguageModel);
+export default forwardRef(UserCustomForm);
