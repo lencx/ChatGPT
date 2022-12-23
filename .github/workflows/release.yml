@@ -19,7 +19,7 @@ jobs:
         shell: bash
         run: |
           echo "using version tag ${GITHUB_REF:10}"
-          echo ::set-output name=version::"${GITHUB_REF:10}"
+          echo ::save-state name=version::"${GITHUB_REF:10}"
 
       - name: Create Release
         id: create_release
@@ -63,7 +63,7 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+        run: echo "::save-state name=dir::$(yarn config get cacheFolder)"
 
       - name: Yarn cache
         uses: actions/cache@v2
