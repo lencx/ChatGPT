@@ -85,37 +85,66 @@ async function cmdTip() {
     }
 
     // feat: https://github.com/lencx/ChatGPT/issues/54
-    if (event.keyCode === 9) {
+    if (event.keyCode === 9 && !window.__CHAT_MODEL_STATUS__) {
       const strGroup = window.__CHAT_MODEL_CMD_PROMPT__.match(/\{([^{}]*)\}/) || [];
 
       if (strGroup[1]) {
-        searchInput.value = `/${window.__CHAT_MODEL_CMD__}` + `{${strGroup[1]}}` + ' |-> ';
-        window.__CHAT_MODEL_VAR__ = true;
+        searchInput.value = `/${window.__CHAT_MODEL_CMD__}` + ` {${strGroup[1]}}` + ' |-> ';
+        window.__CHAT_MODEL_STATUS__ = 1;
       }
       event.preventDefault();
     }
 
-    if (window.__CHAT_MODEL_VAR__ && event.keyCode === 9) {
+    if (window.__CHAT_MODEL_STATUS__ === 1 && event.keyCode === 9) {
       const data = searchInput.value.split('|->');
-      if (data[1]) {
+      if (data[1]?.trim()) {
         window.__CHAT_MODEL_CMD_PROMPT__ = window.__CHAT_MODEL_CMD_PROMPT__?.replace(/\{([^{}]*)\}/, `{${data[1]?.trim()}}`);
-        // searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
+        window.__CHAT_MODEL_STATUS__ = 2;
       }
-      // event.preventDefault();
+      event.preventDefault();
+    }
+
+    // input text
+    if (window.__CHAT_MODEL_STATUS__ === 2 && event.keyCode === 9) {
+      console.log('«110» /src/assets/cmd.js ~> ', __CHAT_MODEL_STATUS__);
+
+      searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
+      modelDom.innerHTML = '';
+      delete window.__CHAT_MODEL_STATUS__;
+      event.preventDefault();
+    }
+
+    // type in a space to complete the fill
+    if (event.keyCode === 32) {
+      searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
+      modelDom.innerHTML = '';
+      delete window.__CHAT_MODEL_CMD_PROMPT__;
     }
 
     // send
     if (event.keyCode === 13 && window.__CHAT_MODEL_CMD_PROMPT__) {
+      const data = searchInput.value.split('|->');
+      if (data[1]?.trim()) {
+        window.__CHAT_MODEL_CMD_PROMPT__ = window.__CHAT_MODEL_CMD_PROMPT__?.replace(/\{([^{}]*)\}/, `{${data[1]?.trim()}}`);
+      }
+
       searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
       modelDom.innerHTML = '';
       delete window.__CHAT_MODEL_CMD_PROMPT__;
       delete window.__CHAT_MODEL_CMD__;
-      delete window.__CHAT_MODEL_VAR__;
+      delete window.__CHAT_MODEL_STATUS__;
+      event.preventDefault();
     }
   });
 
   searchInput.addEventListener('input', (event) => {
-    if (window.__CHAT_MODEL_VAR__) return;
+    if (searchInput.value === '') {
+      delete window.__CHAT_MODEL_CMD_PROMPT__;
+      delete window.__CHAT_MODEL_CMD__;
+      delete window.__CHAT_MODEL_STATUS__;
+    }
+
+    if (window.__CHAT_MODEL_STATUS__) return;
 
     const query = searchInput.value;
     if (!query || !/^\//.test(query)) {
@@ -140,6 +169,7 @@ async function cmdTip() {
       modelDom.innerHTML = '';
       delete window.__CHAT_MODEL_CMD_PROMPT__;
       delete window.__CHAT_MODEL_CMD__;
+      delete window.__CHAT_MODEL_STATUS__;
     }
   }, {
     capture: false,

@@ -11,6 +11,7 @@
 [![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
 [![chat](https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord)](https://discord.gg/aPhCRf4zZr)
 [![lencx](https://img.shields.io/twitter/follow/lencx_.svg?style=social)](https://twitter.com/lencx_)
+
 <!-- [![中文版 badge](https://img.shields.io/badge/%E4%B8%AD%E6%96%87-Traditional%20Chinese-blue)](./README-ZH.md) -->
 
 [Awesome ChatGPT](./AWESOME.md)
@@ -35,18 +36,18 @@
 
 Easily install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
 
-~~~ sh
+```sh
 brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
 brew install --cask chatgpt --no-quarantine
-~~~
+```
 
 Also, if you keep a _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_, you can add something like this:
 
-~~~ rb
+```rb
 repo = "lencx/chatgpt"
 tap repo, "https://github.com/#{repo}.git"
 cask "popcorn-time", args: { "no-quarantine": true }
-~~~
+```
 
 ## 📢 Announcement
 
@@ -63,7 +64,7 @@ After the data import is done, you can restart the app to make the configuration
 
 The project maintains a list of common commands, or you can copy [chat.model.json](https://github.com/lencx/ChatGPT/blob/main/chat.model.json) directly to your local directory `~/.chatgpt/chat.model.json`
 
-In the chatgpt text input area, type a character starting with `/` to bring up the command prompt, press the spacebar, and it will fill the input area with the text associated with the command by default (note: if it contains multiple command prompts, it will only select the first one as the fill, you can keep typing until the first prompted command is the one you want, then press the spacebar. Or use the mouse to click on one of the multiple commands). When the fill is complete, you simply press the Enter key.
+In the chatgpt text input area, type a character starting with `/` to bring up the command prompt, press the spacebar, and it will fill the input area with the text associated with the command by default (note: if it contains multiple command prompts, it will only select the first one as the fill, you can keep typing until the first prompted command is the one you want, then press the spacebar. Or use the mouse to click on one of the multiple commands). When the fill is complete, you simply press the Enter key. Under the slash command, use the tab key to modify the contents of the `{q}` tag (only single changes are supported [#54](https://github.com/lencx/ChatGPT/issues/54)).
 
 ![chatgpt](assets/chatgpt.gif)
 
@@ -75,7 +76,7 @@ In the chatgpt text input area, type a character starting with `/` to bring up t
 - Common shortcut keys
 - System tray hover window
 - Powerful menu items
-- Shortcut command typing chatgpt prompt
+- Support for slash commands and their configuration (can be configured manually or synchronized from a file)
 
 ### MenuItem
 
@@ -100,6 +101,57 @@ In the chatgpt text input area, type a character starting with `/` to bring up t
   - `Update Log`: ChatGPT changelog.
   - `Report Bug`: Report a bug or give feedback.
   - `Toggle Developer Tools`: Developer debugging tools.
+
+## Application Configuration
+
+| Platform | Path                      |
+| -------- | ------------------------- |
+| Linux    | `/home/lencx/.chatgpt`    |
+| macOS    | `/Users/lencx/.chatgpt`   |
+| Windows  | `C:\Users\lencx\.chatgpt` |
+
+- `[.chatgpt]` - application configuration root folder
+  - `chat.conf.json` - preferences configuration
+  - `chat.model.json` - prompts configuration，contains three parts:
+    - `user_custom` - Requires manual data entry (**Control Conter -> Language Model -> User Custom**)
+    - `sync_prompts` - Synchronizing data from [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) (**Control Conter -> Language Model -> Sync Prompts**)
+    - `sync_custom` - Synchronize custom json and csv file data, support local and remote (**Control Conter -> Language Model -> Sync Custom**)
+  - `chat.model.cmd.json` - filtered (whether to enable) and sorted slash commands
+  - `[cache_model]` - caching model data
+    - `chatgpt_prompts.json` - Cache `sync_prompts` data
+    - `user_custom.json` - Cache `user_custom` data
+    - `ae6cf32a6f8541b499d6bfe549dbfca3.json` - Randomly generated file names, cache `sync_custom` data
+    - `4f695d3cfbf8491e9b1f3fab6d85715c.json` - Randomly generated file names, cache `sync_custom` data
+    - `bd1b96f15a1644f7bd647cc53073ff8f.json` - Randomly generated file names, cache `sync_custom` data
+
+### Sync Custom
+
+Currently, only json and csv are supported for synchronizing custom files, and the following formats need to be met, otherwise the application will be abnormal：
+
+> JSON format:
+
+```json
+[
+  {
+    "cmd": "a",
+    "act": "aa",
+    "prompt": "aaa aaa aaa"
+  },
+  {
+    "cmd": "b",
+    "act": "bb",
+    "prompt": "bbb bbb bbb"
+  }
+]
+```
+
+> CSV format
+
+```csv
+"cmd","act","prompt"
+"a","aa","aaa aaa aaa"
+"b","bb","bbb bbb bbb"
+```
 
 ## TODO
 
