@@ -12,7 +12,6 @@ import { fmtDate, chatRoot } from '@/utils';
 import { getPath } from '@/view/model/SyncCustom/config';
 import { syncColumns } from './config';
 import useInit from '@/hooks/useInit';
-import './index.scss';
 
 export default function SyncRecord() {
   const location = useLocation();
@@ -21,7 +20,7 @@ export default function SyncRecord() {
   const state = location?.state;
 
   const { rowSelection, selectedRowIDs } = useTable();
-  const { modelJson, modelSet } = useCacheModel(jsonPath);
+  const { modelCacheJson, modelCacheSet } = useCacheModel(jsonPath);
   const { opData, opInit, opReplace, opReplaceItems, opSafeKey } = useData([]);
   const { columns, ...opInfo } = useColumns(syncColumns());
 
@@ -29,24 +28,24 @@ export default function SyncRecord() {
 
   useInit(async () => {
     setFilePath(await getPath(state));
-    setJsonPath(await path.join(await chatRoot(), 'cache_sync', `${state?.id}.json`));
+    setJsonPath(await path.join(await chatRoot(), 'cache_model', `${state?.id}.json`));
   })
 
   useEffect(() => {
-    if (modelJson.length <= 0) return;
-    opInit(modelJson);
-  }, [modelJson.length]);
+    if (modelCacheJson.length <= 0) return;
+    opInit(modelCacheJson);
+  }, [modelCacheJson.length]);
 
   useEffect(() => {
     if (opInfo.opType === 'enable') {
       const data = opReplace(opInfo?.opRecord?.[opSafeKey], opInfo?.opRecord);
-      modelSet(data);
+      modelCacheSet(data);
     }
   }, [opInfo.opTime]);
 
   const handleEnable = (isEnable: boolean) => {
     const data = opReplaceItems(selectedRowIDs, { enable: isEnable })
-    modelSet(data);
+    modelCacheSet(data);
   };
 
   return (

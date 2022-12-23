@@ -66,8 +66,8 @@ pub fn open_file(path: PathBuf) {
 }
 
 #[command]
-pub fn get_chat_model() -> serde_json::Value {
-    let path = utils::chat_root().join("chat.model.json");
+pub fn get_chat_model_cmd() -> serde_json::Value {
+    let path = utils::chat_root().join("chat.model.cmd.json");
     let content = fs::read_to_string(path).unwrap_or_else(|_| r#"{"data":[]}"#.to_string());
     serde_json::from_str(&content).unwrap()
 }
@@ -97,4 +97,34 @@ pub fn window_reload(app: AppHandle, label: &str) {
         .unwrap()
         .eval("window.location.reload()")
         .unwrap();
+}
+
+
+use walkdir::WalkDir;
+use utils::chat_root;
+
+#[derive(serde::Serialize, serde::Deserialize, Debug, Clone)]
+pub struct ModelRecord {
+    pub cmd: String,
+    pub act: String,
+    pub prompt: String,
+    pub tags: Vec<String>,
+    pub enable: bool,
+}
+
+#[command]
+pub fn cmd_list() -> Vec<ModelRecord> {
+    let mut list = vec![];
+    for entry in WalkDir::new(chat_root().join("cache_model")).into_iter().filter_map(|e| e.ok()) {
+        let file = fs::read_to_string(entry.path().display().to_string());
+        if let Ok(v) = file {
+            let data: Vec<ModelRecord> = serde_json::from_str(&v).unwrap_or_else(|_| vec![]);
+            let enable_list = data.into_iter()
+                .filter(|v| v.enable);
+            list.extend(enable_list)
+        }
+    }
+    // dbg!(&list);
+    list.sort_by(|a, b| a.cmd.len().cmp(&b.cmd.len()));
+    list
 }

@@ -61,10 +61,8 @@ function init() {
 }
 
 async function cmdTip() {
-  const chatModelJson = await invoke('get_chat_model') || {};
-  const user_custom = chatModelJson.user_custom || [];
-  const sys_sync_prompts = chatModelJson.sys_sync_prompts || [];
-  const data = [...user_custom, ...sys_sync_prompts];
+  const chatModelJson = await invoke('get_chat_model_cmd') || {};
+  const data = chatModelJson.data;
   if (data.length <= 0) return;
 
   const modelDom = document.createElement('div');
@@ -82,18 +80,43 @@ async function cmdTip() {
   // Enter a command starting with `/` and press a space to automatically fill `chatgpt prompt`.
   // If more than one command appears in the search results, the first one will be used by default.
   searchInput.addEventListener('keydown', (event) => {
-    if (!window.__CHAT_MODEL_CMD__) {
+    if (!window.__CHAT_MODEL_CMD_PROMPT__) {
       return;
     }
 
-    if (event.keyCode === 13 && window.__CHAT_MODEL_CMD__) {
-      searchInput.value = window.__CHAT_MODEL_CMD__;
+    // feat: https://github.com/lencx/ChatGPT/issues/54
+    if (event.keyCode === 9) {
+      const strGroup = window.__CHAT_MODEL_CMD_PROMPT__.match(/\{([^{}]*)\}/) || [];
+
+      if (strGroup[1]) {
+        searchInput.value = `/${window.__CHAT_MODEL_CMD__}` + `{${strGroup[1]}}` + ' |-> ';
+        window.__CHAT_MODEL_VAR__ = true;
+      }
+      event.preventDefault();
+    }
+
+    if (window.__CHAT_MODEL_VAR__ && event.keyCode === 9) {
+      const data = searchInput.value.split('|->');
+      if (data[1]) {
+        window.__CHAT_MODEL_CMD_PROMPT__ = window.__CHAT_MODEL_CMD_PROMPT__?.replace(/\{([^{}]*)\}/, `{${data[1]?.trim()}}`);
+        // searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
+      }
+      // event.preventDefault();
+    }
+
+    // send
+    if (event.keyCode === 13 && window.__CHAT_MODEL_CMD_PROMPT__) {
+      searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
       modelDom.innerHTML = '';
+      delete window.__CHAT_MODEL_CMD_PROMPT__;
       delete window.__CHAT_MODEL_CMD__;
+      delete window.__CHAT_MODEL_VAR__;
     }
   });
 
   searchInput.addEventListener('input', (event) => {
+    if (window.__CHAT_MODEL_VAR__) return;
+
     const query = searchInput.value;
     if (!query || !/^\//.test(query)) {
       modelDom.innerHTML = '';
@@ -102,18 +125,20 @@ async function cmdTip() {
 
     // all cmd result
     if (query === '/') {
-      const result = data.filter(i => i.enable);
-      modelDom.innerHTML = `<div>${result.map(itemDom).join('')}</div>`;
-      window.__CHAT_MODEL_CMD__ = result[0]?.prompt.trim();
+      modelDom.innerHTML = `<div>${data.map(itemDom).join('')}</div>`;
+      window.__CHAT_MODEL_CMD_PROMPT__ = data[0]?.prompt.trim();
+      window.__CHAT_MODEL_CMD__ = data[0]?.cmd.trim();
       return;
     }
 
-    const result = data.filter(i => i.enable && new RegExp(query.substring(1)).test(i.cmd));
+    const result = data.filter(i => new RegExp(query.substring(1)).test(i.cmd));
     if (result.length > 0) {
       modelDom.innerHTML = `<div>${result.map(itemDom).join('')}</div>`;
-      window.__CHAT_MODEL_CMD__ = result[0]?.prompt.trim();
+      window.__CHAT_MODEL_CMD_PROMPT__ = result[0]?.prompt.trim();
+      window.__CHAT_MODEL_CMD__ = result[0]?.cmd.trim();
     } else {
       modelDom.innerHTML = '';
+      delete window.__CHAT_MODEL_CMD_PROMPT__;
       delete window.__CHAT_MODEL_CMD__;
     }
   }, {
@@ -136,7 +161,7 @@ async function cmdTip() {
         const val = decodeURIComponent(item.getAttribute('data-prompt'));
         searchInput.value = val;
         document.querySelector('form textarea').focus();
-        window.__CHAT_MODEL_CMD__ = val;
+        window.__CHAT_MODEL_CMD_PROMPT__ = val;
         modelDom.innerHTML = '';
       }
     }, {

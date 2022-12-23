@@ -1,13 +1,3 @@
-.chat-prompts-tags {
-  .ant-tag {
-    margin: 2px;
-  }
-}
-
-.add-btn {
-  margin-bottom: 5px;
-}
-
 .chat-table-tip, .chat-table-btns {
   display: flex;
   justify-content: space-between;
@@ -18,24 +8,5 @@
 
   .num {
     margin-left: 10px;
-  }
-}
-
-.chat-model-path {
-  font-size: 12px;
-  font-weight: bold;
-  color: #888;
-  margin-bottom: 5px;
-
-  span {
-    display: inline-block;
-    // background-color: #d8d8d8;
-    color: #4096ff;
-    padding: 0 8px;
-    height: 20px;
-    line-height: 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: underline;
   }
 }

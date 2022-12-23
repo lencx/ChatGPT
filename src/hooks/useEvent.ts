@@ -5,7 +5,7 @@ import useChatModel from '@/hooks/useChatModel';
 import { GITHUB_PROMPTS_CSV_URL, chatPromptsPath, genCmd } from '@/utils';
 
 export default function useEvent() {
-  const { modelSet } = useChatModel('sys_sync_prompts');
+  const { modelSet } = useChatModel('sync_prompts');
   // Using `emit` and `listen` will be triggered multiple times in development mode.
   // So here we use `eval` to call `__sync_prompt`
   useInit(() => {

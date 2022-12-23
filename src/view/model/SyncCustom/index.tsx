@@ -3,19 +3,19 @@ import { Table, Modal, Button, message } from 'antd';
 import { invoke, http, path, fs } from '@tauri-apps/api';
 
 import useData from '@/hooks/useData';
-import useChatModel from '@/hooks/useChatModel';
+import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
 import useColumns from '@/hooks/useColumns';
 import { TABLE_PAGINATION } from '@/hooks/useTable';
-import { CHAT_MODEL_SYNC_JSON, chatRoot, writeJSON, readJSON, genCmd } from '@/utils';
+import { CHAT_MODEL_JSON, chatRoot, readJSON, genCmd } from '@/utils';
 import { syncColumns, getPath } from './config';
 import SyncForm from './Form';
-import './index.scss';
 
 const setTag = (data: Record<string, any>[]) => data.map((i) => ({ ...i, tags: ['user-sync'], enable: true }))
 
 export default function SyncCustom() {
   const [isVisible, setVisible] = useState(false);
-  const { modelData, modelSet } = useChatModel('sync_url', CHAT_MODEL_SYNC_JSON);
+  const { modelData, modelSet } = useChatModel('sync_custom', CHAT_MODEL_JSON);
+  const { modelCacheCmd, modelCacheSet } = useCacheModel();
   const { opData, opInit, opAdd, opRemove, opReplace, opSafeKey } = useData([]);
   const { columns, ...opInfo } = useColumns(syncColumns());
   const formRef = useRef<any>(null);
@@ -53,7 +53,7 @@ export default function SyncCustom() {
   const handleSync = async (filename: string) => {
     const record = opInfo?.opRecord;
     const isJson = /json$/.test(record?.ext);
-    const file = await path.join(await chatRoot(), 'cache_sync', filename);
+    const file = await path.join(await chatRoot(), 'cache_model', filename);
     const filePath = await getPath(record);
 
     // https or http
@@ -65,13 +65,14 @@ export default function SyncCustom() {
       if (res.ok) {
         if (isJson) {
           // parse json
-          writeJSON(file, setTag(Array.isArray(res?.data) ? res?.data : []), { isRoot: true, dir: 'cache_sync' });
+          await modelCacheSet(setTag(Array.isArray(res?.data) ? res?.data : []), file);
         } else {
           // parse csv
           const list: Record<string, string>[] = await invoke('parse_prompt', { data: res?.data });
           const fmtList = list.map(i => ({ ...i, cmd: i.cmd ? i.cmd : genCmd(i.act), enable: true, tags: ['user-sync'] }));
-          await writeJSON(file, fmtList, { isRoot: true, dir: 'cache_sync' });
+          await modelCacheSet(fmtList, file);
         }
+        await modelCacheCmd();
         message.success('ChatGPT Prompts data has been synchronized!');
       } else {
         message.error('ChatGPT Prompts data sync failed, please try again!');
@@ -82,14 +83,15 @@ export default function SyncCustom() {
     if (isJson) {
       // parse json
       const data = await readJSON(filePath, { isRoot: true });
-      await writeJSON(file, setTag(Array.isArray(data) ? data : []), { isRoot: true, dir: 'cache_sync' });
+      await modelCacheSet(setTag(Array.isArray(data) ? data : []), file);
     } else {
       // parse csv
       const data = await fs.readTextFile(filePath);
       const list: Record<string, string>[] = await invoke('parse_prompt', { data });
       const fmtList = list.map(i => ({ ...i, cmd: i.cmd ? i.cmd : genCmd(i.act), enable: true, tags: ['user-sync'] }));
-      await writeJSON(file, fmtList, { isRoot: true, dir: 'cache_sync' });
+      await modelCacheSet(fmtList, file);
     }
+    await modelCacheCmd();
   };
 
   const handleOk = () => {
@@ -109,7 +111,7 @@ export default function SyncCustom() {
   return (
     <div>
       <Button
-        className="add-btn"
+        className="chat-add-btn"
         type="primary"
         onClick={opInfo.opNew}
       >

@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Table, Button, message, Popconfirm } from 'antd';
-import { invoke } from '@tauri-apps/api';
-import { fetch, ResponseType } from '@tauri-apps/api/http';
-import { writeTextFile } from '@tauri-apps/api/fs';
+import { invoke, http, path, shell } from '@tauri-apps/api';
 
-import useColumns from '@/hooks/useColumns';
+import useInit from '@/hooks/useInit';
 import useData from '@/hooks/useData';
-import useChatModel from '@/hooks/useChatModel';
+import useColumns from '@/hooks/useColumns';
+import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
 import useTable, { TABLE_PAGINATION } from '@/hooks/useTable';
-import { fmtDate, chatPromptsPath, GITHUB_PROMPTS_CSV_URL, genCmd } from '@/utils';
+import { fmtDate, chatRoot, GITHUB_PROMPTS_CSV_URL, genCmd } from '@/utils';
 import { syncColumns } from './config';
 import './index.scss';
 
@@ -16,36 +15,39 @@ const promptsURL = 'https://github.com/f/awesome-chatgpt-prompts/blob/main/promp
 
 export default function SyncPrompts() {
   const { rowSelection, selectedRowIDs } = useTable();
-  const [lastUpdated, setLastUpdated] = useState();
-  const { modelJson, modelSet } = useChatModel('sys_sync_prompts');
+  const [jsonPath, setJsonPath] = useState('');
+  const { modelJson, modelSet } = useChatModel('sync_prompts');
+  const { modelCacheJson, modelCacheSet } = useCacheModel(jsonPath);
   const { opData, opInit, opReplace, opReplaceItems, opSafeKey } = useData([]);
   const { columns, ...opInfo } = useColumns(syncColumns());
-
+  const lastUpdated = modelJson?.sync_prompts?.last_updated;
   const selectedItems = rowSelection.selectedRowKeys || [];
 
+  useInit(async () => {
+    setJsonPath(await path.join(await chatRoot(), 'cache_model', 'chatgpt_prompts.json'));
+  });
+
   useEffect(() => {
-    if (!modelJson?.sys_sync_prompts) return;
-    opInit(modelJson?.sys_sync_prompts);
-    if (lastUpdated) return;
-    (async () => {
-      const fileData: Record<string, any> = await invoke('metadata', { path: await chatPromptsPath() });
-      setLastUpdated(fileData.accessedAtMs);
-    })();
-  }, [modelJson?.sys_sync_prompts])
+    if (modelCacheJson.length <= 0) return;
+    opInit(modelCacheJson);
+  }, [modelCacheJson.length]);
 
   const handleSync = async () => {
-    const res = await fetch(GITHUB_PROMPTS_CSV_URL, {
+    const res = await http.fetch(GITHUB_PROMPTS_CSV_URL, {
       method: 'GET',
-      responseType: ResponseType.Text,
+      responseType: http.ResponseType.Text,
     });
     const data = (res.data || '') as string;
     if (res.ok) {
       // const content = data.replace(/"(\s+)?,(\s+)?"/g, '","');
-      await writeTextFile(await chatPromptsPath(), data);
       const list: Record<string, string>[] = await invoke('parse_prompt', { data });
-      opInit(list);
-      modelSet(list.map(i => ({ ...i, cmd: i.cmd ? i.cmd : genCmd(i.act), enable: true, tags: ['chatgpt-prompts'] })));
-      setLastUpdated(fmtDate(Date.now()) as any);
+      const fmtList = list.map(i => ({ ...i, cmd: i.cmd ? i.cmd : genCmd(i.act), enable: true, tags: ['chatgpt-prompts'] }));
+      await modelCacheSet(fmtList);
+      opInit(fmtList);
+      modelSet({
+        id: 'chatgpt_prompts',
+        last_updated: Date.now(),
+      });
       message.success('ChatGPT Prompts data has been synchronized!');
     } else {
       message.error('ChatGPT Prompts data sync failed, please try again!');
@@ -55,13 +57,13 @@ export default function SyncPrompts() {
   useEffect(() => {
     if (opInfo.opType === 'enable') {
       const data = opReplace(opInfo?.opRecord?.[opSafeKey], opInfo?.opRecord);
-      modelSet(data);
+      modelCacheSet(data);
     }
   }, [opInfo.opTime]);
 
   const handleEnable = (isEnable: boolean) => {
     const data = opReplaceItems(selectedRowIDs, { enable: isEnable })
-    modelSet(data);
+    modelCacheSet(data);
   };
 
   return (
@@ -87,7 +89,10 @@ export default function SyncPrompts() {
         </Popconfirm>
       </div>
       <div className="chat-table-tip">
-        <span className="chat-model-path">URL: <a href={promptsURL} target="_blank" title={promptsURL}>f/awesome-chatgpt-prompts/prompts.csv</a></span>
+        <div className="chat-sync-path">
+          <div>PATH: <a onClick={() => shell.open(promptsURL)} target="_blank" title={promptsURL}>f/awesome-chatgpt-prompts/prompts.csv</a></div>
+          <div>CACHE: <a onClick={() => shell.open(jsonPath)} target="_blank" title={jsonPath}>{jsonPath}</a></div>
+        </div>
         {lastUpdated && <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>Last updated on {fmtDate(lastUpdated)}</span>}
       </div>
       <Table
