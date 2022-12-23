@@ -75,7 +75,7 @@ In the chatgpt text input area, type a character starting with `/` to bring up t
 - Common shortcut keys
 - System tray hover window
 - Powerful menu items
-- Support for slash commands and their configuration (can be configured manually or synchronized from a file)
+- Support for slash commands and their configuration (can be configured manually or synchronized from a file [#55](https://github.com/lencx/ChatGPT/issues/55))
 
 ### MenuItem
 

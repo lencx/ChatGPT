@@ -73,7 +73,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
 - 丰富的快捷键
 - 系统托盘悬浮窗
 - 应用菜单功能强大
-- 支持斜杠命令及其配置（可手动配置或从文件同步）
+- 支持斜杠命令及其配置（可手动配置或从文件同步 [#55](https://github.com/lencx/ChatGPT/issues/55)）
 
 ### 菜单项
 
