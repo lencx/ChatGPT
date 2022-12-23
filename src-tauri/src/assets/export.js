@@ -1,6 +1,7 @@
 // *** Core Script - Export ***
 // @ref: https://github.com/liady/ChatGPT-pdf
 
+const buttonOuterHTMLFallback = `<button class="btn flex justify-center gap-2 btn-neutral" id="download-png-button">Try Again</button>`;
 async function init() {
   const chatConf = await invoke('get_chat_conf') || {};
   if (window.buttonsInterval) {
@@ -11,14 +12,15 @@ async function init() {
     if (!actionsArea) {
       return;
     }
-    const buttons = actionsArea.querySelectorAll("button");
-    const hasTryAgainButton = Array.from(buttons).some((button) => {
-      return !button.id?.includes("download");
-    });
-    if (hasTryAgainButton && buttons.length === 1) {
-      const TryAgainButton = actionsArea.querySelector("button");
+    if (shouldAddButtons(actionsArea)) {
+      let TryAgainButton = actionsArea.querySelector("button");
+      if (!TryAgainButton) {
+        const parentNode = document.createElement("div");
+        parentNode.innerHTML = buttonOuterHTMLFallback;
+        TryAgainButton = parentNode.querySelector("button");
+      }
       addActionsButtons(actionsArea, TryAgainButton, chatConf);
-    } else if (!hasTryAgainButton) {
+    } else if (shouldRemoveButtons()) {
       removeButtons();
     }
   }, 200);
@@ -29,32 +31,42 @@ const Format = {
   PDF: "pdf",
 };
 
-function addActionsButtons(actionsArea, TryAgainButton, chatConf) {
-  const downloadButton = TryAgainButton.cloneNode(true);
-  downloadButton.id = "download-png-button";
-  downloadButton.innerText = "Generate PNG";
-  downloadButton.onclick = () => {
-    downloadThread();
-  };
-  actionsArea.appendChild(downloadButton);
-
-  const downloadPdfButton = TryAgainButton.cloneNode(true);
-  downloadPdfButton.id = "download-pdf-button";
-  downloadPdfButton.innerText = "Download PDF";
-  downloadPdfButton.onclick = () => {
-    downloadThread({ as: Format.PDF });
-  };
-  actionsArea.appendChild(downloadPdfButton);
-
-  if (new RegExp('//chat.openai.com').test(chatConf.origin)) {
-    const exportHtml = TryAgainButton.cloneNode(true);
-    exportHtml.id = "download-html-button";
-    exportHtml.innerText = "Share Link";
-    exportHtml.onclick = () => {
-      sendRequest();
-    };
-    actionsArea.appendChild(exportHtml);
+function shouldRemoveButtons() {
+  const isOpenScreen = document.querySelector("h1.text-4xl");
+  if(isOpenScreen){
+    return true;
   }
+  const inConversation = document.querySelector("form button>div");
+  if(inConversation){
+    return true;
+  }
+  return false;
+}
+
+function shouldAddButtons(actionsArea) {
+  // first, check if there's a "Try Again" button and no other buttons
+  const buttons = actionsArea.querySelectorAll("button");
+  const hasTryAgainButton = Array.from(buttons).some((button) => {
+    return !button.id?.includes("download");
+  });
+  if (hasTryAgainButton && buttons.length === 1) {
+    return true;
+  }
+
+  // otherwise, check if open screen is not visible
+  const isOpenScreen = document.querySelector("h1.text-4xl");
+  if (isOpenScreen) {
+    return false;
+  }
+
+  // check if the conversation is finished and there are no share buttons
+  const finishedConversation = document.querySelector("form button>svg");
+  const hasShareButtons = actionsArea.querySelectorAll("button[share-ext]");
+  if (finishedConversation && !hasShareButtons.length) {
+    return true;
+  }
+
+  return false;
 }
 
 function removeButtons() {
@@ -70,6 +82,33 @@ function removeButtons() {
   if (downloadHtmlButton) {
     downloadHtmlButton.remove();
   }
+}
+
+function addActionsButtons(actionsArea, TryAgainButton) {
+  const downloadButton = TryAgainButton.cloneNode(true);
+  downloadButton.id = "download-png-button";
+  downloadButton.setAttribute("share-ext", "true");
+  downloadButton.innerText = "Generate PNG";
+  downloadButton.onclick = () => {
+    downloadThread();
+  };
+  actionsArea.appendChild(downloadButton);
+  const downloadPdfButton = TryAgainButton.cloneNode(true);
+  downloadPdfButton.id = "download-pdf-button";
+  downloadButton.setAttribute("share-ext", "true");
+  downloadPdfButton.innerText = "Download PDF";
+  downloadPdfButton.onclick = () => {
+    downloadThread({ as: Format.PDF });
+  };
+  actionsArea.appendChild(downloadPdfButton);
+  const exportHtml = TryAgainButton.cloneNode(true);
+  exportHtml.id = "download-html-button";
+  downloadButton.setAttribute("share-ext", "true");
+  exportHtml.innerText = "Share Link";
+  exportHtml.onclick = () => {
+    sendRequest();
+  };
+  actionsArea.appendChild(exportHtml);
 }
 
 function downloadThread({ as = Format.PNG } = {}) {
@@ -113,7 +152,7 @@ function handlePdf(imgData, canvas, pixelRatio) {
   ]);
   var pdfWidth = pdf.internal.pageSize.getWidth();
   var pdfHeight = pdf.internal.pageSize.getHeight();
-  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight, '', 'FAST');
 
   const data = pdf.__private__.getArrayBuffer(pdf.__private__.buildDocument());
   invoke('download', { name: `chatgpt-${Date.now()}.pdf`, blob: Array.from(new Uint8Array(data)) });

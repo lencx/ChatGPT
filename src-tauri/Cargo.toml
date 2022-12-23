@@ -22,6 +22,9 @@ tauri-plugin-positioner = { version = "1.0.4", features = ["system-tray"] }
 log = "0.4.17"
 csv = "1.1.6"
 thiserror = "1.0.38"
+walkdir = "2.3.2"
+# tokio = { version = "1.23.0", features = ["macros"] }
+# reqwest = "0.11.13"
 
 [dependencies.tauri-plugin-log]
 git = "https://github.com/tauri-apps/tauri-plugin-log"

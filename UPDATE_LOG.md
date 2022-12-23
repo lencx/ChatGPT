@@ -1,5 +1,17 @@
 # UPDATE LOG
 
+## v0.6.0
+
+fix:
+- windows show Chinese when upgrading
+
+feat:
+- optimize the generated pdf file size
+- menu added `Sync Prompts`
+- `Control Center` added `Sync Custom`
+- the slash command is triggered by the enter key
+- under the slash command, use the tab key to modify the contents of the `{q}` tag (only single changes are supported (https://github.com/lencx/ChatGPT/issues/54)
+
 ## v0.5.1
 
 some optimization

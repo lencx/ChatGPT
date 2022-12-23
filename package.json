@@ -32,7 +32,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
     "@tauri-apps/api": "^1.2.0",
-    "antd": "^5.0.6",
+    "antd": "^5.1.0",
     "dayjs": "^1.11.7",
     "lodash": "^4.17.21",
     "react": "^18.2.0",

@@ -22,9 +22,9 @@
 
 **最新版:**
 
-- `Mac`: [ChatGPT_0.5.1_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.5.1/ChatGPT_0.5.1_x64.dmg)
-- `Linux`: [chat-gpt_0.5.1_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.5.1/chat-gpt_0.5.1_amd64.deb)
-- `Windows`: [ChatGPT_0.5.1_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.5.1/ChatGPT_0.5.1_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.6.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.6.0/ChatGPT_0.6.0_x64.dmg)
+- `Linux`: [chat-gpt_0.6.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.6.0/chat-gpt_0.6.0_amd64.deb)
+- `Windows`: [ChatGPT_0.6.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.6.0/ChatGPT_0.6.0_x64_en-US.msi)
 
 [其他版本...](https://github.com/lencx/ChatGPT/releases)
 
@@ -34,18 +34,18 @@
 
 Easily install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
 
-~~~ sh
+```sh
 brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
 brew install --cask chatgpt --no-quarantine
-~~~
+```
 
 Also, if you keep a _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_, you can add something like this:
 
-~~~ rb
+```rb
 repo = "lencx/chatgpt"
 tap repo, "https://github.com/#{repo}.git"
 cask "popcorn-time", args: { "no-quarantine": true }
-~~~
+```
 
 ## 📢 公告
 
@@ -60,11 +60,10 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 数据导入完成后，可以重新启动应用来使配置生效（`Menu -> Preferences -> Restart ChatGPT`）。
 
-项目会维护一份常用命令，您也可以直接将 [chat.model.json](https://github.com/lencx/ChatGPT/blob/main/chat.model.json) 复制到你的本地目录 `~/.chatgpt/chat.model.json`。
-
-在 ChatGPT 文本输入区域，键入 `/` 开头的字符，则会弹出指令提示，按下空格键，它会默认将命令关联的文本填充到输入区域（注意：如果包含多个指令提示，它只会选择第一个作为填充，你可以持续输入，直到第一个提示命令为你想要时，再按下空格键。或者使用鼠标来点击多条指令中的某一个）。填充完成后，你只需要按下回车键即可。
+在 ChatGPT 文本输入区域，键入 `/` 开头的字符，则会弹出指令提示，按下空格键，它会默认将命令关联的文本填充到输入区域（注意：如果包含多个指令提示，它只会选择第一个作为填充，你可以持续输入，直到第一个提示命令为你想要时，再按下空格键。或者使用鼠标来点击多条指令中的某一个）。填充完成后，你只需要按下回车键即可。斜杠命令下，使用 TAB 键修改 `{q}` 标签内容（仅支持单个修改 [#54](https://github.com/lencx/ChatGPT/issues/54)）。
 
 ![chatgpt](assets/chatgpt.gif)
+![chatgpt-cmd](assets/chatgpt-cmd.gif)
 
 ## ✨ 功能概览
 
@@ -74,6 +73,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
 - 丰富的快捷键
 - 系统托盘悬浮窗
 - 应用菜单功能强大
+- 支持斜杠命令及其配置（可手动配置或从文件同步 [#55](https://github.com/lencx/ChatGPT/issues/55)）
 
 ### 菜单项
 
@@ -99,18 +99,68 @@ cask "popcorn-time", args: { "no-quarantine": true }
   - `Report Bug`: 报告 BUG 或反馈建议
   - `Toggle Developer Tools`: 网站调试工具，调试页面或脚本可能需要
 
+## 应用配置
+
+| 平台    | 路径                      |
+| ------- | ------------------------- |
+| Linux   | `/home/lencx/.chatgpt`    |
+| macOS   | `/Users/lencx/.chatgpt`   |
+| Windows | `C:\Users\lencx\.chatgpt` |
+
+- `[.chatgpt]` - 应用配置根路径
+  - `chat.conf.json` - 应用喜好配置
+  - `chat.model.json` - ChatGPT 输入提示，通过斜杠命令来快速完成输入，主要包含三部分:
+    - `user_custom` - 需要手动录入 (**Control Conter -> Language Model -> User Custom**)
+    - `sync_prompts` - 从 [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) 同步数据 (**Control Conter -> Language Model -> Sync Prompts**)
+    - `sync_custom` - 同步自定义的 json 或 csv 文件数据，支持本地和远程 (**Control Conter -> Language Model -> Sync Custom**)
+  - `chat.model.cmd.json` - 过滤（是否启用）和排序处理后的斜杠命令数据
+  - `[cache_model]` - 缓存同步或录入的数据
+    - `chatgpt_prompts.json` - 缓存 `sync_prompts` 数据
+    - `user_custom.json` - 缓存 `user_custom` 数据
+    - `ae6cf32a6f8541b499d6bfe549dbfca3.json` - 随机生成的文件名，缓存 `sync_custom` 数据
+    - `4f695d3cfbf8491e9b1f3fab6d85715c.json` - 随机生成的文件名，缓存 `sync_custom` 数据
+    - `bd1b96f15a1644f7bd647cc53073ff8f.json` - 随机生成的文件名，缓存 `sync_custom` 数据
+
+### Sync Custom
+
+目前同步自定文件仅支持 json 和 csv，且需要满足以下格式，否则会导致应用异常：
+
+> JSON 格式
+
+```json
+[
+  {
+    "cmd": "a",
+    "act": "aa",
+    "prompt": "aaa aaa aaa"
+  },
+  {
+    "cmd": "b",
+    "act": "bb",
+    "prompt": "bbb bbb bbb"
+  }
+]
+```
+
+> CSV 格式
+
+```csv
+"cmd","act","prompt"
+"a","aa","aaa aaa aaa"
+"b","bb","bbb bbb bbb"
+```
+
 ## 👀 预览
 
 <img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/control-center.png" alt="control center">
 <img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
 <img width="320" src="./assets/tray-login.png" alt="tray login"> <img width="320" src="./assets/auto-update.png" alt="auto update">
 
-
 ---
 
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-## ❓常见问题
+## ❓ 常见问题
 
 ### 不能打开 ChatGPT
 

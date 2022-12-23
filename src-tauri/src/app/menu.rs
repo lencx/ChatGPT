@@ -47,6 +47,10 @@ pub fn init() -> Menu {
     let preferences_menu = Submenu::new(
         "Preferences",
         Menu::with_items([
+            CustomMenuItem::new("control_center".to_string(), "Control Center")
+                .accelerator("CmdOrCtrl+Shift+P")
+                .into(),
+            MenuItem::Separator.into(),
             Submenu::new(
                 "Theme",
                 Menu::new()
@@ -67,13 +71,11 @@ pub fn init() -> Menu {
             titlebar_menu.into(),
             #[cfg(target_os = "macos")]
             CustomMenuItem::new("hide_dock_icon".to_string(), "Hide Dock Icon").into(),
-            MenuItem::Separator.into(),
             CustomMenuItem::new("inject_script".to_string(), "Inject Script")
                 .accelerator("CmdOrCtrl+J")
                 .into(),
-            CustomMenuItem::new("control_center".to_string(), "Control Center")
-                .accelerator("CmdOrCtrl+Shift+P")
-                .into(),
+            MenuItem::Separator.into(),
+            CustomMenuItem::new("sync_prompts".to_string(), "Sync Prompts").into(),
             MenuItem::Separator.into(),
             CustomMenuItem::new("go_conf".to_string(), "Go to Config")
                 .accelerator("CmdOrCtrl+Shift+G")
@@ -178,6 +180,21 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         "go_conf" => utils::open_file(utils::chat_root()),
         "clear_conf" => utils::clear_conf(&app),
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
+        "sync_prompts" => {
+            tauri::api::dialog::ask(
+                app.get_window("main").as_ref(),
+                "Sync Prompts",
+                "Data sync will enable all prompts, are you sure you want to sync?",
+                move |is_restart| {
+                    if is_restart {
+                        app.get_window("main")
+                            .unwrap()
+                            .eval("window.__sync_prompts && window.__sync_prompts()")
+                            .unwrap()
+                    }
+                },
+            );
+        }
         "hide_dock_icon" => {
             ChatConfJson::amend(&serde_json::json!({ "hide_dock_icon": true }), Some(app)).unwrap()
         }

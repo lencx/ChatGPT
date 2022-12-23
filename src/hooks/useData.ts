@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { v4 } from 'uuid';
 
-const safeKey = Symbol('chat-id');
+export const safeKey = Symbol('chat-id');
 
 export default function useData(oData: any[]) {
   const [opData, setData] = useState<any[]>([]);
@@ -17,6 +17,9 @@ export default function useData(oData: any[]) {
   };
 
   const opInit = (val: any[] = []) => {
+    if (!val || !Array.isArray(val)) return;
+    console.log('«20» /src/hooks/useData.ts ~> ', val);
+
     const nData = val.map(i => ({ [safeKey]: v4(), ...i }));
     setData(nData);
   };
@@ -35,5 +38,20 @@ export default function useData(oData: any[]) {
     return nData;
   };
 
-  return { opSafeKey: safeKey, opInit, opReplace, opAdd, opRemove, opData };
+  const opReplaceItems = (ids: string[], data: any) => {
+    const nData = [...opData];
+    let count = 0;
+    for (let i = 0; i < nData.length; i++) {
+      const v = nData[i];
+      if (ids.includes(v[safeKey])) {
+        count++;
+        nData[i] = { ...v, ...data };
+      }
+      if (count === ids.length) break;
+    }
+    setData(nData);
+    return nData;
+  };
+
+  return { opSafeKey: safeKey, opInit, opReplace, opAdd, opRemove, opData, opReplaceItems };
 }

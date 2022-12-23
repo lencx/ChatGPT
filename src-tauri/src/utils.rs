@@ -30,6 +30,14 @@ pub fn create_file(path: &Path) -> Result<File> {
     File::create(path).map_err(Into::into)
 }
 
+pub fn create_chatgpt_prompts() {
+    let sync_file = chat_root().join("cache_model").join("chatgpt_prompts.json");
+    if !exists(&sync_file) {
+        create_file(&sync_file).unwrap();
+        fs::write(&sync_file, "[]").unwrap();
+    }
+}
+
 pub fn script_path() -> PathBuf {
     let script_file = chat_root().join("main.js");
     if !exists(&script_file) {
