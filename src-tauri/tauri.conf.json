@@ -22,7 +22,9 @@
       "fs": {
         "all": true,
         "scope": [
-          "**"
+          "$HOME/.chatgpt/*",
+          "$HOME/.chatgpt/**",
+          "$HOME/.chatgpt/cache_model/*"
         ]
       }
     },
