@@ -1,6 +1,6 @@
 # UPDATE LOG
 
-## v0.6.2
+## v0.6.3
 
 fix: path not allowed on the configured scope
 
