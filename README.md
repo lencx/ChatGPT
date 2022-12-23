@@ -24,9 +24,9 @@
 
 **Latest:**
 
-- `Mac`: [ChatGPT_0.5.1_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.5.1/ChatGPT_0.5.1_x64.dmg)
-- `Linux`: [chat-gpt_0.5.1_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.5.1/chat-gpt_0.5.1_amd64.deb)
-- `Windows`: [ChatGPT_0.5.1_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.5.1/ChatGPT_0.5.1_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.6.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.6.0/ChatGPT_0.6.0_x64.dmg)
+- `Linux`: [chat-gpt_0.6.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.6.0/chat-gpt_0.6.0_amd64.deb)
+- `Windows`: [ChatGPT_0.6.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.6.0/ChatGPT_0.6.0_x64_en-US.msi)
 
 [Other version...](https://github.com/lencx/ChatGPT/releases)
 
@@ -67,6 +67,7 @@ The project maintains a list of common commands, or you can copy [chat.model.jso
 In the chatgpt text input area, type a character starting with `/` to bring up the command prompt, press the spacebar, and it will fill the input area with the text associated with the command by default (note: if it contains multiple command prompts, it will only select the first one as the fill, you can keep typing until the first prompted command is the one you want, then press the spacebar. Or use the mouse to click on one of the multiple commands). When the fill is complete, you simply press the Enter key. Under the slash command, use the tab key to modify the contents of the `{q}` tag (only single changes are supported [#54](https://github.com/lencx/ChatGPT/issues/54)).
 
 ![chatgpt](assets/chatgpt.gif)
+![chatgpt-cmd](assets/chatgpt-cmd.gif)
 
 ## ✨ Features
 
