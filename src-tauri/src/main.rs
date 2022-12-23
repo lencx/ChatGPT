@@ -17,6 +17,8 @@ use tauri_plugin_log::{
 
 fn main() {
     ChatConfJson::init();
+    // If the file does not exist, creating the file will block menu synchronization
+    utils::create_chatgpt_prompts();
     let chat_conf = ChatConfJson::get_chat_conf();
     let context = tauri::generate_context!();
     let colors = ColoredLevelConfig {
