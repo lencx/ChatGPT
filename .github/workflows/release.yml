@@ -19,7 +19,7 @@ jobs:
         shell: bash
         run: |
           echo "using version tag ${GITHUB_REF:10}"
-          echo ::save-state name=version::"${GITHUB_REF:10}"
+          echo "version=${GITHUB_REF:10}" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
@@ -27,8 +27,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: '${{ steps.get_version.outputs.VERSION }}'
-          release_name: 'ChatGPT ${{ steps.get_version.outputs.VERSION }}'
+          tag_name: '${{ env.version }}'
+          release_name: 'ChatGPT ${{ env.version }}'
           body: 'See the assets to download this version and install.'
 
   build-tauri:
@@ -63,13 +63,13 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::save-state name=dir::$(yarn config get cacheFolder)"
+        run: echo "yarndir=$(yarn config get cacheFolder)" >> $GITHUB_ENV
 
       - name: Yarn cache
         uses: actions/cache@v2
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          path: ${{ env.yarndir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
