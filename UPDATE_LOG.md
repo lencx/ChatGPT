@@ -1,6 +1,6 @@
 # UPDATE LOG
 
-## v0.5.2
+## v0.6.0
 
 fix:
 - windows show Chinese when upgrading
