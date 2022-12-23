@@ -52,12 +52,12 @@ export const readJSON = async (path: string, opts: readJSONOpts = {}) => {
 
 type writeJSONOpts = { dir?: string, isRoot?: boolean };
 export const writeJSON = async (path: string, data: Record<string, any>, opts: writeJSONOpts = {}) => {
-  const { isRoot = false, dir = '' } = opts;
+  const { isRoot = false } = opts;
   const root = await chatRoot();
   const file = await join(isRoot ? '' : root, path);
 
   if (isRoot && !await exists(await dirname(file))) {
-    await createDir(await join('.chatgpt', dir), { dir: BaseDirectory.Home });
+    await createDir(await dirname(file), { recursive: true });
   }
 
   await writeTextFile(file, JSON.stringify(data, null, 2));
