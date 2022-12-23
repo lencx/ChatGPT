@@ -46,7 +46,7 @@ Also, if you keep a _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usag
 ```rb
 repo = "lencx/chatgpt"
 tap repo, "https://github.com/#{repo}.git"
-cask "popcorn-time", args: { "no-quarantine": true }
+cask "chatgpt", args: { "no-quarantine": true }
 ```
 
 ## 📢 Announcement
