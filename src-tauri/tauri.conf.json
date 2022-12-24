@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.6.8"
+    "version": "0.6.9"
   },
   "tauri": {
     "allowlist": {
@@ -22,9 +22,8 @@
       "fs": {
         "all": true,
         "scope": [
-          "$HOME/*",
-          "$HOME/.chatgpt/*",
-          "$HOME/.chatgpt/cache_mode/*"
+          "$HOME/.chatgpt/**",
+          "$HOME/.chatgpt/cache_model/**"
         ]
       }
     },

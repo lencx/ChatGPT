@@ -1,4 +1,4 @@
-import { readTextFile, writeTextFile, exists, createDir, BaseDirectory } from '@tauri-apps/api/fs';
+import { readTextFile, writeTextFile, exists, createDir } from '@tauri-apps/api/fs';
 import { homeDir, join, dirname } from '@tauri-apps/api/path';
 import dayjs from 'dayjs';
 
