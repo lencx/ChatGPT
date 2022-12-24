@@ -34,7 +34,7 @@ pub fn control_window(handle: &tauri::AppHandle) {
     std::thread::spawn(move || {
         WindowBuilder::new(&app, "main", WindowUrl::App("index.html".into()))
             .title("ChatGPT")
-            .resizable(false)
+            .resizable(true)
             .fullscreen(false)
             .inner_size(800.0, 600.0)
             .min_inner_size(800.0, 600.0)

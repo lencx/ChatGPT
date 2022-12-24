@@ -1,6 +1,6 @@
 # UPDATE LOG
 
-## v0.6.5
+## v0.6.6
 
 fix: unable to synchronize
 

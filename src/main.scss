@@ -45,12 +45,26 @@ html, body {
   }
 }
 
+.chat-table-tip {
+  > span {
+    line-height: 16px;
+  }
+}
+
 .chat-sync-path {
   font-size: 12px;
   font-weight: 500;
   color: #888;
   margin-bottom: 5px;
   line-height: 16px;
+
+  > div {
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #2a2a2a;
+  }
 
   span {
     display: inline-block;
