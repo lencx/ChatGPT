@@ -8,6 +8,7 @@ import useInit from '@/hooks/useInit';
 
 interface SyncFormProps {
   record?: Record<string|symbol, any> | null;
+  type: string;
 }
 
 const initFormValue = {
@@ -17,7 +18,8 @@ const initFormValue = {
   prompt: '',
 };
 
-const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record }, ref) => {
+const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record, type }, ref) => {
+  const isDisabled = type === 'edit';
   const [form] = Form.useForm();
   useImperativeHandle(ref, () => ({ form }));
   const [root, setRoot] = useState('');
@@ -34,7 +36,7 @@ const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record }
 
   const pathOptions = (
     <Form.Item noStyle name="protocol" initialValue="https">
-      <Select>
+      <Select disabled={isDisabled}>
         <Select.Option value="local">{root}</Select.Option>
         <Select.Option value="http">http://</Select.Option>
         <Select.Option value="https">https://</Select.Option>
@@ -43,7 +45,7 @@ const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record }
   );
   const extOptions = (
     <Form.Item noStyle name="ext" initialValue="json">
-      <Select>
+      <Select disabled={isDisabled}>
         <Select.Option value="csv">.csv</Select.Option>
         <Select.Option value="json">.json</Select.Option>
       </Select>
@@ -90,8 +92,13 @@ const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record }
           label="PATH"
           name="path"
           rules={[{ required: true, message: 'Please input path!' }]}
-        >
-          <Input placeholder="YOUR_PATH" addonBefore={pathOptions} addonAfter={extOptions} {...DISABLE_AUTO_COMPLETE} />
+          >
+          <Input
+            placeholder="YOUR_PATH"
+            addonBefore={pathOptions}
+            addonAfter={extOptions}
+            {...DISABLE_AUTO_COMPLETE}
+          />
         </Form.Item>
         <Form.Item style={{ display: 'none' }} name="id" initialValue={v4().replace(/-/g, '')}><input /></Form.Item>
       </Form>

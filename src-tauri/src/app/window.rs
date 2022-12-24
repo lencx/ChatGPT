@@ -28,3 +28,17 @@ pub fn tray_window(handle: &tauri::AppHandle) {
             .unwrap();
     });
 }
+
+pub fn control_window(handle: &tauri::AppHandle) {
+    let app = handle.clone();
+    std::thread::spawn(move || {
+        WindowBuilder::new(&app, "main", WindowUrl::App("index.html".into()))
+            .title("ChatGPT")
+            .resizable(false)
+            .fullscreen(false)
+            .inner_size(800.0, 600.0)
+            .min_inner_size(800.0, 600.0)
+            .build()
+            .unwrap();
+    });
+}

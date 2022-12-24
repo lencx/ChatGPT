@@ -128,12 +128,12 @@ export default function SyncCustom() {
       <Modal
         open={isVisible}
         onCancel={hide}
-        title="Model PATH"
+        title="Sync PATH"
         onOk={handleOk}
         destroyOnClose
         maskClosable={false}
       >
-        <SyncForm ref={formRef} record={opInfo?.opRecord} />
+        <SyncForm ref={formRef} record={opInfo?.opRecord} type={opInfo.opType} />
       </Modal>
     </div>
   )

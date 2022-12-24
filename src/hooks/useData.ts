@@ -18,8 +18,6 @@ export default function useData(oData: any[]) {
 
   const opInit = (val: any[] = []) => {
     if (!val || !Array.isArray(val)) return;
-    console.log('«20» /src/hooks/useData.ts ~> ', val);
-
     const nData = val.map(i => ({ [safeKey]: v4(), ...i }));
     setData(nData);
   };

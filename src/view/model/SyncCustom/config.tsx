@@ -34,7 +34,7 @@ export const syncColumns = () => [
     key: 'last_updated',
     width: 140,
     render: (v: number) => (
-      <div style={{ textAlign: 'center' }}>
+      <div>
         <HistoryOutlined style={{ marginRight: 5, color: v ? '#52c41a' : '#ff4d4f' }} />
         { v ? fmtDate(v) : ''}
       </div>
@@ -47,7 +47,15 @@ export const syncColumns = () => [
     render: (_: any, row: any, actions: any) => {
       return (
         <Space>
-          <a onClick={() => actions.setRecord(row, 'sync')}>Sync</a>
+          <Popconfirm
+            overlayStyle={{ width: 250 }}
+            title="Sync will overwrite the previous data, confirm to sync?"
+            onConfirm={() => actions.setRecord(row, 'sync')}
+            okText="Yes"
+            cancelText="No"
+          >
+            <a>Sync</a>
+          </Popconfirm>
           {row.last_updated && <Link to={`${row.id}`} state={row}>View</Link>}
           <a onClick={() => actions.setRecord(row, 'edit')}>Edit</a>
           <Popconfirm

@@ -69,6 +69,16 @@ export default function SyncPrompts() {
   return (
     <div>
       <div className="chat-table-btns">
+        <Popconfirm
+          overlayStyle={{ width: 250 }}
+          title="Sync will overwrite the previous data, confirm to sync?"
+          placement="topLeft"
+          onConfirm={handleSync}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button type="primary">Sync</Button>
+        </Popconfirm>
         <div>
           {selectedItems.length > 0 && (
             <>
@@ -78,15 +88,6 @@ export default function SyncPrompts() {
             </>
           )}
         </div>
-        <Popconfirm
-          title={<span>Data sync will enable all prompts,<br/>are you sure you want to sync?</span>}
-          placement="topLeft"
-          onConfirm={handleSync}
-          okText="Yes"
-          cancelText="No"
-        >
-          <Button type="primary">Sync</Button>
-        </Popconfirm>
       </div>
       <div className="chat-table-tip">
         <div className="chat-sync-path">
