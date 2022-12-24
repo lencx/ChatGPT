@@ -1,5 +1,9 @@
 # UPDATE LOG
 
+## v0.6.5
+
+fix: unable to synchronize
+
 ## v0.6.4
 
 fix: path not allowed on the configured scope
