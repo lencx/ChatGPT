@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.6.4"
+    "version": "0.6.5"
   },
   "tauri": {
     "allowlist": {
