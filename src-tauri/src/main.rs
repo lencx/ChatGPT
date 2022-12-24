@@ -61,6 +61,7 @@ fn main() {
             cmd::open_file,
             cmd::get_chat_model_cmd,
             cmd::parse_prompt,
+            cmd::sync_prompts,
             cmd::window_reload,
             cmd::cmd_list,
             fs_extra::metadata,
@@ -76,7 +77,7 @@ fn main() {
             if let tauri::WindowEvent::CloseRequested { api, .. } = event.event() {
                 let win = event.window();
                 if win.label() == "main" {
-                    win.hide().unwrap();
+                    win.close().unwrap();
                 } else {
                     // TODO: https://github.com/tauri-apps/tauri/issues/3084
                     // event.window().hide().unwrap();

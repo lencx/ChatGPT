@@ -10,7 +10,7 @@ export const syncColumns = () => [
     // width: 120,
     key: 'cmd',
     render: (_: string, row: Record<string, string>) => (
-      <Tag color="#2a2a2a">/{genCmd(row.act)}</Tag>
+      <Tag color="#2a2a2a">/{row.cmd ? row.cmd : genCmd(row.act)}</Tag>
     ),
   },
   {

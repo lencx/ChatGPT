@@ -20,10 +20,6 @@ export const chatModelPath = async (): Promise<string> => {
   return join(await chatRoot(), CHAT_MODEL_JSON);
 }
 
-// export const chatModelSyncPath = async (): Promise<string> => {
-//   return join(await chatRoot(), CHAT_MODEL_SYNC_JSON);
-// }
-
 export const chatPromptsPath = async (): Promise<string> => {
   return join(await chatRoot(), CHAT_PROMPTS_CSV);
 }
@@ -35,7 +31,9 @@ export const readJSON = async (path: string, opts: readJSONOpts = {}) => {
   const file = await join(isRoot ? '' : root, path);
 
   if (!await exists(file)) {
-    await createDir(await dirname(file), { recursive: true });
+    if (await dirname(file) !== root) {
+      await createDir(await dirname(file), { recursive: true });
+    }
     await writeTextFile(file, isList ? '[]' : JSON.stringify({
       name: 'ChatGPT',
       link: 'https://github.com/lencx/ChatGPT',

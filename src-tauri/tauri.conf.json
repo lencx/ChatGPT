@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.6.4"
+    "version": "0.6.5"
   },
   "tauri": {
     "allowlist": {
@@ -22,9 +22,7 @@
       "fs": {
         "all": true,
         "scope": [
-          "$HOME/.chatgpt/*",
-          "$HOME/.chatgpt/**",
-          "$HOME/.chatgpt/cache_model/*"
+          "*"
         ]
       }
     },
@@ -79,18 +77,6 @@
         "https://lencx.github.io/ChatGPT/install.json"
       ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEIxMjY4OUI5MTVFNjBEMDUKUldRRkRlWVZ1WWttc1NGWEE0RFNSb0RqdnhsekRJZTkwK2hVLzhBZTZnaHExSEZ1ZEdzWkpXTHkK"
-    },
-    "windows": [
-      {
-        "label": "main",
-        "url": "index.html",
-        "title": "ChatGPT",
-        "visible": false,
-        "width": 800,
-        "height": 600,
-        "minWidth": 800,
-        "minHeight": 600
-      }
-    ]
+    }
   }
 }

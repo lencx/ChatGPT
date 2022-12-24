@@ -1,6 +1,9 @@
 use anyhow::Result;
 use log::info;
+use regex::Regex;
+use serde_json::Value;
 use std::{
+    collections::HashMap,
     fs::{self, File},
     path::{Path, PathBuf},
     process::Command,
@@ -88,4 +91,22 @@ pub fn clear_conf(app: &tauri::AppHandle) {
             }
         },
     );
+}
+
+pub fn merge(v: &Value, fields: &HashMap<String, Value>) -> Value {
+    match v {
+        Value::Object(m) => {
+            let mut m = m.clone();
+            for (k, v) in fields {
+                m.insert(k.clone(), v.clone());
+            }
+            Value::Object(m)
+        }
+        v => v.clone(),
+    }
+}
+
+pub fn gen_cmd(name: String) -> String {
+    let re = Regex::new(r"[^a-zA-Z0-9]").unwrap();
+    re.replace_all(&name, "_").to_lowercase()
 }

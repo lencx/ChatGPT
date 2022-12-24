@@ -106,8 +106,6 @@ async function cmdTip() {
 
     // input text
     if (window.__CHAT_MODEL_STATUS__ === 2 && event.keyCode === 9) {
-      console.log('«110» /src/assets/cmd.js ~> ', __CHAT_MODEL_STATUS__);
-
       searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
       modelDom.innerHTML = '';
       delete window.__CHAT_MODEL_STATUS__;

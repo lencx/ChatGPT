@@ -8,6 +8,8 @@ use tauri::{
 };
 use tauri_plugin_positioner::{on_tray_event, Position, WindowExt};
 
+use super::window;
+
 // --- Menu
 pub fn init() -> Menu {
     let chat_conf = ChatConfJson::get_chat_conf();
@@ -174,7 +176,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
 
     match menu_id {
         // Preferences
-        "control_center" => app.get_window("main").unwrap().show().unwrap(),
+        "control_center" => window::control_window(&app),
         "restart" => tauri::api::process::restart(&app.env()),
         "inject_script" => open(&app, script_path),
         "go_conf" => utils::open_file(utils::chat_root()),
@@ -182,12 +184,12 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
         "sync_prompts" => {
             tauri::api::dialog::ask(
-                app.get_window("main").as_ref(),
+                app.get_window("core").as_ref(),
                 "Sync Prompts",
                 "Data sync will enable all prompts, are you sure you want to sync?",
                 move |is_restart| {
                     if is_restart {
-                        app.get_window("main")
+                        app.get_window("core")
                             .unwrap()
                             .eval("window.__sync_prompts && window.__sync_prompts()")
                             .unwrap()
@@ -304,7 +306,7 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
             }
         }
         SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
-            "control_center" => app.get_window("main").unwrap().show().unwrap(),
+            "control_center" => window::control_window(&app),
             "restart" => tauri::api::process::restart(&handle.env()),
             "show_dock_icon" => {
                 ChatConfJson::amend(&serde_json::json!({ "hide_dock_icon": false }), Some(app))
