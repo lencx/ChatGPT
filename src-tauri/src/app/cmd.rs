@@ -1,4 +1,4 @@
-use crate::{conf::ChatConfJson, utils};
+use crate::{conf::ChatConfJson, utils::{self, exists}};
 use std::{collections::HashMap, fs, path::PathBuf};
 use tauri::{api, command, AppHandle, Manager};
 
@@ -150,6 +150,13 @@ pub fn sync_prompts(app: AppHandle, data: String, time: u64) {
     let model = chat_root().join("chat.model.json");
     let model_cmd = chat_root().join("chat.model.cmd.json");
     let chatgpt_prompts = chat_root().join("cache_model").join("chatgpt_prompts.json");
+
+    if !exists(&model) {
+        fs::write(&model, serde_json::json!({
+            "name": "ChatGPT Model",
+            "link": "https://github.com/lencx/ChatGPT"
+        }).to_string()).unwrap();
+    }
 
     // chatgpt_prompts.json
     fs::write(

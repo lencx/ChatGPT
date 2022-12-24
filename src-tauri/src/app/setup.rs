@@ -5,11 +5,11 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
     let chat_conf = ChatConfJson::get_chat_conf();
     let url = chat_conf.origin.to_string();
     let theme = ChatConfJson::theme();
-    // let handle = app.app_handle();
+    let handle = app.app_handle();
 
-    // std::thread::spawn(move || {
-    //     window::tray_window(&handle);
-    // });
+    std::thread::spawn(move || {
+        window::tray_window(&handle);
+    });
 
     if chat_conf.hide_dock_icon {
         #[cfg(target_os = "macos")]
