@@ -28,7 +28,11 @@ type readJSONOpts = { defaultVal?: Record<string, any>, isRoot?: boolean, isList
 export const readJSON = async (path: string, opts: readJSONOpts = {}) => {
   const { defaultVal = {}, isRoot = false, isList = false } = opts;
   const root = await chatRoot();
-  const file = await join(isRoot ? '' : root, path);
+  let file = path;
+
+  if (!isRoot) {
+    file = await join(root, path);
+  }
 
   if (!await exists(file)) {
     if (await dirname(file) !== root) {
@@ -52,7 +56,11 @@ type writeJSONOpts = { dir?: string, isRoot?: boolean };
 export const writeJSON = async (path: string, data: Record<string, any>, opts: writeJSONOpts = {}) => {
   const { isRoot = false } = opts;
   const root = await chatRoot();
-  const file = await join(isRoot ? '' : root, path);
+  let file = path;
+
+  if (!isRoot) {
+    file = await join(root, path);
+  }
 
   if (isRoot && !await exists(await dirname(file))) {
     await createDir(await dirname(file), { recursive: true });

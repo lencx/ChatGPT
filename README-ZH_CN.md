@@ -22,9 +22,9 @@
 
 **最新版:**
 
-- `Mac`: [ChatGPT_0.6.9_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.6.9/ChatGPT_0.6.9_x64.dmg)
-- `Linux`: [chat-gpt_0.6.9_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.6.9/chat-gpt_0.6.9_amd64.deb)
-- `Windows`: [ChatGPT_0.6.9_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.6.9/ChatGPT_0.6.9_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.6.10_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.6.10/ChatGPT_0.6.10_x64.dmg)
+- `Linux`: [chat-gpt_0.6.10_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.6.10/chat-gpt_0.6.10_amd64.deb)
+- `Windows`: [ChatGPT_0.6.10_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.6.10/ChatGPT_0.6.10_x64_en-US.msi)
 
 [其他版本...](https://github.com/lencx/ChatGPT/releases)
 
