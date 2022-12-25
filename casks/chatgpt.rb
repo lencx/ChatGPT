@@ -1,6 +1,6 @@
 cask "chatgpt" do
-  version "0.1.7"
-  sha256 "1320b30a67e2506f9b45ffd2a48243d6141171c231dd698994ae5156a637eb3f"
+   version "0.6.10"
+   sha256 "e85062565f826d32219c53b184d6df9c89441d4231cdfff775c2de8c50ac9906"
 
   url "https://github.com/lencx/ChatGPT/releases/download/v#{version}/ChatGPT_#{version}_x64.dmg"
   name "ChatGPT"
