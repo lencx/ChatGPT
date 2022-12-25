@@ -1,8 +1,8 @@
 # UPDATE LOG
 
-## v0.6.9
+## v0.6.10
 
-fix: unable to synchronize
+fix: sync failure on windows
 
 ## v0.6.4
 
