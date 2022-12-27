@@ -1,5 +1,12 @@
 # UPDATE LOG
 
+## v0.7.1
+
+fix:
+- some windows systems cannot start the application
+- windows and linux add about menu (show version information)
+- the tray icon is indistinguishable from the background in dark mode on window and linux
+
 ## v0.7.0
 
 fix:

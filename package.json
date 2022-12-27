@@ -8,6 +8,8 @@
     "build": "yarn tauri build",
     "updater": "tr updater",
     "release": "tr release --git",
+    "fix:tray": "tr override --json.tauri_systemTray_iconPath=\"icons/tray-icon-light.png\" --json.tauri_systemTray_iconAsTemplate=false",
+    "fix:tray:mac": "tr override --json.tauri_systemTray_iconPath=\"icons/tray-icon.png\" --json.tauri_systemTray_iconAsTemplate=true",
     "download": "node ./scripts/download.js",
     "tr": "tr",
     "tauri": "tauri"
