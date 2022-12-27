@@ -12,6 +12,9 @@
   "tauri": {
     "allowlist": {
       "all": true,
+      "globalShortcut": {
+        "all": true
+      },
       "http": {
         "all": true,
         "scope": [
