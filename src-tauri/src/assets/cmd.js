@@ -28,6 +28,9 @@ function init() {
   .chat-model-cmd-list .cmd-item:last-child {
     border-bottom: none;
   }
+  .chat-model-cmd-list .cmd-item.selected {
+    background: #fea;
+  }
   .chat-model-cmd-list .cmd-item b {
     display: inline-block;
     width: 100px;
@@ -46,7 +49,16 @@ function init() {
     white-space: nowrap;
     text-align: right;
     color: #888;
-  }`;
+  }
+  .chatappico {
+    width: 20px;
+    height: 20px;
+  }
+  .chatappico.pdf {
+    width: 24px;
+    height: 24px;
+  }
+  `;
   document.head.append(styleDom);
 
   if (window.formInterval) {
@@ -70,11 +82,24 @@ async function cmdTip() {
 
   // fix: tray window
   if (__TAURI_METADATA__.__currentWindow.label === 'tray') {
-    modelDom.style.bottom = '40px';
+    modelDom.style.bottom = '54px';
   }
 
   document.querySelector('form').appendChild(modelDom);
-  const itemDom = (v) => `<div class="cmd-item" title="${v.prompt}" data-prompt="${encodeURIComponent(v.prompt)}"><b title="${v.cmd}">/${v.cmd}</b><i>${v.act}</i></div>`;
+  const itemDom = (v) => `<div class="cmd-item" title="${v.prompt}" data-cmd="${v.cmd}" data-prompt="${encodeURIComponent(v.prompt)}"><b title="${v.cmd}">/${v.cmd}</b><i>${v.act}</i></div>`;
+  const renderList = (v) => {
+    modelDom.innerHTML = `<div>${v.map(itemDom).join('')}</div>`;
+    window.__CHAT_MODEL_CMD_PROMPT__ = v[0]?.prompt.trim();
+    window.__CHAT_MODEL_CMD__ = v[0]?.cmd.trim();
+    window.__list = modelDom.querySelectorAll('.cmd-item');
+    window.__index = 0;
+    window.__list[window.__index].classList.add('selected');
+  };
+  const setPrompt = (v = '') => {
+    if (v.trim()) {
+      window.__CHAT_MODEL_CMD_PROMPT__ = window.__CHAT_MODEL_CMD_PROMPT__?.replace(/\{([^{}]*)\}/, `{${v.trim()}}`);
+    }
+  }
   const searchInput = document.querySelector('form textarea');
 
   // Enter a command starting with `/` and press a space to automatically fill `chatgpt prompt`.
@@ -84,6 +109,35 @@ async function cmdTip() {
       return;
     }
 
+    // ------------------ Keyboard scrolling (ArrowUp | ArrowDown) --------------------------
+    if (event.keyCode === 38 &&  window.__index > 0) { // ArrowUp
+      window.__list[window.__index].classList.remove('selected');
+      window.__index = window.__index - 1;
+      window.__list[window.__index].classList.add('selected');
+      window.__CHAT_MODEL_CMD_PROMPT__ = decodeURIComponent(window.__list[window.__index].getAttribute('data-prompt'));
+      searchInput.value = `/${window.__list[window.__index].getAttribute('data-cmd')}`;
+      event.preventDefault();
+    }
+
+    if (event.keyCode === 40 && window.__index < window.__list.length - 1) { // ArrowDown
+      window.__list[window.__index].classList.remove('selected');
+      window.__index = window.__index + 1;
+      window.__list[window.__index].classList.add('selected');
+      window.__CHAT_MODEL_CMD_PROMPT__ = decodeURIComponent(window.__list[window.__index].getAttribute('data-prompt'));
+      searchInput.value = `/${window.__list[window.__index].getAttribute('data-cmd')}`;
+      event.preventDefault();
+    }
+
+    const containerHeight = modelDom.offsetHeight;
+    const itemHeight = window.__list[0].offsetHeight + 1;
+
+    const itemTop = window.__list[window.__index].offsetTop;
+    const itemBottom = itemTop + itemHeight;
+    if (itemTop < modelDom.scrollTop || itemBottom > modelDom.scrollTop + containerHeight) {
+      modelDom.scrollTop = itemTop;
+    }
+
+    // ------------------ TAB key replaces `{q}` tag content -------------------------------
     // feat: https://github.com/lencx/ChatGPT/issues/54
     if (event.keyCode === 9 && !window.__CHAT_MODEL_STATUS__) {
       const strGroup = window.__CHAT_MODEL_CMD_PROMPT__.match(/\{([^{}]*)\}/) || [];
@@ -95,36 +149,37 @@ async function cmdTip() {
       event.preventDefault();
     }
 
-    if (window.__CHAT_MODEL_STATUS__ === 1 && event.keyCode === 9) {
+    if (window.__CHAT_MODEL_STATUS__ === 1 && event.keyCode === 9) { // TAB
       const data = searchInput.value.split('|->');
       if (data[1]?.trim()) {
-        window.__CHAT_MODEL_CMD_PROMPT__ = window.__CHAT_MODEL_CMD_PROMPT__?.replace(/\{([^{}]*)\}/, `{${data[1]?.trim()}}`);
+        setPrompt(data[1]);
         window.__CHAT_MODEL_STATUS__ = 2;
       }
       event.preventDefault();
     }
 
     // input text
-    if (window.__CHAT_MODEL_STATUS__ === 2 && event.keyCode === 9) {
+    if (window.__CHAT_MODEL_STATUS__ === 2 && event.keyCode === 9) { // TAB
       searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
       modelDom.innerHTML = '';
       delete window.__CHAT_MODEL_STATUS__;
       event.preventDefault();
     }
 
-    // type in a space to complete the fill
+    // ------------------ type in a space to complete the fill ------------------------------------
     if (event.keyCode === 32) {
       searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
       modelDom.innerHTML = '';
       delete window.__CHAT_MODEL_CMD_PROMPT__;
     }
 
-    // send
-    if (event.keyCode === 13 && window.__CHAT_MODEL_CMD_PROMPT__) {
+    console.log('«174» /src/assets/cmd.js ~> ', window.__CHAT_MODEL_CMD_PROMPT__);
+
+
+    // ------------------ send --------------------------------------------------------------------
+    if (event.keyCode === 13 && window.__CHAT_MODEL_CMD_PROMPT__) { // Enter
       const data = searchInput.value.split('|->');
-      if (data[1]?.trim()) {
-        window.__CHAT_MODEL_CMD_PROMPT__ = window.__CHAT_MODEL_CMD_PROMPT__?.replace(/\{([^{}]*)\}/, `{${data[1]?.trim()}}`);
-      }
+      setPrompt(data[1]);
 
       searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
       modelDom.innerHTML = '';
@@ -135,7 +190,7 @@ async function cmdTip() {
     }
   });
 
-  searchInput.addEventListener('input', (event) => {
+  searchInput.addEventListener('input', () => {
     if (searchInput.value === '') {
       delete window.__CHAT_MODEL_CMD_PROMPT__;
       delete window.__CHAT_MODEL_CMD__;
@@ -152,17 +207,13 @@ async function cmdTip() {
 
     // all cmd result
     if (query === '/') {
-      modelDom.innerHTML = `<div>${data.map(itemDom).join('')}</div>`;
-      window.__CHAT_MODEL_CMD_PROMPT__ = data[0]?.prompt.trim();
-      window.__CHAT_MODEL_CMD__ = data[0]?.cmd.trim();
+      renderList(data);
       return;
     }
 
     const result = data.filter(i => new RegExp(query.substring(1)).test(i.cmd));
     if (result.length > 0) {
-      modelDom.innerHTML = `<div>${result.map(itemDom).join('')}</div>`;
-      window.__CHAT_MODEL_CMD_PROMPT__ = result[0]?.prompt.trim();
-      window.__CHAT_MODEL_CMD__ = result[0]?.cmd.trim();
+      renderList(result);
     } else {
       modelDom.innerHTML = '';
       delete window.__CHAT_MODEL_CMD_PROMPT__;

@@ -1,5 +1,15 @@
 # UPDATE LOG
 
+## v0.7.0
+
+fix:
+- mac m1 copy/paste does not work on some system versions
+- optimize the save chat log button to a small icon, the tray window no longer provides a save chat log button (the buttons causes the input area to become larger and the content area to become smaller)
+
+feat:
+- use the keyboard `⇧` (arrow up) and `⇩` (arrow down) keys to select the slash command
+- global shortcuts to the chatgpt app (mac: command+shift+o, windows: ctrl+shift+o)
+
 ## v0.6.10
 
 fix: sync failure on windows

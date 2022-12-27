@@ -22,9 +22,9 @@
 
 **最新版:**
 
-- `Mac`: [ChatGPT_0.6.10_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.6.10/ChatGPT_0.6.10_x64.dmg)
-- `Linux`: [chat-gpt_0.6.10_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.6.10/chat-gpt_0.6.10_amd64.deb)
-- `Windows`: [ChatGPT_0.6.10_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.6.10/ChatGPT_0.6.10_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.7.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.0/ChatGPT_0.7.0_x64.dmg)
+- `Linux`: [chat-gpt_0.7.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.0/chat-gpt_0.7.0_amd64.deb)
+- `Windows`: [ChatGPT_0.7.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.0/ChatGPT_0.7.0_x64_en-US.msi)
 
 [其他版本...](https://github.com/lencx/ChatGPT/releases)
 
@@ -60,7 +60,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 数据导入完成后，可以重新启动应用来使配置生效（`Menu -> Preferences -> Restart ChatGPT`）。
 
-在 ChatGPT 文本输入区域，键入 `/` 开头的字符，则会弹出指令提示，按下空格键，它会默认将命令关联的文本填充到输入区域（注意：如果包含多个指令提示，它只会选择第一个作为填充，你可以持续输入，直到第一个提示命令为你想要时，再按下空格键。或者使用鼠标来点击多条指令中的某一个）。填充完成后，你只需要按下回车键即可。斜杠命令下，使用 TAB 键修改 `{q}` 标签内容（仅支持单个修改 [#54](https://github.com/lencx/ChatGPT/issues/54)）。
+在 ChatGPT 文本输入区域，键入 `/` 开头的字符，则会弹出指令提示，按下空格键，它会默认将命令关联的文本填充到输入区域（注意：如果包含多个指令提示，它只会选择第一个作为填充，你可以持续输入，直到第一个提示命令为你想要时，再按下空格键。或者使用鼠标来点击多条指令中的某一个）。填充完成后，你只需要按下回车键即可。斜杠命令下，使用 TAB 键修改 `{q}` 标签内容（仅支持单个修改 [#54](https://github.com/lencx/ChatGPT/issues/54)）。使用键盘 `⇧` 和 `⇩`（上下键）来选择斜杠指令。
 
 ![chatgpt](assets/chatgpt.gif)
 ![chatgpt-cmd](assets/chatgpt-cmd.gif)
@@ -74,6 +74,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
 - 系统托盘悬浮窗
 - 应用菜单功能强大
 - 支持斜杠命令及其配置（可手动配置或从文件同步 [#55](https://github.com/lencx/ChatGPT/issues/55)）
+- 进入应用的全局快捷键 (mac: `command+shift+o`, windows: `ctrl+shift+o`)
 
 ### 菜单项
 
