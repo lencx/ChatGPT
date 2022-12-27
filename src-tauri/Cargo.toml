@@ -45,4 +45,4 @@ custom-protocol = [ "tauri/custom-protocol" ]
 [profile.release]
 strip = true
 lto = true
-opt-level = "z"
+opt-level = "s"
