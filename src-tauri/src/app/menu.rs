@@ -3,10 +3,13 @@ use crate::{
     utils,
 };
 use tauri::{
-    AboutMetadata, AppHandle, CustomMenuItem, Manager, Menu, MenuItem, Submenu, SystemTray,
-    SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowMenuEvent,
+    AppHandle, CustomMenuItem, Manager, Menu, MenuItem, Submenu, SystemTray, SystemTrayEvent,
+    SystemTrayMenu, SystemTrayMenuItem, WindowMenuEvent,
 };
 use tauri_plugin_positioner::{on_tray_event, Position, WindowExt};
+
+#[cfg(target_os = "macos")]
+use tauri::AboutMetadata;
 
 use super::window;
 
@@ -20,15 +23,15 @@ pub fn init() -> Menu {
             #[cfg(target_os = "macos")]
             MenuItem::About(name.into(), AboutMetadata::default()).into(),
             #[cfg(not(target_os = "macos"))]
-            CustomMenuItem::new("about".to_string(), "About ChatGPT")
-                .into(),
+            CustomMenuItem::new("about".to_string(), "About ChatGPT").into(),
             MenuItem::Services.into(),
             MenuItem::Hide.into(),
             MenuItem::HideOthers.into(),
             MenuItem::ShowAll.into(),
             MenuItem::Separator.into(),
             MenuItem::Quit.into(),
-        ]));
+        ]),
+    );
 
     let stay_on_top =
         CustomMenuItem::new("stay_on_top".to_string(), "Stay On Top").accelerator("CmdOrCtrl+T");
@@ -183,7 +186,11 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         // App
         "about" => {
             let tauri_conf = utils::get_tauri_conf().unwrap();
-            tauri::api::dialog::message(app.get_window("core").as_ref(), "ChatGPT", format!("Version {}", tauri_conf.package.version.unwrap()));
+            tauri::api::dialog::message(
+                app.get_window("core").as_ref(),
+                "ChatGPT",
+                format!("Version {}", tauri_conf.package.version.unwrap()),
+            );
         }
         // Preferences
         "control_center" => window::control_window(&app),

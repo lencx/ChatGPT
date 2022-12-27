@@ -22,9 +22,9 @@
 
 **最新版:**
 
-- `Mac`: [ChatGPT_0.7.1_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.1/ChatGPT_0.7.1_x64.dmg)
-- `Linux`: [chat-gpt_0.7.1_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.1/chat-gpt_0.7.1_amd64.deb)
-- `Windows`: [ChatGPT_0.7.1_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.1/ChatGPT_0.7.1_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.7.2_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.2/ChatGPT_0.7.2_x64.dmg)
+- `Linux`: [chat-gpt_0.7.2_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.2/chat-gpt_0.7.2_amd64.deb)
+- `Windows`: [ChatGPT_0.7.2_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.2/ChatGPT_0.7.2_x64_en-US.msi)
 
 [其他版本...](https://github.com/lencx/ChatGPT/releases)
 
@@ -74,7 +74,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
 - 系统托盘悬浮窗
 - 应用菜单功能强大
 - 支持斜杠命令及其配置（可手动配置或从文件同步 [#55](https://github.com/lencx/ChatGPT/issues/55)）
-- 进入应用的全局快捷键 (mac: `command+shift+o`, windows: `ctrl+shift+o`)
+<!-- - 进入应用的全局快捷键 (mac: `command+shift+o`, windows: `ctrl+shift+o`) -->
 
 ### 菜单项
 
