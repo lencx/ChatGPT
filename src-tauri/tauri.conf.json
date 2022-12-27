@@ -30,8 +30,8 @@
       }
     },
     "systemTray": {
-      "iconPath": "icons/tray-icon.png",
-      "iconAsTemplate": true,
+      "iconPath": "icons/tray-icon-light.png",
+      "iconAsTemplate": false,
       "menuOnLeftClick": false
     },
     "bundle": {

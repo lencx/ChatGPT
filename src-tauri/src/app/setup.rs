@@ -1,4 +1,5 @@
 use crate::{app::window, conf::ChatConfJson, utils};
+use log::info;
 use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, GlobalShortcutManager, Manager};
 
 pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
@@ -11,12 +12,15 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         window::tray_window(&handle);
     });
 
+    info!("stepup");
+
     {
+        info!("global_shortcut_start");
         let handle = app.app_handle();
         let mut shortcut = app.global_shortcut_manager();
         let is_mini_key = shortcut.is_registered("CmdOrCtrl+Shift+O");
 
-        if !is_mini_key.unwrap() {
+        if is_mini_key.is_ok() {
             shortcut
                 .register("CmdOrCtrl+Shift+O", move || {
                     if let Some(w) = handle.get_window("core") {
@@ -30,6 +34,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
                 })
                 .unwrap();
         };
+        info!("global_shortcut_end");
     }
 
     if chat_conf.hide_dock_icon {
