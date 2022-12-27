@@ -29,6 +29,7 @@ pub fn init() -> Menu {
 
     let stay_on_top =
         CustomMenuItem::new("stay_on_top".to_string(), "Stay On Top").accelerator("CmdOrCtrl+T");
+    #[cfg(target_os = "macos")]
     let titlebar =
         CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
     let theme_light = CustomMenuItem::new("theme_light".to_string(), "Light");
@@ -40,6 +41,7 @@ pub fn init() -> Menu {
     } else {
         stay_on_top
     };
+    #[cfg(target_os = "macos")]
     let titlebar_menu = if chat_conf.titlebar {
         titlebar.selected()
     } else {
