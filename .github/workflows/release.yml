@@ -64,6 +64,11 @@ jobs:
       - name: Install app dependencies and build it
         run: yarn && yarn build:fe
 
+      - name: fix tray icon
+        if: matrix.platform != 'macos-latest'
+        run: |
+          yarn fix:tray
+
       - uses: tauri-apps/tauri-action@v0.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

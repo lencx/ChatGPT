@@ -8,19 +8,18 @@ use std::{
     path::{Path, PathBuf},
     process::Command,
 };
-use tauri::Manager;
-// use tauri::utils::config::Config;
+use tauri::{Manager, utils::config::Config};
 
 pub fn chat_root() -> PathBuf {
     tauri::api::path::home_dir().unwrap().join(".chatgpt")
 }
 
-// pub fn get_tauri_conf() -> Option<Config> {
-//     let config_file = include_str!("../tauri.conf.json");
-//     let config: Config =
-//         serde_json::from_str(config_file).expect("failed to parse tauri.conf.json");
-//     Some(config)
-// }
+pub fn get_tauri_conf() -> Option<Config> {
+    let config_file = include_str!("../tauri.conf.json");
+    let config: Config =
+        serde_json::from_str(config_file).expect("failed to parse tauri.conf.json");
+    Some(config)
+}
 
 pub fn exists(path: &Path) -> bool {
     Path::new(path).exists()

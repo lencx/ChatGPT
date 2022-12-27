@@ -16,16 +16,19 @@ pub fn init() -> Menu {
     let name = "ChatGPT";
     let app_menu = Submenu::new(
         name,
-        Menu::new()
-            .add_native_item(MenuItem::About(name.into(), AboutMetadata::default()))
-            .add_native_item(MenuItem::Services)
-            .add_native_item(MenuItem::Separator)
-            .add_native_item(MenuItem::Hide)
-            .add_native_item(MenuItem::HideOthers)
-            .add_native_item(MenuItem::ShowAll)
-            .add_native_item(MenuItem::Separator)
-            .add_native_item(MenuItem::Quit),
-    );
+        Menu::with_items([
+            #[cfg(target_os = "macos")]
+            MenuItem::About(name.into(), AboutMetadata::default()).into(),
+            #[cfg(not(target_os = "macos"))]
+            CustomMenuItem::new("about".to_string(), "About ChatGPT")
+                .into(),
+            MenuItem::Services.into(),
+            MenuItem::Hide.into(),
+            MenuItem::HideOthers.into(),
+            MenuItem::ShowAll.into(),
+            MenuItem::Separator.into(),
+            MenuItem::Quit.into(),
+        ]));
 
     let stay_on_top =
         CustomMenuItem::new("stay_on_top".to_string(), "Stay On Top").accelerator("CmdOrCtrl+T");
@@ -177,6 +180,11 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     let menu_handle = core_window.menu_handle();
 
     match menu_id {
+        // App
+        "about" => {
+            let tauri_conf = utils::get_tauri_conf().unwrap();
+            tauri::api::dialog::message(app.get_window("core").as_ref(), "ChatGPT", format!("Version {}", tauri_conf.package.version.unwrap()));
+        }
         // Preferences
         "control_center" => window::control_window(&app),
         "restart" => tauri::api::process::restart(&app.env()),
