@@ -1,5 +1,6 @@
 use crate::{app::window, conf::ChatConfJson, utils};
-use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, GlobalShortcutManager, Manager};
+use log::info;
+use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, Manager};
 
 pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
     let chat_conf = ChatConfJson::get_chat_conf();
@@ -11,26 +12,31 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         window::tray_window(&handle);
     });
 
-    {
-        let handle = app.app_handle();
-        let mut shortcut = app.global_shortcut_manager();
-        let is_mini_key = shortcut.is_registered("CmdOrCtrl+Shift+O");
+    info!("stepup");
 
-        if !is_mini_key.unwrap() {
-            shortcut
-                .register("CmdOrCtrl+Shift+O", move || {
-                    if let Some(w) = handle.get_window("core") {
-                        if w.is_visible().unwrap() {
-                            w.hide().unwrap();
-                        } else {
-                            w.show().unwrap();
-                            w.set_focus().unwrap();
-                        }
-                    }
-                })
-                .unwrap();
-        };
-    }
+    // fix: Global shortcuts can cause programs to exit under windows
+    // {
+    //     info!("global_shortcut_start");
+    //     let handle = app.app_handle();
+    //     let mut shortcut = app.global_shortcut_manager();
+    //     let is_mini_key = shortcut.is_registered("CmdOrCtrl+Shift+O");
+
+    //     if is_mini_key.is_ok() {
+    //         shortcut
+    //             .register("CmdOrCtrl+Shift+O", move || {
+    //                 if let Some(w) = handle.get_window("core") {
+    //                     if w.is_visible().unwrap() {
+    //                         w.hide().unwrap();
+    //                     } else {
+    //                         w.show().unwrap();
+    //                         w.set_focus().unwrap();
+    //                     }
+    //                 }
+    //             })
+    //             .unwrap();
+    //     };
+    //     info!("global_shortcut_end");
+    // }
 
     if chat_conf.hide_dock_icon {
         #[cfg(target_os = "macos")]

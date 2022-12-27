@@ -1,5 +1,9 @@
 # UPDATE LOG
 
+## v0.7.2
+
+fix: some windows systems cannot start the application
+
 ## v0.7.1
 
 fix:
@@ -15,7 +19,7 @@ fix:
 
 feat:
 - use the keyboard `⇧` (arrow up) and `⇩` (arrow down) keys to select the slash command
-- global shortcuts to the chatgpt app (mac: command+shift+o, windows: ctrl+shift+o)
+<!-- - global shortcuts to the chatgpt app (mac: command+shift+o, windows: ctrl+shift+o) -->
 
 ## v0.6.10
 

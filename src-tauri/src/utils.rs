@@ -8,7 +8,7 @@ use std::{
     path::{Path, PathBuf},
     process::Command,
 };
-use tauri::{Manager, utils::config::Config};
+use tauri::{utils::config::Config, Manager};
 
 pub fn chat_root() -> PathBuf {
     tauri::api::path::home_dir().unwrap().join(".chatgpt")
