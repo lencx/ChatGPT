@@ -17,7 +17,7 @@ tauri-build = {version = "1.2.1", features = [] }
 anyhow = "1.0.66"
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.2.3", features = ["api-all", "devtools", "system-tray", "updater"] }
+tauri = { version = "1.2.3", features = ["api-all", "devtools", "global-shortcut", "system-tray", "updater"] }
 tauri-plugin-positioner = { version = "1.0.4", features = ["system-tray"] }
 log = "0.4.17"
 csv = "1.1.6"

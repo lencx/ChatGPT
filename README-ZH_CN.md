@@ -74,7 +74,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
 - 系统托盘悬浮窗
 - 应用菜单功能强大
 - 支持斜杠命令及其配置（可手动配置或从文件同步 [#55](https://github.com/lencx/ChatGPT/issues/55)）
-<!-- - 进入应用的全局快捷键 (mac: `command+shift+o`, windows: `ctrl+shift+o`) -->
+- 进入应用的全局快捷键 (mac: `Command + Shift + O`, windows: `Ctrl + Shift + O`)
 
 ### 菜单项
 
