@@ -9,7 +9,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
     let theme = ChatConfJson::theme();
     let handle = app.app_handle();
 
-    std::thread::spawn(move || {
+    tokio::spawn(async move {
         window::tray_window(&handle);
     });
 
@@ -43,7 +43,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         app.set_activation_policy(tauri::ActivationPolicy::Accessory);
     } else {
         let app = app.handle();
-        std::thread::spawn(move || {
+        tokio::spawn(async move {
             #[cfg(target_os = "macos")]
             WindowBuilder::new(&app, "core", WindowUrl::App(url.into()))
                 .title("ChatGPT")

@@ -15,7 +15,8 @@ use tauri_plugin_log::{
     LogTarget, LoggerBuilder,
 };
 
-fn main() {
+#[tokio::main]
+async fn main() {
     ChatConfJson::init();
     // If the file does not exist, creating the file will block menu synchronization
     utils::create_chatgpt_prompts();
