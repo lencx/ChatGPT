@@ -3,6 +3,7 @@
 ## v0.7.3
 
 chore:
+- optimize slash command style
 - optimize tray menu icon and button icons
 - global shortcuts to the chatgpt app (mac: `Command + Shift + O`, windows: `Ctrl + Shift + O`)
 
