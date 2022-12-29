@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.7.2"
+    "version": "0.7.3"
   },
   "tauri": {
     "allowlist": {
@@ -30,8 +30,8 @@
       }
     },
     "systemTray": {
-      "iconPath": "icons/tray-icon-light.png",
-      "iconAsTemplate": false,
+      "iconPath": "icons/tray-icon.png",
+      "iconAsTemplate": true,
       "menuOnLeftClick": false
     },
     "bundle": {

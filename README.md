@@ -24,9 +24,9 @@
 
 **Latest:**
 
-- `Mac`: [ChatGPT_0.7.2_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.2/ChatGPT_0.7.2_x64.dmg)
-- `Linux`: [chat-gpt_0.7.2_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.2/chat-gpt_0.7.2_amd64.deb)
-- `Windows`: [ChatGPT_0.7.2_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.2/ChatGPT_0.7.2_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.7.3_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.3/ChatGPT_0.7.3_x64.dmg)
+- `Linux`: [chat-gpt_0.7.3_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.3/chat-gpt_0.7.3_amd64.deb)
+- `Windows`: [ChatGPT_0.7.3_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.3/ChatGPT_0.7.3_x64_en-US.msi)
 
 [Other version...](https://github.com/lencx/ChatGPT/releases)
 
@@ -60,7 +60,7 @@ You can look at [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-p
 ![chat cmd](./assets/chat-cmd-1.png)
 ![chat cmd](./assets/chat-cmd-2.png)
 
-After the data import is done, you can restart the app to make the configuration take effect (`Menu -> Preferences -> Restart ChatGPT`).
+<!-- After the data import is done, you can restart the app to make the configuration take effect (`Menu -> Preferences -> Restart ChatGPT`). -->
 
 In the chatgpt text input area, type a character starting with `/` to bring up the command prompt, press the spacebar, and it will fill the input area with the text associated with the command by default (note: if it contains multiple command prompts, it will only select the first one as the fill, you can keep typing until the first prompted command is the one you want, then press the spacebar. Or use the mouse to click on one of the multiple commands). When the fill is complete, you simply press the Enter key. Under the slash command, use the tab key to modify the contents of the `{q}` tag (only single changes are supported [#54](https://github.com/lencx/ChatGPT/issues/54)). Use the keyboard `⇧` (arrow up) and `⇩` (arrow down) keys to select the slash command.
 
@@ -76,7 +76,7 @@ In the chatgpt text input area, type a character starting with `/` to bring up t
 - System tray hover window
 - Powerful menu items
 - Support for slash commands and their configuration (can be configured manually or synchronized from a file [#55](https://github.com/lencx/ChatGPT/issues/55))
-<!-- - Global shortcuts to the chatgpt app (mac: `command+shift+o`, windows: `ctrl+shift+o`) -->
+- Global shortcuts to the chatgpt app (mac: `Command + Shift + O`, windows: `Ctrl + Shift + O`)
 
 ### MenuItem
 

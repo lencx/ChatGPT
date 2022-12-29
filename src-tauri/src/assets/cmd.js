@@ -13,13 +13,30 @@ function init() {
     z-index: 9999;
   }
   .chat-model-cmd-list>div {
-    border: solid 2px #d8d8d8;
+    border: solid 2px rgba(80,80,80,.3);
     border-radius: 5px;
     background-color: #fff;
   }
+
+  html.dark .chat-model-cmd-list>div {
+    background-color: #4a4a4a;
+  }
+  html.dark .chat-model-cmd-list .cmd-item {
+    border-color: #666;
+  }
+  html.dark .chat-model-cmd-list .cmd-item b {
+    color: #e8e8e8;
+  }
+  html.dark .chat-model-cmd-list .cmd-item i {
+    color: #999;
+  }
+  html.dark .chat-model-cmd-list .cmd-item.selected {
+    background: rgba(59,130,246,.5);
+  }
+
   .chat-model-cmd-list .cmd-item {
     font-size: 12px;
-    border-bottom: solid 1px #888;
+    border-bottom: solid 1px rgba(80,80,80,.2);
     padding: 2px 4px;
     display: flex;
     user-select: none;
@@ -29,7 +46,7 @@ function init() {
     border-bottom: none;
   }
   .chat-model-cmd-list .cmd-item.selected {
-    background: #fea;
+    background: rgba(59,130,246,.3);
   }
   .chat-model-cmd-list .cmd-item b {
     display: inline-block;
@@ -172,9 +189,6 @@ async function cmdTip() {
       modelDom.innerHTML = '';
       delete window.__CHAT_MODEL_CMD_PROMPT__;
     }
-
-    console.log('«174» /src/assets/cmd.js ~> ', window.__CHAT_MODEL_CMD_PROMPT__);
-
 
     // ------------------ send --------------------------------------------------------------------
     if (event.keyCode === 13 && window.__CHAT_MODEL_CMD_PROMPT__) { // Enter
