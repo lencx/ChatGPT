@@ -17,6 +17,24 @@ const OriginLabel = ({ url }: { url: string }) => {
   )
 }
 
+const GlobalShortcut = () => {
+  return (
+    <div>
+      Global Shortcut
+      {' '}
+      <Tooltip title={(
+        <div>
+          <div>Shortcut definition, modifiers and key separated by "+" e.g. CmdOrControl+Q</div>
+          <div style={{ margin: '10px 0'}}>If empty, the shortcut is disabled.</div>
+          <a href="https://tauri.app/v1/api/js/globalshortcut" target="_blank">https://tauri.app/v1/api/js/globalshortcut</a>
+        </div>
+      )}>
+        <QuestionCircleOutlined />
+      </Tooltip>
+    </div>
+  )
+}
+
 export default function General() {
   const [form] = Form.useForm();
   const [platformInfo, setPlatform] = useState<string>('');
@@ -70,6 +88,9 @@ export default function General() {
       </Form.Item>
       <Form.Item label="Stay On Top" name="stay_on_top" valuePropName="checked">
         <Switch />
+      </Form.Item>
+      <Form.Item label={<GlobalShortcut />} name="global_shortcut">
+        <Input placeholder="CmdOrCtrl+Shift+O" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
       {platformInfo === 'darwin' && (
         <Form.Item label="Titlebar" name="titlebar" valuePropName="checked">

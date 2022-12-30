@@ -13,30 +13,25 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         window::tray_window(&handle);
     });
 
-    {
-        info!("global_shortcut_start");
+    if let Some(v) = chat_conf.global_shortcut {
+        info!("global_shortcut");
         let handle = app.app_handle();
         let mut shortcut = app.global_shortcut_manager();
-        let core_shortcut = shortcut.is_registered("CmdOrCtrl+Shift+O");
-
-        info!("is_registered: {}", core_shortcut.is_ok());
-
-        if core_shortcut.is_ok() {
-            shortcut
-                .register("CmdOrCtrl+Shift+O", move || {
-                    if let Some(w) = handle.get_window("core") {
-                        if w.is_visible().unwrap() {
-                            w.hide().unwrap();
-                        } else {
-                            w.show().unwrap();
-                            w.set_focus().unwrap();
-                        }
-                    }
-                })
-                .unwrap();
-        };
-        info!("global_shortcut_end");
-    }
+        shortcut.register(&v, move|| {
+            if let Some(w) = handle.get_window("core") {
+                if w.is_visible().unwrap() {
+                    w.hide().unwrap();
+                } else {
+                    w.show().unwrap();
+                    w.set_focus().unwrap();
+                }
+            }
+        }).unwrap_or_else(|err| {
+            info!("global_shortcut_register_error: {}", err);
+        });
+    } else {
+        info!("global_shortcut_unregister");
+    };
 
     if chat_conf.hide_dock_icon {
         #[cfg(target_os = "macos")]
