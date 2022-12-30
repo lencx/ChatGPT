@@ -18,6 +18,7 @@ pub const DEFAULT_CHAT_CONF: &str = r#"{
     "stay_on_top": false,
     "theme": "Light",
     "titlebar": true,
+    "global_shortcut": "",
     "hide_dock_icon": false,
     "default_origin": "https://chat.openai.com",
     "origin": "https://chat.openai.com",
@@ -28,6 +29,7 @@ pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
     "stay_on_top": false,
     "theme": "Light",
     "titlebar": false,
+    "global_shortcut": "",
     "hide_dock_icon": false,
     "default_origin": "https://chat.openai.com",
     "origin": "https://chat.openai.com",
@@ -61,6 +63,7 @@ pub struct ChatConfJson {
     pub origin: String,
     pub ua_window: String,
     pub ua_tray: String,
+    pub global_shortcut: Option<String>,
 }
 
 impl ChatConfJson {

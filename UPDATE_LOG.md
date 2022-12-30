@@ -1,5 +1,10 @@
 # UPDATE LOG
 
+## v0.7.4
+
+fix:
+- customize global shortcuts (`Menu -> Preferences -> Control Center -> General -> Global Shortcut`)
+
 ## v0.7.3
 
 chore:
