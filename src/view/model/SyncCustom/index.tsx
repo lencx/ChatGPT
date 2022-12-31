@@ -34,7 +34,9 @@ export default function SyncCustom() {
     if (!opInfo.opType) return;
     if (opInfo.opType === 'sync') {
       const filename = `${opInfo?.opRecord?.id}.json`;
-      handleSync(filename).then(() => {
+      handleSync(filename).then((isOk: boolean) => {
+        opInfo.resetRecord();
+        if (!isOk) return;
         const data = opReplace(opInfo?.opRecord?.[opSafeKey], { ...opInfo?.opRecord, last_updated: Date.now() });
         modelSet(data);
         opInfo.resetRecord();
@@ -70,10 +72,11 @@ export default function SyncCustom() {
         await modelCacheSet(data as [], file);
         await modelCacheCmd();
         message.success('ChatGPT Prompts data has been synchronized!');
+        return true;
       } else {
         message.error('ChatGPT Prompts data sync failed, please try again!');
+        return false;
       }
-      return;
     }
     // local
     if (isJson) {
@@ -87,6 +90,7 @@ export default function SyncCustom() {
       await modelCacheSet(fmtData(list), file);
     }
     await modelCacheCmd();
+    return true;
   };
 
   const handleOk = () => {

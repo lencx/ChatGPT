@@ -30,7 +30,7 @@ pub fn control_window(handle: &tauri::AppHandle) {
     let app = handle.clone();
     tokio::spawn(async move {
         WindowBuilder::new(&app, "main", WindowUrl::App("index.html".into()))
-            .title("ChatGPT")
+            .title("Control Center")
             .resizable(true)
             .fullscreen(false)
             .inner_size(800.0, 600.0)

@@ -88,8 +88,17 @@ pub fn parse_prompt(data: String) -> Vec<PromptRecord> {
     let mut rdr = csv::Reader::from_reader(data.as_bytes());
     let mut list = vec![];
     for result in rdr.deserialize() {
-        let record: PromptRecord = result.unwrap();
-        list.push(record);
+        let record: PromptRecord = result.unwrap_or_else(|err| {
+            info!("parse_prompt_error: {}", err);
+            PromptRecord {
+                cmd: None,
+                act: "".to_string(),
+                prompt: "".to_string(),
+            }
+        });
+        if !record.act.is_empty() {
+            list.push(record);
+        }
     }
     list
 }
@@ -222,19 +231,22 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
 
 #[command]
 pub async fn sync_user_prompts(url: String, data_type: String) -> Option<Vec<ModelRecord>> {
-    let res = utils::get_data(&url, None).await.unwrap();
+    let res = utils::get_data(&url, None).await.unwrap_or_else(|err| {
+        info!("chatgpt_http_error: {}", err);
+        None
+    });
 
     info!("chatgpt_http_url: {}", url);
 
     if let Some(v) = res {
         let data;
         if data_type == "csv" {
-            info!("chatgpt_http_csv_parser");
+            info!("chatgpt_http_csv_parse");
             data = parse_prompt(v);
         } else if data_type == "json" {
-            info!("chatgpt_http_json_parser");
+            info!("chatgpt_http_json_parse");
             data = serde_json::from_str(&v).unwrap_or_else(|err| {
-                info!("chatgpt_http_json_parser_error: {}", err);
+                info!("chatgpt_http_json_parse_error: {}", err);
                 vec![]
             });
         } else {

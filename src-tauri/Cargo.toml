@@ -26,6 +26,7 @@ walkdir = "2.3.2"
 regex = "1.7.0"
 tokio = { version = "1.23.0", features = ["macros"] }
 reqwest = "0.11.13"
+wry = "0.23.4"
 
 [dependencies.tauri-plugin-log]
 git = "https://github.com/tauri-apps/tauri-plugin-log"
