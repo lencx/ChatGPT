@@ -24,7 +24,9 @@ export const syncColumns = () => [
     dataIndex: 'tags',
     key: 'tags',
     // width: 150,
-    render: () => <Tag>chatgpt-prompts</Tag>,
+    render: (v: string[]) => (
+      <span className="chat-prompts-tags">{v?.map(i => <Tag key={i}>{i}</Tag>)}</span>
+    ),
   },
   {
     title: 'Enable',

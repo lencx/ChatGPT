@@ -109,3 +109,22 @@ pub fn gen_cmd(name: String) -> String {
     let re = Regex::new(r"[^a-zA-Z0-9]").unwrap();
     re.replace_all(&name, "_").to_lowercase()
 }
+
+pub async fn get_data(
+    url: &str,
+    app: Option<&tauri::AppHandle>,
+) -> Result<Option<String>, reqwest::Error> {
+    let res = reqwest::get(url).await?;
+    let is_ok = res.status() == 200;
+    let body = res.text().await?;
+
+    if is_ok {
+        Ok(Some(body))
+    } else {
+        info!("chatgpt_http_error: {}", body);
+        if let Some(v) = app {
+            tauri::api::dialog::message(v.get_window("core").as_ref(), "ChatGPT HTTP", body);
+        }
+        Ok(None)
+    }
+}

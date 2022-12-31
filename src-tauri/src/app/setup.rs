@@ -17,18 +17,20 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         info!("global_shortcut");
         let handle = app.app_handle();
         let mut shortcut = app.global_shortcut_manager();
-        shortcut.register(&v, move|| {
-            if let Some(w) = handle.get_window("core") {
-                if w.is_visible().unwrap() {
-                    w.hide().unwrap();
-                } else {
-                    w.show().unwrap();
-                    w.set_focus().unwrap();
+        shortcut
+            .register(&v, move || {
+                if let Some(w) = handle.get_window("core") {
+                    if w.is_visible().unwrap() {
+                        w.hide().unwrap();
+                    } else {
+                        w.show().unwrap();
+                        w.set_focus().unwrap();
+                    }
                 }
-            }
-        }).unwrap_or_else(|err| {
-            info!("global_shortcut_register_error: {}", err);
-        });
+            })
+            .unwrap_or_else(|err| {
+                info!("global_shortcut_register_error: {}", err);
+            });
     } else {
         info!("global_shortcut_unregister");
     };
