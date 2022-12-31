@@ -34,11 +34,7 @@ async fn main() {
         // https://github.com/tauri-apps/tauri/pull/2736
         .plugin(
             LoggerBuilder::new()
-                .level(if cfg!(debug_assertions) {
-                    log::LevelFilter::Debug
-                } else {
-                    log::LevelFilter::Trace
-                })
+                .level(log::LevelFilter::Debug)
                 .with_colors(colors)
                 .targets([
                     // LogTarget::LogDir,
