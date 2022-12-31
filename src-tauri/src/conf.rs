@@ -14,10 +14,13 @@ use tauri::TitleBarStyle;
 pub const ISSUES_URL: &str = "https://github.com/lencx/ChatGPT/issues";
 pub const UPDATE_LOG_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/UPDATE_LOG.md";
 pub const AWESOME_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/AWESOME.md";
+pub const GITHUB_PROMPTS_CSV_URL: &str =
+    "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv";
 pub const DEFAULT_CHAT_CONF: &str = r#"{
     "stay_on_top": false,
     "theme": "Light",
     "titlebar": true,
+    "global_shortcut": "",
     "hide_dock_icon": false,
     "default_origin": "https://chat.openai.com",
     "origin": "https://chat.openai.com",
@@ -28,6 +31,7 @@ pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
     "stay_on_top": false,
     "theme": "Light",
     "titlebar": false,
+    "global_shortcut": "",
     "hide_dock_icon": false,
     "default_origin": "https://chat.openai.com",
     "origin": "https://chat.openai.com",
@@ -61,6 +65,7 @@ pub struct ChatConfJson {
     pub origin: String,
     pub ua_window: String,
     pub ua_tray: String,
+    pub global_shortcut: Option<String>,
 }
 
 impl ChatConfJson {

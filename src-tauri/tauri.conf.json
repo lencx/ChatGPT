@@ -7,20 +7,13 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.7.3"
+    "version": "0.7.4"
   },
   "tauri": {
     "allowlist": {
       "all": true,
       "globalShortcut": {
         "all": true
-      },
-      "http": {
-        "all": true,
-        "scope": [
-          "https://**",
-          "http://**"
-        ]
       },
       "fs": {
         "all": true,

@@ -1,5 +1,11 @@
 # UPDATE LOG
 
+## v0.7.4
+
+fix:
+- trying to resolve linux errors: `error while loading shared libraries`
+- customize global shortcuts (`Menu -> Preferences -> Control Center -> General -> Global Shortcut`)
+
 ## v0.7.3
 
 chore:

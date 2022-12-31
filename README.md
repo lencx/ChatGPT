@@ -24,9 +24,9 @@
 
 **Latest:**
 
-- `Mac`: [ChatGPT_0.7.3_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.3/ChatGPT_0.7.3_x64.dmg)
-- `Linux`: [chat-gpt_0.7.3_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.3/chat-gpt_0.7.3_amd64.deb)
-- `Windows`: [ChatGPT_0.7.3_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.3/ChatGPT_0.7.3_x64_en-US.msi)
+- `Mac`: [ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg)
+- `Linux`: [chat-gpt_0.7.4_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.deb)
+- `Windows`: [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
 
 [Other version...](https://github.com/lencx/ChatGPT/releases)
 
@@ -76,7 +76,7 @@ In the chatgpt text input area, type a character starting with `/` to bring up t
 - System tray hover window
 - Powerful menu items
 - Support for slash commands and their configuration (can be configured manually or synchronized from a file [#55](https://github.com/lencx/ChatGPT/issues/55))
-- Global shortcuts to the chatgpt app (mac: `Command + Shift + O`, windows: `Ctrl + Shift + O`)
+- Customize global shortcuts ([#108](https://github.com/lencx/ChatGPT/issues/108))
 
 ### MenuItem
 

@@ -1,6 +1,7 @@
 use crate::{app::window, conf::ChatConfJson, utils};
 use log::info;
 use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, GlobalShortcutManager, Manager};
+use wry::application::accelerator::Accelerator;
 
 pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
     info!("stepup");
@@ -13,30 +14,35 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         window::tray_window(&handle);
     });
 
-    {
-        info!("global_shortcut_start");
-        let handle = app.app_handle();
-        let mut shortcut = app.global_shortcut_manager();
-        let core_shortcut = shortcut.is_registered("CmdOrCtrl+Shift+O");
-
-        info!("is_registered: {}", core_shortcut.is_ok());
-
-        if core_shortcut.is_ok() {
-            shortcut
-                .register("CmdOrCtrl+Shift+O", move || {
-                    if let Some(w) = handle.get_window("core") {
-                        if w.is_visible().unwrap() {
-                            w.hide().unwrap();
-                        } else {
-                            w.show().unwrap();
-                            w.set_focus().unwrap();
+    if let Some(v) = chat_conf.global_shortcut {
+        info!("global_shortcut: `{}`", v);
+        match v.parse::<Accelerator>() {
+            Ok(_) => {
+                info!("global_shortcut_register");
+                let handle = app.app_handle();
+                let mut shortcut = app.global_shortcut_manager();
+                shortcut
+                    .register(&v, move || {
+                        if let Some(w) = handle.get_window("core") {
+                            if w.is_visible().unwrap() {
+                                w.hide().unwrap();
+                            } else {
+                                w.show().unwrap();
+                                w.set_focus().unwrap();
+                            }
                         }
-                    }
-                })
-                .unwrap();
-        };
-        info!("global_shortcut_end");
-    }
+                    })
+                    .unwrap_or_else(|err| {
+                        info!("global_shortcut_register_error: {}", err);
+                    });
+            }
+            Err(err) => {
+                info!("global_shortcut_parse_error: {}", err);
+            }
+        }
+    } else {
+        info!("global_shortcut_unregister");
+    };
 
     if chat_conf.hide_dock_icon {
         #[cfg(target_os = "macos")]

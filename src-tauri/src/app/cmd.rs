@@ -1,7 +1,8 @@
 use crate::{
-    conf::ChatConfJson,
+    conf::{ChatConfJson, GITHUB_PROMPTS_CSV_URL},
     utils::{self, exists},
 };
+use log::info;
 use std::{collections::HashMap, fs, path::PathBuf};
 use tauri::{api, command, AppHandle, Manager};
 
@@ -87,8 +88,17 @@ pub fn parse_prompt(data: String) -> Vec<PromptRecord> {
     let mut rdr = csv::Reader::from_reader(data.as_bytes());
     let mut list = vec![];
     for result in rdr.deserialize() {
-        let record: PromptRecord = result.unwrap();
-        list.push(record);
+        let record: PromptRecord = result.unwrap_or_else(|err| {
+            info!("parse_prompt_error: {}", err);
+            PromptRecord {
+                cmd: None,
+                act: "".to_string(),
+                prompt: "".to_string(),
+            }
+        });
+        if !record.act.is_empty() {
+            list.push(record);
+        }
     }
     list
 }
@@ -134,75 +144,133 @@ pub fn cmd_list() -> Vec<ModelRecord> {
 }
 
 #[command]
-pub fn sync_prompts(app: AppHandle, data: String, time: u64) {
-    let data = parse_prompt(data)
-        .iter()
-        .map(move |i| ModelRecord {
-            cmd: if i.cmd.is_some() {
-                i.cmd.clone().unwrap()
-            } else {
-                utils::gen_cmd(i.act.clone())
-            },
-            act: i.act.clone(),
-            prompt: i.prompt.clone(),
-            tags: vec!["chatgpt-prompts".to_string()],
-            enable: true,
-        })
-        .collect::<Vec<ModelRecord>>();
+pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>> {
+    let res = utils::get_data(GITHUB_PROMPTS_CSV_URL, Some(&app))
+        .await
+        .unwrap();
 
-    let model = chat_root().join("chat.model.json");
-    let model_cmd = chat_root().join("chat.model.cmd.json");
-    let chatgpt_prompts = chat_root().join("cache_model").join("chatgpt_prompts.json");
-
-    if !exists(&model) {
-        fs::write(
-            &model,
-            serde_json::json!({
-                "name": "ChatGPT Model",
-                "link": "https://github.com/lencx/ChatGPT"
+    if let Some(v) = res {
+        let data = parse_prompt(v)
+            .iter()
+            .map(move |i| ModelRecord {
+                cmd: if i.cmd.is_some() {
+                    i.cmd.clone().unwrap()
+                } else {
+                    utils::gen_cmd(i.act.clone())
+                },
+                act: i.act.clone(),
+                prompt: i.prompt.clone(),
+                tags: vec!["chatgpt-prompts".to_string()],
+                enable: true,
             })
-            .to_string(),
+            .collect::<Vec<ModelRecord>>();
+
+        let data2 = data.clone();
+
+        let model = chat_root().join("chat.model.json");
+        let model_cmd = chat_root().join("chat.model.cmd.json");
+        let chatgpt_prompts = chat_root().join("cache_model").join("chatgpt_prompts.json");
+
+        if !exists(&model) {
+            fs::write(
+                &model,
+                serde_json::json!({
+                    "name": "ChatGPT Model",
+                    "link": "https://github.com/lencx/ChatGPT"
+                })
+                .to_string(),
+            )
+            .unwrap();
+        }
+
+        // chatgpt_prompts.json
+        fs::write(
+            chatgpt_prompts,
+            serde_json::to_string_pretty(&data).unwrap(),
         )
         .unwrap();
+        let cmd_data = cmd_list();
+
+        // chat.model.cmd.json
+        fs::write(
+            model_cmd,
+            serde_json::to_string_pretty(&serde_json::json!({
+                "name": "ChatGPT CMD",
+                "last_updated": time,
+                "data": cmd_data,
+            }))
+            .unwrap(),
+        )
+        .unwrap();
+        let mut kv = HashMap::new();
+        kv.insert(
+            "sync_prompts".to_string(),
+            serde_json::json!({ "id": "chatgpt_prompts", "last_updated": time }),
+        );
+        let model_data = utils::merge(
+            &serde_json::from_str(&fs::read_to_string(&model).unwrap()).unwrap(),
+            &kv,
+        );
+
+        // chat.model.json
+        fs::write(model, serde_json::to_string_pretty(&model_data).unwrap()).unwrap();
+
+        // refresh window
+        api::dialog::message(
+            app.get_window("core").as_ref(),
+            "Sync Prompts",
+            "ChatGPT Prompts data has been synchronized!",
+        );
+        window_reload(app, "core");
+
+        return Some(data2);
     }
 
-    // chatgpt_prompts.json
-    fs::write(
-        chatgpt_prompts,
-        serde_json::to_string_pretty(&data).unwrap(),
-    )
-    .unwrap();
-    let cmd_data = cmd_list();
+    None
+}
 
-    // chat.model.cmd.json
-    fs::write(
-        model_cmd,
-        serde_json::to_string_pretty(&serde_json::json!({
-            "name": "ChatGPT CMD",
-            "last_updated": time,
-            "data": cmd_data,
-        }))
-        .unwrap(),
-    )
-    .unwrap();
-    let mut kv = HashMap::new();
-    kv.insert(
-        "sync_prompts".to_string(),
-        serde_json::json!({ "id": "chatgpt_prompts", "last_updated": time }),
-    );
-    let model_data = utils::merge(
-        &serde_json::from_str(&fs::read_to_string(&model).unwrap()).unwrap(),
-        &kv,
-    );
+#[command]
+pub async fn sync_user_prompts(url: String, data_type: String) -> Option<Vec<ModelRecord>> {
+    let res = utils::get_data(&url, None).await.unwrap_or_else(|err| {
+        info!("chatgpt_http_error: {}", err);
+        None
+    });
 
-    // chat.model.json
-    fs::write(model, serde_json::to_string_pretty(&model_data).unwrap()).unwrap();
+    info!("chatgpt_http_url: {}", url);
 
-    // refresh window
-    api::dialog::message(
-        app.get_window("core").as_ref(),
-        "Sync Prompts",
-        "ChatGPT Prompts data has been synchronized!",
-    );
-    window_reload(app, "core");
+    if let Some(v) = res {
+        let data;
+        if data_type == "csv" {
+            info!("chatgpt_http_csv_parse");
+            data = parse_prompt(v);
+        } else if data_type == "json" {
+            info!("chatgpt_http_json_parse");
+            data = serde_json::from_str(&v).unwrap_or_else(|err| {
+                info!("chatgpt_http_json_parse_error: {}", err);
+                vec![]
+            });
+        } else {
+            info!("chatgpt_http_unknown_type");
+            data = vec![];
+        }
+
+        let data = data
+            .iter()
+            .map(move |i| ModelRecord {
+                cmd: if i.cmd.is_some() {
+                    i.cmd.clone().unwrap()
+                } else {
+                    utils::gen_cmd(i.act.clone())
+                },
+                act: i.act.clone(),
+                prompt: i.prompt.clone(),
+                tags: vec!["user-sync".to_string()],
+                enable: true,
+            })
+            .collect::<Vec<ModelRecord>>();
+
+        return Some(data);
+    }
+
+    None
 }
