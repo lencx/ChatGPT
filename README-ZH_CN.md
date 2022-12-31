@@ -44,7 +44,7 @@ brew install --cask chatgpt --no-quarantine
 ```rb
 repo = "lencx/chatgpt"
 tap repo, "https://github.com/#{repo}.git"
-cask "popcorn-time", args: { "no-quarantine": true }
+cask "chatgpt", args: { "no-quarantine": true }
 ```
 
 ## 📢 公告
