@@ -32,14 +32,14 @@
 
 ### brew 安装
 
-Easily install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
+_[Homebrew快捷安装](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
 
 ```sh
 brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
 brew install --cask chatgpt --no-quarantine
 ```
 
-Also, if you keep a _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_, you can add something like this:
+如果你坚持使用 _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_ ,你需要添加以下配置:
 
 ```rb
 repo = "lencx/chatgpt"
@@ -122,7 +122,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
     - `4f695d3cfbf8491e9b1f3fab6d85715c.json` - 随机生成的文件名，缓存 `sync_custom` 数据
     - `bd1b96f15a1644f7bd647cc53073ff8f.json` - 随机生成的文件名，缓存 `sync_custom` 数据
 
-### Sync Custom
+### 客户端信息同步
 
 目前同步自定文件仅支持 json 和 csv，且需要满足以下格式，否则会导致应用异常：
 
@@ -175,7 +175,7 @@ cask "popcorn-time", args: { "no-quarantine": true }
 
 它是安全的，仅仅只是对 [OpenAI ChatGPT](https://chat.openai.com) 网站的包装，注入了一些额外功能（均在本地，未发起网络请求），如果存疑，可以检查源代码。
 
-### Developer cannot be verified?
+### 开发者未验证?
 
 Mac 上无法安装，提示开发者未验证，具体可以查看下面给出的解决方案（它是开源的，很安全）。
 
