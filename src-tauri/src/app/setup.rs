@@ -1,6 +1,7 @@
 use crate::{app::window, conf::ChatConfJson, utils};
 use log::info;
 use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, GlobalShortcutManager, Manager};
+use wry::application::accelerator::Accelerator;
 
 pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
     info!("stepup");
@@ -14,23 +15,31 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
     });
 
     if let Some(v) = chat_conf.global_shortcut {
-        info!("global_shortcut");
-        let handle = app.app_handle();
-        let mut shortcut = app.global_shortcut_manager();
-        shortcut
-            .register(&v, move || {
-                if let Some(w) = handle.get_window("core") {
-                    if w.is_visible().unwrap() {
-                        w.hide().unwrap();
-                    } else {
-                        w.show().unwrap();
-                        w.set_focus().unwrap();
-                    }
-                }
-            })
-            .unwrap_or_else(|err| {
-                info!("global_shortcut_register_error: {}", err);
-            });
+        info!("global_shortcut: `{}`", v);
+        match v.parse::<Accelerator>() {
+            Ok(_) => {
+                info!("global_shortcut_register");
+                let handle = app.app_handle();
+                let mut shortcut = app.global_shortcut_manager();
+                shortcut
+                    .register(&v, move || {
+                        if let Some(w) = handle.get_window("core") {
+                            if w.is_visible().unwrap() {
+                                w.hide().unwrap();
+                            } else {
+                                w.show().unwrap();
+                                w.set_focus().unwrap();
+                            }
+                        }
+                    })
+                    .unwrap_or_else(|err| {
+                        info!("global_shortcut_register_error: {}", err);
+                    });
+            }
+            Err(err) => {
+                info!("global_shortcut_parse_error: {}", err);
+            }
+        }
     } else {
         info!("global_shortcut_unregister");
     };
