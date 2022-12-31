@@ -63,6 +63,7 @@ async fn main() {
             cmd::get_chat_model_cmd,
             cmd::parse_prompt,
             cmd::sync_prompts,
+            cmd::sync_user_prompts,
             cmd::window_reload,
             cmd::cmd_list,
             fs_extra::metadata,

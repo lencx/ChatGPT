@@ -15,13 +15,6 @@
       "globalShortcut": {
         "all": true
       },
-      "http": {
-        "all": true,
-        "scope": [
-          "https://**",
-          "http://**"
-        ]
-      },
       "fs": {
         "all": true,
         "scope": [

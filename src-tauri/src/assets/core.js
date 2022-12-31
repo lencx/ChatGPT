@@ -88,21 +88,7 @@ async function init() {
   });
 
   window.__sync_prompts = async function() {
-    const res = await fetch('https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv');
-    if (res.ok) {
-      const data = await res.text();
-      await invoke('sync_prompts', { data, time: Date.now() });
-    } else {
-      invoke('messageDialog', {
-        __tauriModule: 'Dialog',
-        message: {
-          cmd: 'messageDialog',
-          message: 'ChatGPT Prompts data sync failed, please try again!'.toString(),
-          title: 'Sync Prompts'.toString(),
-          type: 'error'
-        }
-      })
-    }
+    await invoke('sync_prompts', { time: Date.now() });
   }
 }
 

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Table, Button, message, Popconfirm } from 'antd';
-import { invoke, http, path, shell } from '@tauri-apps/api';
+import { Table, Button, Popconfirm } from 'antd';
+import { invoke, path, shell } from '@tauri-apps/api';
 
 import useInit from '@/hooks/useInit';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
 import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
 import useTable, { TABLE_PAGINATION } from '@/hooks/useTable';
-import { fmtDate, chatRoot, GITHUB_PROMPTS_CSV_URL, genCmd } from '@/utils';
+import { fmtDate, chatRoot } from '@/utils';
 import { syncColumns } from './config';
 import './index.scss';
 
@@ -33,24 +33,13 @@ export default function SyncPrompts() {
   }, [modelCacheJson.length]);
 
   const handleSync = async () => {
-    const res = await http.fetch(GITHUB_PROMPTS_CSV_URL, {
-      method: 'GET',
-      responseType: http.ResponseType.Text,
-    });
-    const data = (res.data || '') as string;
-    if (res.ok) {
-      // const content = data.replace(/"(\s+)?,(\s+)?"/g, '","');
-      const list: Record<string, string>[] = await invoke('parse_prompt', { data });
-      const fmtList = list.map(i => ({ ...i, cmd: i.cmd ? i.cmd : genCmd(i.act), enable: true, tags: ['chatgpt-prompts'] }));
-      await modelCacheSet(fmtList);
-      opInit(fmtList);
+    const data = await invoke('sync_prompts', { time: Date.now() });
+    if (data) {
+      opInit(data as any[]);
       modelSet({
         id: 'chatgpt_prompts',
         last_updated: Date.now(),
       });
-      message.success('ChatGPT Prompts data has been synchronized!');
-    } else {
-      message.error('ChatGPT Prompts data sync failed, please try again!');
     }
   };
 

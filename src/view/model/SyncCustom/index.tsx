@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Table, Modal, Button, message } from 'antd';
-import { invoke, http, path, fs } from '@tauri-apps/api';
+import { invoke, path, fs } from '@tauri-apps/api';
 
 import useData from '@/hooks/useData';
 import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
@@ -10,7 +10,7 @@ import { CHAT_MODEL_JSON, chatRoot, readJSON, genCmd } from '@/utils';
 import { syncColumns, getPath } from './config';
 import SyncForm from './Form';
 
-const setTag = (data: Record<string, any>[]) => data.map((i) => ({ ...i, tags: ['user-sync'], enable: true }))
+const fmtData = (data: Record<string, any>[] = []) => (Array.isArray(data) ? data : []).map((i) => ({ ...i, cmd: i.cmd ? i.cmd : genCmd(i.act), tags: ['user-sync'], enable: true }));
 
 export default function SyncCustom() {
   const [isVisible, setVisible] = useState(false);
@@ -44,9 +44,16 @@ export default function SyncCustom() {
       setVisible(true);
     }
     if (['delete'].includes(opInfo.opType)) {
-      const data = opRemove(opInfo?.opRecord?.[opSafeKey]);
-      modelSet(data);
-      opInfo.resetRecord();
+      (async () => {
+        try {
+          const file = await path.join(await chatRoot(), 'cache_model', `${opInfo?.opRecord?.id}.json`);
+          await fs.removeFile(file);
+        } catch(e) {}
+        const data = opRemove(opInfo?.opRecord?.[opSafeKey]);
+        modelSet(data);
+        opInfo.resetRecord();
+        modelCacheCmd();
+      })();
     }
   }, [opInfo.opType, formRef]);
 
@@ -58,20 +65,9 @@ export default function SyncCustom() {
 
     // https or http
     if (/^http/.test(record?.protocol)) {
-      const res = await http.fetch(filePath, {
-        method: 'GET',
-        responseType: isJson ? 1 : 2,
-      });
-      if (res.ok) {
-        if (isJson) {
-          // parse json
-          await modelCacheSet(setTag(Array.isArray(res?.data) ? res?.data : []), file);
-        } else {
-          // parse csv
-          const list: Record<string, string>[] = await invoke('parse_prompt', { data: res?.data });
-          const fmtList = list.map(i => ({ ...i, cmd: i.cmd ? i.cmd : genCmd(i.act), enable: true, tags: ['user-sync'] }));
-          await modelCacheSet(fmtList, file);
-        }
+      const data = await invoke('sync_user_prompts', { url: filePath, dataType: record?.ext });
+      if (data) {
+        await modelCacheSet(data as [], file);
         await modelCacheCmd();
         message.success('ChatGPT Prompts data has been synchronized!');
       } else {
@@ -83,13 +79,12 @@ export default function SyncCustom() {
     if (isJson) {
       // parse json
       const data = await readJSON(filePath, { isRoot: true });
-      await modelCacheSet(setTag(Array.isArray(data) ? data : []), file);
+      await modelCacheSet(fmtData(data), file);
     } else {
       // parse csv
       const data = await fs.readTextFile(filePath);
       const list: Record<string, string>[] = await invoke('parse_prompt', { data });
-      const fmtList = list.map(i => ({ ...i, cmd: i.cmd ? i.cmd : genCmd(i.act), enable: true, tags: ['user-sync'] }));
-      await modelCacheSet(fmtList, file);
+      await modelCacheSet(fmtData(list), file);
     }
     await modelCacheCmd();
   };
