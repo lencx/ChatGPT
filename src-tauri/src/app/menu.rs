@@ -293,12 +293,13 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
 // --- SystemTray Menu
 pub fn tray_menu() -> SystemTray {
     if cfg!(target_os = "macos") {
-        return SystemTray::new().with_menu(
+        SystemTray::new().with_menu(
             SystemTrayMenu::new()
                 .add_item(CustomMenuItem::new(
                     "control_center".to_string(),
                     "Control Center",
                 ))
+                .add_native_item(SystemTrayMenuItem::Separator)
                 .add_item(CustomMenuItem::new(
                     "show_dock_icon".to_string(),
                     "Show Dock Icon",
@@ -307,20 +308,28 @@ pub fn tray_menu() -> SystemTray {
                     "hide_dock_icon".to_string(),
                     "Hide Dock Icon",
                 ))
+                .add_item(CustomMenuItem::new(
+                    "show_core".to_string(),
+                    "Show ChatGPT",
+                ))
                 .add_native_item(SystemTrayMenuItem::Separator)
                 .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
-        );
+        )
+    } else {
+        SystemTray::new().with_menu(
+            SystemTrayMenu::new()
+                .add_item(CustomMenuItem::new(
+                    "control_center".to_string(),
+                    "Control Center",
+                ))
+                .add_item(CustomMenuItem::new(
+                    "show_core".to_string(),
+                    "Show ChatGPT",
+                ))
+                .add_native_item(SystemTrayMenuItem::Separator)
+                .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
+        )
     }
-
-    SystemTray::new().with_menu(
-        SystemTrayMenu::new()
-            .add_item(CustomMenuItem::new(
-                "control_center".to_string(),
-                "Control Center",
-            ))
-            .add_native_item(SystemTrayMenuItem::Separator)
-            .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
-    )
 }
 
 // --- SystemTray Event
@@ -359,6 +368,15 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
                 if !chat_conf.hide_dock_icon {
                     ChatConfJson::amend(&serde_json::json!({ "hide_dock_icon": true }), Some(app))
                         .unwrap();
+                }
+            }
+            "show_core" => {
+                let core_win = app.get_window("core").unwrap();
+                let tray_win = app.get_window("tray").unwrap();
+                if !core_win.is_visible().unwrap() {
+                    core_win.show().unwrap();
+                    core_win.set_focus().unwrap();
+                    tray_win.hide().unwrap();
                 }
             }
             "quit" => std::process::exit(0),

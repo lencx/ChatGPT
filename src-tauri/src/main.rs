@@ -82,7 +82,12 @@ async fn main() {
                     // TODO: https://github.com/tauri-apps/tauri/issues/3084
                     // event.window().hide().unwrap();
                     // https://github.com/tauri-apps/tao/pull/517
+                    #[cfg(target_os = "macos")]
                     event.window().minimize().unwrap();
+
+                    // fix: https://github.com/lencx/ChatGPT/issues/93
+                    #[cfg(not(target_os = "macos"))]
+                    event.window().hide().unwrap();
                 }
                 api.prevent_close();
             }

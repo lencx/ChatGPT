@@ -1,5 +1,10 @@
 # UPDATE LOG
 
+## v0.7.5
+
+fix:
+- close the main window and hide it in the tray (windows systems)
+
 ## v0.7.4
 
 fix:
