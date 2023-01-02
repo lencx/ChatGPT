@@ -6,7 +6,7 @@ pub fn tray_window(handle: &tauri::AppHandle) {
     let theme = conf::ChatConfJson::theme();
     let app = handle.clone();
 
-    tokio::spawn(async move {
+    tauri::async_runtime::spawn(async move {
         WindowBuilder::new(&app, "tray", WindowUrl::App(chat_conf.origin.into()))
             .title("ChatGPT")
             .resizable(false)
@@ -28,7 +28,7 @@ pub fn tray_window(handle: &tauri::AppHandle) {
 
 pub fn control_window(handle: &tauri::AppHandle) {
     let app = handle.clone();
-    tokio::spawn(async move {
+    tauri::async_runtime::spawn(async move {
         WindowBuilder::new(&app, "main", WindowUrl::App("index.html".into()))
             .title("Control Center")
             .resizable(true)
