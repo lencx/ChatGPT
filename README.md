@@ -14,8 +14,6 @@
 
 <!-- [![中文版 badge](https://img.shields.io/badge/%E4%B8%AD%E6%96%87-Traditional%20Chinese-blue)](./README-ZH.md) -->
 
-[Awesome ChatGPT](./AWESOME.md)
-
 ## 📦 Downloads
 
 [📝 Update Log](./UPDATE_LOG.md)
@@ -33,6 +31,10 @@
 [Other version...](https://github.com/lencx/ChatGPT/releases)
 
 <!-- download end -->
+
+<a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
+
+---
 
 ### Install
 
