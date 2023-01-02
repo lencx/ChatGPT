@@ -161,6 +161,7 @@ Currently, only json and csv are supported for synchronizing custom files, and t
 
 <!-- - Web access capability ([#20](https://github.com/lencx/ChatGPT/issues/20)) -->
 - `Control Center` - Feature Enhancements
+- Integration with [DALL·E 2](https://openai.com/dall-e-2/) ([#122](https://github.com/lencx/ChatGPT/issues/122))
 - ...
 
 ## 👀 Preview
