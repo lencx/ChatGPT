@@ -3,11 +3,12 @@
   <h1 align="center">ChatGPT</h1>
 </p>
 
-> ChatGPT Desktop Application
+<div align="center"><h2>ChatGPT Desktop Application</h2></div>
+<br>
 
 [![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](./README.md)
 [![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](./README-ZH_CN.md)
-
+[![License](https://img.shields.io/badge/License-Apache%202-green.svg)](https://opencollective.com/lencx-chatgpt)
 [![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
 [![chat](https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord)](https://discord.gg/aPhCRf4zZr)
 [![lencx](https://img.shields.io/twitter/follow/lencx_.svg?style=social)](https://twitter.com/lencx_)
@@ -55,20 +56,27 @@ cask "chatgpt", args: { "no-quarantine": true }
 
 ## 📢 Announcement
 
+### ChatGPT Prompts!
 This is a major and exciting update. It works like a `Telegram bot command` and helps you quickly populate custom models to make chatgpt work the way you want it to. This project has taken a lot of my spare time, so if it helps you, please help spread the word or star it would be a great encouragement to me. I hope I can keep updating it and adding more interesting features.
 
 ### How does it work?
 
-You can look at [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) to find interesting features to import into the app.
+You can look at <b>[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)</b> to find interesting features to import into the app.
 
 ![chat cmd](./assets/chat-cmd-1.png)
+
 ![chat cmd](./assets/chat-cmd-2.png)
 
 <!-- After the data import is done, you can restart the app to make the configuration take effect (`Menu -> Preferences -> Restart ChatGPT`). -->
+<br>
 
-In the chatgpt text input area, type a character starting with `/` to bring up the command prompt, press the spacebar, and it will fill the input area with the text associated with the command by default (note: if it contains multiple command prompts, it will only select the first one as the fill, you can keep typing until the first prompted command is the one you want, then press the spacebar. Or use the mouse to click on one of the multiple commands). When the fill is complete, you simply press the Enter key. Under the slash command, use the tab key to modify the contents of the `{q}` tag (only single changes are supported [#54](https://github.com/lencx/ChatGPT/issues/54)). Use the keyboard `⇧` (arrow up) and `⇩` (arrow down) keys to select the slash command.
+- In the chatgpt text input area, type a character starting with `/` to bring up the command prompt, press the spacebar, and it will fill the input area with the text associated with the command by default (note: if it contains multiple command prompts, it will only select the first one as the fill, you can keep typing until the first prompted command is the one you want, then press the spacebar. 
+- Or use the mouse to click on one of the multiple commands). When the fill is complete, you simply press the Enter key. 
+- Under the slash command, use the tab key to modify the contents of the `{q}` tag (only single changes are supported [#54](https://github.com/lencx/ChatGPT/issues/54)). Use the keyboard `⇧` (arrow up) and `⇩` (arrow down) keys to select the slash command.
+<br>
 
 ![chatgpt](assets/chatgpt.gif)
+
 ![chatgpt-cmd](assets/chatgpt-cmd.gif)
 
 ## ✨ Features
@@ -82,7 +90,7 @@ In the chatgpt text input area, type a character starting with `/` to bring up t
 - Support for slash commands and their configuration (can be configured manually or synchronized from a file [#55](https://github.com/lencx/ChatGPT/issues/55))
 - Customize global shortcuts ([#108](https://github.com/lencx/ChatGPT/issues/108))
 
-### MenuItem
+## MenuItem
 
 - **Preferences**
   - `Theme` - `Light`, `Dark` (Only macOS and Windows are supported).
@@ -172,19 +180,19 @@ Currently, only json and csv are supported for synchronizing custom files, and t
 
 ## ❓FAQ
 
-### Can't open ChatGPT
+### 1. Can't open ChatGPT
 
 If you cannot open the application after the upgrade, please try to clear the configuration file, which is in the `~/.chatgpt/*` directory.
 
-### Out of sync login status between multiple windows
+### 2. Out of sync login status between multiple windows
 
 If you have already logged in in the main window, but the system tray window shows that you are not logged in, you can fix it by restarting the application (`Menu -> Preferences -> Restart ChatGPT`).
 
-### Is it safe?
+### 3. Is it safe?
 
 It's safe, just a wrapper for [OpenAI ChatGPT](https://chat.openai.com) website, no other data transfer exists (you can check the source code).
 
-### Developer cannot be verified?
+### 4. Developer cannot be verified?
 
 - [Open a Mac app from an unidentified developer](https://support.apple.com/en-sg/guide/mac-help/mh40616/mac)
 
@@ -216,6 +224,7 @@ yarn dev
 # bundle path: src-tauri/target/release/bundle
 yarn build
 ```
+---
 
 ## ❤️ Thanks
 
