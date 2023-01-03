@@ -58,6 +58,19 @@ export default function General() {
     form.setFieldsValue(chatConf);
   };
 
+  const onReset = async () => {
+    const chatData = await invoke('reset_chat_conf');
+    setChatConf(chatData);
+    const isOk = await ask(`Configuration reset successfully, whether to restart?`, {
+      title: 'ChatGPT Preferences'
+    });
+    if (isOk) {
+      relaunch();
+      return;
+    }
+    message.success('Configuration reset successfully');
+  };
+
   const onFinish = async (values: any) => {
     if (!isEqual(omit(chatConf, ['default_origin']), values)) {
       await invoke('form_confirm', { data: values, label: 'main' });
@@ -115,10 +128,13 @@ export default function General() {
         <Form.Item>
           <Space size={20}>
             <Button onClick={onCancel}>Cancel</Button>
+
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
+            <a onClick={onReset}>Reset to defaults</a>
           </Space>
+
         </Form.Item>
       </Form>
     </>

@@ -39,6 +39,11 @@ pub fn get_chat_conf() -> ChatConfJson {
 }
 
 #[command]
+pub fn reset_chat_conf() -> ChatConfJson {
+    ChatConfJson::reset_chat_conf()
+}
+
+#[command]
 pub fn form_confirm(_app: AppHandle, data: serde_json::Value) {
     ChatConfJson::amend(&serde_json::json!(data), None).unwrap();
 }
