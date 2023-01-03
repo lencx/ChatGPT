@@ -61,7 +61,7 @@ This is a major and exciting update. It works like a `Telegram bot command` and 
 
 ### How does it work?
 
-You can look at <b>[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)</b> to find interesting features to import into the app.
+You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)** to find interesting features to import into the app.
 
 ![chat cmd](./assets/chat-cmd-1.png)
 
@@ -180,19 +180,19 @@ Currently, only json and csv are supported for synchronizing custom files, and t
 
 ## ❓FAQ
 
-### 1. Can't open ChatGPT
+### Can't open ChatGPT
 
 If you cannot open the application after the upgrade, please try to clear the configuration file, which is in the `~/.chatgpt/*` directory.
 
-### 2. Out of sync login status between multiple windows
+### Out of sync login status between multiple windows
 
 If you have already logged in in the main window, but the system tray window shows that you are not logged in, you can fix it by restarting the application (`Menu -> Preferences -> Restart ChatGPT`).
 
-### 3. Is it safe?
+### Is it safe?
 
 It's safe, just a wrapper for [OpenAI ChatGPT](https://chat.openai.com) website, no other data transfer exists (you can check the source code).
 
-### 4. Developer cannot be verified?
+### Developer cannot be verified?
 
 - [Open a Mac app from an unidentified developer](https://support.apple.com/en-sg/guide/mac-help/mh40616/mac)
 
