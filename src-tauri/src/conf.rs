@@ -129,6 +129,17 @@ impl ChatConfJson {
         }
     }
 
+    pub fn reset_chat_conf() -> Self {
+        let conf_file = ChatConfJson::conf_path();
+        let content = if cfg!(target_os = "macos") {
+            DEFAULT_CHAT_CONF_MAC
+        } else {
+            DEFAULT_CHAT_CONF
+        };
+        fs::write(&conf_file, content).unwrap();
+        serde_json::from_str(content).unwrap()
+    }
+
     // https://users.rust-lang.org/t/updating-object-fields-given-dynamic-json/39049/3
     pub fn amend(new_rules: &Value, app: Option<tauri::AppHandle>) -> Result<()> {
         let config = ChatConfJson::get_chat_conf();
