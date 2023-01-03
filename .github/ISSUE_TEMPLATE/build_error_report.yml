@@ -1,0 +1,37 @@
+name: "❌ Build error report"
+description: "report errors when building by yourself"
+title: "[Build Error]"
+labels:
+  - "build error"
+body:
+- type: markdown
+  attributes:
+    value: "Please make sure to [search for existing issues](https://github.com/lencx/ChatGPT/issues) before filing a new one!"
+- type: markdown
+  attributes:
+    value: "Please make sure to build from the source code with the latest version of ChatGPT."
+- type: markdown
+  attributes:
+    value: |
+      ## Build error report
+      Please fill in the following information to help us reproduce the bug:
+- type: textarea
+  id: error
+  attributes:
+    label: Error message
+    description: "Please paste the error message here."
+  validations:
+    required: true
+- type: input
+  id: OS
+  attributes:
+    label: OS
+    description: "Please specify the OS you are using."
+    placeholder: "e.g. Ubuntu 22.04"
+  validations:
+    required: true
+- type: textarea
+  id: environment
+  attributes:
+    label: Environment
+    description: "If you think your environment may be related to the problem, please describe it here."
