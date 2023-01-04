@@ -1,0 +1,34 @@
+name: "⭐ Feature or enhancement request"
+description: "suggest new features or enhancements"
+title: "[Feature]"
+labels:
+  - "enhancement"
+body:
+- type: markdown
+  attributes:
+    value: "Please make sure to [search for existing issues](https://github.com/lencx/ChatGPT/issues) before creating a new one."
+- type: textarea
+  id: feature-description
+  attributes:
+    label: "Feature description"
+    description: "Describe the feature or enhancements you'd like to see."
+  validations:
+    required: true
+- type: textarea
+  id: motivation
+  attributes:
+    label: "Motivation"
+    description: "Describe the motivation for this feature or enhancement."
+- type: textarea
+  id: alternatives
+  attributes:
+    label: "Alternatives"
+    description: "Describe any alternatives you've considered."
+- type: textarea
+  id: additional-context
+  attributes:
+    label: "Additional context"
+    description: "Add any other context or screenshots about the feature request here."
+- type: markdown
+  attributes:
+    value: Please limit one request per issue.
