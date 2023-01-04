@@ -194,15 +194,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             );
         }
         "check_update" => {
-            tauri::async_runtime::spawn(async move {
-                let result = app.updater().check().await;
-                let update_resp = result.unwrap();
-                if update_resp.is_update_available() {
-                    tauri::async_runtime::spawn(async move {
-                        utils::prompt_for_install(app, update_resp).await.unwrap();
-                    });
-                }
-            });
+            utils::run_check_update(app).unwrap();
         }
         // Preferences
         "control_center" => window::control_window(&app),

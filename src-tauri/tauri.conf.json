@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.7.4"
+    "version": "0.7.2"
   },
   "tauri": {
     "allowlist": {
@@ -67,7 +67,7 @@
       "csp": null
     },
     "updater": {
-      "active": true,
+      "active": false,
       "dialog": true,
       "endpoints": [
         "https://lencx.github.io/ChatGPT/install.json"

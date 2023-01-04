@@ -1,6 +1,7 @@
+use std::borrow::Borrow;
 use crate::{app::window, conf::ChatConfJson, utils};
 use log::info;
-use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, GlobalShortcutManager, Manager};
+use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, GlobalShortcutManager, Manager, AppHandle, Wry};
 use wry::application::accelerator::Accelerator;
 
 pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
@@ -88,6 +89,11 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
                 .build()
                 .unwrap();
         });
+    }
+    // auto_check_update
+    if chat_conf.auto_check_update {
+        let app = app.handle();
+        utils::run_check_update(app).unwrap();
     }
 
     Ok(())

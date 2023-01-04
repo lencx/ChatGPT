@@ -18,6 +18,7 @@ pub const GITHUB_PROMPTS_CSV_URL: &str =
     "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv";
 pub const DEFAULT_CHAT_CONF: &str = r#"{
     "stay_on_top": false,
+    "auto_check_update": true,
     "theme": "Light",
     "titlebar": true,
     "global_shortcut": "",
@@ -29,6 +30,7 @@ pub const DEFAULT_CHAT_CONF: &str = r#"{
 }"#;
 pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
     "stay_on_top": false,
+    "auto_check_update": true,
     "theme": "Light",
     "titlebar": false,
     "global_shortcut": "",
@@ -60,6 +62,7 @@ pub struct ChatConfJson {
     // macOS and Windows
     pub theme: String,
 
+    pub auto_check_update: bool,
     pub stay_on_top: bool,
     pub default_origin: String,
     pub origin: String,

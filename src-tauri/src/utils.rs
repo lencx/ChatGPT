@@ -10,7 +10,6 @@ use std::{
 };
 use tauri::{utils::config::Config, Manager, AppHandle, Wry};
 use tauri::updater::UpdateResponse;
-
 pub fn chat_root() -> PathBuf {
     tauri::api::path::home_dir().unwrap().join(".chatgpt")
 }
@@ -129,6 +128,20 @@ pub async fn get_data(
         Ok(None)
     }
 }
+
+pub fn run_check_update(app: AppHandle<Wry>) -> Result<()> {
+    tauri::async_runtime::spawn(async move {
+        let result = app.updater().check().await;
+        let update_resp = result.unwrap();
+        if update_resp.is_update_available() {
+            tauri::async_runtime::spawn(async move {
+                prompt_for_install(app, update_resp).await.unwrap();
+            });
+        }
+    });
+    Ok(())
+}
+
 // Copy private api in tauri/updater/mod.rs. TODO: refactor to public api
 // Prompt a dialog asking if the user want to install the new version
 // Maybe we should add an option to customize it in future versions.
