@@ -36,9 +36,11 @@ pub fn init() -> Menu {
 
     let stay_on_top =
         CustomMenuItem::new("stay_on_top".to_string(), "Stay On Top").accelerator("CmdOrCtrl+T");
+
     #[cfg(target_os = "macos")]
     let titlebar =
         CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
+
     let theme_light = CustomMenuItem::new("theme_light".to_string(), "Light");
     let theme_dark = CustomMenuItem::new("theme_dark".to_string(), "Dark");
     let theme_system = CustomMenuItem::new("theme_system".to_string(), "System");
@@ -50,6 +52,7 @@ pub fn init() -> Menu {
     } else {
         stay_on_top
     };
+
     #[cfg(target_os = "macos")]
     let titlebar_menu = if chat_conf.titlebar {
         titlebar.selected()
@@ -237,13 +240,11 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             .unwrap();
             tauri::api::process::restart(&app.env());
         }
-        "theme_light" | "theme_dark"  | "theme_system" => {
-            let theme = if menu_id == "theme_dark" {
-                "Dark"
-            } else if menu_id == "theme_system" {
-                "System"
-            } else {
-                "Light"
+        "theme_light" | "theme_dark" | "theme_system" => {
+            let theme = match menu_id {
+                "theme_dark" => "Dark",
+                "theme_system" => "System",
+                _ => "Light",
             };
             ChatConfJson::amend(&serde_json::json!({ "theme": theme }), Some(app)).unwrap();
         }

@@ -8,8 +8,8 @@ use std::{
     path::{Path, PathBuf},
     process::Command,
 };
-use tauri::{utils::config::Config, Manager, AppHandle, Wry};
 use tauri::updater::UpdateResponse;
+use tauri::{utils::config::Config, AppHandle, Manager, Wry};
 
 pub fn chat_root() -> PathBuf {
     tauri::api::path::home_dir().unwrap().join(".chatgpt")
@@ -146,10 +146,7 @@ pub fn run_check_update(app: AppHandle<Wry>) -> Result<()> {
 // Copy private api in tauri/updater/mod.rs. TODO: refactor to public api
 // Prompt a dialog asking if the user want to install the new version
 // Maybe we should add an option to customize it in future versions.
-pub async fn prompt_for_install (
-    app: AppHandle<Wry>,
-    update: UpdateResponse<Wry>
-) -> Result<()> {
+pub async fn prompt_for_install(app: AppHandle<Wry>, update: UpdateResponse<Wry>) -> Result<()> {
     let windows = app.windows();
     let parent_window = windows.values().next();
     let package_info = app.package_info().clone();
@@ -167,7 +164,11 @@ Would you like to install it now?
 
 Release Notes:
 {}"#,
-            package_info.name, update.latest_version(), package_info.version, body),
+            package_info.name,
+            update.latest_version(),
+            package_info.version,
+            body
+        ),
     );
 
     if should_install {
