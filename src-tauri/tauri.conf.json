@@ -67,7 +67,7 @@
       "csp": null
     },
     "updater": {
-      "active": false,
+      "active": true,
       "dialog": true,
       "endpoints": [
         "https://lencx.github.io/ChatGPT/install.json"

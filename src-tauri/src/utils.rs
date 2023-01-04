@@ -10,6 +10,7 @@ use std::{
 };
 use tauri::{utils::config::Config, Manager, AppHandle, Wry};
 use tauri::updater::UpdateResponse;
+
 pub fn chat_root() -> PathBuf {
     tauri::api::path::home_dir().unwrap().join(".chatgpt")
 }
