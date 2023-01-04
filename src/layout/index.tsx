@@ -1,11 +1,18 @@
 import { FC, useState } from 'react';
-import { Layout, Menu } from 'antd';
+import {Layout, Menu, Button, Tooltip, message} from 'antd';
+import { SyncOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { getName, getVersion } from '@tauri-apps/api/app';
+import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
+import { relaunch } from '@tauri-apps/api/process';
 
 import Routes, { menuItems } from '@/routes';
 import './index.scss';
 
 const { Content, Footer, Sider } = Layout;
+
+const appName = await getName();
+const appVersion = await getVersion();
 
 interface ChatLayoutProps {
   children?: React.ReactNode;
@@ -15,6 +22,14 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const go = useNavigate();
+
+  const checkAppUpdate = async () => {
+      try {
+          await checkUpdate();
+      }catch (e) {
+          console.log(e)
+      }
+  }
 
   return (
     <Layout style={{ minHeight: '100vh' }} hasSider>
@@ -34,6 +49,19 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
         }}
       >
         <div className="chat-logo"><img src="/logo.png" /></div>
+        <div className="chat-info">
+            <span>{appName}</span>
+        </div>
+        <div className="chat-info">
+            <span>{appVersion}</span>
+            <span> </span>
+            {
+                <Tooltip title="click to check update">
+                    <a onClick={checkAppUpdate}><SyncOutlined /></a>
+                </Tooltip>
+            }
+        </div>
+
         <Menu
           defaultSelectedKeys={[location.pathname]}
           mode="inline"
