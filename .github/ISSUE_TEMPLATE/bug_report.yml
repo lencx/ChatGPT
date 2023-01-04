@@ -16,7 +16,7 @@ body:
   id: version
   attributes:
     label: Version
-    description: "Please specify the version of ChatGPT you are using."
+    description: "Please specify the version of ChatGPT you are using, a newer version may have fixed the bug you encountered.Check the [UPDATE_LOG](https://github.com/lencx/ChatGPT/blob/main/UPDATE_LOG.md) for more information."
     placeholder: "e.g. v0.1.0"
   validations:
     required: true
