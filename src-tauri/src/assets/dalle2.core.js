@@ -28,22 +28,19 @@ async function init() {
   document.body.appendChild(selectionMenu);
   const { computePosition, flip, offset, shift } = window.FloatingUIDOM;
 
-  document.body.addEventListener("mouseup", async (e) => {
-    const selection = window.getSelection();
-    if (window.__DALLE2_STATE__ !== 1) {
-      window.__DALLE2_CONTENT__ = selection.toString().trim();
-    }
-
+  document.body.addEventListener('mousedown', async (e) => {
     if (e.target.id === 'chagpt-selection-menu') {
       await invoke('dalle2_window', { query: encodeURIComponent(window.__DALLE2_CONTENT__) });
-    }
-
-    if (window.__DALLE2_STATE__ === 1) {
-      delete window.__DALLE2_STATE__;
+    } else {
       delete window.__DALLE2_CONTENT__;
     }
+  });
 
+  document.body.addEventListener("mouseup", async (e) => {
     selectionMenu.style.display = 'none';
+    const selection = window.getSelection();
+    window.__DALLE2_CONTENT__ = selection.toString().trim();
+
     if (!window.__DALLE2_CONTENT__) return;
 
     if (selection.rangeCount > 0) {
@@ -55,8 +52,6 @@ async function init() {
       rootEl.style.position = 'fixed';
       rootEl.style.left = `${rect.left}px`;
       document.body.appendChild(rootEl);
-
-      window.__DALLE2_STATE__ = 1;
 
       selectionMenu.style.display = 'block';
       computePosition(rootEl, selectionMenu, {
