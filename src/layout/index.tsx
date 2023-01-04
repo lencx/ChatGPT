@@ -3,8 +3,7 @@ import {Layout, Menu, Button, Tooltip, message} from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getName, getVersion } from '@tauri-apps/api/app';
-import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
-import { relaunch } from '@tauri-apps/api/process';
+import { invoke } from '@tauri-apps/api';
 
 import Routes, { menuItems } from '@/routes';
 import './index.scss';
@@ -24,11 +23,7 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
   const go = useNavigate();
 
   const checkAppUpdate = async () => {
-      try {
-          await checkUpdate();
-      }catch (e) {
-          console.log(e)
-      }
+      await invoke('run_check_update');
   }
 
   return (

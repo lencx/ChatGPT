@@ -1,7 +1,6 @@
-use std::borrow::Borrow;
 use crate::{app::window, conf::ChatConfJson, utils};
 use log::info;
-use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, GlobalShortcutManager, Manager, AppHandle, Wry};
+use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, GlobalShortcutManager, Manager};
 use wry::application::accelerator::Accelerator;
 
 pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {

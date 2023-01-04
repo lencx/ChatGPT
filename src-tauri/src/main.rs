@@ -57,6 +57,7 @@ async fn main() {
             cmd::open_link,
             cmd::get_chat_conf,
             cmd::reset_chat_conf,
+            cmd::run_check_update,
             cmd::form_cancel,
             cmd::form_confirm,
             cmd::form_msg,
