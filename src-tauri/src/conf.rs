@@ -177,7 +177,17 @@ impl ChatConfJson {
 
     pub fn theme() -> Option<Theme> {
         let conf = ChatConfJson::get_chat_conf();
-        if conf.theme == "Dark" {
+        if conf.theme == "System" {
+            let mode = dark_light::detect();
+            return match mode {
+                // Dark mode
+                dark_light::Mode::Dark => Some(Theme::Dark),
+                // Light mode
+                dark_light::Mode::Light => Some(Theme::Light),
+                // Unspecified
+                dark_light::Mode::Default => Some(Theme::Light),
+            }
+        } if conf.theme == "Dark" {
             Some(Theme::Dark)
         } else {
             Some(Theme::Light)

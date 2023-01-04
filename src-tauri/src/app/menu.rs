@@ -41,7 +41,9 @@ pub fn init() -> Menu {
         CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
     let theme_light = CustomMenuItem::new("theme_light".to_string(), "Light");
     let theme_dark = CustomMenuItem::new("theme_dark".to_string(), "Dark");
+    let theme_system = CustomMenuItem::new("theme_system".to_string(), "System");
     let is_dark = chat_conf.theme == "Dark";
+    let is_system = chat_conf.theme == "System";
 
     let stay_on_top_menu = if chat_conf.stay_on_top {
         stay_on_top.selected()
@@ -65,7 +67,7 @@ pub fn init() -> Menu {
             Submenu::new(
                 "Theme",
                 Menu::new()
-                    .add_item(if is_dark {
+                    .add_item(if is_dark || is_system {
                         theme_light
                     } else {
                         theme_light.selected()
@@ -74,6 +76,11 @@ pub fn init() -> Menu {
                         theme_dark.selected()
                     } else {
                         theme_dark
+                    })
+                    .add_item(if is_system {
+                        theme_system.selected()
+                    } else {
+                        theme_system
                     }),
             )
             .into(),
@@ -230,9 +237,11 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             .unwrap();
             tauri::api::process::restart(&app.env());
         }
-        "theme_light" | "theme_dark" => {
+        "theme_light" | "theme_dark"  | "theme_system" => {
             let theme = if menu_id == "theme_dark" {
                 "Dark"
+            } else if menu_id == "theme_system" {
+                "System"
             } else {
                 "Light"
             };
