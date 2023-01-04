@@ -25,7 +25,7 @@ body:
   attributes:
     label: Bug description
     description: |
-      Please describe the bug here,if possible, please provide a minimal example to reproduce the bug.The content of `~/.chatgpt/chatgpt.log` may be helpful if you meet a crash.
+      Please describe the bug here,if possible, please provide a minimal example to reproduce the bug.The content of `~/.chatgpt/chatgpt.log` may be helpful if you encounter a crash.
   validations:
     required: true
 - type: input
