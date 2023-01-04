@@ -111,6 +111,11 @@ export default function General() {
           <Radio.Group>
             <Radio value="Light">Light</Radio>
             <Radio value="Dark">Dark</Radio>
+            {
+              (["darwin", "windows"].includes(platformInfo) ) && (
+                    <Radio value="System">System</Radio>
+                )
+            }
           </Radio.Group>
         </Form.Item>
         <Form.Item label="Stay On Top" name="stay_on_top" valuePropName="checked">
