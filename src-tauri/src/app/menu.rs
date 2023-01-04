@@ -261,6 +261,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         "reload" => win.eval("window.location.reload()").unwrap(),
         "go_back" => win.eval("window.history.go(-1)").unwrap(),
         "go_forward" => win.eval("window.history.go(1)").unwrap(),
+        // core: document.querySelector('main .overflow-y-auto')
         "scroll_top" => win
             .eval(
                 r#"window.scroll({
@@ -308,10 +309,7 @@ pub fn tray_menu() -> SystemTray {
                     "hide_dock_icon".to_string(),
                     "Hide Dock Icon",
                 ))
-                .add_item(CustomMenuItem::new(
-                    "show_core".to_string(),
-                    "Show ChatGPT",
-                ))
+                .add_item(CustomMenuItem::new("show_core".to_string(), "Show ChatGPT"))
                 .add_native_item(SystemTrayMenuItem::Separator)
                 .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
         )
@@ -322,10 +320,7 @@ pub fn tray_menu() -> SystemTray {
                     "control_center".to_string(),
                     "Control Center",
                 ))
-                .add_item(CustomMenuItem::new(
-                    "show_core".to_string(),
-                    "Show ChatGPT",
-                ))
+                .add_item(CustomMenuItem::new("show_core".to_string(), "Show ChatGPT"))
                 .add_native_item(SystemTrayMenuItem::Separator)
                 .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
         )

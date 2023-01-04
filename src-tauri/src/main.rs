@@ -63,6 +63,7 @@ async fn main() {
             cmd::sync_prompts,
             cmd::sync_user_prompts,
             cmd::window_reload,
+            cmd::dalle2_window,
             cmd::cmd_list,
             fs_extra::metadata,
         ])
@@ -76,9 +77,7 @@ async fn main() {
             // https://github.com/tauri-apps/tauri/discussions/2684
             if let tauri::WindowEvent::CloseRequested { api, .. } = event.event() {
                 let win = event.window();
-                if win.label() == "main" {
-                    win.close().unwrap();
-                } else {
+                if win.label() == "core" {
                     // TODO: https://github.com/tauri-apps/tauri/issues/3084
                     // event.window().hide().unwrap();
                     // https://github.com/tauri-apps/tao/pull/517
@@ -88,6 +87,8 @@ async fn main() {
                     // fix: https://github.com/lencx/ChatGPT/issues/93
                     #[cfg(not(target_os = "macos"))]
                     event.window().hide().unwrap();
+                } else {
+                    win.close().unwrap();
                 }
                 api.prevent_close();
             }

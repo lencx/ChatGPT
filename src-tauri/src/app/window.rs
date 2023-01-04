@@ -1,4 +1,5 @@
 use crate::{conf, utils};
+use std::time::SystemTime;
 use tauri::{utils::config::WindowUrl, window::WindowBuilder};
 
 pub fn tray_window(handle: &tauri::AppHandle) {
@@ -22,6 +23,33 @@ pub fn tray_window(handle: &tauri::AppHandle) {
             .build()
             .unwrap()
             .hide()
+            .unwrap();
+    });
+}
+
+pub fn dalle2_window(handle: &tauri::AppHandle, query: String) {
+    let timestamp = SystemTime::now()
+        .duration_since(SystemTime::UNIX_EPOCH)
+        .unwrap()
+        .as_secs();
+    let theme = conf::ChatConfJson::theme();
+    let app = handle.clone();
+
+    tauri::async_runtime::spawn(async move {
+        WindowBuilder::new(&app, format!("dalle2_{}", timestamp), WindowUrl::App("https://labs.openai.com".into()))
+            .title("ChatGPT & DALL·E 2")
+            .resizable(true)
+            .fullscreen(false)
+            .inner_size(800.0, 600.0)
+            .always_on_top(false)
+            .theme(theme)
+            .initialization_script(include_str!("../assets/core.js"))
+            .initialization_script(&format!(
+                "window.addEventListener('DOMContentLoaded', function() {{\nwindow.__CHATGPT_QUERY__='{}';\n}})",
+                query
+            ))
+            .initialization_script(include_str!("../assets/dalle2.js"))
+            .build()
             .unwrap();
     });
 }
