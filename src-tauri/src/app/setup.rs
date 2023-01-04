@@ -89,6 +89,11 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
                 .unwrap();
         });
     }
+    // auto_check_update
+    if chat_conf.auto_check_update {
+        let app = app.handle();
+        utils::run_check_update(app).unwrap();
+    }
 
     Ok(())
 }

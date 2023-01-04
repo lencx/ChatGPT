@@ -24,6 +24,7 @@ pub fn init() -> Menu {
             MenuItem::About(name.into(), AboutMetadata::default()).into(),
             #[cfg(not(target_os = "macos"))]
             CustomMenuItem::new("about".to_string(), "About ChatGPT").into(),
+            CustomMenuItem::new("check_update".to_string(), "Check for Updates").into(),
             MenuItem::Services.into(),
             MenuItem::Hide.into(),
             MenuItem::HideOthers.into(),
@@ -191,6 +192,9 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
                 "ChatGPT",
                 format!("Version {}", tauri_conf.package.version.unwrap()),
             );
+        }
+        "check_update" => {
+            utils::run_check_update(app).unwrap();
         }
         // Preferences
         "control_center" => window::control_window(&app),

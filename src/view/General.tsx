@@ -10,6 +10,14 @@ import { clone, omit, isEqual } from 'lodash';
 import useInit from '@/hooks/useInit';
 import { DISABLE_AUTO_COMPLETE, chatRoot } from '@/utils';
 
+const CheckUpdateLabel = () => {
+  return (
+    <span>
+      Auto Check Update <Tooltip title={`check update on start`}><QuestionCircleOutlined style={{ color: '#1677ff' }} /></Tooltip>
+    </span>
+  )
+}
+
 const OriginLabel = ({ url }: { url: string }) => {
   return (
     <span>
@@ -106,6 +114,9 @@ export default function General() {
           </Radio.Group>
         </Form.Item>
         <Form.Item label="Stay On Top" name="stay_on_top" valuePropName="checked">
+          <Switch />
+        </Form.Item>
+        <Form.Item label={<CheckUpdateLabel />} name="auto_check_update" valuePropName="checked">
           <Switch />
         </Form.Item>
         <Form.Item label={<GlobalShortcut />} name="global_shortcut">
