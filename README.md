@@ -27,8 +27,8 @@
 
 - From our github releases: [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
 - Or install with [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
-  - `winget install --id=lencx.ChatGPT  -e`
-  - `winget install --id=lencx.ChatGPT  -e --version 0.7.4`
+  - `winget install --id=lencx.ChatGPT -e`
+  - `winget install --id=lencx.ChatGPT -e --version 0.7.4`
 
 **Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972))**
 
@@ -53,7 +53,7 @@
 
 - [chat-gpt_0.7.4_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.deb)
 - [chat-gpt_0.7.4_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.AppImage): **works reliably, you can try it if `.deb` fails to run**
-- available on [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin) with the package name `chatgpt-desktop-bin`, and you can use your favourite AUR package manager to install it. 
+- Available on [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin) with the package name `chatgpt-desktop-bin`, and you can use your favourite AUR package manager to install it.
 
 [History versions...](https://github.com/lencx/ChatGPT/releases)
 
