@@ -52,6 +52,7 @@ async fn main() {
             cmd::download,
             cmd::open_link,
             cmd::get_chat_conf,
+            cmd::get_theme,
             cmd::reset_chat_conf,
             cmd::run_check_update,
             cmd::form_cancel,

@@ -16,7 +16,8 @@
 
 ## 📦 安装
 
-[📝 更新日志](./UPDATE_LOG.md)
+- [📝 更新日志](./UPDATE_LOG.md)
+- [🕒 历史版本...](https://github.com/lencx/ChatGPT/releases)
 
 <!-- download start -->
 
@@ -24,8 +25,8 @@
 
 - [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
 - 或者使用 [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
-  - `winget install --id=lencx.ChatGPT  -e`
-  - `winget install --id=lencx.ChatGPT  -e --version 0.7.4`
+  - `winget install --id=lencx.ChatGPT -e`
+  - `winget install --id=lencx.ChatGPT -e --version 0.7.4`
 
 **注意：如果安装路径和应用名称相同，会导致冲突 ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972))**
 
@@ -50,6 +51,7 @@
 
 - [chat-gpt_0.7.4_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.deb)
 - [chat-gpt_0.7.4_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.AppImage): **工作可靠，`.deb` 运行失败时可以尝试它**
+- [chatgpt-desktop-bin](https://aur.archlinux.org/packages/chatgpt-desktop-bin): 使用 AUR 来安装
 
 <!-- download end -->
 
@@ -134,7 +136,7 @@
 
 目前同步自定文件仅支持 json 和 csv，且需要满足以下格式，否则会导致应用异常：
 
-> JSON 格式
+`JSON 格式`
 
 ```json
 [
@@ -151,7 +153,7 @@
 ]
 ```
 
-> CSV 格式
+`CSV 格式`
 
 ```csv
 "cmd","act","prompt"

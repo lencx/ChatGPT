@@ -114,19 +114,22 @@ export default function General() {
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 15, offset: 1 }}
       >
+        <Form.Item label="Stay On Top" name="stay_on_top" valuePropName="checked">
+          <Switch />
+        </Form.Item>
+        {platformInfo === 'darwin' && (
+          <Form.Item label="Titlebar" name="titlebar" valuePropName="checked">
+            <Switch />
+          </Form.Item>
+        )}
         <Form.Item label="Theme" name="theme">
           <Radio.Group>
             <Radio value="Light">Light</Radio>
             <Radio value="Dark">Dark</Radio>
-            {
-              (["darwin", "windows"].includes(platformInfo) ) && (
-                    <Radio value="System">System</Radio>
-                )
-            }
+            {["darwin", "windows"].includes(platformInfo) && (
+              <Radio value="System">System</Radio>
+            )}
           </Radio.Group>
-        </Form.Item>
-        <Form.Item label="Stay On Top" name="stay_on_top" valuePropName="checked">
-          <Switch />
         </Form.Item>
         <Form.Item label={<AutoUpdateLabel />} name="auto_update">
           <Radio.Group>
@@ -138,11 +141,6 @@ export default function General() {
         <Form.Item label={<GlobalShortcut />} name="global_shortcut">
           <Input placeholder="CmdOrCtrl+Shift+O" {...DISABLE_AUTO_COMPLETE} />
         </Form.Item>
-        {platformInfo === 'darwin' && (
-          <Form.Item label="Titlebar" name="titlebar" valuePropName="checked">
-            <Switch />
-          </Form.Item>
-        )}
         <Form.Item label={<OriginLabel url={chatConf?.default_origin} />} name="origin">
           <Input placeholder="https://chat.openai.com" {...DISABLE_AUTO_COMPLETE} />
         </Form.Item>

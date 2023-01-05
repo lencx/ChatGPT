@@ -5,7 +5,7 @@ use crate::{
 };
 use log::info;
 use std::{collections::HashMap, fs, path::PathBuf};
-use tauri::{api, command, AppHandle, Manager};
+use tauri::{api, command, AppHandle, Manager, Theme};
 use walkdir::WalkDir;
 
 #[command]
@@ -43,6 +43,11 @@ pub fn open_link(app: AppHandle, url: String) {
 #[command]
 pub fn get_chat_conf() -> ChatConfJson {
     ChatConfJson::get_chat_conf()
+}
+
+#[command]
+pub fn get_theme() -> String {
+    ChatConfJson::theme().unwrap_or(Theme::Light).to_string()
 }
 
 #[command]

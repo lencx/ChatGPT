@@ -103,14 +103,13 @@ pub fn init() -> Menu {
                         update_silent.selected()
                     } else {
                         update_silent
-                    })
-                    // .add_item(if chat_conf.auto_update == "Disable" {
-                    //     update_disable.selected()
-                    // } else {
-                    //     update_disable
-                    // })
-                ,
-            ).into(),
+                    }), // .add_item(if chat_conf.auto_update == "Disable" {
+                        //     update_disable.selected()
+                        // } else {
+                        //     update_disable
+                        // })
+            )
+            .into(),
             stay_on_top_menu.into(),
             #[cfg(target_os = "macos")]
             titlebar_menu.into(),
@@ -273,22 +272,31 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             ChatConfJson::amend(&serde_json::json!({ "theme": theme }), Some(app)).unwrap();
         }
         "update_prompt" | "update_silent" | "update_disable" => {
-            for id in ["update_prompt" , "update_silent" , "update_disable"] {
+            for id in ["update_prompt", "update_silent", "update_disable"] {
                 menu_handle.get_item(id).set_selected(false).unwrap();
             }
             let auto_update = match menu_id {
                 "update_silent" => {
-                    menu_handle.get_item("update_silent").set_selected(true).unwrap();
+                    menu_handle
+                        .get_item("update_silent")
+                        .set_selected(true)
+                        .unwrap();
                     "Silent"
-                },
+                }
                 "update_disable" => {
-                    menu_handle.get_item("update_disable").set_selected(true).unwrap();
+                    menu_handle
+                        .get_item("update_disable")
+                        .set_selected(true)
+                        .unwrap();
                     "Disable"
-                },
+                }
                 _ => {
-                    menu_handle.get_item("update_prompt").set_selected(true).unwrap();
+                    menu_handle
+                        .get_item("update_prompt")
+                        .set_selected(true)
+                        .unwrap();
                     "Prompt"
-                },
+                }
             };
             ChatConfJson::amend(&serde_json::json!({ "auto_update": auto_update }), None).unwrap();
         }
