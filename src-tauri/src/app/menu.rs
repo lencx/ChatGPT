@@ -272,6 +272,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             ChatConfJson::amend(&serde_json::json!({ "theme": theme }), Some(app)).unwrap();
         }
         "update_prompt" | "update_silent" | "update_disable" => {
+            dbg!(12);
             for id in ["update_prompt", "update_silent", "update_disable"] {
                 menu_handle.get_item(id).set_selected(false).unwrap();
             }
