@@ -29,7 +29,7 @@
 - or install with [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
   - `winget install --id=lencx.ChatGPT  -e`
   - `winget install --id=lencx.ChatGPT  -e --version 0.7.4`
-- we have just received a [report](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972) that another [chatgpt](https://github.com/sonnylazuardi/chatgpt-desktop/)  has the same default `msi` installation path, but you can specify the installation path when installing the msi.
+- we have just received a [report](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972) that another [chatgpt](https://github.com/sonnylazuardi/chatgpt-desktop/) is also avaliable on `winget` and has the same default installation path, which may cause conflicts.
 
 ### Mac
 
