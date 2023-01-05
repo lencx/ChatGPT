@@ -19,7 +19,8 @@
 
 ## 📦 Install
 
-[📝 Update Log](./UPDATE_LOG.md)
+- [📝 Update Log](./UPDATE_LOG.md)
+- [🕒 History versions...](https://github.com/lencx/ChatGPT/releases)
 
 <!-- download start -->
 
@@ -54,8 +55,6 @@
 - [chat-gpt_0.7.4_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.deb)
 - [chat-gpt_0.7.4_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.AppImage): **works reliably, you can try it if `.deb` fails to run**
 - Available on [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin) with the package name `chatgpt-desktop-bin`, and you can use your favourite AUR package manager to install it.
-
-[History versions...](https://github.com/lencx/ChatGPT/releases)
 
 <!-- download end -->
 
