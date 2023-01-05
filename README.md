@@ -15,48 +15,57 @@
 
 <!-- [![中文版 badge](https://img.shields.io/badge/%E4%B8%AD%E6%96%87-Traditional%20Chinese-blue)](./README-ZH.md) -->
 
-## 📦 Downloads
+<a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
+
+## 📦 Install
 
 [📝 Update Log](./UPDATE_LOG.md)
 
 <!-- download start -->
 
-**Latest:**
+### Windows
 
-- `Mac`: [ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg)
-- `Windows`: [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
-- `Linux`:
-  - [chat-gpt_0.7.4_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.deb)
-  - [chat-gpt_0.7.4_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.AppImage): **works reliably, you can try it if `.deb` fails to run**
+- from our github releases: [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
+- or install with [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
+  - `winget install --id=lencx.ChatGPT  -e`
+  - `winget install --id=lencx.ChatGPT  -e --version 0.7.4`
+- we have just received a [report](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972) that another [chatgpt](https://github.com/sonnylazuardi/chatgpt-desktop/) is also avaliable on `winget` and has the same default installation path, which may cause conflicts.
 
-[Other version...](https://github.com/lencx/ChatGPT/releases)
+### Mac
+
+- from our github releases: [ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg)
+- if you prefer `.app` installation, you can also download it from our github releases: [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
+- Homebrew \
+  Or you can install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
+
+  ```sh
+  brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
+  brew install --cask chatgpt --no-quarantine
+  ```
+
+  Also, if you keep a _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_, you can add something like this:
+
+  ```rb
+  repo = "lencx/chatgpt"
+  tap repo, "https://github.com/#{repo}.git"
+  cask "chatgpt", args: { "no-quarantine": true }
+  ```
+
+### Linux
+
+- [chat-gpt_0.7.4_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.deb)
+- [chat-gpt_0.7.4_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.AppImage): **works reliably, you can try it if `.deb` fails to run**
+
+[History versions...](https://github.com/lencx/ChatGPT/releases)
 
 <!-- download end -->
 
-<a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
-
 ---
-
-### Install
-
-Easily install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
-
-```sh
-brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
-brew install --cask chatgpt --no-quarantine
-```
-
-Also, if you keep a _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_, you can add something like this:
-
-```rb
-repo = "lencx/chatgpt"
-tap repo, "https://github.com/#{repo}.git"
-cask "chatgpt", args: { "no-quarantine": true }
-```
 
 ## 📢 Announcement
 
 ### ChatGPT Prompts!
+
 This is a major and exciting update. It works like a `Telegram bot command` and helps you quickly populate custom models to make chatgpt work the way you want it to. This project has taken a lot of my spare time, so if it helps you, please help spread the word or star it would be a great encouragement to me. I hope I can keep updating it and adding more interesting features.
 
 ### How does it work?
@@ -140,7 +149,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 
 Currently, only json and csv are supported for synchronizing custom files, and the following formats need to be met, otherwise the application will be abnormal：
 
-> JSON format:
+`JSON format:`
 
 ```json
 [
@@ -157,7 +166,7 @@ Currently, only json and csv are supported for synchronizing custom files, and t
 ]
 ```
 
-> CSV format
+`CSV format`
 
 ```csv
 "cmd","act","prompt"
