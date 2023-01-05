@@ -26,7 +26,8 @@
 - 或者使用 [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
   - `winget install --id=lencx.ChatGPT  -e`
   - `winget install --id=lencx.ChatGPT  -e --version 0.7.4`
-- 我们收到[报告](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972) 称另一个 [chatgpt](https://github.com/sonnylazuardi/chatgpt-desktop/) 也可以通过 `winget`安装，并且与我们的程序有相同的默认安装路径，这无疑会引发冲突。
+
+**注意：如果安装路径和应用名称相同，会导致冲突 ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972))**
 
 ### Mac
 

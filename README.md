@@ -25,16 +25,17 @@
 
 ### Windows
 
-- from our github releases: [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
-- or install with [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
+- From our github releases: [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
+- Or install with [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
   - `winget install --id=lencx.ChatGPT  -e`
   - `winget install --id=lencx.ChatGPT  -e --version 0.7.4`
-- we have just received a [report](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972) that another [chatgpt](https://github.com/sonnylazuardi/chatgpt-desktop/) is also avaliable on `winget` and has the same default installation path, which may cause conflicts.
+
+**Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972))**
 
 ### Mac
 
-- from our github releases: [ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg)
-- if you prefer `.app` installation, you can also download it from our github releases: [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
+- From our github releases: [ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg)
+- If you prefer `.app` installation, you can also download it from our github releases: [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
 - Homebrew \
   Or you can install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
