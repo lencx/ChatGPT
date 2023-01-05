@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import {Layout, Menu, Button, Tooltip, message, ConfigProvider, theme, Tag} from 'antd';
+import { useState } from 'react';
+import {Layout, Menu, Tooltip, ConfigProvider, theme, Tag } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getName, getVersion } from '@tauri-apps/api/app';
@@ -13,25 +13,21 @@ const { Content, Footer, Sider } = Layout;
 const appName = await getName();
 const appVersion = await getVersion();
 const appTheme = await invoke("get_theme");
-console.log("theme:"+appTheme);
-interface ChatLayoutProps {
-  children?: React.ReactNode;
-}
 
-const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
+export default function ChatLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const go = useNavigate();
 
   const checkAppUpdate = async () => {
-      await invoke('run_check_update', {silent: false});
+      await invoke('run_check_update', { silent: false });
   }
 
   return (
     <ConfigProvider theme={{algorithm: appTheme === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm}}>
     <Layout style={{ minHeight: '100vh' }} hasSider>
       <Sider
-        theme={ appTheme === "dark" ? "dark" : "light" }
+        theme={appTheme === "dark" ? "dark" : "light"}
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
@@ -47,19 +43,13 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
       >
         <div className="chat-logo"><img src="/logo.png" /></div>
         <div className="chat-info">
-            <Tag>{appName}</Tag>
-        </div>
-        <div className="chat-info">
+          <Tag>{appName}</Tag>
           <Tag>
-            <span>{appVersion}</span>
-            <span> </span>
-            {
+              <span style={{ marginRight: 5 }}>{appVersion}</span>
               <Tooltip title="click to check update">
                 <a onClick={checkAppUpdate}><SyncOutlined /></a>
               </Tooltip>
-            }
           </Tag>
-
         </div>
 
         <Menu
@@ -88,5 +78,3 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
     </ConfigProvider>
   );
 };
-
-export default ChatLayout;
