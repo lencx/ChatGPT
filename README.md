@@ -25,7 +25,7 @@
 
 ### Windows
 
-- from our github releases:[ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
+- from our github releases: [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
 - or install with [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
   - `winget install --id=lencx.ChatGPT  -e`
   - `winget install --id=lencx.ChatGPT  -e --version 0.7.4`
@@ -33,22 +33,23 @@
 
 ### Mac
 
-- from our github releases:[ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg)
-- if you prefer `.app` installation, you can also download it from our github releases:[ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
-- or you can install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
+- from our github releases: [ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg)
+- if you prefer `.app` installation, you can also download it from our github releases: [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
+- Homebrew
+  Or you can install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
 
-```sh
-brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
-brew install --cask chatgpt --no-quarantine
-```
+  ```sh
+  brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
+  brew install --cask chatgpt --no-quarantine
+  ```
 
-- Also, if you keep a _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_, you can add something like this:
+  Also, if you keep a _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_, you can add something like this:
 
-```rb
-repo = "lencx/chatgpt"
-tap repo, "https://github.com/#{repo}.git"
-cask "chatgpt", args: { "no-quarantine": true }
-```
+  ```rb
+  repo = "lencx/chatgpt"
+  tap repo, "https://github.com/#{repo}.git"
+  cask "chatgpt", args: { "no-quarantine": true }
+  ```
 
 ### Linux
 
@@ -148,7 +149,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 
 Currently, only json and csv are supported for synchronizing custom files, and the following formats need to be met, otherwise the application will be abnormal：
 
-> JSON format:
+`JSON format:`
 
 ```json
 [
@@ -165,7 +166,7 @@ Currently, only json and csv are supported for synchronizing custom files, and t
 ]
 ```
 
-> CSV format
+`CSV format`
 
 ```csv
 "cmd","act","prompt"

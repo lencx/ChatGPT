@@ -12,8 +12,6 @@
 [![chat](https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord)](https://discord.gg/aPhCRf4zZr)
 [![lencx](https://img.shields.io/twitter/follow/lencx_.svg?style=social)](https://twitter.com/lencx_)
 
-[Awesome ChatGPT](./AWESOME.md)
-
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
 
 ## 📦 安装
@@ -25,7 +23,7 @@
 ### Windows
 
 - [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
-- 或者使用[winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
+- 或者使用 [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
   - `winget install --id=lencx.ChatGPT  -e`
   - `winget install --id=lencx.ChatGPT  -e --version 0.7.4`
 - 我们收到[报告](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972) 称另一个 [chatgpt](https://github.com/sonnylazuardi/chatgpt-desktop/) 也可以通过 `winget`安装，并且与我们的程序有相同的默认安装路径，这无疑会引发冲突。
@@ -33,21 +31,22 @@
 ### Mac
 
 - [ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg)
-- 如果你偏爱 `.app` 的安装包, 你同样可以在我们的github releases里找到[ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
-- _[Homebrew快捷安装](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
+- 如果你偏爱 `.app` 的安装包，你同样可以在我们的 github releases 里找到 [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
+- Homebrew
+  _[Homebrew 快捷安装](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
 
-```sh
-brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
-brew install --cask chatgpt --no-quarantine
-```
+  ```sh
+  brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
+  brew install --cask chatgpt --no-quarantine
+  ```
 
-- 如果你坚持使用 _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_ ,你需要添加以下配置:
+  如果你坚持使用 _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_ ，你需要添加以下配置:
 
-```rb
-repo = "lencx/chatgpt"
-tap repo, "https://github.com/#{repo}.git"
-cask "chatgpt", args: { "no-quarantine": true }
-```
+  ```rb
+  repo = "lencx/chatgpt"
+  tap repo, "https://github.com/#{repo}.git"
+  cask "chatgpt", args: { "no-quarantine": true }
+  ```
 
 ### Linux
 
