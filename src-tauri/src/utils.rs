@@ -130,14 +130,20 @@ pub async fn get_data(
     }
 }
 
-pub fn run_check_update(app: AppHandle<Wry>) -> Result<()> {
+pub fn run_check_update(app: AppHandle<Wry>, silent: bool) -> Result<()> {
     tauri::async_runtime::spawn(async move {
         let result = app.updater().check().await;
         let update_resp = result.unwrap();
         if update_resp.is_update_available() {
-            tauri::async_runtime::spawn(async move {
-                prompt_for_install(app, update_resp).await.unwrap();
-            });
+            if silent {
+                tauri::async_runtime::spawn(async move {
+                    silent_install(app, update_resp).await.unwrap();
+                });
+            } else {
+                tauri::async_runtime::spawn(async move {
+                    prompt_for_install(app, update_resp).await.unwrap();
+                });
+            }
         }
     });
     Ok(())
@@ -187,6 +193,29 @@ Release Notes:
         if should_exit {
             app.restart();
         }
+    }
+
+    Ok(())
+}
+
+pub async fn silent_install(app: AppHandle<Wry>, update: UpdateResponse<Wry>) -> Result<()> {
+    let windows = app.windows();
+    let parent_window = windows.values().next();
+
+    // Launch updater download process
+    // macOS we display the `Ready to restart dialog` asking to restart
+    // Windows is closing the current App and launch the downloaded MSI when ready (the process stop here)
+    // Linux we replace the AppImage by launching a new install, it start a new AppImage instance, so we're closing the previous. (the process stop here)
+    update.download_and_install().await?;
+
+    // Ask user if we need to restart the application
+    let should_exit = tauri::api::dialog::blocking::ask(
+        parent_window,
+        "Ready to Restart",
+        "The silent installation was successful, do you want to restart the application now?",
+    );
+    if should_exit {
+        app.restart();
     }
 
     Ok(())
