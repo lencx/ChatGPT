@@ -63,6 +63,7 @@ pub fn init() -> Menu {
             CustomMenuItem::new("control_center".to_string(), "Control Center")
                 .accelerator("CmdOrCtrl+Shift+P")
                 .into(),
+                CustomMenuItem::new("dall_e2".to_string(), "Search DALLE-2").into(),
             MenuItem::Separator.into(),
             Submenu::new(
                 "Theme",
@@ -189,7 +190,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
 
     let core_window = app.get_window("core").unwrap();
     let menu_handle = core_window.menu_handle();
-
+    let query = String::from("");
     match menu_id {
         // App
         "about" => {
@@ -205,6 +206,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         }
         // Preferences
         "control_center" => window::control_window(&app),
+        "dall_e2"=> window::dalle2_window(&app, query),
         "restart" => tauri::api::process::restart(&app.env()),
         "inject_script" => open(&app, script_path),
         "go_conf" => utils::open_file(utils::chat_root()),
