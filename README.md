@@ -37,14 +37,11 @@
 - if you prefer `.app` installation, you can also download it from our github releases: [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
 - Homebrew \
   Or you can install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
-
   ```sh
   brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
   brew install --cask chatgpt --no-quarantine
   ```
-
   Also, if you keep a _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_, you can add something like this:
-
   ```rb
   repo = "lencx/chatgpt"
   tap repo, "https://github.com/#{repo}.git"

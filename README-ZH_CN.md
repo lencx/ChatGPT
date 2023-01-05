@@ -34,14 +34,11 @@
 - 如果你偏爱 `.app` 的安装包，你同样可以在我们的 github releases 里找到 [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
 - Homebrew \
   _[Homebrew 快捷安装](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
-
   ```sh
   brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
   brew install --cask chatgpt --no-quarantine
   ```
-
   如果你坚持使用 _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_ ，你需要添加以下配置:
-
   ```rb
   repo = "lencx/chatgpt"
   tap repo, "https://github.com/#{repo}.git"
