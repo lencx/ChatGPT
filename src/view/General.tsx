@@ -10,10 +10,17 @@ import { clone, omit, isEqual } from 'lodash';
 import useInit from '@/hooks/useInit';
 import { DISABLE_AUTO_COMPLETE, chatRoot } from '@/utils';
 
-const CheckUpdateLabel = () => {
+const AutoUpdateLabel = () => {
   return (
     <span>
-      Auto Check Update <Tooltip title={`check update on start`}><QuestionCircleOutlined style={{ color: '#1677ff' }} /></Tooltip>
+      Auto Update <Tooltip title={(
+          <div>
+            <div>Auto Update Policy</div>
+            <span><strong>Prompt</strong>: prompt to install</span><br/>
+            <span><strong>Silent</strong>: install silently</span><br/>
+            {/*<span><strong>Disable</strong>: disable auto update</span><br/>*/}
+          </div>
+    )}><QuestionCircleOutlined style={{ color: '#1677ff' }} /></Tooltip>
     </span>
   )
 }
@@ -121,8 +128,12 @@ export default function General() {
         <Form.Item label="Stay On Top" name="stay_on_top" valuePropName="checked">
           <Switch />
         </Form.Item>
-        <Form.Item label={<CheckUpdateLabel />} name="auto_check_update" valuePropName="checked">
-          <Switch />
+        <Form.Item label={<AutoUpdateLabel />} name="auto_update">
+          <Radio.Group>
+            <Radio value="Prompt">Prompt</Radio>
+            <Radio value="Silent">Silent</Radio>
+            {/*<Radio value="Disable">Disable</Radio>*/}
+          </Radio.Group>
         </Form.Item>
         <Form.Item label={<GlobalShortcut />} name="global_shortcut">
           <Input placeholder="CmdOrCtrl+Shift+O" {...DISABLE_AUTO_COMPLETE} />

@@ -23,7 +23,7 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
   const go = useNavigate();
 
   const checkAppUpdate = async () => {
-      await invoke('run_check_update');
+      await invoke('run_check_update', {silent: false});
   }
 
   return (

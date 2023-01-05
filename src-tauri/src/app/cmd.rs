@@ -51,8 +51,8 @@ pub fn reset_chat_conf() -> ChatConfJson {
 }
 
 #[command]
-pub fn run_check_update(app: AppHandle) -> () {
-    utils::run_check_update(app).unwrap();
+pub fn run_check_update(app: AppHandle, silent: bool) {
+    utils::run_check_update(app, silent).unwrap();
 }
 
 #[command]

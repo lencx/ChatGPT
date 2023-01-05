@@ -36,20 +36,27 @@ pub fn init() -> Menu {
 
     let stay_on_top =
         CustomMenuItem::new("stay_on_top".to_string(), "Stay On Top").accelerator("CmdOrCtrl+T");
+
     #[cfg(target_os = "macos")]
     let titlebar =
         CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
+
     let theme_light = CustomMenuItem::new("theme_light".to_string(), "Light");
     let theme_dark = CustomMenuItem::new("theme_dark".to_string(), "Dark");
     let theme_system = CustomMenuItem::new("theme_system".to_string(), "System");
     let is_dark = chat_conf.theme == "Dark";
     let is_system = chat_conf.theme == "System";
 
+    let update_prompt = CustomMenuItem::new("update_prompt".to_string(), "Prompt");
+    let update_silent = CustomMenuItem::new("update_silent".to_string(), "Silent");
+    let _update_disable = CustomMenuItem::new("update_disable".to_string(), "Disable");
+
     let stay_on_top_menu = if chat_conf.stay_on_top {
         stay_on_top.selected()
     } else {
         stay_on_top
     };
+
     #[cfg(target_os = "macos")]
     let titlebar_menu = if chat_conf.titlebar {
         titlebar.selected()
@@ -84,6 +91,26 @@ pub fn init() -> Menu {
                     }),
             )
             .into(),
+            Submenu::new(
+                "Auto Update",
+                Menu::new()
+                    .add_item(if chat_conf.auto_update == "Prompt" {
+                        update_prompt.selected()
+                    } else {
+                        update_prompt
+                    })
+                    .add_item(if chat_conf.auto_update == "Silent" {
+                        update_silent.selected()
+                    } else {
+                        update_silent
+                    })
+                    // .add_item(if chat_conf.auto_update == "Disable" {
+                    //     update_disable.selected()
+                    // } else {
+                    //     update_disable
+                    // })
+                ,
+            ).into(),
             stay_on_top_menu.into(),
             #[cfg(target_os = "macos")]
             titlebar_menu.into(),
@@ -201,7 +228,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             );
         }
         "check_update" => {
-            utils::run_check_update(app).unwrap();
+            utils::run_check_update(app, false).unwrap();
         }
         // Preferences
         "control_center" => window::control_window(&app),
@@ -237,15 +264,33 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             .unwrap();
             tauri::api::process::restart(&app.env());
         }
-        "theme_light" | "theme_dark"  | "theme_system" => {
-            let theme = if menu_id == "theme_dark" {
-                "Dark"
-            } else if menu_id == "theme_system" {
-                "System"
-            } else {
-                "Light"
+        "theme_light" | "theme_dark" | "theme_system" => {
+            let theme = match menu_id {
+                "theme_dark" => "Dark",
+                "theme_system" => "System",
+                _ => "Light",
             };
             ChatConfJson::amend(&serde_json::json!({ "theme": theme }), Some(app)).unwrap();
+        }
+        "update_prompt" | "update_silent" | "update_disable" => {
+            for id in ["update_prompt" , "update_silent" , "update_disable"] {
+                menu_handle.get_item(id).set_selected(false).unwrap();
+            }
+            let auto_update = match menu_id {
+                "update_silent" => {
+                    menu_handle.get_item("update_silent").set_selected(true).unwrap();
+                    "Silent"
+                },
+                "update_disable" => {
+                    menu_handle.get_item("update_disable").set_selected(true).unwrap();
+                    "Disable"
+                },
+                _ => {
+                    menu_handle.get_item("update_prompt").set_selected(true).unwrap();
+                    "Prompt"
+                },
+            };
+            ChatConfJson::amend(&serde_json::json!({ "auto_update": auto_update }), None).unwrap();
         }
         "stay_on_top" => {
             let mut stay_on_top = state.stay_on_top.lock().unwrap();
