@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import {Layout, Menu, Button, Tooltip, message} from 'antd';
+import {Layout, Menu, Button, Tooltip, message, ConfigProvider, theme, Tag} from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getName, getVersion } from '@tauri-apps/api/app';
@@ -12,7 +12,8 @@ const { Content, Footer, Sider } = Layout;
 
 const appName = await getName();
 const appVersion = await getVersion();
-
+const appTheme = await invoke("get_theme");
+console.log("theme:"+appTheme);
 interface ChatLayoutProps {
   children?: React.ReactNode;
 }
@@ -27,9 +28,10 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
   }
 
   return (
+    <ConfigProvider theme={{algorithm: appTheme === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm}}>
     <Layout style={{ minHeight: '100vh' }} hasSider>
       <Sider
-        theme="light"
+        theme={ appTheme === "dark" ? "dark" : "light" }
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
@@ -45,21 +47,25 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
       >
         <div className="chat-logo"><img src="/logo.png" /></div>
         <div className="chat-info">
-            <span>{appName}</span>
+            <Tag>{appName}</Tag>
         </div>
         <div className="chat-info">
+          <Tag>
             <span>{appVersion}</span>
             <span> </span>
             {
-                <Tooltip title="click to check update">
-                    <a onClick={checkAppUpdate}><SyncOutlined /></a>
-                </Tooltip>
+              <Tooltip title="click to check update">
+                <a onClick={checkAppUpdate}><SyncOutlined /></a>
+              </Tooltip>
             }
+          </Tag>
+
         </div>
 
         <Menu
           defaultSelectedKeys={[location.pathname]}
           mode="inline"
+          theme={ appTheme === "dark" ? "dark" : "light" }
           inlineIndent={12}
           items={menuItems}
           defaultOpenKeys={['/model']}
@@ -79,6 +85,7 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
           <a href="https://github.com/lencx/chatgpt" target="_blank">ChatGPT Desktop Application</a> ©2022 Created by lencx</Footer>
       </Layout>
     </Layout>
+    </ConfigProvider>
   );
 };
 
