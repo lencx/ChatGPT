@@ -95,10 +95,12 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
                 .unwrap();
         });
     }
-    // auto_check_update
-    if chat_conf.auto_check_update {
+
+    // auto_update
+    if chat_conf.auto_update != "Disable" {
+        info!("stepup::run_check_update");
         let app = app.handle();
-        utils::run_check_update(app).unwrap();
+        utils::run_check_update(app, chat_conf.auto_update == "Silent", None).unwrap();
     }
 
     Ok(())

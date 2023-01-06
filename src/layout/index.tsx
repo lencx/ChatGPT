@@ -1,35 +1,39 @@
-import { FC, useState } from 'react';
-import {Layout, Menu, Button, Tooltip, message} from 'antd';
+import { useState } from 'react';
+import {Layout, Menu, Tooltip, ConfigProvider, theme, Tag } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getName, getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api';
 
+import useInit from '@/hooks/useInit';
 import Routes, { menuItems } from '@/routes';
 import './index.scss';
 
 const { Content, Footer, Sider } = Layout;
 
-const appName = await getName();
-const appVersion = await getVersion();
-
-interface ChatLayoutProps {
-  children?: React.ReactNode;
-}
-
-const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
+export default function ChatLayout() {
   const [collapsed, setCollapsed] = useState(false);
+  const [appInfo, setAppInfo] = useState<Record<string, any>>({});
   const location = useLocation();
   const go = useNavigate();
 
+  useInit(async () => {
+    setAppInfo({
+      appName: await getName(),
+      appVersion: await getVersion(),
+      appTheme: await invoke("get_theme"),
+    });
+  })
+
   const checkAppUpdate = async () => {
-      await invoke('run_check_update');
+    await invoke('run_check_update', { silent: false, hasMsg: true });
   }
 
   return (
+    <ConfigProvider theme={{algorithm: appInfo.appTheme === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm}}>
     <Layout style={{ minHeight: '100vh' }} hasSider>
       <Sider
-        theme="light"
+        theme={appInfo.appTheme === "dark" ? "dark" : "light"}
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
@@ -45,21 +49,19 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
       >
         <div className="chat-logo"><img src="/logo.png" /></div>
         <div className="chat-info">
-            <span>{appName}</span>
-        </div>
-        <div className="chat-info">
-            <span>{appVersion}</span>
-            <span> </span>
-            {
-                <Tooltip title="click to check update">
-                    <a onClick={checkAppUpdate}><SyncOutlined /></a>
-                </Tooltip>
-            }
+          <Tag>{appInfo.appName}</Tag>
+          <Tag>
+              <span style={{ marginRight: 5 }}>{appInfo.appVersion}</span>
+              <Tooltip title="click to check update">
+                <a onClick={checkAppUpdate}><SyncOutlined /></a>
+              </Tooltip>
+          </Tag>
         </div>
 
         <Menu
           defaultSelectedKeys={[location.pathname]}
           mode="inline"
+          theme={ appInfo.appTheme === "dark" ? "dark" : "light" }
           inlineIndent={12}
           items={menuItems}
           defaultOpenKeys={['/model']}
@@ -79,7 +81,6 @@ const ChatLayout: FC<ChatLayoutProps> = ({ children }) => {
           <a href="https://github.com/lencx/chatgpt" target="_blank">ChatGPT Desktop Application</a> ©2022 Created by lencx</Footer>
       </Layout>
     </Layout>
+    </ConfigProvider>
   );
 };
-
-export default ChatLayout;

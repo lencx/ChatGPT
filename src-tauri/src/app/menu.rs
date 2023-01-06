@@ -1,4 +1,5 @@
 use crate::{
+    app::window,
     conf::{self, ChatConfJson},
     utils,
 };
@@ -10,8 +11,6 @@ use tauri_plugin_positioner::{on_tray_event, Position, WindowExt};
 
 #[cfg(target_os = "macos")]
 use tauri::AboutMetadata;
-
-use super::window;
 
 // --- Menu
 pub fn init() -> Menu {
@@ -36,20 +35,27 @@ pub fn init() -> Menu {
 
     let stay_on_top =
         CustomMenuItem::new("stay_on_top".to_string(), "Stay On Top").accelerator("CmdOrCtrl+T");
+
     #[cfg(target_os = "macos")]
     let titlebar =
         CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
+
     let theme_light = CustomMenuItem::new("theme_light".to_string(), "Light");
     let theme_dark = CustomMenuItem::new("theme_dark".to_string(), "Dark");
     let theme_system = CustomMenuItem::new("theme_system".to_string(), "System");
     let is_dark = chat_conf.theme == "Dark";
     let is_system = chat_conf.theme == "System";
 
+    let update_prompt = CustomMenuItem::new("update_prompt".to_string(), "Prompt");
+    let update_silent = CustomMenuItem::new("update_silent".to_string(), "Silent");
+    let _update_disable = CustomMenuItem::new("update_disable".to_string(), "Disable");
+
     let stay_on_top_menu = if chat_conf.stay_on_top {
         stay_on_top.selected()
     } else {
         stay_on_top
     };
+
     #[cfg(target_os = "macos")]
     let titlebar_menu = if chat_conf.titlebar {
         titlebar.selected()
@@ -64,6 +70,15 @@ pub fn init() -> Menu {
                 .accelerator("CmdOrCtrl+Shift+P")
                 .into(),
                 CustomMenuItem::new("dall_e2".to_string(), "Search DALLE-2").into(),
+            MenuItem::Separator.into(),
+            stay_on_top_menu.into(),
+            #[cfg(target_os = "macos")]
+            titlebar_menu.into(),
+            #[cfg(target_os = "macos")]
+            CustomMenuItem::new("hide_dock_icon".to_string(), "Hide Dock Icon").into(),
+            CustomMenuItem::new("inject_script".to_string(), "Inject Script")
+                .accelerator("CmdOrCtrl+J")
+                .into(),
             MenuItem::Separator.into(),
             Submenu::new(
                 "Theme",
@@ -85,14 +100,25 @@ pub fn init() -> Menu {
                     }),
             )
             .into(),
-            stay_on_top_menu.into(),
-            #[cfg(target_os = "macos")]
-            titlebar_menu.into(),
-            #[cfg(target_os = "macos")]
-            CustomMenuItem::new("hide_dock_icon".to_string(), "Hide Dock Icon").into(),
-            CustomMenuItem::new("inject_script".to_string(), "Inject Script")
-                .accelerator("CmdOrCtrl+J")
-                .into(),
+            Submenu::new(
+                "Auto Update",
+                Menu::new()
+                    .add_item(if chat_conf.auto_update == "Prompt" {
+                        update_prompt.selected()
+                    } else {
+                        update_prompt
+                    })
+                    .add_item(if chat_conf.auto_update == "Silent" {
+                        update_silent.selected()
+                    } else {
+                        update_silent
+                    }), // .add_item(if chat_conf.auto_update == "Disable" {
+                        //     update_disable.selected()
+                        // } else {
+                        //     update_disable
+                        // })
+            )
+            .into(),
             MenuItem::Separator.into(),
             CustomMenuItem::new("sync_prompts".to_string(), "Sync Prompts").into(),
             MenuItem::Separator.into(),
@@ -152,6 +178,8 @@ pub fn init() -> Menu {
     let window_menu = Submenu::new(
         "Window",
         Menu::new()
+            .add_item(CustomMenuItem::new("dalle2".to_string(), "DALL·E 2"))
+            .add_native_item(MenuItem::Separator)
             .add_native_item(MenuItem::Minimize)
             .add_native_item(MenuItem::Zoom),
     );
@@ -174,9 +202,9 @@ pub fn init() -> Menu {
     Menu::new()
         .add_submenu(app_menu)
         .add_submenu(preferences_menu)
+        .add_submenu(window_menu)
         .add_submenu(edit_menu)
         .add_submenu(view_menu)
-        .add_submenu(window_menu)
         .add_submenu(help_menu)
 }
 
@@ -202,7 +230,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             );
         }
         "check_update" => {
-            utils::run_check_update(app).unwrap();
+            utils::run_check_update(app, false, None).unwrap();
         }
         // Preferences
         "control_center" => window::control_window(&app),
@@ -239,15 +267,43 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             .unwrap();
             tauri::api::process::restart(&app.env());
         }
-        "theme_light" | "theme_dark"  | "theme_system" => {
-            let theme = if menu_id == "theme_dark" {
-                "Dark"
-            } else if menu_id == "theme_system" {
-                "System"
-            } else {
-                "Light"
+        "theme_light" | "theme_dark" | "theme_system" => {
+            let theme = match menu_id {
+                "theme_dark" => "Dark",
+                "theme_system" => "System",
+                _ => "Light",
             };
             ChatConfJson::amend(&serde_json::json!({ "theme": theme }), Some(app)).unwrap();
+        }
+        "update_prompt" | "update_silent" | "update_disable" => {
+            // for id in ["update_prompt", "update_silent", "update_disable"] {
+            for id in ["update_prompt", "update_silent"] {
+                menu_handle.get_item(id).set_selected(false).unwrap();
+            }
+            let auto_update = match menu_id {
+                "update_silent" => {
+                    menu_handle
+                        .get_item("update_silent")
+                        .set_selected(true)
+                        .unwrap();
+                    "Silent"
+                }
+                "update_disable" => {
+                    menu_handle
+                        .get_item("update_disable")
+                        .set_selected(true)
+                        .unwrap();
+                    "Disable"
+                }
+                _ => {
+                    menu_handle
+                        .get_item("update_prompt")
+                        .set_selected(true)
+                        .unwrap();
+                    "Prompt"
+                }
+            };
+            ChatConfJson::amend(&serde_json::json!({ "auto_update": auto_update }), None).unwrap();
         }
         "stay_on_top" => {
             let mut stay_on_top = state.stay_on_top.lock().unwrap();
@@ -259,6 +315,8 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             win.set_always_on_top(*stay_on_top).unwrap();
             ChatConfJson::amend(&serde_json::json!({ "stay_on_top": *stay_on_top }), None).unwrap();
         }
+        // Window
+        "dalle2" => window::dalle2_window(&app, None, None),
         // View
         "reload" => win.eval("window.location.reload()").unwrap(),
         "go_back" => win.eval("window.history.go(-1)").unwrap(),

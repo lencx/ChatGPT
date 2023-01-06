@@ -57,8 +57,8 @@ jobs:
       - name: Install app dependencies and build it
         run: yarn && yarn build:fe
 
-      - name: Rewrite tauri.conf.json
-        run: yarn fix:conf
+      # - name: Rewrite tauri.conf.json
+      #   run: yarn fix:conf
 
       - name: fix tray icon
         if: matrix.platform != 'macos-latest'
@@ -90,3 +90,14 @@ jobs:
           # 📝: Edit the deployment directory
           publish_dir: ./updater
           force_orphan: true
+          
+  publish-winget:
+  # Action can only be run on windows
+    runs-on: windows-latest
+    needs: [create-release, build-tauri]
+    steps:
+      - uses: vedantmgoyal2009/winget-releaser@v1
+        with:
+          identifier: lencx.ChatGPT
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ env.version }}

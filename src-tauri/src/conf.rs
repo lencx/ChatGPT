@@ -18,7 +18,7 @@ pub const GITHUB_PROMPTS_CSV_URL: &str =
     "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv";
 pub const DEFAULT_CHAT_CONF: &str = r#"{
     "stay_on_top": false,
-    "auto_check_update": true,
+    "auto_update": "Prompt",
     "theme": "Light",
     "titlebar": true,
     "global_shortcut": "",
@@ -30,7 +30,7 @@ pub const DEFAULT_CHAT_CONF: &str = r#"{
 }"#;
 pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
     "stay_on_top": false,
-    "auto_check_update": true,
+    "auto_update": "Prompt",
     "theme": "Light",
     "titlebar": false,
     "global_shortcut": "",
@@ -59,10 +59,10 @@ pub struct ChatConfJson {
     pub titlebar: bool,
     pub hide_dock_icon: bool,
 
-    // macOS and Windows
+    // macOS and Windows, Light/Dark/System
     pub theme: String,
-
-    pub auto_check_update: bool,
+    // auto update policy, Prompt/Silent/Disable
+    pub auto_update: String,
     pub stay_on_top: bool,
     pub default_origin: String,
     pub origin: String,
@@ -177,21 +177,20 @@ impl ChatConfJson {
 
     pub fn theme() -> Option<Theme> {
         let conf = ChatConfJson::get_chat_conf();
-        if conf.theme == "System" {
-            let mode = dark_light::detect();
-            return match mode {
+        let theme = match conf.theme.as_str() {
+            "System" => match dark_light::detect() {
                 // Dark mode
-                dark_light::Mode::Dark => Some(Theme::Dark),
+                dark_light::Mode::Dark => Theme::Dark,
                 // Light mode
-                dark_light::Mode::Light => Some(Theme::Light),
+                dark_light::Mode::Light => Theme::Light,
                 // Unspecified
-                dark_light::Mode::Default => Some(Theme::Light),
-            }
-        } if conf.theme == "Dark" {
-            Some(Theme::Dark)
-        } else {
-            Some(Theme::Light)
-        }
+                dark_light::Mode::Default => Theme::Light,
+            },
+            "Dark" => Theme::Dark,
+            _ => Theme::Light,
+        };
+
+        Some(theme)
     }
 
     #[cfg(target_os = "macos")]

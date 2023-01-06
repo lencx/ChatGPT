@@ -5,7 +5,7 @@ use crate::{
 };
 use log::info;
 use std::{collections::HashMap, fs, path::PathBuf};
-use tauri::{api, command, AppHandle, Manager};
+use tauri::{api, command, AppHandle, Manager, Theme};
 use walkdir::WalkDir;
 
 #[command]
@@ -15,7 +15,11 @@ pub fn drag_window(app: AppHandle) {
 
 #[command]
 pub fn dalle2_window(app: AppHandle, query: String) {
-    window::dalle2_window(&app.app_handle(), query);
+    window::dalle2_window(
+        &app.app_handle(),
+        Some(query),
+        Some("ChatGPT & DALL·E 2".to_string()),
+    );
 }
 
 #[command]
@@ -46,13 +50,18 @@ pub fn get_chat_conf() -> ChatConfJson {
 }
 
 #[command]
+pub fn get_theme() -> String {
+    ChatConfJson::theme().unwrap_or(Theme::Light).to_string()
+}
+
+#[command]
 pub fn reset_chat_conf() -> ChatConfJson {
     ChatConfJson::reset_chat_conf()
 }
 
 #[command]
-pub fn run_check_update(app: AppHandle) -> () {
-    utils::run_check_update(app).unwrap();
+pub fn run_check_update(app: AppHandle, silent: bool, has_msg: Option<bool>) {
+    utils::run_check_update(app, silent, has_msg).unwrap();
 }
 
 #[command]
