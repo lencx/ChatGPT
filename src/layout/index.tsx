@@ -5,29 +5,35 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { getName, getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api';
 
+import useInit from '@/hooks/useInit';
 import Routes, { menuItems } from '@/routes';
 import './index.scss';
 
 const { Content, Footer, Sider } = Layout;
 
-const appName = await getName();
-const appVersion = await getVersion();
-const appTheme = await invoke("get_theme");
-
 export default function ChatLayout() {
   const [collapsed, setCollapsed] = useState(false);
+  const [appInfo, setAppInfo] = useState<Record<string, any>>({});
   const location = useLocation();
   const go = useNavigate();
 
+  useInit(async () => {
+    setAppInfo({
+      appName: await getName(),
+      appVersion: await getVersion(),
+      appTheme: await invoke("get_theme"),
+    });
+  })
+
   const checkAppUpdate = async () => {
-      await invoke('run_check_update', { silent: false });
+    await invoke('run_check_update', { silent: false });
   }
 
   return (
-    <ConfigProvider theme={{algorithm: appTheme === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm}}>
+    <ConfigProvider theme={{algorithm: appInfo.appTheme === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm}}>
     <Layout style={{ minHeight: '100vh' }} hasSider>
       <Sider
-        theme={appTheme === "dark" ? "dark" : "light"}
+        theme={appInfo.appTheme === "dark" ? "dark" : "light"}
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
@@ -43,9 +49,9 @@ export default function ChatLayout() {
       >
         <div className="chat-logo"><img src="/logo.png" /></div>
         <div className="chat-info">
-          <Tag>{appName}</Tag>
+          <Tag>{appInfo.appName}</Tag>
           <Tag>
-              <span style={{ marginRight: 5 }}>{appVersion}</span>
+              <span style={{ marginRight: 5 }}>{appInfo.appVersion}</span>
               <Tooltip title="click to check update">
                 <a onClick={checkAppUpdate}><SyncOutlined /></a>
               </Tooltip>
@@ -55,7 +61,7 @@ export default function ChatLayout() {
         <Menu
           defaultSelectedKeys={[location.pathname]}
           mode="inline"
-          theme={ appTheme === "dark" ? "dark" : "light" }
+          theme={ appInfo.appTheme === "dark" ? "dark" : "light" }
           inlineIndent={12}
           items={menuItems}
           defaultOpenKeys={['/model']}
