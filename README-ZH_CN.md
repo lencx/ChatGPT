@@ -23,24 +23,29 @@
 
 ### Windows
 
-- [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
-- 或者使用 [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
-  - `winget install --id=lencx.ChatGPT -e`
-  - `winget install --id=lencx.ChatGPT -e --version 0.7.4`
+- [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi):
+- 使用 [winget](https://winstall.app/apps/lencx.ChatGPT):
+  ```bash
+  # install the latest version
+  winget install --id=lencx.ChatGPT -e
+
+  # install the specified version
+  winget install --id=lencx.ChatGPT -e --version 0.7.4
+  ```
 
 **注意：如果安装路径和应用名称相同，会导致冲突 ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972))**
 
 ### Mac
 
 - [ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg)
-- 如果你偏爱 `.app` 的安装包，你同样可以在我们的 github releases 里找到 [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
+- [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
 - Homebrew \
   _[Homebrew 快捷安装](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
   brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
   brew install --cask chatgpt --no-quarantine
   ```
-  如果你坚持使用 _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_ ，你需要添加以下配置:
+  如果你坚持使用 _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_ ，则需要添加以下配置:
   ```rb
   repo = "lencx/chatgpt"
   tap repo, "https://github.com/#{repo}.git"
@@ -51,7 +56,10 @@
 
 - [chat-gpt_0.7.4_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.deb)
 - [chat-gpt_0.7.4_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.AppImage): **工作可靠，`.deb` 运行失败时可以尝试它**
-- [chatgpt-desktop-bin](https://aur.archlinux.org/packages/chatgpt-desktop-bin): 使用 AUR 来安装
+- 使用 [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin):
+  ```bash
+  sudo pacman -S chatgpt-desktop-bin
+  ```
 
 <!-- download end -->
 
@@ -63,7 +71,7 @@
 
 ### 如何使用指令？
 
-你可以从 [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) 来寻找有趣的功能来导入到应用。
+你可以从 [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) 来寻找有趣的功能来导入到应用。也可以使用 `Sync Prompts`，来一键同步所有，如果你不想让某些提示出现在你的斜杠命令，你可以禁用它们。
 
 ![chat cmd](./assets/chat-cmd-1.png)
 ![chat cmd](./assets/chat-cmd-2.png)

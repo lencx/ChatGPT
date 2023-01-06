@@ -26,17 +26,22 @@
 
 ### Windows
 
-- From our github releases: [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
-- Or install with [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
-  - `winget install --id=lencx.ChatGPT -e`
-  - `winget install --id=lencx.ChatGPT -e --version 0.7.4`
+- [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi): Direct download installer
+- Use [winget](https://winstall.app/apps/lencx.ChatGPT):
+  ```bash
+  # install the latest version
+  winget install --id=lencx.ChatGPT -e
+
+  # install the specified version
+  winget install --id=lencx.ChatGPT -e --version 0.7.4
+  ```
 
 **Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972))**
 
 ### Mac
 
-- From our github releases: [ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg)
-- If you prefer `.app` installation, you can also download it from our github releases: [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
+- [ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg): Direct download installer
+- [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz): Download the `.app` installer
 - Homebrew \
   Or you can install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
@@ -52,9 +57,13 @@
 
 ### Linux
 
-- [chat-gpt_0.7.4_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.deb)
-- [chat-gpt_0.7.4_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.AppImage): **works reliably, you can try it if `.deb` fails to run**
-- Available on [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin) with the package name `chatgpt-desktop-bin`, and you can use your favourite AUR package manager to install it.
+- [chat-gpt_0.7.4_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
+- [chat-gpt_0.7.4_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.AppImage): Works reliably, you can try it if `.deb` fails to run
+- Use [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin):
+  ```bash
+  sudo pacman -S chatgpt-desktop-bin
+  ```
+
 
 <!-- download end -->
 
@@ -68,19 +77,16 @@ This is a major and exciting update. It works like a `Telegram bot command` and 
 
 ### How does it work?
 
-You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)** to find interesting features to import into the app.
+You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)** to find interesting features to import into the app. You can also use `Sync Prompts` to sync all in one click, and if you don't want certain prompts to appear in your slash commands, you can disable them.
 
 ![chat cmd](./assets/chat-cmd-1.png)
-
 ![chat cmd](./assets/chat-cmd-2.png)
 
 <!-- After the data import is done, you can restart the app to make the configuration take effect (`Menu -> Preferences -> Restart ChatGPT`). -->
-<br>
 
 - In the chatgpt text input area, type a character starting with `/` to bring up the command prompt, press the spacebar, and it will fill the input area with the text associated with the command by default (note: if it contains multiple command prompts, it will only select the first one as the fill, you can keep typing until the first prompted command is the one you want, then press the spacebar.
 - Or use the mouse to click on one of the multiple commands). When the fill is complete, you simply press the Enter key.
 - Under the slash command, use the tab key to modify the contents of the `{q}` tag (only single changes are supported [#54](https://github.com/lencx/ChatGPT/issues/54)). Use the keyboard `⇧` (arrow up) and `⇩` (arrow down) keys to select the slash command.
-<br>
 
 ![chatgpt](assets/chatgpt.gif)
 
