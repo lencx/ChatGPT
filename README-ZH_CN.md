@@ -1,9 +1,8 @@
 <p align="center">
   <img width="180" src="./public/logo.png" alt="ChatGPT">
   <h1 align="center">ChatGPT</h1>
+  <p align="center">ChatGPT 桌面应用（Mac, Windows and Linux）</p>
 </p>
-
-> ChatGPT 桌面应用
 
 [![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](./README.md)
 [![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](./README-ZH_CN.md)\
@@ -63,8 +62,6 @@
 
 <!-- download end -->
 
----
-
 ## 📢 公告
 
 这是一个令人兴奋的重大更新。像 `Telegram 机器人指令` 那样工作，帮助你快速填充自定模型，来让 ChatGPT 按照你想要的方式去工作。这个项目倾注了我大量业余时间，如果它对你有所帮助，宣传转发，或者 star 都是对我的巨大鼓励。我希望我可以持续更新下去，加入更多有趣的功能。
@@ -93,11 +90,12 @@
 - 应用菜单功能强大
 - 支持斜杠命令及其配置（可手动配置或从文件同步 [#55](https://github.com/lencx/ChatGPT/issues/55)）
 - 自定义全局快捷键 ([#108](https://github.com/lencx/ChatGPT/issues/108))
+- DALL·E 2 搜索 (触发方式：鼠标选中文本 [#122](https://github.com/lencx/ChatGPT/issues/122))
 
-### 菜单项
+### #️⃣ 菜单项
 
 - **Preferences (喜好)**
-  - `Theme` - `Light`, `Dark` (仅支持 macOS 和 Windows)
+  - `Theme` - `Light`, `Dark`, `System` (仅支持 macOS 和 Windows)
   - `Stay On Top`: 窗口置顶
   - `Titlebar`: 是否显示 `Titlebar`，仅 macOS 支持
   - `Inject Script`: 用于修改网站的用户自定义脚本
@@ -118,7 +116,7 @@
   - `Report Bug`: 报告 BUG 或反馈建议
   - `Toggle Developer Tools`: 网站调试工具，调试页面或脚本可能需要
 
-## 应用配置
+## ⚙️ 应用配置
 
 | 平台    | 路径                      |
 | ------- | ------------------------- |
@@ -194,6 +192,8 @@
 Mac 上无法安装，提示开发者未验证，具体可以查看下面给出的解决方案（它是开源的，很安全）。
 
 - [Open a Mac app from an unidentified developer](https://support.apple.com/en-sg/guide/mac-help/mh40616/mac)
+
+---
 
 ### 我想自己构建它？
 

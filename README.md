@@ -1,9 +1,8 @@
 <p align="center">
   <img width="180" src="./public/logo.png" alt="ChatGPT">
   <h1 align="center">ChatGPT</h1>
+  <p align="center">ChatGPT Desktop Application (Mac, Windows and Linux)</p>
 </p>
-
-<div align="center"><h2>ChatGPT Desktop Application</h2></div>
 
 [![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](./README.md)
 [![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](./README-ZH_CN.md)\
@@ -62,8 +61,6 @@
 
 <!-- download end -->
 
----
-
 ## 📢 Announcement
 
 ### ChatGPT Prompts!
@@ -96,11 +93,12 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 - Powerful menu items
 - Support for slash commands and their configuration (can be configured manually or synchronized from a file [#55](https://github.com/lencx/ChatGPT/issues/55))
 - Customize global shortcuts ([#108](https://github.com/lencx/ChatGPT/issues/108))
+- DALL·E 2 Search (mouse selected content [#122](https://github.com/lencx/ChatGPT/issues/122))
 
-## MenuItem
+## #️⃣ MenuItem
 
 - **Preferences**
-  - `Theme` - `Light`, `Dark` (Only macOS and Windows are supported).
+  - `Theme` - `Light`, `Dark`, `System` (Only macOS and Windows are supported).
   - `Stay On Top`: The window is stay on top of other windows.
   - `Titlebar`: Whether to display the titlebar, supported by macOS only.
   - `Hide Dock Icon` ([#35](https://github.com/lencx/ChatGPT/issues/35)): Hide application icons from the Dock(support macOS only).
@@ -121,7 +119,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
   - `Report Bug`: Report a bug or give feedback.
   - `Toggle Developer Tools`: Developer debugging tools.
 
-## Application Configuration
+## ⚙️ Application Configuration
 
 | Platform | Path                      |
 | -------- | ------------------------- |
@@ -172,7 +170,7 @@ Currently, only json and csv are supported for synchronizing custom files, and t
 "b","bb","bbb bbb bbb"
 ```
 
-## TODO
+## 📌 TODO
 
 <!-- - Web access capability ([#20](https://github.com/lencx/ChatGPT/issues/20)) -->
 - `Control Center` - Feature Enhancements
@@ -203,6 +201,8 @@ It's safe, just a wrapper for [OpenAI ChatGPT](https://chat.openai.com) website,
 
 - [Open a Mac app from an unidentified developer](https://support.apple.com/en-sg/guide/mac-help/mh40616/mac)
 
+---
+
 ### How do i build it?
 
 #### PreInstall
@@ -231,7 +231,6 @@ yarn dev
 # bundle path: src-tauri/target/release/bundle
 yarn build
 ```
----
 
 ## ❤️ Thanks
 
