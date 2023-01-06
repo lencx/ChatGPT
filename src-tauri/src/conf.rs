@@ -21,6 +21,7 @@ pub const DEFAULT_CHAT_CONF: &str = r#"{
     "auto_update": "Prompt",
     "theme": "Light",
     "titlebar": true,
+    "dalle2_search": true,
     "global_shortcut": "",
     "hide_dock_icon": false,
     "default_origin": "https://chat.openai.com",
@@ -33,6 +34,7 @@ pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
     "auto_update": "Prompt",
     "theme": "Light",
     "titlebar": false,
+    "dalle2_search": true,
     "global_shortcut": "",
     "hide_dock_icon": false,
     "default_origin": "https://chat.openai.com",
@@ -63,6 +65,7 @@ pub struct ChatConfJson {
     pub theme: String,
     // auto update policy, Prompt/Silent/Disable
     pub auto_update: String,
+    pub dalle2_search: bool,
     pub stay_on_top: bool,
     pub default_origin: String,
     pub origin: String,

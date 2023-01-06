@@ -246,7 +246,8 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
             "Sync Prompts",
             "ChatGPT Prompts data has been synchronized!",
         );
-        window_reload(app, "core");
+        window_reload(app.clone(), "core");
+        window_reload(app, "tray");
 
         return Some(data2);
     }

@@ -1,6 +1,8 @@
 // *** Core Script - DALL·E 2 Core ***
 
 async function init() {
+  const chatConf = await invoke('get_chat_conf') || {};
+  if (!chatConf.dalle2_search) return;
   if (!window.FloatingUIDOM) return;
 
   const styleDom = document.createElement('style');

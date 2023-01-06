@@ -1,5 +1,5 @@
 use crate::{
-    app::window,
+    app::{cmd, window},
     conf::{self, ChatConfJson},
     utils,
 };
@@ -35,6 +35,12 @@ pub fn init() -> Menu {
 
     let stay_on_top =
         CustomMenuItem::new("stay_on_top".to_string(), "Stay On Top").accelerator("CmdOrCtrl+T");
+    let stay_on_top_menu = if chat_conf.stay_on_top {
+        stay_on_top.selected()
+    } else {
+        stay_on_top
+    };
+
 
     #[cfg(target_os = "macos")]
     let titlebar =
@@ -50,10 +56,11 @@ pub fn init() -> Menu {
     let update_silent = CustomMenuItem::new("update_silent".to_string(), "Silent");
     let _update_disable = CustomMenuItem::new("update_disable".to_string(), "Disable");
 
-    let stay_on_top_menu = if chat_conf.stay_on_top {
-        stay_on_top.selected()
+    let dalle2_search = CustomMenuItem::new("dalle2_search".to_string(), "DALL·E 2 Search");
+    let dalle2_search_menu = if chat_conf.dalle2_search {
+        dalle2_search.selected()
     } else {
-        stay_on_top
+        dalle2_search
     };
 
     #[cfg(target_os = "macos")]
@@ -119,6 +126,7 @@ pub fn init() -> Menu {
             )
             .into(),
             MenuItem::Separator.into(),
+            dalle2_search_menu.into(),
             CustomMenuItem::new("sync_prompts".to_string(), "Sync Prompts").into(),
             MenuItem::Separator.into(),
             CustomMenuItem::new("go_conf".to_string(), "Go to Config")
@@ -238,6 +246,17 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         "go_conf" => utils::open_file(utils::chat_root()),
         "clear_conf" => utils::clear_conf(&app),
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
+        "dalle2_search" => {
+            let chat_conf = conf::ChatConfJson::get_chat_conf();
+            let dalle2_search = !chat_conf.dalle2_search;
+            menu_handle
+                .get_item(menu_id)
+                .set_selected(dalle2_search)
+                .unwrap();
+            ChatConfJson::amend(&serde_json::json!({ "dalle2_search": dalle2_search }), None).unwrap();
+            cmd::window_reload(app.clone(), "core");
+            cmd::window_reload(app, "tray");
+        },
         "sync_prompts" => {
             tauri::api::dialog::ask(
                 app.get_window("core").as_ref(),

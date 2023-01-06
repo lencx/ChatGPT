@@ -14,12 +14,12 @@ const AutoUpdateLabel = () => {
   return (
     <span>
       Auto Update <Tooltip title={(
-          <div>
-            <div>Auto Update Policy</div>
-            <span><strong>Prompt</strong>: prompt to install</span><br/>
-            <span><strong>Silent</strong>: install silently</span><br/>
-            {/*<span><strong>Disable</strong>: disable auto update</span><br/>*/}
-          </div>
+        <div>
+          <div>Auto Update Policy</div>
+          <span><strong>Prompt</strong>: prompt to install</span><br/>
+          <span><strong>Silent</strong>: install silently</span><br/>
+          {/*<span><strong>Disable</strong>: disable auto update</span><br/>*/}
+        </div>
     )}><QuestionCircleOutlined style={{ color: '#1677ff' }} /></Tooltip>
     </span>
   )
@@ -122,6 +122,9 @@ export default function General() {
             <Switch />
           </Form.Item>
         )}
+        <Form.Item label="DALL·E 2 Search" name="dalle2_search" valuePropName="checked">
+          <Switch />
+        </Form.Item>
         <Form.Item label="Theme" name="theme">
           <Radio.Group>
             <Radio value="Light">Light</Radio>

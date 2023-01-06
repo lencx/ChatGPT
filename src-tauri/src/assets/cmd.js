@@ -75,6 +75,11 @@ function init() {
     width: 24px;
     height: 24px;
   }
+  @media screen and (max-width: 767px) {
+    #download-png-button, #download-pdf-button, #download-html-button {
+      display: none;
+    }
+  }
   `;
   document.head.append(styleDom);
 
