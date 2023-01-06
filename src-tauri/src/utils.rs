@@ -130,7 +130,7 @@ pub async fn get_data(
     }
 }
 
-pub fn run_check_update(app: AppHandle<Wry>, silent: bool) -> Result<()> {
+pub fn run_check_update(app: AppHandle<Wry>, silent: bool, has_msg: Option<bool>) -> Result<()> {
     tauri::async_runtime::spawn(async move {
         let result = app.updater().check().await;
         let update_resp = result.unwrap();
@@ -143,6 +143,14 @@ pub fn run_check_update(app: AppHandle<Wry>, silent: bool) -> Result<()> {
                 tauri::async_runtime::spawn(async move {
                     prompt_for_install(app, update_resp).await.unwrap();
                 });
+            }
+        } else if let Some(v) = has_msg {
+            if v {
+                tauri::api::dialog::message(
+                    app.app_handle().get_window("core").as_ref(),
+                    "ChatGPT",
+                    "Your ChatGPT is up to date",
+                );
             }
         }
     });

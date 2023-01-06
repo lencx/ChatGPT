@@ -10,6 +10,7 @@ mod utils;
 use app::{cmd, fs_extra, menu, setup};
 use conf::{ChatConfJson, ChatState};
 use tauri::api::path;
+use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::{
     fern::colors::{Color, ColoredLevelConfig},
     LogTarget, LoggerBuilder,
@@ -70,6 +71,10 @@ async fn main() {
         ])
         .setup(setup::init)
         .plugin(tauri_plugin_positioner::init())
+        .plugin(tauri_plugin_autostart::init(
+            MacosLauncher::LaunchAgent,
+            None,
+        ))
         .menu(menu::init())
         .system_tray(menu::tray_menu())
         .on_menu_event(menu::menu_handler)
