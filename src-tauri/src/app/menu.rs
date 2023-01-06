@@ -229,7 +229,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             );
         }
         "check_update" => {
-            utils::run_check_update(app, false, None).unwrap();
+            utils::run_check_update(app, false, None);
         }
         // Preferences
         "control_center" => window::control_window(&app),

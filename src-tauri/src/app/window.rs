@@ -50,7 +50,7 @@ pub fn dalle2_window(handle: &tauri::AppHandle, query: Option<String>, title: Op
         WindowBuilder::new(
             &app,
             format!("dalle2_{}", timestamp),
-            WindowUrl::App("https://labs.openai.com/".into()),
+            WindowUrl::App("https://labs.openai.com".into()),
         )
         .title(title.unwrap_or_else(|| "DALL·E 2".to_string()))
         .resizable(true)
