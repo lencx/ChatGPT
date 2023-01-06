@@ -58,7 +58,7 @@
 - [chat-gpt_0.7.4_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.AppImage): **工作可靠，`.deb` 运行失败时可以尝试它**
 - 使用 [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin):
   ```bash
-  sudo pacman -S chatgpt-desktop-bin
+  yay -S chatgpt-desktop-bin
   ```
 
 <!-- download end -->
@@ -73,8 +73,8 @@
 
 你可以从 [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) 来寻找有趣的功能来导入到应用。也可以使用 `Sync Prompts`，来一键同步所有，如果你不想让某些提示出现在你的斜杠命令，你可以禁用它们。
 
-![chat cmd](./assets/chat-cmd-1.png)
-![chat cmd](./assets/chat-cmd-2.png)
+![chatgpt menu](./assets/chatgpt-menu.png)
+![chatgpt sync prompts](./assets/chatgpt-sync-prompts.png)
 
 <!-- 数据导入完成后，可以重新启动应用来使配置生效（`Menu -> Preferences -> Restart ChatGPT`）。 -->
 
@@ -171,9 +171,9 @@
 
 ## 👀 预览
 
-<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/control-center.png" alt="control center">
-<img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
-<img width="320" src="./assets/tray-login.png" alt="tray login"> <img width="320" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chatgpt-control-center-general.png" alt="control center">
+<img width="320" src="./assets/chatgpt-export.png" alt="export"> <img width="320" src="./assets/chatgpt-dalle2-tray.png" alt="dalle2 tray">
+<img width="320" src="./assets/auto-update.png" alt="auto update">
 
 ## ❓ 常见问题
 

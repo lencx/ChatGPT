@@ -4,7 +4,6 @@
 </p>
 
 <div align="center"><h2>ChatGPT Desktop Application</h2></div>
-<br>
 
 [![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](./README.md)
 [![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](./README-ZH_CN.md)\
@@ -59,11 +58,7 @@
 
 - [chat-gpt_0.7.4_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
 - [chat-gpt_0.7.4_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.AppImage): Works reliably, you can try it if `.deb` fails to run
-- Use [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin):
-  ```bash
-  sudo pacman -S chatgpt-desktop-bin
-  ```
-
+- Available on [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin) with the package name `chatgpt-desktop-bin`, and you can use your favourite AUR package manager to install it.
 
 <!-- download end -->
 
@@ -79,8 +74,8 @@ This is a major and exciting update. It works like a `Telegram bot command` and 
 
 You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)** to find interesting features to import into the app. You can also use `Sync Prompts` to sync all in one click, and if you don't want certain prompts to appear in your slash commands, you can disable them.
 
-![chat cmd](./assets/chat-cmd-1.png)
-![chat cmd](./assets/chat-cmd-2.png)
+![chatgpt menu](./assets/chatgpt-menu.png)
+![chatgpt sync prompts](./assets/chatgpt-sync-prompts.png)
 
 <!-- After the data import is done, you can restart the app to make the configuration take effect (`Menu -> Preferences -> Restart ChatGPT`). -->
 
@@ -89,7 +84,6 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 - Under the slash command, use the tab key to modify the contents of the `{q}` tag (only single changes are supported [#54](https://github.com/lencx/ChatGPT/issues/54)). Use the keyboard `⇧` (arrow up) and `⇩` (arrow down) keys to select the slash command.
 
 ![chatgpt](assets/chatgpt.gif)
-
 ![chatgpt-cmd](assets/chatgpt-cmd.gif)
 
 ## ✨ Features
@@ -187,9 +181,9 @@ Currently, only json and csv are supported for synchronizing custom files, and t
 
 ## 👀 Preview
 
-<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/control-center.png" alt="control center">
-<img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
-<img width="320" src="./assets/tray-login.png" alt="tray login"> <img width="320" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chatgpt-control-center-general.png" alt="control center">
+<img width="320" src="./assets/chatgpt-export.png" alt="export"> <img width="320" src="./assets/chatgpt-dalle2-tray.png" alt="dalle2 tray">
+<img width="320" src="./assets/auto-update.png" alt="auto update">
 
 ## ❓FAQ
 

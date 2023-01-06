@@ -153,11 +153,8 @@ export default function General() {
         <Form.Item>
           <Space size={20}>
             <Button onClick={onCancel}>Cancel</Button>
-
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-            <a onClick={onReset}>Reset to defaults</a>
+            <Button type="primary" htmlType="submit">Submit</Button>
+            <Button type="dashed" onClick={onReset}>Reset to defaults</Button>
           </Space>
 
         </Form.Item>
