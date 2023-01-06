@@ -93,7 +93,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 - Powerful menu items
 - Support for slash commands and their configuration (can be configured manually or synchronized from a file [#55](https://github.com/lencx/ChatGPT/issues/55))
 - Customize global shortcuts ([#108](https://github.com/lencx/ChatGPT/issues/108))
-- DALL·E 2 Search ([#122](https://github.com/lencx/ChatGPT/issues/122) mouse selected content, use no more than 400 characters): The application is built using Tauri, and due to its security restrictions, some of the action buttons will not work, so we recommend going to your browser.
+- DALL·E 2 Search ([#122](https://github.com/lencx/ChatGPT/issues/122) mouse selected content, no more than 400 characters): The application is built using Tauri, and due to its security restrictions, some of the action buttons will not work, so we recommend going to your browser.
 
 ## #️⃣ MenuItem
 
