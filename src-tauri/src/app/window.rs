@@ -1,7 +1,7 @@
 use crate::{conf, utils};
 use log::info;
 use std::time::SystemTime;
-use tauri::{utils::config::WindowUrl, window::WindowBuilder};
+use tauri::{utils::config::WindowUrl, window::WindowBuilder, Manager};
 
 pub fn tray_window(handle: &tauri::AppHandle) {
     let chat_conf = conf::ChatConfJson::get_chat_conf();
@@ -22,7 +22,7 @@ pub fn tray_window(handle: &tauri::AppHandle) {
             .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
             .initialization_script(include_str!("../assets/core.js"))
             .initialization_script(include_str!("../assets/cmd.js"))
-            .initialization_script(include_str!("../assets/dalle2.core.js"))
+            .initialization_script(include_str!("../assets/popup.core.js"))
             .user_agent(&chat_conf.ua_tray)
             .build()
             .unwrap()
@@ -72,13 +72,19 @@ pub fn dalle2_window(handle: &tauri::AppHandle, query: Option<String>, title: Op
 pub fn control_window(handle: &tauri::AppHandle) {
     let app = handle.clone();
     tauri::async_runtime::spawn(async move {
-        WindowBuilder::new(&app, "main", WindowUrl::App("index.html".into()))
-            .title("Control Center")
-            .resizable(true)
-            .fullscreen(false)
-            .inner_size(800.0, 600.0)
-            .min_inner_size(800.0, 600.0)
-            .build()
-            .unwrap();
+        if app.app_handle().get_window("main").is_none() {
+            WindowBuilder::new(&app, "main", WindowUrl::App("index.html".into()))
+                .title("Control Center")
+                .resizable(true)
+                .fullscreen(false)
+                .inner_size(800.0, 600.0)
+                .min_inner_size(800.0, 600.0)
+                .build()
+                .unwrap();
+        } else {
+            let main_win = app.app_handle().get_window("main").unwrap();
+            main_win.show().unwrap();
+            main_win.set_focus().unwrap();
+        }
     });
 }

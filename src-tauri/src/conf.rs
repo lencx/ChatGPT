@@ -2,7 +2,7 @@ use crate::utils::{chat_root, create_file, exists};
 use anyhow::Result;
 use log::info;
 use serde_json::Value;
-use std::{collections::BTreeMap, fs, path::PathBuf, sync::Mutex};
+use std::{collections::BTreeMap, fs, path::PathBuf};
 use tauri::{Manager, Theme};
 
 #[cfg(target_os = "macos")]
@@ -21,7 +21,7 @@ pub const DEFAULT_CHAT_CONF: &str = r#"{
     "auto_update": "Prompt",
     "theme": "Light",
     "titlebar": true,
-    "dalle2_search": true,
+    "popup_search": true,
     "global_shortcut": "",
     "hide_dock_icon": false,
     "default_origin": "https://chat.openai.com",
@@ -34,7 +34,7 @@ pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
     "auto_update": "Prompt",
     "theme": "Light",
     "titlebar": false,
-    "dalle2_search": true,
+    "popup_search": true,
     "global_shortcut": "",
     "hide_dock_icon": false,
     "default_origin": "https://chat.openai.com",
@@ -42,18 +42,6 @@ pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
     "ua_window": "",
     "ua_tray": ""
 }"#;
-
-pub struct ChatState {
-    pub stay_on_top: Mutex<bool>,
-}
-
-impl ChatState {
-    pub fn default(chat_conf: ChatConfJson) -> Self {
-        ChatState {
-            stay_on_top: Mutex::new(chat_conf.stay_on_top),
-        }
-    }
-}
 
 #[derive(serde::Serialize, serde::Deserialize, Debug, Clone)]
 pub struct ChatConfJson {
@@ -65,7 +53,7 @@ pub struct ChatConfJson {
     pub theme: String,
     // auto update policy, Prompt/Silent/Disable
     pub auto_update: String,
-    pub dalle2_search: bool,
+    pub popup_search: bool,
     pub stay_on_top: bool,
     pub default_origin: String,
     pub origin: String,

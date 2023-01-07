@@ -90,7 +90,7 @@
 - 应用菜单功能强大
 - 支持斜杠命令及其配置（可手动配置或从文件同步 [#55](https://github.com/lencx/ChatGPT/issues/55)）
 - 自定义全局快捷键 ([#108](https://github.com/lencx/ChatGPT/issues/108))
-- DALL·E 2 搜索 ([#122](https://github.com/lencx/ChatGPT/issues/122) 鼠标选中文本，不超过 400 个字符)：应用使用 Tauri 构建，因其安全限制，会导致部分操作按钮无效，建议前往浏览器操作。
+- 划词搜索 ([#122](https://github.com/lencx/ChatGPT/issues/122) 鼠标选中文本，不超过 400 个字符)：应用使用 Tauri 构建，因其安全限制，会导致部分操作按钮无效，建议前往浏览器操作。
 
 ### #️⃣ 菜单项
 

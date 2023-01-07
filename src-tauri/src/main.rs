@@ -8,7 +8,7 @@ mod conf;
 mod utils;
 
 use app::{cmd, fs_extra, menu, setup};
-use conf::{ChatConfJson, ChatState};
+use conf::ChatConfJson;
 use tauri::api::path;
 use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::{
@@ -21,7 +21,6 @@ async fn main() {
     ChatConfJson::init();
     // If the file does not exist, creating the file will block menu synchronization
     utils::create_chatgpt_prompts();
-    let chat_conf = ChatConfJson::get_chat_conf();
     let context = tauri::generate_context!();
     let colors = ColoredLevelConfig {
         error: Color::Red,
@@ -46,7 +45,6 @@ async fn main() {
                 ])
                 .build(),
         )
-        .manage(ChatState::default(chat_conf))
         .invoke_handler(tauri::generate_handler![
             cmd::drag_window,
             cmd::fullscreen,

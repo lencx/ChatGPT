@@ -41,7 +41,6 @@ pub fn init() -> Menu {
         stay_on_top
     };
 
-
     #[cfg(target_os = "macos")]
     let titlebar =
         CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
@@ -56,11 +55,11 @@ pub fn init() -> Menu {
     let update_silent = CustomMenuItem::new("update_silent".to_string(), "Silent");
     let _update_disable = CustomMenuItem::new("update_disable".to_string(), "Disable");
 
-    let dalle2_search = CustomMenuItem::new("dalle2_search".to_string(), "DALL·E 2 Search");
-    let dalle2_search_menu = if chat_conf.dalle2_search {
-        dalle2_search.selected()
+    let popup_search = CustomMenuItem::new("popup_search".to_string(), "Pop-up Search");
+    let popup_search_menu = if chat_conf.popup_search {
+        popup_search.selected()
     } else {
-        dalle2_search
+        popup_search
     };
 
     #[cfg(target_os = "macos")]
@@ -126,7 +125,7 @@ pub fn init() -> Menu {
             )
             .into(),
             MenuItem::Separator.into(),
-            dalle2_search_menu.into(),
+            popup_search_menu.into(),
             CustomMenuItem::new("sync_prompts".to_string(), "Sync Prompts").into(),
             MenuItem::Separator.into(),
             CustomMenuItem::new("go_conf".to_string(), "Go to Config")
@@ -219,12 +218,9 @@ pub fn init() -> Menu {
 pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     let win = Some(event.window()).unwrap();
     let app = win.app_handle();
-    let state: tauri::State<conf::ChatState> = app.state();
     let script_path = utils::script_path().to_string_lossy().to_string();
     let menu_id = event.menu_item_id();
-
-    let core_window = app.get_window("core").unwrap();
-    let menu_handle = core_window.menu_handle();
+    let menu_handle = win.menu_handle();
 
     match menu_id {
         // App
@@ -246,17 +242,18 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         "go_conf" => utils::open_file(utils::chat_root()),
         "clear_conf" => utils::clear_conf(&app),
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
-        "dalle2_search" => {
+        "popup_search" => {
             let chat_conf = conf::ChatConfJson::get_chat_conf();
-            let dalle2_search = !chat_conf.dalle2_search;
+            let popup_search = !chat_conf.popup_search;
             menu_handle
                 .get_item(menu_id)
-                .set_selected(dalle2_search)
+                .set_selected(popup_search)
                 .unwrap();
-            ChatConfJson::amend(&serde_json::json!({ "dalle2_search": dalle2_search }), None).unwrap();
+            ChatConfJson::amend(&serde_json::json!({ "popup_search": popup_search }), None)
+                .unwrap();
             cmd::window_reload(app.clone(), "core");
             cmd::window_reload(app, "tray");
-        },
+        }
         "sync_prompts" => {
             tauri::api::dialog::ask(
                 app.get_window("core").as_ref(),
@@ -323,14 +320,14 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             ChatConfJson::amend(&serde_json::json!({ "auto_update": auto_update }), None).unwrap();
         }
         "stay_on_top" => {
-            let mut stay_on_top = state.stay_on_top.lock().unwrap();
-            *stay_on_top = !*stay_on_top;
+            let chat_conf = conf::ChatConfJson::get_chat_conf();
+            let stay_on_top = !chat_conf.stay_on_top;
             menu_handle
                 .get_item(menu_id)
-                .set_selected(*stay_on_top)
+                .set_selected(stay_on_top)
                 .unwrap();
-            win.set_always_on_top(*stay_on_top).unwrap();
-            ChatConfJson::amend(&serde_json::json!({ "stay_on_top": *stay_on_top }), None).unwrap();
+            win.set_always_on_top(stay_on_top).unwrap();
+            ChatConfJson::amend(&serde_json::json!({ "stay_on_top": stay_on_top }), None).unwrap();
         }
         // Window
         "dalle2" => window::dalle2_window(&app, None, None),

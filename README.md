@@ -93,7 +93,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 - Powerful menu items
 - Support for slash commands and their configuration (can be configured manually or synchronized from a file [#55](https://github.com/lencx/ChatGPT/issues/55))
 - Customize global shortcuts ([#108](https://github.com/lencx/ChatGPT/issues/108))
-- DALL·E 2 Search ([#122](https://github.com/lencx/ChatGPT/issues/122) mouse selected content, no more than 400 characters): The application is built using Tauri, and due to its security restrictions, some of the action buttons will not work, so we recommend going to your browser.
+- Pop-up Search ([#122](https://github.com/lencx/ChatGPT/issues/122) mouse selected content, no more than 400 characters): The application is built using Tauri, and due to its security restrictions, some of the action buttons will not work, so we recommend going to your browser.
 
 ## #️⃣ MenuItem
 
@@ -174,14 +174,13 @@ Currently, only json and csv are supported for synchronizing custom files, and t
 
 <!-- - Web access capability ([#20](https://github.com/lencx/ChatGPT/issues/20)) -->
 - `Control Center` - Feature Enhancements
-- Integration with [DALL·E 2](https://openai.com/dall-e-2/) ([#122](https://github.com/lencx/ChatGPT/issues/122))
 - ...
 
 ## 👀 Preview
 
-<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chatgpt-control-center-general.png" alt="control center">
-<img width="320" src="./assets/chatgpt-export.png" alt="export"> <img width="320" src="./assets/chatgpt-dalle2-tray.png" alt="dalle2 tray">
-<img width="320" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chatgpt-popup-search.png" alt="popup search">
+<img width="320" src="./assets/chatgpt-control-center-general.png" alt="control center"> <img width="320" src="./assets/chatgpt-export.png" alt="export">
+<img width="320" src="./assets/chatgpt-dalle2-tray.png" alt="dalle2 tray"> <img width="320" src="./assets/auto-update.png" alt="auto update">
 
 ## ❓FAQ
 

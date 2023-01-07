@@ -33,10 +33,10 @@ const OriginLabel = ({ url }: { url: string }) => {
   )
 }
 
-const Dalle2SearchLabel = () => {
+const PopupSearchLabel = () => {
   return (
     <span>
-      DALL·E 2 Search
+      Pop-up Search
       {' '}
       <Tooltip title={(
         <div>
@@ -137,7 +137,7 @@ export default function General() {
             <Switch />
           </Form.Item>
         )}
-        <Form.Item label={<Dalle2SearchLabel />} name="dalle2_search" valuePropName="checked">
+        <Form.Item label={<PopupSearchLabel />} name="popup_search" valuePropName="checked">
           <Switch />
         </Form.Item>
         <Form.Item label="Theme" name="theme">

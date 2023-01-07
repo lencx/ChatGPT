@@ -2,7 +2,7 @@
 
 async function init() {
   const chatConf = await invoke('get_chat_conf') || {};
-  if (!chatConf.dalle2_search) return;
+  if (!chatConf.popup_search) return;
   if (!window.FloatingUIDOM) return;
 
   const styleDom = document.createElement('style');
