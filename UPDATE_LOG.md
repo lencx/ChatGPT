@@ -1,5 +1,15 @@
 # UPDATE LOG
 
+## v0.8.0
+
+feat:
+- theme enhancement (Light, Dark, System)
+- automatic updates support `silent` settings
+- pop-up search: select the ChatGPT content with the mouse, the `DALL·E 2` button appears, and click to jump (note: because the search content filled by the script cannot trigger the event directly, you need to enter a space in the input box to make the button clickable).
+
+fix:
+- close the main window and hide it in the tray (windows systems)
+
 ## v0.7.4
 
 fix:

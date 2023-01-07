@@ -1,9 +1,8 @@
 <p align="center">
   <img width="180" src="./public/logo.png" alt="ChatGPT">
   <h1 align="center">ChatGPT</h1>
+  <p align="center">ChatGPT 桌面应用（Mac, Windows and Linux）</p>
 </p>
-
-> ChatGPT 桌面应用
 
 [![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](./README.md)
 [![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](./README-ZH_CN.md)\
@@ -23,24 +22,29 @@
 
 ### Windows
 
-- [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
-- 或者使用 [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
-  - `winget install --id=lencx.ChatGPT -e`
-  - `winget install --id=lencx.ChatGPT -e --version 0.7.4`
+- [ChatGPT_0.8.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.8.0/ChatGPT_0.8.0_x64_en-US.msi):
+- 使用 [winget](https://winstall.app/apps/lencx.ChatGPT):
+  ```bash
+  # install the latest version
+  winget install --id=lencx.ChatGPT -e
 
-**注意：如果安装路径和应用名称相同，会导致冲突 ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972))**
+  # install the specified version
+  winget install --id=lencx.ChatGPT -e --version 0.7.4
+  ```
+
+**注意：如果安装路径和应用名称相同，会导致冲突 ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.8.0))**
 
 ### Mac
 
-- [ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg)
-- 如果你偏爱 `.app` 的安装包，你同样可以在我们的 github releases 里找到 [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
+- [ChatGPT_0.8.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.8.0/ChatGPT_0.8.0_x64.dmg)
+- [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.8.0/ChatGPT.app.tar.gz)
 - Homebrew \
   _[Homebrew 快捷安装](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
   brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git
   brew install --cask chatgpt --no-quarantine
   ```
-  如果你坚持使用 _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_ ，你需要添加以下配置:
+  如果你坚持使用 _[Brewfile](https://github.com/Homebrew/homebrew-bundle#usage)_ ，则需要添加以下配置:
   ```rb
   repo = "lencx/chatgpt"
   tap repo, "https://github.com/#{repo}.git"
@@ -49,13 +53,14 @@
 
 ### Linux
 
-- [chat-gpt_0.7.4_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.deb)
-- [chat-gpt_0.7.4_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.AppImage): **工作可靠，`.deb` 运行失败时可以尝试它**
-- [chatgpt-desktop-bin](https://aur.archlinux.org/packages/chatgpt-desktop-bin): 使用 AUR 来安装
+- [chat-gpt_0.8.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.8.0/chat-gpt_0.8.0_amd64.deb)
+- [chat-gpt_0.8.0_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.8.0/chat-gpt_0.8.0_amd64.AppImage): **工作可靠，`.deb` 运行失败时可以尝试它**
+- 使用 [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin):
+  ```bash
+  yay -S chatgpt-desktop-bin
+  ```
 
 <!-- download end -->
-
----
 
 ## 📢 公告
 
@@ -63,10 +68,10 @@
 
 ### 如何使用指令？
 
-你可以从 [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) 来寻找有趣的功能来导入到应用。
+你可以从 [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) 来寻找有趣的功能来导入到应用。也可以使用 `Sync Prompts`，来一键同步所有，如果你不想让某些提示出现在你的斜杠命令，你可以禁用它们。
 
-![chat cmd](./assets/chat-cmd-1.png)
-![chat cmd](./assets/chat-cmd-2.png)
+![chatgpt menu](./assets/chatgpt-menu.png)
+![chatgpt sync prompts](./assets/chatgpt-sync-prompts.png)
 
 <!-- 数据导入完成后，可以重新启动应用来使配置生效（`Menu -> Preferences -> Restart ChatGPT`）。 -->
 
@@ -85,11 +90,12 @@
 - 应用菜单功能强大
 - 支持斜杠命令及其配置（可手动配置或从文件同步 [#55](https://github.com/lencx/ChatGPT/issues/55)）
 - 自定义全局快捷键 ([#108](https://github.com/lencx/ChatGPT/issues/108))
+- 划词搜索 ([#122](https://github.com/lencx/ChatGPT/issues/122) 鼠标选中文本，不超过 400 个字符)：应用使用 Tauri 构建，因其安全限制，会导致部分操作按钮无效，建议前往浏览器操作。
 
-### 菜单项
+### #️⃣ 菜单项
 
 - **Preferences (喜好)**
-  - `Theme` - `Light`, `Dark` (仅支持 macOS 和 Windows)
+  - `Theme` - `Light`, `Dark`, `System` (仅支持 macOS 和 Windows)
   - `Stay On Top`: 窗口置顶
   - `Titlebar`: 是否显示 `Titlebar`，仅 macOS 支持
   - `Inject Script`: 用于修改网站的用户自定义脚本
@@ -110,7 +116,7 @@
   - `Report Bug`: 报告 BUG 或反馈建议
   - `Toggle Developer Tools`: 网站调试工具，调试页面或脚本可能需要
 
-## 应用配置
+## ⚙️ 应用配置
 
 | 平台    | 路径                      |
 | ------- | ------------------------- |
@@ -163,9 +169,9 @@
 
 ## 👀 预览
 
-<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/control-center.png" alt="control center">
-<img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
-<img width="320" src="./assets/tray-login.png" alt="tray login"> <img width="320" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chatgpt-control-center-general.png" alt="control center">
+<img width="320" src="./assets/chatgpt-export.png" alt="export"> <img width="320" src="./assets/chatgpt-dalle2-tray.png" alt="dalle2 tray">
+<img width="320" src="./assets/auto-update.png" alt="auto update">
 
 ## ❓ 常见问题
 
@@ -186,6 +192,8 @@
 Mac 上无法安装，提示开发者未验证，具体可以查看下面给出的解决方案（它是开源的，很安全）。
 
 - [Open a Mac app from an unidentified developer](https://support.apple.com/en-sg/guide/mac-help/mh40616/mac)
+
+---
 
 ### 我想自己构建它？
 

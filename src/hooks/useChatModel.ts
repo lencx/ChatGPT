@@ -47,6 +47,7 @@ export function useCacheModel(file = '') {
     const list = await invoke('cmd_list');
     await writeJSON(CHAT_MODEL_CMD_JSON, { name: 'ChatGPT CMD', last_updated: Date.now(), data: list });
     await invoke('window_reload', { label: 'core' });
+    await invoke('window_reload', { label: 'tray' });
   };
 
   return { modelCacheJson, modelCacheSet, modelCacheCmd };

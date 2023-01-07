@@ -2,7 +2,6 @@ name: Release CI
 
 on:
   push:
-    # Sequence of patterns matched against refs/tags
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
@@ -90,7 +89,7 @@ jobs:
           # 📝: Edit the deployment directory
           publish_dir: ./updater
           force_orphan: true
-          
+
   publish-winget:
   # Action can only be run on windows
     runs-on: windows-latest
@@ -99,5 +98,5 @@ jobs:
       - uses: vedantmgoyal2009/winget-releaser@v1
         with:
           identifier: lencx.ChatGPT
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.WINGET_TOKEN }}
           version: ${{ env.version }}

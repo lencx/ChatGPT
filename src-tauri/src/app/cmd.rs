@@ -1,14 +1,26 @@
 use crate::{
+    app::window,
     conf::{ChatConfJson, GITHUB_PROMPTS_CSV_URL},
-    utils::{self, exists},
+    utils,
 };
 use log::info;
 use std::{collections::HashMap, fs, path::PathBuf};
 use tauri::{api, command, AppHandle, Manager, Theme};
+use walkdir::WalkDir;
 
 #[command]
 pub fn drag_window(app: AppHandle) {
     app.get_window("core").unwrap().start_dragging().unwrap();
+}
+
+#[command]
+pub fn dalle2_window(app: AppHandle, query: String) {
+    window::dalle2_window(
+        &app.app_handle(),
+        Some(query),
+        Some("ChatGPT & DALL·E 2".to_string()),
+        None,
+    );
 }
 
 #[command]
@@ -49,8 +61,8 @@ pub fn reset_chat_conf() -> ChatConfJson {
 }
 
 #[command]
-pub fn run_check_update(app: AppHandle, silent: bool) {
-    utils::run_check_update(app, silent).unwrap();
+pub fn run_check_update(app: AppHandle, silent: bool, has_msg: Option<bool>) {
+    utils::run_check_update(app, silent, has_msg);
 }
 
 #[command]
@@ -127,9 +139,6 @@ pub fn window_reload(app: AppHandle, label: &str) {
         .unwrap();
 }
 
-use utils::chat_root;
-use walkdir::WalkDir;
-
 #[derive(serde::Serialize, serde::Deserialize, Debug, Clone)]
 pub struct ModelRecord {
     pub cmd: String,
@@ -142,7 +151,7 @@ pub struct ModelRecord {
 #[command]
 pub fn cmd_list() -> Vec<ModelRecord> {
     let mut list = vec![];
-    for entry in WalkDir::new(chat_root().join("cache_model"))
+    for entry in WalkDir::new(utils::chat_root().join("cache_model"))
         .into_iter()
         .filter_map(|e| e.ok())
     {
@@ -182,11 +191,13 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
 
         let data2 = data.clone();
 
-        let model = chat_root().join("chat.model.json");
-        let model_cmd = chat_root().join("chat.model.cmd.json");
-        let chatgpt_prompts = chat_root().join("cache_model").join("chatgpt_prompts.json");
+        let model = utils::chat_root().join("chat.model.json");
+        let model_cmd = utils::chat_root().join("chat.model.cmd.json");
+        let chatgpt_prompts = utils::chat_root()
+            .join("cache_model")
+            .join("chatgpt_prompts.json");
 
-        if !exists(&model) {
+        if !utils::exists(&model) {
             fs::write(
                 &model,
                 serde_json::json!({
@@ -236,7 +247,8 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
             "Sync Prompts",
             "ChatGPT Prompts data has been synchronized!",
         );
-        window_reload(app, "core");
+        window_reload(app.clone(), "core");
+        window_reload(app, "tray");
 
         return Some(data2);
     }

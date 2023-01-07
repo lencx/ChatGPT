@@ -14,12 +14,12 @@ const AutoUpdateLabel = () => {
   return (
     <span>
       Auto Update <Tooltip title={(
-          <div>
-            <div>Auto Update Policy</div>
-            <span><strong>Prompt</strong>: prompt to install</span><br/>
-            <span><strong>Silent</strong>: install silently</span><br/>
-            {/*<span><strong>Disable</strong>: disable auto update</span><br/>*/}
-          </div>
+        <div>
+          <div>Auto Update Policy</div>
+          <span><strong>Prompt</strong>: prompt to install</span><br/>
+          <span><strong>Silent</strong>: install silently</span><br/>
+          {/*<span><strong>Disable</strong>: disable auto update</span><br/>*/}
+        </div>
     )}><QuestionCircleOutlined style={{ color: '#1677ff' }} /></Tooltip>
     </span>
   )
@@ -33,7 +33,22 @@ const OriginLabel = ({ url }: { url: string }) => {
   )
 }
 
-const GlobalShortcut = () => {
+const PopupSearchLabel = () => {
+  return (
+    <span>
+      Pop-up Search
+      {' '}
+      <Tooltip title={(
+        <div>
+          <div style={{ marginBottom: 10 }}>Generate images according to the content: Select the ChatGPT content with the mouse, no more than 400 characters. the <b>DALL·E 2</b> button appears, and click to jump (Note: because the search content filled by the script cannot trigger the event directly, you need to enter a space in the input box to make the button clickable).</div>
+          <div>The application is built using Tauri, and due to its security restrictions, some of the action buttons will not work, so we recommend going to your browser.</div>
+        </div>
+      )}><QuestionCircleOutlined style={{ color: '#1677ff' }} /></Tooltip>
+    </span>
+  )
+}
+
+const GlobalShortcutLabel = () => {
   return (
     <div>
       Global Shortcut
@@ -122,6 +137,9 @@ export default function General() {
             <Switch />
           </Form.Item>
         )}
+        <Form.Item label={<PopupSearchLabel />} name="popup_search" valuePropName="checked">
+          <Switch />
+        </Form.Item>
         <Form.Item label="Theme" name="theme">
           <Radio.Group>
             <Radio value="Light">Light</Radio>
@@ -138,7 +156,7 @@ export default function General() {
             {/*<Radio value="Disable">Disable</Radio>*/}
           </Radio.Group>
         </Form.Item>
-        <Form.Item label={<GlobalShortcut />} name="global_shortcut">
+        <Form.Item label={<GlobalShortcutLabel />} name="global_shortcut">
           <Input placeholder="CmdOrCtrl+Shift+O" {...DISABLE_AUTO_COMPLETE} />
         </Form.Item>
         <Form.Item label={<OriginLabel url={chatConf?.default_origin} />} name="origin">
@@ -153,11 +171,8 @@ export default function General() {
         <Form.Item>
           <Space size={20}>
             <Button onClick={onCancel}>Cancel</Button>
-
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-            <a onClick={onReset}>Reset to defaults</a>
+            <Button type="primary" htmlType="submit">Submit</Button>
+            <Button type="dashed" onClick={onReset}>Reset to defaults</Button>
           </Space>
 
         </Form.Item>

@@ -130,7 +130,8 @@ pub async fn get_data(
     }
 }
 
-pub fn run_check_update(app: AppHandle<Wry>, silent: bool) -> Result<()> {
+pub fn run_check_update(app: AppHandle<Wry>, silent: bool, has_msg: Option<bool>) {
+    info!("run_check_update: silent={} has_msg={:?}", silent, has_msg);
     tauri::async_runtime::spawn(async move {
         let result = app.updater().check().await;
         let update_resp = result.unwrap();
@@ -144,15 +145,23 @@ pub fn run_check_update(app: AppHandle<Wry>, silent: bool) -> Result<()> {
                     prompt_for_install(app, update_resp).await.unwrap();
                 });
             }
+        } else if let Some(v) = has_msg {
+            if v {
+                tauri::api::dialog::message(
+                    app.app_handle().get_window("core").as_ref(),
+                    "ChatGPT",
+                    "Your ChatGPT is up to date",
+                );
+            }
         }
     });
-    Ok(())
 }
 
 // Copy private api in tauri/updater/mod.rs. TODO: refactor to public api
 // Prompt a dialog asking if the user want to install the new version
 // Maybe we should add an option to customize it in future versions.
 pub async fn prompt_for_install(app: AppHandle<Wry>, update: UpdateResponse<Wry>) -> Result<()> {
+    info!("prompt_for_install");
     let windows = app.windows();
     let parent_window = windows.values().next();
     let package_info = app.package_info().clone();
@@ -199,6 +208,7 @@ Release Notes:
 }
 
 pub async fn silent_install(app: AppHandle<Wry>, update: UpdateResponse<Wry>) -> Result<()> {
+    info!("silent_install");
     let windows = app.windows();
     let parent_window = windows.values().next();
 

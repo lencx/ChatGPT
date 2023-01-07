@@ -1,4 +1,5 @@
 use crate::{
+    app::{cmd, window},
     conf::{self, ChatConfJson},
     utils,
 };
@@ -10,8 +11,6 @@ use tauri_plugin_positioner::{on_tray_event, Position, WindowExt};
 
 #[cfg(target_os = "macos")]
 use tauri::AboutMetadata;
-
-use super::window;
 
 // --- Menu
 pub fn init() -> Menu {
@@ -36,6 +35,11 @@ pub fn init() -> Menu {
 
     let stay_on_top =
         CustomMenuItem::new("stay_on_top".to_string(), "Stay On Top").accelerator("CmdOrCtrl+T");
+    let stay_on_top_menu = if chat_conf.stay_on_top {
+        stay_on_top.selected()
+    } else {
+        stay_on_top
+    };
 
     #[cfg(target_os = "macos")]
     let titlebar =
@@ -51,10 +55,11 @@ pub fn init() -> Menu {
     let update_silent = CustomMenuItem::new("update_silent".to_string(), "Silent");
     let _update_disable = CustomMenuItem::new("update_disable".to_string(), "Disable");
 
-    let stay_on_top_menu = if chat_conf.stay_on_top {
-        stay_on_top.selected()
+    let popup_search = CustomMenuItem::new("popup_search".to_string(), "Pop-up Search");
+    let popup_search_menu = if chat_conf.popup_search {
+        popup_search.selected()
     } else {
-        stay_on_top
+        popup_search
     };
 
     #[cfg(target_os = "macos")]
@@ -69,6 +74,15 @@ pub fn init() -> Menu {
         Menu::with_items([
             CustomMenuItem::new("control_center".to_string(), "Control Center")
                 .accelerator("CmdOrCtrl+Shift+P")
+                .into(),
+            MenuItem::Separator.into(),
+            stay_on_top_menu.into(),
+            #[cfg(target_os = "macos")]
+            titlebar_menu.into(),
+            #[cfg(target_os = "macos")]
+            CustomMenuItem::new("hide_dock_icon".to_string(), "Hide Dock Icon").into(),
+            CustomMenuItem::new("inject_script".to_string(), "Inject Script")
+                .accelerator("CmdOrCtrl+J")
                 .into(),
             MenuItem::Separator.into(),
             Submenu::new(
@@ -110,15 +124,8 @@ pub fn init() -> Menu {
                         // })
             )
             .into(),
-            stay_on_top_menu.into(),
-            #[cfg(target_os = "macos")]
-            titlebar_menu.into(),
-            #[cfg(target_os = "macos")]
-            CustomMenuItem::new("hide_dock_icon".to_string(), "Hide Dock Icon").into(),
-            CustomMenuItem::new("inject_script".to_string(), "Inject Script")
-                .accelerator("CmdOrCtrl+J")
-                .into(),
             MenuItem::Separator.into(),
+            popup_search_menu.into(),
             CustomMenuItem::new("sync_prompts".to_string(), "Sync Prompts").into(),
             MenuItem::Separator.into(),
             CustomMenuItem::new("go_conf".to_string(), "Go to Config")
@@ -177,6 +184,8 @@ pub fn init() -> Menu {
     let window_menu = Submenu::new(
         "Window",
         Menu::new()
+            .add_item(CustomMenuItem::new("dalle2".to_string(), "DALL·E 2"))
+            .add_native_item(MenuItem::Separator)
             .add_native_item(MenuItem::Minimize)
             .add_native_item(MenuItem::Zoom),
     );
@@ -199,9 +208,9 @@ pub fn init() -> Menu {
     Menu::new()
         .add_submenu(app_menu)
         .add_submenu(preferences_menu)
+        .add_submenu(window_menu)
         .add_submenu(edit_menu)
         .add_submenu(view_menu)
-        .add_submenu(window_menu)
         .add_submenu(help_menu)
 }
 
@@ -209,12 +218,9 @@ pub fn init() -> Menu {
 pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     let win = Some(event.window()).unwrap();
     let app = win.app_handle();
-    let state: tauri::State<conf::ChatState> = app.state();
     let script_path = utils::script_path().to_string_lossy().to_string();
     let menu_id = event.menu_item_id();
-
-    let core_window = app.get_window("core").unwrap();
-    let menu_handle = core_window.menu_handle();
+    let menu_handle = win.menu_handle();
 
     match menu_id {
         // App
@@ -227,7 +233,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             );
         }
         "check_update" => {
-            utils::run_check_update(app, false).unwrap();
+            utils::run_check_update(app, false, None);
         }
         // Preferences
         "control_center" => window::control_window(&app),
@@ -236,6 +242,18 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         "go_conf" => utils::open_file(utils::chat_root()),
         "clear_conf" => utils::clear_conf(&app),
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
+        "popup_search" => {
+            let chat_conf = conf::ChatConfJson::get_chat_conf();
+            let popup_search = !chat_conf.popup_search;
+            menu_handle
+                .get_item(menu_id)
+                .set_selected(popup_search)
+                .unwrap();
+            ChatConfJson::amend(&serde_json::json!({ "popup_search": popup_search }), None)
+                .unwrap();
+            cmd::window_reload(app.clone(), "core");
+            cmd::window_reload(app, "tray");
+        }
         "sync_prompts" => {
             tauri::api::dialog::ask(
                 app.get_window("core").as_ref(),
@@ -272,7 +290,8 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             ChatConfJson::amend(&serde_json::json!({ "theme": theme }), Some(app)).unwrap();
         }
         "update_prompt" | "update_silent" | "update_disable" => {
-            for id in ["update_prompt", "update_silent", "update_disable"] {
+            // for id in ["update_prompt", "update_silent", "update_disable"] {
+            for id in ["update_prompt", "update_silent"] {
                 menu_handle.get_item(id).set_selected(false).unwrap();
             }
             let auto_update = match menu_id {
@@ -301,19 +320,22 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             ChatConfJson::amend(&serde_json::json!({ "auto_update": auto_update }), None).unwrap();
         }
         "stay_on_top" => {
-            let mut stay_on_top = state.stay_on_top.lock().unwrap();
-            *stay_on_top = !*stay_on_top;
+            let chat_conf = conf::ChatConfJson::get_chat_conf();
+            let stay_on_top = !chat_conf.stay_on_top;
             menu_handle
                 .get_item(menu_id)
-                .set_selected(*stay_on_top)
+                .set_selected(stay_on_top)
                 .unwrap();
-            win.set_always_on_top(*stay_on_top).unwrap();
-            ChatConfJson::amend(&serde_json::json!({ "stay_on_top": *stay_on_top }), None).unwrap();
+            win.set_always_on_top(stay_on_top).unwrap();
+            ChatConfJson::amend(&serde_json::json!({ "stay_on_top": stay_on_top }), None).unwrap();
         }
+        // Window
+        "dalle2" => window::dalle2_window(&app, None, None, Some(false)),
         // View
         "reload" => win.eval("window.location.reload()").unwrap(),
         "go_back" => win.eval("window.history.go(-1)").unwrap(),
         "go_forward" => win.eval("window.history.go(1)").unwrap(),
+        // core: document.querySelector('main .overflow-y-auto')
         "scroll_top" => win
             .eval(
                 r#"window.scroll({
@@ -346,12 +368,13 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
 // --- SystemTray Menu
 pub fn tray_menu() -> SystemTray {
     if cfg!(target_os = "macos") {
-        return SystemTray::new().with_menu(
+        SystemTray::new().with_menu(
             SystemTrayMenu::new()
                 .add_item(CustomMenuItem::new(
                     "control_center".to_string(),
                     "Control Center",
                 ))
+                .add_native_item(SystemTrayMenuItem::Separator)
                 .add_item(CustomMenuItem::new(
                     "show_dock_icon".to_string(),
                     "Show Dock Icon",
@@ -360,20 +383,22 @@ pub fn tray_menu() -> SystemTray {
                     "hide_dock_icon".to_string(),
                     "Hide Dock Icon",
                 ))
+                .add_item(CustomMenuItem::new("show_core".to_string(), "Show ChatGPT"))
                 .add_native_item(SystemTrayMenuItem::Separator)
                 .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
-        );
+        )
+    } else {
+        SystemTray::new().with_menu(
+            SystemTrayMenu::new()
+                .add_item(CustomMenuItem::new(
+                    "control_center".to_string(),
+                    "Control Center",
+                ))
+                .add_item(CustomMenuItem::new("show_core".to_string(), "Show ChatGPT"))
+                .add_native_item(SystemTrayMenuItem::Separator)
+                .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
+        )
     }
-
-    SystemTray::new().with_menu(
-        SystemTrayMenu::new()
-            .add_item(CustomMenuItem::new(
-                "control_center".to_string(),
-                "Control Center",
-            ))
-            .add_native_item(SystemTrayMenuItem::Separator)
-            .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
-    )
 }
 
 // --- SystemTray Event
@@ -412,6 +437,15 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
                 if !chat_conf.hide_dock_icon {
                     ChatConfJson::amend(&serde_json::json!({ "hide_dock_icon": true }), Some(app))
                         .unwrap();
+                }
+            }
+            "show_core" => {
+                let core_win = app.get_window("core").unwrap();
+                let tray_win = app.get_window("tray").unwrap();
+                if !core_win.is_visible().unwrap() {
+                    core_win.show().unwrap();
+                    core_win.set_focus().unwrap();
+                    tray_win.hide().unwrap();
                 }
             }
             "quit" => std::process::exit(0),

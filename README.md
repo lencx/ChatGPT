@@ -1,10 +1,8 @@
 <p align="center">
   <img width="180" src="./public/logo.png" alt="ChatGPT">
   <h1 align="center">ChatGPT</h1>
+  <p align="center">ChatGPT Desktop Application (Mac, Windows and Linux)</p>
 </p>
-
-<div align="center"><h2>ChatGPT Desktop Application</h2></div>
-<br>
 
 [![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](./README.md)
 [![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](./README-ZH_CN.md)\
@@ -26,17 +24,22 @@
 
 ### Windows
 
-- From our github releases: [ChatGPT_0.7.4_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64_en-US.msi)
-- Or install with [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
-  - `winget install --id=lencx.ChatGPT -e`
-  - `winget install --id=lencx.ChatGPT -e --version 0.7.4`
+- [ChatGPT_0.8.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.8.0/ChatGPT_0.8.0_x64_en-US.msi): Direct download installer
+- Use [winget](https://winstall.app/apps/lencx.ChatGPT):
+  ```bash
+  # install the latest version
+  winget install --id=lencx.ChatGPT -e
 
-**Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-1371166972))**
+  # install the specified version
+  winget install --id=lencx.ChatGPT -e --version 0.7.4
+  ```
+
+**Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.8.0))**
 
 ### Mac
 
-- From our github releases: [ChatGPT_0.7.4_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT_0.7.4_x64.dmg)
-- If you prefer `.app` installation, you can also download it from our github releases: [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/ChatGPT.app.tar.gz)
+- [ChatGPT_0.8.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.8.0/ChatGPT_0.8.0_x64.dmg): Direct download installer
+- [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.8.0/ChatGPT.app.tar.gz): Download the `.app` installer
 - Homebrew \
   Or you can install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
@@ -52,13 +55,11 @@
 
 ### Linux
 
-- [chat-gpt_0.7.4_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.deb)
-- [chat-gpt_0.7.4_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.7.4/chat-gpt_0.7.4_amd64.AppImage): **works reliably, you can try it if `.deb` fails to run**
+- [chat-gpt_0.8.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.8.0/chat-gpt_0.8.0_amd64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
+- [chat-gpt_0.8.0_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.8.0/chat-gpt_0.8.0_amd64.AppImage): Works reliably, you can try it if `.deb` fails to run
 - Available on [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin) with the package name `chatgpt-desktop-bin`, and you can use your favourite AUR package manager to install it.
 
 <!-- download end -->
-
----
 
 ## 📢 Announcement
 
@@ -68,22 +69,18 @@ This is a major and exciting update. It works like a `Telegram bot command` and 
 
 ### How does it work?
 
-You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)** to find interesting features to import into the app.
+You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)** to find interesting features to import into the app. You can also use `Sync Prompts` to sync all in one click, and if you don't want certain prompts to appear in your slash commands, you can disable them.
 
-![chat cmd](./assets/chat-cmd-1.png)
-
-![chat cmd](./assets/chat-cmd-2.png)
+![chatgpt menu](./assets/chatgpt-menu.png)
+![chatgpt sync prompts](./assets/chatgpt-sync-prompts.png)
 
 <!-- After the data import is done, you can restart the app to make the configuration take effect (`Menu -> Preferences -> Restart ChatGPT`). -->
-<br>
 
 - In the chatgpt text input area, type a character starting with `/` to bring up the command prompt, press the spacebar, and it will fill the input area with the text associated with the command by default (note: if it contains multiple command prompts, it will only select the first one as the fill, you can keep typing until the first prompted command is the one you want, then press the spacebar.
 - Or use the mouse to click on one of the multiple commands). When the fill is complete, you simply press the Enter key.
 - Under the slash command, use the tab key to modify the contents of the `{q}` tag (only single changes are supported [#54](https://github.com/lencx/ChatGPT/issues/54)). Use the keyboard `⇧` (arrow up) and `⇩` (arrow down) keys to select the slash command.
-<br>
 
 ![chatgpt](assets/chatgpt.gif)
-
 ![chatgpt-cmd](assets/chatgpt-cmd.gif)
 
 ## ✨ Features
@@ -96,11 +93,12 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 - Powerful menu items
 - Support for slash commands and their configuration (can be configured manually or synchronized from a file [#55](https://github.com/lencx/ChatGPT/issues/55))
 - Customize global shortcuts ([#108](https://github.com/lencx/ChatGPT/issues/108))
+- Pop-up Search ([#122](https://github.com/lencx/ChatGPT/issues/122) mouse selected content, no more than 400 characters): The application is built using Tauri, and due to its security restrictions, some of the action buttons will not work, so we recommend going to your browser.
 
-## MenuItem
+## #️⃣ MenuItem
 
 - **Preferences**
-  - `Theme` - `Light`, `Dark` (Only macOS and Windows are supported).
+  - `Theme` - `Light`, `Dark`, `System` (Only macOS and Windows are supported).
   - `Stay On Top`: The window is stay on top of other windows.
   - `Titlebar`: Whether to display the titlebar, supported by macOS only.
   - `Hide Dock Icon` ([#35](https://github.com/lencx/ChatGPT/issues/35)): Hide application icons from the Dock(support macOS only).
@@ -121,7 +119,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
   - `Report Bug`: Report a bug or give feedback.
   - `Toggle Developer Tools`: Developer debugging tools.
 
-## Application Configuration
+## ⚙️ Application Configuration
 
 | Platform | Path                      |
 | -------- | ------------------------- |
@@ -172,18 +170,18 @@ Currently, only json and csv are supported for synchronizing custom files, and t
 "b","bb","bbb bbb bbb"
 ```
 
-## TODO
+## 📌 TODO
 
 <!-- - Web access capability ([#20](https://github.com/lencx/ChatGPT/issues/20)) -->
-- `Control Center` - Feature Enhancements
-- Integration with [DALL·E 2](https://openai.com/dall-e-2/) ([#122](https://github.com/lencx/ChatGPT/issues/122))
+- `Control Center` enhancement
+- `Pop-up Search` enhancement
 - ...
 
 ## 👀 Preview
 
-<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/control-center.png" alt="control center">
-<img width="320" src="./assets/export.png" alt="export"> <img width="320" src="./assets/tray.png" alt="tray">
-<img width="320" src="./assets/tray-login.png" alt="tray login"> <img width="320" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chatgpt-popup-search.png" alt="popup search">
+<img width="320" src="./assets/chatgpt-control-center-general.png" alt="control center"> <img width="320" src="./assets/chatgpt-export.png" alt="export">
+<img width="320" src="./assets/chatgpt-dalle2-tray.png" alt="dalle2 tray"> <img width="320" src="./assets/auto-update.png" alt="auto update">
 
 ## ❓FAQ
 
@@ -202,6 +200,8 @@ It's safe, just a wrapper for [OpenAI ChatGPT](https://chat.openai.com) website,
 ### Developer cannot be verified?
 
 - [Open a Mac app from an unidentified developer](https://support.apple.com/en-sg/guide/mac-help/mh40616/mac)
+
+---
 
 ### How do i build it?
 
@@ -231,7 +231,6 @@ yarn dev
 # bundle path: src-tauri/target/release/bundle
 yarn build
 ```
----
 
 ## ❤️ Thanks
 

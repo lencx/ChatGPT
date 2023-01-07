@@ -26,7 +26,7 @@ export default function ChatLayout() {
   })
 
   const checkAppUpdate = async () => {
-    await invoke('run_check_update', { silent: false });
+    await invoke('run_check_update', { silent: false, hasMsg: true });
   }
 
   return (

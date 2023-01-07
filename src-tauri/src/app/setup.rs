@@ -10,7 +10,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
     let theme = ChatConfJson::theme();
     let handle = app.app_handle();
 
-    tokio::spawn(async move {
+    tauri::async_runtime::spawn(async move {
         window::tray_window(&handle);
     });
 
@@ -49,7 +49,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         app.set_activation_policy(tauri::ActivationPolicy::Accessory);
     } else {
         let app = app.handle();
-        tokio::spawn(async move {
+        tauri::async_runtime::spawn(async move {
             #[cfg(target_os = "macos")]
             WindowBuilder::new(&app, "core", WindowUrl::App(url.into()))
                 .title("ChatGPT")
@@ -61,9 +61,12 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
                 .always_on_top(chat_conf.stay_on_top)
                 .title_bar_style(ChatConfJson::titlebar())
                 .initialization_script(&utils::user_script())
-                .initialization_script(include_str!("../assets/html2canvas.js"))
-                .initialization_script(include_str!("../assets/jspdf.js"))
+                .initialization_script(include_str!("../vendors/floating-ui-core.js"))
+                .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
+                .initialization_script(include_str!("../vendors/html2canvas.js"))
+                .initialization_script(include_str!("../vendors/jspdf.js"))
                 .initialization_script(include_str!("../assets/core.js"))
+                .initialization_script(include_str!("../assets/popup.core.js"))
                 .initialization_script(include_str!("../assets/export.js"))
                 .initialization_script(include_str!("../assets/cmd.js"))
                 .user_agent(&chat_conf.ua_window)
@@ -79,9 +82,12 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
                 .theme(theme)
                 .always_on_top(chat_conf.stay_on_top)
                 .initialization_script(&utils::user_script())
-                .initialization_script(include_str!("../assets/html2canvas.js"))
-                .initialization_script(include_str!("../assets/jspdf.js"))
+                .initialization_script(include_str!("../vendors/floating-ui-core.js"))
+                .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
+                .initialization_script(include_str!("../vendors/html2canvas.js"))
+                .initialization_script(include_str!("../vendors/jspdf.js"))
                 .initialization_script(include_str!("../assets/core.js"))
+                .initialization_script(include_str!("../assets/popup.core.js"))
                 .initialization_script(include_str!("../assets/export.js"))
                 .initialization_script(include_str!("../assets/cmd.js"))
                 .user_agent(&chat_conf.ua_window)
@@ -89,10 +95,12 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
                 .unwrap();
         });
     }
+
     // auto_update
     if chat_conf.auto_update != "Disable" {
+        info!("stepup::run_check_update");
         let app = app.handle();
-        utils::run_check_update(app, chat_conf.auto_update == "Silent").unwrap();
+        utils::run_check_update(app, chat_conf.auto_update == "Silent", None);
     }
 
     Ok(())
