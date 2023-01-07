@@ -19,6 +19,7 @@ pub fn dalle2_window(app: AppHandle, query: String) {
         &app.app_handle(),
         Some(query),
         Some("ChatGPT & DALL·E 2".to_string()),
+        None,
     );
 }
 

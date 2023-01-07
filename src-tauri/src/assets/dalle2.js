@@ -3,6 +3,7 @@
 async function init() {
   document.addEventListener("click", (e) => {
     const origin = e.target.closest("a");
+    if (!origin.target) return;
     if (origin && origin.href && origin.target !== '_self') {
       if (/\/(login|signup)$/.test(window.location.href)) {
         origin.target = '_self';

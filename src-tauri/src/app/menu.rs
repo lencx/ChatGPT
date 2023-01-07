@@ -330,7 +330,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             ChatConfJson::amend(&serde_json::json!({ "stay_on_top": stay_on_top }), None).unwrap();
         }
         // Window
-        "dalle2" => window::dalle2_window(&app, None, None),
+        "dalle2" => window::dalle2_window(&app, None, None, Some(false)),
         // View
         "reload" => win.eval("window.location.reload()").unwrap(),
         "go_back" => win.eval("window.history.go(-1)").unwrap(),
