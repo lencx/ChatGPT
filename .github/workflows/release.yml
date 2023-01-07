@@ -73,22 +73,22 @@ jobs:
         with:
           releaseId: ${{ needs.create-release.outputs.RELEASE_UPLOAD_ID }}
 
-  # updater:
-  #   runs-on: ubuntu-20.04
-  #   needs: [create-release, build-tauri]
+  updater:
+    runs-on: ubuntu-20.04
+    needs: [create-release, build-tauri]
 
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - run: yarn
-  #     - run: yarn updater --token=${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn
+      - run: yarn updater --token=${{ secrets.GITHUB_TOKEN }}
 
-  #     - name: Deploy install.json
-  #       uses: peaceiris/actions-gh-pages@v3
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  #         # 📝: Edit the deployment directory
-  #         publish_dir: ./updater
-  #         force_orphan: true
+      - name: Deploy install.json
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # 📝: Edit the deployment directory
+          publish_dir: ./updater
+          force_orphan: true
 
   publish-winget:
   # Action can only be run on windows

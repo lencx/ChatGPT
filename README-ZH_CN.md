@@ -29,7 +29,7 @@
   winget install --id=lencx.ChatGPT -e
 
   # install the specified version
-  winget install --id=lencx.ChatGPT -e --version 0.8.0
+  winget install --id=lencx.ChatGPT -e --version 0.7.4
   ```
 
 **注意：如果安装路径和应用名称相同，会导致冲突 ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.8.0))**

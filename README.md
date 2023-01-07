@@ -31,7 +31,7 @@
   winget install --id=lencx.ChatGPT -e
 
   # install the specified version
-  winget install --id=lencx.ChatGPT -e --version 0.8.0
+  winget install --id=lencx.ChatGPT -e --version 0.7.4
   ```
 
 **Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.8.0))**

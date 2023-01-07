@@ -1,9 +1,5 @@
 # UPDATE LOG
 
-## v0.8.1
-
-fix: winget release
-
 ## v0.8.0
 
 feat:
