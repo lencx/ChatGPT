@@ -41,10 +41,6 @@ pub fn init() -> Menu {
         stay_on_top
     };
 
-    #[cfg(target_os = "macos")]
-    let titlebar =
-        CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
-
     let theme_light = CustomMenuItem::new("theme_light".to_string(), "Light");
     let theme_dark = CustomMenuItem::new("theme_dark".to_string(), "Dark");
     let theme_system = CustomMenuItem::new("theme_system".to_string(), "System");
@@ -62,6 +58,9 @@ pub fn init() -> Menu {
         popup_search
     };
 
+    #[cfg(target_os = "macos")]
+    let titlebar =
+        CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
     #[cfg(target_os = "macos")]
     let titlebar_menu = if chat_conf.titlebar {
         titlebar.selected()

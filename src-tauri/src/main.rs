@@ -45,6 +45,11 @@ async fn main() {
                 ])
                 .build(),
         )
+        .plugin(tauri_plugin_positioner::init())
+        .plugin(tauri_plugin_autostart::init(
+            MacosLauncher::LaunchAgent,
+            None,
+        ))
         .invoke_handler(tauri::generate_handler![
             cmd::drag_window,
             cmd::fullscreen,
@@ -68,11 +73,6 @@ async fn main() {
             fs_extra::metadata,
         ])
         .setup(setup::init)
-        .plugin(tauri_plugin_positioner::init())
-        .plugin(tauri_plugin_autostart::init(
-            MacosLauncher::LaunchAgent,
-            None,
-        ))
         .menu(menu::init())
         .system_tray(menu::tray_menu())
         .on_menu_event(menu::menu_handler)
