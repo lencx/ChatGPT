@@ -20,6 +20,7 @@ pub const DEFAULT_CHAT_CONF: &str = r#"{
     "stay_on_top": false,
     "auto_update": "Prompt",
     "theme": "Light",
+    "tray": true,
     "titlebar": true,
     "popup_search": true,
     "global_shortcut": "",
@@ -33,6 +34,7 @@ pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
     "stay_on_top": false,
     "auto_update": "Prompt",
     "theme": "Light",
+    "tray": true,
     "titlebar": false,
     "popup_search": true,
     "global_shortcut": "",
@@ -53,6 +55,7 @@ pub struct ChatConfJson {
     pub theme: String,
     // auto update policy, Prompt/Silent/Disable
     pub auto_update: String,
+    pub tray: bool,
     pub popup_search: bool,
     pub stay_on_top: bool,
     pub default_origin: String,

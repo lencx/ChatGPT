@@ -68,6 +68,14 @@ pub fn init() -> Menu {
         titlebar
     };
 
+    let system_tray =
+        CustomMenuItem::new("system_tray".to_string(), "System Tray");
+    let system_tray_menu = if chat_conf.tray {
+        system_tray.selected()
+    } else {
+        system_tray
+    };
+
     let preferences_menu = Submenu::new(
         "Preferences",
         Menu::with_items([
@@ -80,6 +88,7 @@ pub fn init() -> Menu {
             titlebar_menu.into(),
             #[cfg(target_os = "macos")]
             CustomMenuItem::new("hide_dock_icon".to_string(), "Hide Dock Icon").into(),
+            system_tray_menu.into(),
             CustomMenuItem::new("inject_script".to_string(), "Inject Script")
                 .accelerator("CmdOrCtrl+J")
                 .into(),
@@ -275,6 +284,15 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             let chat_conf = conf::ChatConfJson::get_chat_conf();
             ChatConfJson::amend(
                 &serde_json::json!({ "titlebar": !chat_conf.titlebar }),
+                None,
+            )
+            .unwrap();
+            tauri::api::process::restart(&app.env());
+        }
+        "system_tray" => {
+            let chat_conf = conf::ChatConfJson::get_chat_conf();
+            ChatConfJson::amend(
+                &serde_json::json!({ "tray": !chat_conf.tray }),
                 None,
             )
             .unwrap();
