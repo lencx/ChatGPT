@@ -56,6 +56,7 @@ async fn main() {
             cmd::drag_window,
             cmd::fullscreen,
             cmd::download,
+            cmd::save_file,
             cmd::open_link,
             cmd::get_chat_conf,
             cmd::get_theme,
