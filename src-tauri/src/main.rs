@@ -30,7 +30,9 @@ async fn main() {
         trace: Color::Cyan,
     };
 
-    tauri::Builder::default()
+    let chat_conf = ChatConfJson::get_chat_conf();
+
+    let mut builder = tauri::Builder::default()
         // https://github.com/tauri-apps/tauri/pull/2736
         .plugin(
             LoggerBuilder::new()
@@ -73,8 +75,13 @@ async fn main() {
             fs_extra::metadata,
         ])
         .setup(setup::init)
-        .menu(menu::init())
-        .system_tray(menu::tray_menu())
+        .menu(menu::init());
+
+    if chat_conf.tray {
+        builder = builder.system_tray(menu::tray_menu());
+    }
+
+    builder
         .on_menu_event(menu::menu_handler)
         .on_system_tray_event(menu::tray_handler)
         .on_window_event(|event| {

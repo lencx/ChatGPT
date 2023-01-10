@@ -5,6 +5,7 @@ import {
   SyncOutlined,
   FileSyncOutlined,
   UserOutlined,
+  DownloadOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 
@@ -13,6 +14,7 @@ import UserCustom from '@/view/model/UserCustom';
 import SyncPrompts from '@/view/model/SyncPrompts';
 import SyncCustom from '@/view/model/SyncCustom';
 import SyncRecord from '@/view/model/SyncRecord';
+import Download from '@/view/download';
 
 export type ChatRouteMetaObject = {
   label: string;
@@ -37,6 +39,14 @@ export const routes: Array<ChatRouteObject> = [
     },
   },
   {
+    path: 'download',
+    element: <Download />,
+    meta: {
+      label: 'Download',
+      icon: <DownloadOutlined />,
+    },
+  },
+  {
     path: '/model',
     meta: {
       label: 'Language Model',
@@ -51,6 +61,7 @@ export const routes: Array<ChatRouteObject> = [
           icon: <UserOutlined />,
         },
       },
+      // --- Sync
       {
         path: 'sync-prompts',
         element: <SyncPrompts />,
@@ -72,7 +83,7 @@ export const routes: Array<ChatRouteObject> = [
         element: <SyncRecord />,
         hideMenu: true,
       },
-    ]
+    ],
   },
 ];
 

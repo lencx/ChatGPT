@@ -68,8 +68,7 @@ pub fn init() -> Menu {
         titlebar
     };
 
-    let system_tray =
-        CustomMenuItem::new("system_tray".to_string(), "System Tray");
+    let system_tray = CustomMenuItem::new("system_tray".to_string(), "System Tray");
     let system_tray_menu = if chat_conf.tray {
         system_tray.selected()
     } else {
@@ -291,11 +290,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         }
         "system_tray" => {
             let chat_conf = conf::ChatConfJson::get_chat_conf();
-            ChatConfJson::amend(
-                &serde_json::json!({ "tray": !chat_conf.tray }),
-                None,
-            )
-            .unwrap();
+            ChatConfJson::amend(&serde_json::json!({ "tray": !chat_conf.tray }), None).unwrap();
             tauri::api::process::restart(&app.env());
         }
         "theme_light" | "theme_dark" | "theme_system" => {

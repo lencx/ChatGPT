@@ -71,9 +71,9 @@ $(function() {
     width: 20px;
     height: 20px;
   }
-  .chatappico.pdf {
-    width: 24px;
-    height: 24px;
+  .chatappico.pdf, .chatappico.md {
+    width: 22px;
+    height: 22px;
   }
   @media screen and (max-width: 767px) {
     #download-png-button, #download-pdf-button, #download-html-button {
