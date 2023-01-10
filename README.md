@@ -203,7 +203,7 @@ It's safe, just a wrapper for [OpenAI ChatGPT](https://chat.openai.com) website,
 
 ---
 
-### How do i build it?
+### How do I build it?
 
 #### PreInstall
 
