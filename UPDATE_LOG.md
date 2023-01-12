@@ -1,5 +1,12 @@
 # UPDATE LOG
 
+## v0.8.1
+
+fix:
+- export button keeps blinking
+- export button in the old chat does not work
+- disable export sharing links because it is a security risk
+
 ## v0.8.0
 
 feat:
