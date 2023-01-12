@@ -60,7 +60,7 @@ struct UnixMetadata {
 #[serde(rename_all = "camelCase")]
 pub struct Metadata {
     accessed_at_ms: u64,
-    created_at_ms: u64,
+    pub created_at_ms: u64,
     modified_at_ms: u64,
     is_dir: bool,
     is_file: bool,
@@ -74,7 +74,7 @@ pub struct Metadata {
     file_attributes: u32,
 }
 
-fn system_time_to_ms(time: std::io::Result<SystemTime>) -> u64 {
+pub fn system_time_to_ms(time: std::io::Result<SystemTime>) -> u64 {
     time.map(|t| {
         let duration_since_epoch = t.duration_since(UNIX_EPOCH).unwrap();
         duration_since_epoch.as_millis() as u64

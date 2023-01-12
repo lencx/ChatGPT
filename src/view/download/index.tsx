@@ -5,17 +5,21 @@ import { path, shell } from '@tauri-apps/api';
 import useInit from '@/hooks/useInit';
 import useColumns from '@/hooks/useColumns';
 import useTable, { TABLE_PAGINATION } from '@/hooks/useTable';
-import { chatRoot } from '@/utils';
+import { chatRoot, readJSON } from '@/utils';
 import { syncColumns } from './config';
 import './index.scss';
 
 export default function SyncPrompts() {
   const { rowSelection, selectedRowIDs } = useTable();
   const [downloadPath, setDownloadPath] = useState('');
+  const [downloadData, setDownloadData] = useState([]);
   const { columns, ...opInfo } = useColumns(syncColumns());
 
   useInit(async () => {
-    setDownloadPath(await path.join(await chatRoot(), 'download'));
+    const file = await path.join(await chatRoot(), 'chat.download.json');
+    setDownloadPath(file);
+    const data = await readJSON(file, { isRoot: true, isList: true });
+    setDownloadData(data);
   });
 
   return (
@@ -29,7 +33,7 @@ export default function SyncPrompts() {
         rowKey="name"
         columns={columns}
         scroll={{ x: 'auto' }}
-        dataSource={[]}
+        dataSource={downloadData}
         rowSelection={rowSelection}
         pagination={TABLE_PAGINATION}
       />

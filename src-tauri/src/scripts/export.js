@@ -81,12 +81,16 @@ function shouldAddButtons(actionsArea) {
 function removeButtons() {
   const downloadButton = document.getElementById("download-png-button");
   const downloadPdfButton = document.getElementById("download-pdf-button");
+  const downloadMdButton = document.getElementById("download-markdown-button");
   // const downloadHtmlButton = document.getElementById("download-html-button");
   if (downloadButton) {
     downloadButton.remove();
   }
   if (downloadPdfButton) {
     downloadPdfButton.remove();
+  }
+  if (downloadPdfButton) {
+    downloadMdButton.remove();
   }
   // if (downloadHtmlButton) {
   //   downloadHtmlButton.remove();
@@ -95,6 +99,18 @@ function removeButtons() {
 
 function addActionsButtons(actionsArea, TryAgainButton) {
   const downloadButton = TryAgainButton.cloneNode(true);
+  // Export markdown
+  const exportMd = TryAgainButton.cloneNode(true);
+  exportMd.id = "download-markdown-button";
+  downloadButton.setAttribute("share-ext", "true");
+  exportMd.title = "Export Markdown";
+  exportMd.innerHTML = setIcon('md');
+  exportMd.onclick = () => {
+    exportMarkdown();
+  };
+  actionsArea.appendChild(exportMd);
+
+  // Generate PNG
   downloadButton.id = "download-png-button";
   downloadButton.setAttribute("share-ext", "true");
   // downloadButton.innerText = "Generate PNG";
@@ -104,6 +120,8 @@ function addActionsButtons(actionsArea, TryAgainButton) {
     downloadThread();
   };
   actionsArea.appendChild(downloadButton);
+
+  // Generate PDF
   const downloadPdfButton = TryAgainButton.cloneNode(true);
   downloadPdfButton.id = "download-pdf-button";
   downloadButton.setAttribute("share-ext", "true");
@@ -126,17 +144,11 @@ function addActionsButtons(actionsArea, TryAgainButton) {
   //   sendRequest();
   // };
   // actionsArea.appendChild(exportHtml);
-  const exportMd = TryAgainButton.cloneNode(true);
-  exportMd.id = "download-markdown-button";
-  downloadButton.setAttribute("share-ext", "true");
-  // exportHtml.innerText = "Share Link";
-  exportMd.title = "Download Markdown";
-  exportMd.innerHTML = setIcon('md');
-  exportMd.onclick = () => {
-    const data = ExportMD.turndown(document.querySelector("main div>div>div").innerHTML);
-    invoke('save_file', { name: `chatgpt-${Date.now()}.md`, content: data });
-  };
-  actionsArea.appendChild(exportMd);
+}
+
+async function exportMarkdown() {
+  const data = ExportMD.turndown(document.querySelector("main div>div>div").innerHTML);
+  await invoke('save_file', { name: `notes/${Date.now().toString(36)}.md`, content: data });
 }
 
 function downloadThread({ as = Format.PNG } = {}) {
@@ -162,16 +174,17 @@ function downloadThread({ as = Format.PNG } = {}) {
   });
 }
 
-function handleImg(imgData) {
+async function handleImg(imgData) {
   const binaryData = atob(imgData.split("base64,")[1]);
   const data = [];
   for (let i = 0; i < binaryData.length; i++) {
     data.push(binaryData.charCodeAt(i));
   }
-  invoke('download', { name: `chatgpt-${Date.now()}.png`, blob: data });
+  await invoke('download', { name: `download/img/${Date.now().toString(36)}.png`, blob: data });
+  await invoke('download_list');
 }
 
-function handlePdf(imgData, canvas, pixelRatio) {
+async function handlePdf(imgData, canvas, pixelRatio) {
   const { jsPDF } = window.jspdf;
   const orientation = canvas.width > canvas.height ? "l" : "p";
   var pdf = new jsPDF(orientation, "pt", [
@@ -183,7 +196,8 @@ function handlePdf(imgData, canvas, pixelRatio) {
   pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight, '', 'FAST');
 
   const data = pdf.__private__.getArrayBuffer(pdf.__private__.buildDocument());
-  invoke('download', { name: `chatgpt-${Date.now()}.pdf`, blob: Array.from(new Uint8Array(data)) });
+  await invoke('download', { name: `download/pdf/${Date.now().toString(36)}.pdf`, blob: Array.from(new Uint8Array(data)) });
+  await invoke('download_list');
 }
 
 class Elements {

@@ -36,3 +36,10 @@ export const syncColumns = () => [
     }
   }
 ];
+
+// {
+//   id: '',
+//   name: '',
+//   type: '.png',
+//   created: '2022.01.01',
+// }
