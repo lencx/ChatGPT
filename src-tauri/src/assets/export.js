@@ -24,7 +24,7 @@ async function init() {
     } else if (shouldRemoveButtons()) {
       removeButtons();
     }
-  }, 200);
+  }, 1000);
 }
 
 const Format = {
@@ -47,9 +47,16 @@ function shouldRemoveButtons() {
 function shouldAddButtons(actionsArea) {
   // first, check if there's a "Try Again" button and no other buttons
   const buttons = actionsArea.querySelectorAll("button");
+
   const hasTryAgainButton = Array.from(buttons).some((button) => {
     return !button.id?.includes("download");
   });
+
+  // fix: https://github.com/lencx/ChatGPT/issues/189
+  if (buttons.length === 1) {
+    return false;
+  }
+
   if (hasTryAgainButton && buttons.length === 1) {
     return true;
   }
@@ -106,16 +113,18 @@ function addActionsButtons(actionsArea, TryAgainButton) {
     downloadThread({ as: Format.PDF });
   };
   actionsArea.appendChild(downloadPdfButton);
-  const exportHtml = TryAgainButton.cloneNode(true);
-  exportHtml.id = "download-html-button";
-  downloadButton.setAttribute("share-ext", "true");
-  // exportHtml.innerText = "Share Link";
-  exportHtml.title = "Share Link";
-  exportHtml.innerHTML = setIcon('link');
-  exportHtml.onclick = () => {
-    sendRequest();
-  };
-  actionsArea.appendChild(exportHtml);
+
+  // fix: https://github.com/lencx/ChatGPT/issues/126
+  // const exportHtml = TryAgainButton.cloneNode(true);
+  // exportHtml.id = "download-html-button";
+  // downloadButton.setAttribute("share-ext", "true");
+  // // exportHtml.innerText = "Share Link";
+  // exportHtml.title = "Share Link";
+  // exportHtml.innerHTML = setIcon('link');
+  // exportHtml.onclick = () => {
+  //   sendRequest();
+  // };
+  // actionsArea.appendChild(exportHtml);
 }
 
 function downloadThread({ as = Format.PNG } = {}) {
@@ -175,12 +184,27 @@ class Elements {
     this.thread = document.querySelector(
       "[class*='react-scroll-to-bottom']>[class*='react-scroll-to-bottom']>div"
     );
+
+    // fix: old chat https://github.com/lencx/ChatGPT/issues/185
+    if (!this.thread) {
+      this.thread = document.querySelector(
+        "main .overflow-y-auto"
+      );
+    }
+
+    // h-full overflow-y-auto
     this.positionForm = document.querySelector("form").parentNode;
     // this.styledThread = document.querySelector("main");
     // this.threadContent = document.querySelector(".gAnhyd");
     this.scroller = Array.from(
       document.querySelectorAll('[class*="react-scroll-to"]')
     ).filter((el) => el.classList.contains("h-full"))[0];
+
+    // fix: old chat
+    if (!this.scroller) {
+      this.scroller = document.querySelector('main .overflow-y-auto');
+    }
+
     this.hiddens = Array.from(document.querySelectorAll(".overflow-hidden"));
     this.images = Array.from(document.querySelectorAll("img[srcset]"));
   }
