@@ -15,6 +15,8 @@
 
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
 
+[Supporter Benefits (visible to your supporters and members only)](https://www.buymeacoffee.com/lencx/posts) - Share tips for using ChatGPT desktop application and next steps.
+
 ## 📦 Install
 
 - [📝 Update Log](./UPDATE_LOG.md)
