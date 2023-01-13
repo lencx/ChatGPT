@@ -30,7 +30,7 @@ async fn main() {
         trace: Color::Cyan,
     };
 
-    cmd::download_list(None, None);
+    cmd::download_list("chat.download.json", None, None);
 
     let chat_conf = ChatConfJson::get_chat_conf();
 
@@ -76,6 +76,7 @@ async fn main() {
             cmd::dalle2_window,
             cmd::cmd_list,
             cmd::download_list,
+            cmd::get_download_list,
             fs_extra::metadata,
         ])
         .setup(setup::init)

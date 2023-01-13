@@ -185,24 +185,30 @@ pub struct FileMetadata {
     pub id: String,
 }
 
-#[command]
-pub fn download_list(filename: Option<String>, id: Option<String>) {
-    info!("download_list");
-    let download_path = chat_root().join("chat.download.json");
+#[tauri::command]
+pub fn get_download_list(pathname: &str) -> (Vec<serde_json::Value>, PathBuf) {
+    info!("get_download_list: {}", pathname);
+    let download_path = chat_root().join(PathBuf::from(pathname));
     let content = fs::read_to_string(&download_path).unwrap_or_else(|err| {
         info!("download_list_error: {}", err);
         fs::write(&download_path, "[]").unwrap();
         "[]".to_string()
     });
-    let mut list = serde_json::from_str::<Vec<serde_json::Value>>(&content)
-        .unwrap_or_else(|err| {
-            info!("download_list_parse_error: {}", err);
-            vec![]
-        });
+    let list = serde_json::from_str::<Vec<serde_json::Value>>(&content).unwrap_or_else(|err| {
+        info!("download_list_parse_error: {}", err);
+        vec![]
+    });
 
-    let list2 = &list;
+    (list, download_path)
+}
+
+#[command]
+pub fn download_list(pathname: &str, filename: Option<String>, id: Option<String>) {
+    info!("download_list: {}", pathname);
+    let data = get_download_list(pathname);
+    let mut list = vec![];
     let mut my_hashmap = HashMap::new();
-    utils::vec_to_hashmap(list2.clone().into_iter(), "id", &mut my_hashmap);
+    utils::vec_to_hashmap(data.0.into_iter(), "id", &mut my_hashmap);
 
     for entry in WalkDir::new(utils::chat_root().join("download"))
         .into_iter()
@@ -236,15 +242,14 @@ pub fn download_list(filename: Option<String>, id: Option<String>) {
         }
     }
 
-    dbg!(&list);
-
+    // dbg!(&list);
     list.sort_by(|a, b| {
         let a1 = a.get("created").unwrap().as_u64().unwrap();
         let b1 = b.get("created").unwrap().as_u64().unwrap();
         a1.cmp(&b1).reverse()
     });
 
-    fs::write(download_path, serde_json::to_string_pretty(&list).unwrap()).unwrap();
+    fs::write(data.1, serde_json::to_string_pretty(&list).unwrap()).unwrap();
 }
 
 #[command]

@@ -1,28 +1,37 @@
-import { Switch, Tag, Tooltip, Space, Popconfirm } from 'antd';
+import { Tag, Space, Popconfirm } from 'antd';
+
+import { fmtDate } from '@/utils';
+
+const colorMap: any = {
+  pdf: 'blue',
+  png: 'orange',
+}
 
 export const syncColumns = () => [
   {
     title: 'Name',
     dataIndex: 'name',
     fixed: 'left',
-    // width: 120,
     key: 'name',
   },
   {
-    title: 'Type',
-    dataIndex: 'type',
-    key: 'type',
-    render: () => {
-      return <Tag>{}</Tag>;
-    }
-    // width: 200,
+    title: 'Extension',
+    dataIndex: 'ext',
+    key: 'ext',
+    render: (v: string) => <Tag color={colorMap[v]}>{v}</Tag>,
+  },
+  {
+    title: 'Created',
+    dataIndex: 'created',
+    key: 'created',
+    render: fmtDate,
   },
   {
     title: 'Action',
     render: (_: any, row: any, actions: any) => {
       return (
         <Space>
-          <a>View</a>
+          <a onClick={() => actions.setRecord(row, 'view')}>View</a>
           <Popconfirm
             title="Are you sure to delete this file?"
             onConfirm={() => actions.setRecord(row, 'delete')}
