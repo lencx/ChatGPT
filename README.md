@@ -207,8 +207,9 @@ It's safe, just a wrapper for [OpenAI ChatGPT](https://chat.openai.com) website,
 
 #### PreInstall
 
-- [Rust](https://www.rust-lang.org/)
-- [VS Code](https://code.visualstudio.com/)
+- [Rust (Required)](https://www.rust-lang.org/)
+- [Node.js (Required)](https://nodejs.org/)
+- [VS Code (Optional)](https://code.visualstudio.com/)
   - [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
   - [tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode)
 
@@ -231,6 +232,9 @@ yarn dev
 # bundle path: src-tauri/target/release/bundle
 yarn build
 ```
+
+- [The distDir configuration is set to "../dist" but this path doesn't exist](https://github.com/lencx/ChatGPT/discussions/180)
+- [Error A public key has been found, but no private key. Make sure to set TAURI_PRIVATE_KEY environment variable.](https://github.com/lencx/ChatGPT/discussions/182)
 
 ## ❤️ Thanks
 
