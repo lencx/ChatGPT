@@ -1,5 +1,4 @@
 // *** Core Script - Export ***
-// @ref: https://github.com/liady/ChatGPT-pdf
 
 const buttonOuterHTMLFallback = `<button class="btn flex justify-center gap-2 btn-neutral" id="download-png-button">Try Again</button>`;
 
@@ -50,12 +49,15 @@ function shouldAddButtons(actionsArea) {
   const buttons = actionsArea.querySelectorAll("button");
 
   const hasTryAgainButton = Array.from(buttons).some((button) => {
-    return !button.id?.includes("download");
+    return !/download-/.test(button.id);
   });
 
-  // fix: https://github.com/lencx/ChatGPT/issues/189
-  if (buttons.length === 1) {
+  if (/Stop generating/ig.test(buttons[0].innerText)) {
     return false;
+  }
+
+  if (buttons.length === 2 && (/Regenerate response/ig.test(buttons[0].innerText) || buttons[1].innerText === '')) {
+    return true;
   }
 
   if (hasTryAgainButton && buttons.length === 1) {
@@ -82,7 +84,6 @@ function removeButtons() {
   const downloadButton = document.getElementById("download-png-button");
   const downloadPdfButton = document.getElementById("download-pdf-button");
   const downloadMdButton = document.getElementById("download-markdown-button");
-  // const downloadHtmlButton = document.getElementById("download-html-button");
   if (downloadButton) {
     downloadButton.remove();
   }
@@ -92,9 +93,6 @@ function removeButtons() {
   if (downloadPdfButton) {
     downloadMdButton.remove();
   }
-  // if (downloadHtmlButton) {
-  //   downloadHtmlButton.remove();
-  // }
 }
 
 function addActionsButtons(actionsArea, TryAgainButton) {
@@ -113,7 +111,6 @@ function addActionsButtons(actionsArea, TryAgainButton) {
   // Generate PNG
   downloadButton.id = "download-png-button";
   downloadButton.setAttribute("share-ext", "true");
-  // downloadButton.innerText = "Generate PNG";
   downloadButton.title = "Generate PNG";
   downloadButton.innerHTML = setIcon('png');
   downloadButton.onclick = () => {
@@ -125,25 +122,12 @@ function addActionsButtons(actionsArea, TryAgainButton) {
   const downloadPdfButton = TryAgainButton.cloneNode(true);
   downloadPdfButton.id = "download-pdf-button";
   downloadButton.setAttribute("share-ext", "true");
-  // downloadPdfButton.innerText = "Download PDF";
   downloadPdfButton.title = "Download PDF";
   downloadPdfButton.innerHTML = setIcon('pdf');
   downloadPdfButton.onclick = () => {
     downloadThread({ as: Format.PDF });
   };
   actionsArea.appendChild(downloadPdfButton);
-
-  // fix: https://github.com/lencx/ChatGPT/issues/126
-  // const exportHtml = TryAgainButton.cloneNode(true);
-  // exportHtml.id = "download-html-button";
-  // downloadButton.setAttribute("share-ext", "true");
-  // // exportHtml.innerText = "Share Link";
-  // exportHtml.title = "Share Link";
-  // exportHtml.innerHTML = setIcon('link');
-  // exportHtml.onclick = () => {
-  //   sendRequest();
-  // };
-  // actionsArea.appendChild(exportHtml);
 }
 
 async function exportMarkdown() {
@@ -213,9 +197,7 @@ class Elements {
 
     // fix: old chat https://github.com/lencx/ChatGPT/issues/185
     if (!this.thread) {
-      this.thread = document.querySelector(
-        "main .overflow-y-auto"
-      );
+      this.thread = document.querySelector("main .overflow-y-auto");
     }
 
     // h-full overflow-y-auto
@@ -270,53 +252,6 @@ class Elements {
     document.body.style.lineHeight = null;
   }
 }
-
-function selectElementByClassPrefix(classPrefix) {
-  const element = document.querySelector(`[class^='${classPrefix}']`);
-  return element;
-}
-
-// async function sendRequest() {
-//   const data = getData();
-//   const uploadUrlResponse = await fetch(
-//     "https://chatgpt-static.s3.amazonaws.com/url.txt"
-//   );
-//   const uploadUrl = await uploadUrlResponse.text();
-//   fetch(uploadUrl, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(data),
-//   })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       invoke('open_link', { url: data.url });
-//     });
-// }
-
-// function getData() {
-//   const globalCss = getCssFromSheet(
-//     document.querySelector("link[rel=stylesheet]").sheet
-//   );
-//   const localCss =
-//     getCssFromSheet(
-//       document.querySelector(`style[data-styled][data-styled-version]`).sheet
-//     ) || "body{}";
-//   const data = {
-//     main: document.querySelector("main").outerHTML,
-//     // css: `${globalCss} /* GLOBAL-LOCAL */ ${localCss}`,
-//     globalCss,
-//     localCss,
-//   };
-//   return data;
-// }
-
-// function getCssFromSheet(sheet) {
-//   return Array.from(sheet.cssRules)
-//     .map((rule) => rule.cssText)
-//     .join("");
-// }
 
 function setIcon(type) {
   return {
