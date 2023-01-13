@@ -13,6 +13,8 @@
 
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
 
+[支持者福利 (仅会员可见)](https://www.buymeacoffee.com/lencx/posts) - 分享 ChatGPT 桌面应用使用技巧以及下一步计划。
+
 ## 📦 安装
 
 - [📝 更新日志](./UPDATE_LOG.md)
