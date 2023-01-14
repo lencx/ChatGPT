@@ -88,7 +88,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 ## ✨ Features
 
 - Multi-platform: `macOS` `Linux` `Windows`
-- Export ChatGPT history (PNG, PDF and Share Link)
+- Export ChatGPT history (PNG, PDF and Markdown)
 - Automatic application upgrade notification
 - Common shortcut keys
 - System tray hover window

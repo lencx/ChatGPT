@@ -14,6 +14,7 @@ use tauri::TitleBarStyle;
 pub const ISSUES_URL: &str = "https://github.com/lencx/ChatGPT/issues";
 pub const UPDATE_LOG_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/UPDATE_LOG.md";
 pub const AWESOME_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/AWESOME.md";
+pub const BUY_COFFEE: &str = "https://www.buymeacoffee.com/lencx";
 pub const GITHUB_PROMPTS_CSV_URL: &str =
     "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv";
 pub const DEFAULT_CHAT_CONF: &str = r#"{

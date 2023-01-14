@@ -148,6 +148,7 @@ pub fn init() -> Menu {
             CustomMenuItem::new("awesome".to_string(), "Awesome ChatGPT")
                 .accelerator("CmdOrCtrl+Shift+A")
                 .into(),
+            CustomMenuItem::new("buy_coffee".to_string(), "Buy lencx a coffee").into(),
         ]),
     );
 
@@ -249,6 +250,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         "go_conf" => utils::open_file(utils::chat_root()),
         "clear_conf" => utils::clear_conf(&app),
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
+        "buy_coffee" => open(&app, conf::BUY_COFFEE.to_string()),
         "popup_search" => {
             let chat_conf = conf::ChatConfJson::get_chat_conf();
             let popup_search = !chat_conf.popup_search;
