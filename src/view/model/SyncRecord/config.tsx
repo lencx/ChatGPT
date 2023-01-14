@@ -1,4 +1,4 @@
-import { Switch, Tag, Tooltip } from 'antd';
+import { Switch, Tag, Table } from 'antd';
 
 import { genCmd } from '@/utils';
 
@@ -37,13 +37,14 @@ export const syncColumns = () => [
       <Switch checked={v} onChange={(v) => action.setRecord({ ...row, enable: v }, 'enable')} />
     ),
   },
+  Table.EXPAND_COLUMN,
   {
     title: 'Prompt',
     dataIndex: 'prompt',
     key: 'prompt',
     // width: 300,
     render: (v: string) => (
-      <Tooltip overlayInnerStyle={{ width: 350 }} title={v}><span className="chat-prompts-val">{v}</span></Tooltip>
+      <span className="chat-prompts-val">{v}</span>
     ),
   },
 ];

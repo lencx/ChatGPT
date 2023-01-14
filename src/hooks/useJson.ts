@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { readJSON } from '@/utils';
+import { readJSON, writeJSON } from '@/utils';
 import useInit from '@/hooks/useInit';
 
 export default function useJson<T>(file: string) {
@@ -11,7 +11,12 @@ export default function useJson<T>(file: string) {
     setData(data);
   };
 
+  const updateJson = async (data: any) => {
+    await writeJSON(file, data);
+    await refreshJson();
+  };
+
   useInit(refreshJson);
 
-  return { json, refreshJson };
+  return { json, refreshJson, updateJson };
 }

@@ -207,8 +207,8 @@ pub fn download_list(pathname: &str, filename: Option<String>, id: Option<String
     info!("download_list: {}", pathname);
     let data = get_download_list(pathname);
     let mut list = vec![];
-    let mut my_hashmap = HashMap::new();
-    utils::vec_to_hashmap(data.0.into_iter(), "id", &mut my_hashmap);
+    let mut idmap = HashMap::new();
+    utils::vec_to_hashmap(data.0.into_iter(), "id", &mut idmap);
 
     for entry in WalkDir::new(utils::chat_root().join("download"))
         .into_iter()
@@ -229,7 +229,19 @@ pub fn download_list(pathname: &str, filename: Option<String>, id: Option<String
                 ext: fext.to_string(),
                 created: fs_extra::system_time_to_ms(metadata.created()),
             };
-            if my_hashmap.get(fid).is_some() && filename.is_some() && id.is_some() {
+
+            if idmap.get(fid).is_some() {
+                let name = idmap.get(fid).unwrap().get("name").unwrap().clone();
+                match name {
+                    serde_json::Value::String(v) => {
+                        file_data.name = v.clone();
+                        v
+                    }
+                    _ => "".to_string(),
+                };
+            }
+
+            if filename.is_some() && id.is_some() {
                 if let Some(ref v) = id {
                     if fid == v {
                         if let Some(ref v2) = filename {

@@ -52,11 +52,13 @@ function shouldAddButtons(actionsArea) {
     return !/download-/.test(button.id);
   });
 
-  if (/Stop generating/ig.test(buttons[0].innerText)) {
+  const stopBtn = buttons?.[0]?.innerText;
+
+  if (/Stop generating/ig.test(stopBtn)) {
     return false;
   }
 
-  if (buttons.length === 2 && (/Regenerate response/ig.test(buttons[0].innerText) || buttons[1].innerText === '')) {
+  if (buttons.length === 2 && (/Regenerate response/ig.test(stopBtn) || buttons[1].innerText === '')) {
     return true;
   }
 
@@ -132,7 +134,7 @@ function addActionsButtons(actionsArea, TryAgainButton) {
 
 async function exportMarkdown() {
   const data = ExportMD.turndown(document.querySelector("main div>div>div").innerHTML);
-  await invoke('save_file', { name: `notes/${Date.now().toString(36)}.md`, content: data });
+  await invoke('save_file', { name: `notes/${uid().toString(36)}.md`, content: data });
 }
 
 function downloadThread({ as = Format.PNG } = {}) {
@@ -164,8 +166,9 @@ async function handleImg(imgData) {
   for (let i = 0; i < binaryData.length; i++) {
     data.push(binaryData.charCodeAt(i));
   }
-  await invoke('download', { name: `download/img/${Date.now().toString(36)}.png`, blob: data });
-  await invoke('download_list');
+  const { pathname, id, filename } = getName();
+  await invoke('download', { name: `download/img/${id}.png`, blob: data });
+  await invoke('download_list', { pathname, filename, id });
 }
 
 async function handlePdf(imgData, canvas, pixelRatio) {
@@ -178,10 +181,16 @@ async function handlePdf(imgData, canvas, pixelRatio) {
   var pdfWidth = pdf.internal.pageSize.getWidth();
   var pdfHeight = pdf.internal.pageSize.getHeight();
   pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight, '', 'FAST');
-
+  const { pathname, id, filename } = getName();
   const data = pdf.__private__.getArrayBuffer(pdf.__private__.buildDocument());
-  await invoke('download', { name: `download/pdf/${Date.now().toString(36)}.pdf`, blob: Array.from(new Uint8Array(data)) });
-  await invoke('download_list');
+  await invoke('download', { name: `download/pdf/${id}.pdf`, blob: Array.from(new Uint8Array(data)) });
+  await invoke('download_list', { pathname, filename, id });
+}
+
+function getName() {
+  const id = uid().toString(36);
+  const name = document.querySelector('nav .overflow-y-auto a.hover\\:bg-gray-800')?.innerText?.trim() || '';
+  return { filename: name ? name : id, id, pathname: 'chat.download.json' };
 }
 
 class Elements {

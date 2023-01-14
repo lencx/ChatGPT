@@ -31,8 +31,25 @@ html, body {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+.ellipsis-line {
+  display: inline-block;
+  width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rowedit {
+  padding: 2px 5px;
+
+  &:hover {
+    box-shadow: 0 0 2px rgba(237, 122, 60, 0.8);
+    border-radius: 4px;
+  }
 }
 
 .chat-add-btn {
