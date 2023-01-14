@@ -1,6 +1,6 @@
 // *** Core Script - CMD ***
 
-function init() {
+$(function() {
   const styleDom = document.createElement('style');
   styleDom.innerHTML = `form {
     position: relative;
@@ -71,9 +71,9 @@ function init() {
     width: 20px;
     height: 20px;
   }
-  .chatappico.pdf {
-    width: 24px;
-    height: 24px;
+  .chatappico.pdf, .chatappico.md {
+    width: 22px;
+    height: 22px;
   }
   @media screen and (max-width: 767px) {
     #download-png-button, #download-pdf-button, #download-html-button {
@@ -92,7 +92,7 @@ function init() {
     clearInterval(window.formInterval);
     cmdTip();
   }, 200);
-}
+});
 
 async function cmdTip() {
   const chatModelJson = await invoke('get_chat_model_cmd') || {};
@@ -268,13 +268,4 @@ async function cmdTip() {
       once: false
     });
   }, 200);
-}
-
-if (
-  document.readyState === "complete" ||
-  document.readyState === "interactive"
-) {
-  init();
-} else {
-  document.addEventListener("DOMContentLoaded", init);
 }

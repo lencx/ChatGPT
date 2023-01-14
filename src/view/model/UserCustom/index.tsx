@@ -6,13 +6,13 @@ import useInit from '@/hooks/useInit';
 import useData from '@/hooks/useData';
 import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
 import useColumns from '@/hooks/useColumns';
-import useTable, { TABLE_PAGINATION } from '@/hooks/useTable';
+import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { chatRoot, fmtDate } from '@/utils';
 import { modelColumns } from './config';
 import UserCustomForm from './Form';
 
 export default function LanguageModel() {
-  const { rowSelection, selectedRowIDs } = useTable();
+  const { rowSelection, selectedRowIDs } = useTableRowSelection();
   const [isVisible, setVisible] = useState(false);
   const [jsonPath, setJsonPath] = useState('');
   const { modelJson, modelSet } = useChatModel('user_custom');
@@ -123,6 +123,7 @@ export default function LanguageModel() {
         dataSource={opData}
         rowSelection={rowSelection}
         pagination={TABLE_PAGINATION}
+        expandable={{expandedRowRender: (record) => <div style={{ padding: 10 }}>{record.prompt}</div>}}
       />
       <Modal
         open={isVisible}

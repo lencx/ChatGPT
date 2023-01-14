@@ -7,7 +7,7 @@ import { shell, path } from '@tauri-apps/api';
 import useColumns from '@/hooks/useColumns';
 import useData from '@/hooks/useData';
 import { useCacheModel } from '@/hooks/useChatModel';
-import useTable, { TABLE_PAGINATION } from '@/hooks/useTable';
+import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { fmtDate, chatRoot } from '@/utils';
 import { getPath } from '@/view/model/SyncCustom/config';
 import { syncColumns } from './config';
@@ -19,7 +19,7 @@ export default function SyncRecord() {
   const [jsonPath, setJsonPath] = useState('');
   const state = location?.state;
 
-  const { rowSelection, selectedRowIDs } = useTable();
+  const { rowSelection, selectedRowIDs } = useTableRowSelection();
   const { modelCacheJson, modelCacheSet } = useCacheModel(jsonPath);
   const { opData, opInit, opReplace, opReplaceItems, opSafeKey } = useData([]);
   const { columns, ...opInfo } = useColumns(syncColumns());
@@ -79,6 +79,7 @@ export default function SyncRecord() {
         dataSource={opData}
         rowSelection={rowSelection}
         pagination={TABLE_PAGINATION}
+        expandable={{expandedRowRender: (record) => <div style={{ padding: 10 }}>{record.prompt}</div>}}
       />
     </div>
   )

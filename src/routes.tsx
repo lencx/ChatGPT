@@ -1,10 +1,12 @@
 import { useRoutes } from 'react-router-dom';
 import {
-  DesktopOutlined,
+  SettingOutlined,
   BulbOutlined,
   SyncOutlined,
   FileSyncOutlined,
   UserOutlined,
+  DownloadOutlined,
+  FormOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 
@@ -13,6 +15,8 @@ import UserCustom from '@/view/model/UserCustom';
 import SyncPrompts from '@/view/model/SyncPrompts';
 import SyncCustom from '@/view/model/SyncCustom';
 import SyncRecord from '@/view/model/SyncRecord';
+import Download from '@/view/download';
+import Notes from '@/view/notes';
 
 export type ChatRouteMetaObject = {
   label: string;
@@ -33,7 +37,15 @@ export const routes: Array<ChatRouteObject> = [
     element: <General />,
     meta: {
       label: 'General',
-      icon: <DesktopOutlined />,
+      icon: <SettingOutlined />,
+    },
+  },
+  {
+    path: '/notes',
+    element: <Notes />,
+    meta: {
+      label: 'Notes',
+      icon: <FormOutlined />,
     },
   },
   {
@@ -51,6 +63,7 @@ export const routes: Array<ChatRouteObject> = [
           icon: <UserOutlined />,
         },
       },
+      // --- Sync
       {
         path: 'sync-prompts',
         element: <SyncPrompts />,
@@ -72,7 +85,15 @@ export const routes: Array<ChatRouteObject> = [
         element: <SyncRecord />,
         hideMenu: true,
       },
-    ]
+    ],
+  },
+  {
+    path: 'download',
+    element: <Download />,
+    meta: {
+      label: 'Download',
+      icon: <DownloadOutlined />,
+    },
   },
 ];
 

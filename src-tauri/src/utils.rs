@@ -230,3 +230,23 @@ pub async fn silent_install(app: AppHandle<Wry>, update: UpdateResponse<Wry>) ->
 
     Ok(())
 }
+
+pub fn is_hidden(entry: &walkdir::DirEntry) -> bool {
+    entry
+        .file_name()
+        .to_str()
+        .map(|s| s.starts_with('.'))
+        .unwrap_or(false)
+}
+
+pub fn vec_to_hashmap(
+    vec: impl Iterator<Item = serde_json::Value>,
+    key: &str,
+    map: &mut HashMap<String, serde_json::Value>,
+) {
+    for v in vec {
+        if let Some(kval) = v.get(key).and_then(serde_json::Value::as_str) {
+            map.insert(kval.to_string(), v);
+        }
+    }
+}

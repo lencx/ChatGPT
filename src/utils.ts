@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 
 export const CHAT_MODEL_JSON = 'chat.model.json';
 export const CHAT_MODEL_CMD_JSON = 'chat.model.cmd.json';
+export const CHAT_DOWNLOAD_JSON = 'chat.download.json';
+export const CHAT_NOTES_JSON = 'chat.notes.json';
 export const CHAT_PROMPTS_CSV = 'chat.prompts.csv';
 export const GITHUB_PROMPTS_CSV_URL = 'https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv';
 export const DISABLE_AUTO_COMPLETE = {

@@ -1,6 +1,6 @@
 // *** Core Script - DALL·E 2 Core ***
 
-async function init() {
+$(async function () {
   const chatConf = await invoke('get_chat_conf') || {};
   if (!chatConf.popup_search) return;
   if (!window.FloatingUIDOM) return;
@@ -71,14 +71,4 @@ async function init() {
       });
     }
   });
-
-}
-
-if (
-  document.readyState === "complete" ||
-  document.readyState === "interactive"
-) {
-  init();
-} else {
-  document.addEventListener("DOMContentLoaded", init);
-}
+})

@@ -1,5 +1,14 @@
 # UPDATE LOG
 
+## v0.9.0
+
+fix:
+- export button does not work
+
+feat:
+- add an export markdown button
+- `Control Center` adds `Notes` and `Download` menus for managing exported chat files (Markdown, PNG, PDF). `Notes` supports markdown previews.
+
 ## v0.8.1
 
 fix:

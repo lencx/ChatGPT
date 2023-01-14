@@ -6,7 +6,7 @@ import useInit from '@/hooks/useInit';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
 import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
-import useTable, { TABLE_PAGINATION } from '@/hooks/useTable';
+import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { fmtDate, chatRoot } from '@/utils';
 import { syncColumns } from './config';
 import './index.scss';
@@ -14,7 +14,7 @@ import './index.scss';
 const promptsURL = 'https://github.com/f/awesome-chatgpt-prompts/blob/main/prompts.csv';
 
 export default function SyncPrompts() {
-  const { rowSelection, selectedRowIDs } = useTable();
+  const { rowSelection, selectedRowIDs } = useTableRowSelection();
   const [jsonPath, setJsonPath] = useState('');
   const { modelJson, modelSet } = useChatModel('sync_prompts');
   const { modelCacheJson, modelCacheSet } = useCacheModel(jsonPath);
@@ -93,6 +93,7 @@ export default function SyncPrompts() {
         dataSource={opData}
         rowSelection={rowSelection}
         pagination={TABLE_PAGINATION}
+        expandable={{expandedRowRender: (record) => <div style={{ padding: 10 }}>{record.prompt}</div>}}
       />
     </div>
   )

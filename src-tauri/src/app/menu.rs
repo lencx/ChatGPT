@@ -41,10 +41,6 @@ pub fn init() -> Menu {
         stay_on_top
     };
 
-    #[cfg(target_os = "macos")]
-    let titlebar =
-        CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
-
     let theme_light = CustomMenuItem::new("theme_light".to_string(), "Light");
     let theme_dark = CustomMenuItem::new("theme_dark".to_string(), "Dark");
     let theme_system = CustomMenuItem::new("theme_system".to_string(), "System");
@@ -63,10 +59,20 @@ pub fn init() -> Menu {
     };
 
     #[cfg(target_os = "macos")]
+    let titlebar =
+        CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
+    #[cfg(target_os = "macos")]
     let titlebar_menu = if chat_conf.titlebar {
         titlebar.selected()
     } else {
         titlebar
+    };
+
+    let system_tray = CustomMenuItem::new("system_tray".to_string(), "System Tray");
+    let system_tray_menu = if chat_conf.tray {
+        system_tray.selected()
+    } else {
+        system_tray
     };
 
     let preferences_menu = Submenu::new(
@@ -81,6 +87,7 @@ pub fn init() -> Menu {
             titlebar_menu.into(),
             #[cfg(target_os = "macos")]
             CustomMenuItem::new("hide_dock_icon".to_string(), "Hide Dock Icon").into(),
+            system_tray_menu.into(),
             CustomMenuItem::new("inject_script".to_string(), "Inject Script")
                 .accelerator("CmdOrCtrl+J")
                 .into(),
@@ -141,6 +148,7 @@ pub fn init() -> Menu {
             CustomMenuItem::new("awesome".to_string(), "Awesome ChatGPT")
                 .accelerator("CmdOrCtrl+Shift+A")
                 .into(),
+            CustomMenuItem::new("buy_coffee".to_string(), "Buy lencx a coffee").into(),
         ]),
     );
 
@@ -242,6 +250,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         "go_conf" => utils::open_file(utils::chat_root()),
         "clear_conf" => utils::clear_conf(&app),
         "awesome" => open(&app, conf::AWESOME_URL.to_string()),
+        "buy_coffee" => open(&app, conf::BUY_COFFEE.to_string()),
         "popup_search" => {
             let chat_conf = conf::ChatConfJson::get_chat_conf();
             let popup_search = !chat_conf.popup_search;
@@ -279,6 +288,11 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
                 None,
             )
             .unwrap();
+            tauri::api::process::restart(&app.env());
+        }
+        "system_tray" => {
+            let chat_conf = conf::ChatConfJson::get_chat_conf();
+            ChatConfJson::amend(&serde_json::json!({ "tray": !chat_conf.tray }), None).unwrap();
             tauri::api::process::restart(&app.env());
         }
         "theme_light" | "theme_dark" | "theme_system" => {

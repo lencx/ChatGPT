@@ -1,4 +1,7 @@
-import { useState, useCallback } from 'react';
+import { FC, useState, useCallback } from 'react';
+import { Input } from 'antd';
+
+import { DISABLE_AUTO_COMPLETE } from '@/utils';
 
 export default function useColumns(columns: any[] = []) {
   const [opType, setOpType] = useState('');
@@ -42,3 +45,39 @@ export default function useColumns(columns: any[] = []) {
     opExtra,
   };
 }
+
+interface EditRowProps {
+  rowKey: string;
+  row: Record<string, any>;
+  actions: any;
+}
+export const EditRow: FC<EditRowProps> = ({ rowKey, row, actions }) => {
+  const [isEdit, setEdit] = useState(false);
+  const [val, setVal] = useState(row[rowKey]);
+  const handleEdit = () => {
+    setEdit(true);
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setVal(e.target.value)
+  };
+
+  const handleSave = () => {
+    setEdit(false);
+    row[rowKey] = val;
+    actions?.setRecord(row, 'rowedit')
+  };
+
+  return isEdit
+    ? (
+        <Input.TextArea
+          value={val}
+          rows={1}
+          onChange={handleChange}
+          {...DISABLE_AUTO_COMPLETE}
+          onPressEnter={handleSave}
+        />
+      )
+    : (
+      <div className='rowedit' onClick={handleEdit}>{val}</div>
+    );
+};

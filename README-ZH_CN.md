@@ -201,8 +201,9 @@ Mac 上无法安装，提示开发者未验证，具体可以查看下面给出�
 
 #### 预安装
 
-- [Rust](https://www.rust-lang.org/)
-- [VS Code](https://code.visualstudio.com/)
+- [Rust (必须)](https://www.rust-lang.org/)
+- [Node.js (必须)](https://nodejs.org/)
+- [VS Code (可选)](https://code.visualstudio.com/)
   - [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
   - [tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode)
 
@@ -225,6 +226,9 @@ yarn dev
 # 构建后的安装包位置: src-tauri/target/release/bundle
 yarn build
 ```
+
+- [The distDir configuration is set to "../dist" but this path doesn't exist](https://github.com/lencx/ChatGPT/discussions/180)
+- [Error A public key has been found, but no private key. Make sure to set TAURI_PRIVATE_KEY environment variable.](https://github.com/lencx/ChatGPT/discussions/182)
 
 ## ❤️ 感谢
 
