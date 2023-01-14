@@ -1,36 +1,31 @@
 import { useEffect, useState } from 'react';
 import { Table, Modal, Popconfirm, Button, message } from 'antd';
 import { invoke, path, shell, fs } from '@tauri-apps/api';
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import useInit from '@/hooks/useInit';
 import useJson from '@/hooks/useJson';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
-import { chatRoot, CHAT_DOWNLOAD_JSON } from '@/utils';
-import { downloadColumns } from './config';
+import { chatRoot, CHAT_NOTES_JSON } from '@/utils';
+import { notesColumns } from './config';
 
-function renderFile(buff: Uint8Array, type: string) {
-  const renderType = {
-    pdf: 'application/pdf',
-    png: 'image/png',
-  }[type];
-  return URL.createObjectURL(new Blob([buff], { type: renderType }));
-}
-
-export default function Download() {
-  const [downloadPath, setDownloadPath] = useState('');
+export default function Notes() {
+  const [notesPath, setNotesPath] = useState('');
   const [source, setSource] = useState('');
   const [isVisible, setVisible] = useState(false);
   const { opData, opInit, opReplace, opSafeKey } = useData([]);
-  const { columns, ...opInfo } = useColumns(downloadColumns());
+  const { columns, ...opInfo } = useColumns(notesColumns());
   const { rowSelection, selectedRows, rowReset } = useTableRowSelection({ rowType: 'row' });
-  const { json, refreshJson, updateJson } = useJson<any[]>(CHAT_DOWNLOAD_JSON);
+  const { json, refreshJson, updateJson } = useJson<any[]>(CHAT_NOTES_JSON);
   const selectedItems = rowSelection.selectedRowKeys || [];
 
   useInit(async () => {
-    const file = await path.join(await chatRoot(), CHAT_DOWNLOAD_JSON);
-    setDownloadPath(file);
+    const file = await path.join(await chatRoot(), CHAT_NOTES_JSON);
+    setNotesPath(file);
   });
 
   useEffect(() => {
@@ -42,14 +37,15 @@ export default function Download() {
     if (!opInfo.opType) return;
     (async () => {
       const record = opInfo?.opRecord;
-      const isImg = ['png'].includes(record?.ext);
-      const file = await path.join(await chatRoot(), 'download', isImg ? 'img' : record?.ext, `${record?.id}.${record?.ext}`);
+      const file = await path.join(await chatRoot(), 'notes', `${record?.id}.${record?.ext}`);
       if (opInfo.opType === 'preview') {
-        const data = await fs.readBinaryFile(file);
-        const sourceData = renderFile(data, record?.ext);
-        setSource(sourceData);
+        const data = await fs.readTextFile(file);
+        setSource(data);
         setVisible(true);
         return;
+      }
+      if (opInfo.opType === 'edit') {
+        alert('TODO');
       }
       if (opInfo.opType === 'delete') {
         await fs.removeFile(file);
@@ -66,8 +62,8 @@ export default function Download() {
 
   const handleDelete = async () => {
     if (opData?.length === selectedRows.length) {
-      const downloadDir = await path.join(await chatRoot(), 'download');
-      await fs.removeDir(downloadDir, { recursive: true });
+      const notesDir = await path.join(await chatRoot(), 'notes');
+      await fs.removeDir(notesDir, { recursive: true });
       await handleRefresh();
       rowReset();
       message.success('All files have been cleared!');
@@ -75,8 +71,7 @@ export default function Download() {
     }
 
     const rows = selectedRows.map(async (i) => {
-      const isImg = ['png'].includes(i?.ext);
-      const file = await path.join(await chatRoot(), 'download', isImg ? 'img' : i?.ext, `${i?.id}.${i?.ext}`);
+      const file = await path.join(await chatRoot(), 'notes', `${i?.id}.${i?.ext}`);
       await fs.removeFile(file);
       return file;
     })
@@ -87,7 +82,7 @@ export default function Download() {
   };
 
   const handleRefresh = async () => {
-    await invoke('download_list', { pathname: CHAT_DOWNLOAD_JSON, dir: 'download' });
+    await invoke('download_list', { pathname: CHAT_NOTES_JSON, dir: 'notes' });
     const data = await refreshJson();
     opInit(data);
   };
@@ -120,7 +115,7 @@ export default function Download() {
       </div>
       <div className="chat-table-tip">
         <div className="chat-file-path">
-          <div>PATH: <a onClick={() => shell.open(downloadPath)} title={downloadPath}>{downloadPath}</a></div>
+          <div>PATH: <a onClick={() => shell.open(notesPath)} title={notesPath}>{notesPath}</a></div>
         </div>
       </div>
       <Table
@@ -138,7 +133,27 @@ export default function Download() {
         footer={false}
         destroyOnClose
       >
-        <img style={{ maxWidth: '100%' }} src={source} />
+        <ReactMarkdown
+          children={source}
+          components={{
+            code({node, inline, className, children, ...props}) {
+              const match = /language-(\w+)/.exec(className || '')
+              return !inline && match ? (
+                <SyntaxHighlighter
+                  children={String(children).replace(/\n$/, '')}
+                  style={a11yDark as any}
+                  language={match[1]}
+                  PreTag="div"
+                  {...props}
+                />
+              ) : (
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              )
+            }
+          }}
+        />
       </Modal>
     </div>
   )

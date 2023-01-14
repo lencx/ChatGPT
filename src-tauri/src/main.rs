@@ -30,7 +30,8 @@ async fn main() {
         trace: Color::Cyan,
     };
 
-    cmd::download_list("chat.download.json", None, None);
+    cmd::download_list("chat.download.json", "download", None, None);
+    cmd::download_list("chat.notes.json", "notes", None, None);
 
     let chat_conf = ChatConfJson::get_chat_conf();
 

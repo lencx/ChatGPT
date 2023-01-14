@@ -203,14 +203,14 @@ pub fn get_download_list(pathname: &str) -> (Vec<serde_json::Value>, PathBuf) {
 }
 
 #[command]
-pub fn download_list(pathname: &str, filename: Option<String>, id: Option<String>) {
+pub fn download_list(pathname: &str, dir: &str, filename: Option<String>, id: Option<String>) {
     info!("download_list: {}", pathname);
     let data = get_download_list(pathname);
     let mut list = vec![];
     let mut idmap = HashMap::new();
     utils::vec_to_hashmap(data.0.into_iter(), "id", &mut idmap);
 
-    for entry in WalkDir::new(utils::chat_root().join("download"))
+    for entry in WalkDir::new(utils::chat_root().join(dir))
         .into_iter()
         .filter_entry(|e| !utils::is_hidden(e))
         .filter_map(|e| e.ok())

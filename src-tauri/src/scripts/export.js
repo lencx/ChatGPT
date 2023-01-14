@@ -134,7 +134,9 @@ function addActionsButtons(actionsArea, TryAgainButton) {
 
 async function exportMarkdown() {
   const data = ExportMD.turndown(document.querySelector("main div>div>div").innerHTML);
-  await invoke('save_file', { name: `notes/${uid().toString(36)}.md`, content: data });
+  const { id, filename } = getName();
+  await invoke('save_file', { name: `notes/${id}.md`, content: data });
+  await invoke('download_list', { pathname: 'chat.notes.json', filename, id, dir: 'notes' });
 }
 
 function downloadThread({ as = Format.PNG } = {}) {
@@ -168,7 +170,7 @@ async function handleImg(imgData) {
   }
   const { pathname, id, filename } = getName();
   await invoke('download', { name: `download/img/${id}.png`, blob: data });
-  await invoke('download_list', { pathname, filename, id });
+  await invoke('download_list', { pathname, filename, id, dir: 'download' });
 }
 
 async function handlePdf(imgData, canvas, pixelRatio) {
@@ -184,7 +186,7 @@ async function handlePdf(imgData, canvas, pixelRatio) {
   const { pathname, id, filename } = getName();
   const data = pdf.__private__.getArrayBuffer(pdf.__private__.buildDocument());
   await invoke('download', { name: `download/pdf/${id}.pdf`, blob: Array.from(new Uint8Array(data)) });
-  await invoke('download_list', { pathname, filename, id });
+  await invoke('download_list', { pathname, filename, id, dir: 'download' });
 }
 
 function getName() {

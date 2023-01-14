@@ -9,6 +9,7 @@ export default function useJson<T>(file: string) {
   const refreshJson = async () => {
     const data = await readJSON(file);
     setData(data);
+    return data;
   };
 
   const updateJson = async (data: any) => {
