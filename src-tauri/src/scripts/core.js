@@ -40,7 +40,7 @@ window.uid = uid;
 window.invoke = invoke;
 window.transformCallback = transformCallback;
 
-$(async function () {
+async function init() {
   if (__TAURI_METADATA__.__currentWindow.label === 'tray') {
     document.getElementsByTagName('html')[0].style['font-size'] = '70%';
   }
@@ -91,4 +91,13 @@ $(async function () {
   window.__sync_prompts = async function() {
     await invoke('sync_prompts', { time: Date.now() });
   }
-});
+}
+
+if (
+  document.readyState === "complete" ||
+  document.readyState === "interactive"
+) {
+  init();
+} else {
+  document.addEventListener("DOMContentLoaded", init);
+}

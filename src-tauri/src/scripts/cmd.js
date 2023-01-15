@@ -1,6 +1,6 @@
 // *** Core Script - CMD ***
 
-$(function() {
+function init() {
   const styleDom = document.createElement('style');
   styleDom.innerHTML = `form {
     position: relative;
@@ -94,6 +94,7 @@ $(function() {
     new MutationObserver(function (mutationsList) {
       for (const mutation of mutationsList) {
         if (mutation.target.getAttribute('id') === '__next') {
+          initDom();
           cmdTip();
         }
         if (mutation.target.getAttribute('class') === 'chat-model-cmd-list') {
@@ -117,7 +118,7 @@ $(function() {
       subtree: true,
     });
   }, 300);
-});
+}
 
 async function cmdTip() {
   initDom();
@@ -143,9 +144,9 @@ async function cmdTip() {
       modelDom.innerHTML = `<div>${v.map(itemDom).join('')}</div>`;
       window.__CHAT_MODEL_CMD_PROMPT__ = v[0]?.prompt.trim();
       window.__CHAT_MODEL_CMD__ = v[0]?.cmd.trim();
-      window.__list = modelDom.querySelectorAll('.cmd-item');
-      window.__index = 0;
-      window.__list[window.__index].classList.add('selected');
+      window.__cmd_list = modelDom.querySelectorAll('.cmd-item');
+      window.__cmd_index = 0;
+      window.__cmd_list[window.__cmd_index].classList.add('selected');
     };
     const setPrompt = (v = '') => {
       if (v.trim()) {
@@ -162,28 +163,28 @@ async function cmdTip() {
       }
 
       // ------------------ Keyboard scrolling (ArrowUp | ArrowDown) --------------------------
-      if (event.keyCode === 38 &&  window.__index > 0) { // ArrowUp
-        window.__list[window.__index].classList.remove('selected');
-        window.__index = window.__index - 1;
-        window.__list[window.__index].classList.add('selected');
-        window.__CHAT_MODEL_CMD_PROMPT__ = decodeURIComponent(window.__list[window.__index].getAttribute('data-prompt'));
-        searchInput.value = `/${window.__list[window.__index].getAttribute('data-cmd')}`;
+      if (event.keyCode === 38 &&  window.__cmd_index > 0) { // ArrowUp
+        window.__cmd_list[window.__cmd_index].classList.remove('selected');
+        window.__cmd_index = window.__cmd_index - 1;
+        window.__cmd_list[window.__cmd_index].classList.add('selected');
+        window.__CHAT_MODEL_CMD_PROMPT__ = decodeURIComponent(window.__cmd_list[window.__cmd_index].getAttribute('data-prompt'));
+        searchInput.value = `/${window.__cmd_list[window.__cmd_index].getAttribute('data-cmd')}`;
         event.preventDefault();
       }
 
-      if (event.keyCode === 40 && window.__index < window.__list.length - 1) { // ArrowDown
-        window.__list[window.__index].classList.remove('selected');
-        window.__index = window.__index + 1;
-        window.__list[window.__index].classList.add('selected');
-        window.__CHAT_MODEL_CMD_PROMPT__ = decodeURIComponent(window.__list[window.__index].getAttribute('data-prompt'));
-        searchInput.value = `/${window.__list[window.__index].getAttribute('data-cmd')}`;
+      if (event.keyCode === 40 && window.__cmd_index < window.__cmd_list.length - 1) { // ArrowDown
+        window.__cmd_list[window.__cmd_index].classList.remove('selected');
+        window.__cmd_index = window.__cmd_index + 1;
+        window.__cmd_list[window.__cmd_index].classList.add('selected');
+        window.__CHAT_MODEL_CMD_PROMPT__ = decodeURIComponent(window.__cmd_list[window.__cmd_index].getAttribute('data-prompt'));
+        searchInput.value = `/${window.__cmd_list[window.__cmd_index].getAttribute('data-cmd')}`;
         event.preventDefault();
       }
 
       const containerHeight = modelDom.offsetHeight;
-      const itemHeight = window.__list[0].offsetHeight + 1;
+      const itemHeight = window.__cmd_list[0].offsetHeight + 1;
 
-      const itemTop = window.__list[window.__index].offsetTop;
+      const itemTop = window.__cmd_list[window.__cmd_index].offsetTop;
       const itemBottom = itemTop + itemHeight;
       if (itemTop < modelDom.scrollTop || itemBottom > modelDom.scrollTop + containerHeight) {
         modelDom.scrollTop = itemTop;
@@ -239,8 +240,8 @@ async function cmdTip() {
         event.preventDefault();
       }
     }
-    searchInput.removeEventListener('keydown', cmdKeydown);
-    searchInput.addEventListener('keydown', cmdKeydown);
+    searchInput.removeEventListener('keydown', cmdKeydown, { capture: true });
+    searchInput.addEventListener('keydown', cmdKeydown, { capture: true });
 
     function cmdInput() {
       if (searchInput.value === '') {
@@ -277,8 +278,19 @@ function initDom() {
   const modelDom = document.querySelector('.chat-model-cmd-list');
   if (modelDom) {
     modelDom.innerHTML = '';
-    delete window.__CHAT_MODEL_CMD_PROMPT__;
-    delete window.__CHAT_MODEL_CMD__;
-    delete window.__CHAT_MODEL_STATUS__;
   }
+  delete window.__CHAT_MODEL_CMD_PROMPT__;
+  delete window.__CHAT_MODEL_CMD__;
+  delete window.__CHAT_MODEL_STATUS__;
+  delete window.__cmd_list;
+  delete window.__cmd_index;
+}
+
+if (
+  document.readyState === "complete" ||
+  document.readyState === "interactive"
+) {
+  init();
+} else {
+  document.addEventListener("DOMContentLoaded", init);
 }
