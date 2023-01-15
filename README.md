@@ -26,7 +26,7 @@
 
 ### Windows
 
-- [ChatGPT_0.9.1_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.9.1/ChatGPT_0.9.1_x64_en-US.msi): Direct download installer
+- [ChatGPT_0.9.2_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.9.2/ChatGPT_0.9.2_x64_en-US.msi): Direct download installer
 - Use [winget](https://winstall.app/apps/lencx.ChatGPT):
   ```bash
   # install the latest version
@@ -36,12 +36,12 @@
   winget install --id=lencx.ChatGPT -e --version 0.9.0
   ```
 
-**Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.9.1))**
+**Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.9.2))**
 
 ### Mac
 
-- [ChatGPT_0.9.1_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.9.1/ChatGPT_0.9.1_x64.dmg): Direct download installer
-- [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.9.1/ChatGPT.app.tar.gz): Download the `.app` installer
+- [ChatGPT_0.9.2_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.9.2/ChatGPT_0.9.2_x64.dmg): Direct download installer
+- [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.9.2/ChatGPT.app.tar.gz): Download the `.app` installer
 - Homebrew \
   Or you can install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
@@ -57,8 +57,8 @@
 
 ### Linux
 
-- [chat-gpt_0.9.1_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.9.1/chat-gpt_0.9.1_amd64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
-- [chat-gpt_0.9.1_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.9.1/chat-gpt_0.9.1_amd64.AppImage): Works reliably, you can try it if `.deb` fails to run
+- [chat-gpt_0.9.2_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.9.2/chat-gpt_0.9.2_amd64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
+- [chat-gpt_0.9.2_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.9.2/chat-gpt_0.9.2_amd64.AppImage): Works reliably, you can try it if `.deb` fails to run
 - Available on [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin) with the package name `chatgpt-desktop-bin`, and you can use your favourite AUR package manager to install it.
 
 <!-- download end -->
