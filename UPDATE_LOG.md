@@ -1,5 +1,9 @@
 # UPDATE LOG
 
+## v0.9.2
+
+fix: slash command does not work
+
 ## v0.9.1
 
 fix: slash command does not work

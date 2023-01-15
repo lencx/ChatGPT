@@ -1,6 +1,6 @@
 // *** Core Script - DALL·E 2 ***
 
-$(function () {
+function init() {
   document.addEventListener("click", (e) => {
     const origin = e.target.closest("a");
     if (!origin || !origin.target) return;
@@ -28,4 +28,13 @@ $(function () {
       searchInput.value = query;
     }
   }, 200)
-})
+}
+
+if (
+  document.readyState === "complete" ||
+  document.readyState === "interactive"
+) {
+  init();
+} else {
+  document.addEventListener("DOMContentLoaded", init);
+}
