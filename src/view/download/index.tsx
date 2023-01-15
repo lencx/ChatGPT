@@ -69,7 +69,6 @@ export default function Download() {
       const downloadDir = await path.join(await chatRoot(), 'download');
       await fs.removeDir(downloadDir, { recursive: true });
       await handleRefresh();
-      rowReset();
       message.success('All files have been cleared!');
       return;
     }
@@ -88,6 +87,7 @@ export default function Download() {
 
   const handleRefresh = async () => {
     await invoke('download_list', { pathname: CHAT_DOWNLOAD_JSON, dir: 'download' });
+    rowReset();
     const data = await refreshJson();
     opInit(data);
   };

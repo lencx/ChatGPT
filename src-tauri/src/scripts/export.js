@@ -1,8 +1,7 @@
 // *** Core Script - Export ***
 
-const buttonOuterHTMLFallback = `<button class="btn flex justify-center gap-2 btn-neutral" id="download-png-button">Try Again</button>`;
-
 $(async function () {
+  const buttonOuterHTMLFallback = `<button class="btn flex justify-center gap-2 btn-neutral" id="download-png-button">Try Again</button>`;
   if (window.innerWidth < 767) return;
   const chatConf = await invoke('get_chat_conf') || {};
   if (window.buttonsInterval) {
@@ -190,7 +189,7 @@ async function handlePdf(imgData, canvas, pixelRatio) {
 }
 
 function getName() {
-  const id = uid().toString(36);
+  const id = window.crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
   const name = document.querySelector('nav .overflow-y-auto a.hover\\:bg-gray-800')?.innerText?.trim() || '';
   return { filename: name ? name : id, id, pathname: 'chat.download.json' };
 }
