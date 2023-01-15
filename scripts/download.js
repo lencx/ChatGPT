@@ -13,7 +13,9 @@ async function rewrite(filename) {
       flag = true;
     }
     if (flag) {
-      content[i] = content[i].replace(/(\d+).(\d+).(\d+)/g, argv[0]);
+      if (!/winget install --id=lencx.ChatGPT -e --version/.test(content[i])) {
+        content[i] = content[i].replace(/(\d+).(\d+).(\d+)/g, argv[0]);
+      }
     }
     if (endRe.test(content[i])) {
       break;
