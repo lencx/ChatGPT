@@ -65,7 +65,6 @@ export default function Notes() {
       const notesDir = await path.join(await chatRoot(), 'notes');
       await fs.removeDir(notesDir, { recursive: true });
       await handleRefresh();
-      rowReset();
       message.success('All files have been cleared!');
       return;
     }
@@ -83,6 +82,7 @@ export default function Notes() {
 
   const handleRefresh = async () => {
     await invoke('download_list', { pathname: CHAT_NOTES_JSON, dir: 'notes' });
+    rowReset();
     const data = await refreshJson();
     opInit(data);
   };
@@ -135,6 +135,7 @@ export default function Notes() {
       >
         <ReactMarkdown
           children={source}
+          linkTarget="_blank"
           components={{
             code({node, inline, className, children, ...props}) {
               const match = /language-(\w+)/.exec(className || '')

@@ -53,25 +53,25 @@ interface EditRowProps {
 }
 export const EditRow: FC<EditRowProps> = ({ rowKey, row, actions }) => {
   const [isEdit, setEdit] = useState(false);
-  const [val, setVal] = useState(row[rowKey]);
+  const [val, setVal] = useState(row[rowKey] || '');
   const handleEdit = () => {
     setEdit(true);
   };
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVal(e.target.value)
   };
 
   const handleSave = () => {
     setEdit(false);
-    row[rowKey] = val;
+    row[rowKey] = val?.trim();
     actions?.setRecord(row, 'rowedit')
   };
 
   return isEdit
     ? (
-        <Input.TextArea
+        <Input
           value={val}
-          rows={1}
+          autoFocus
           onChange={handleChange}
           {...DISABLE_AUTO_COMPLETE}
           onPressEnter={handleSave}

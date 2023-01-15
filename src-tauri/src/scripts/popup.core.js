@@ -16,9 +16,9 @@ $(async function () {
     background: #4a4a4a;
     color: white;
     font-weight: bold;
-    padding: 5px 8px;
-    border-radius: 4px;
-    font-size: 12px;
+    padding: 3px 5px;
+    border-radius: 2px;
+    font-size: 10px;
     cursor: pointer;
   }
   `;
@@ -31,6 +31,7 @@ $(async function () {
   const { computePosition, flip, offset, shift } = window.FloatingUIDOM;
 
   document.body.addEventListener('mousedown', async (e) => {
+    selectionMenu.style.display = 'none';
     if (e.target.id === 'chagpt-selection-menu') {
       await invoke('dalle2_window', { query: encodeURIComponent(window.__DALLE2_CONTENT__) });
     } else {
