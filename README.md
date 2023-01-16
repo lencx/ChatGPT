@@ -73,7 +73,7 @@ This is a major and exciting update. It works like a `Telegram bot command` and 
 
 You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)** to find interesting features to import into the app. You can also use `Sync Prompts` to sync all in one click, and if you don't want certain prompts to appear in your slash commands, you can disable them.
 
-![chatgpt menu](./assets/chatgpt-menu.png)
+![chatgpt cmd](./assets/chatgpt-cmd.png)
 ![chatgpt sync prompts](./assets/chatgpt-sync-prompts.png)
 
 <!-- After the data import is done, you can restart the app to make the configuration take effect (`Menu -> Preferences -> Restart ChatGPT`). -->

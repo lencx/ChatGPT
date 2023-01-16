@@ -72,7 +72,7 @@
 
 你可以从 [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) 来寻找有趣的功能来导入到应用。也可以使用 `Sync Prompts`，来一键同步所有，如果你不想让某些提示出现在你的斜杠命令，你可以禁用它们。
 
-![chatgpt menu](./assets/chatgpt-menu.png)
+![chatgpt cmd](./assets/chatgpt-cmd.png)
 ![chatgpt sync prompts](./assets/chatgpt-sync-prompts.png)
 
 <!-- 数据导入完成后，可以重新启动应用来使配置生效（`Menu -> Preferences -> Restart ChatGPT`）。 -->
