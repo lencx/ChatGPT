@@ -94,7 +94,7 @@ pub fn control_window(handle: &tauri::AppHandle) {
                 .title("Control Center")
                 .resizable(true)
                 .fullscreen(false)
-                .inner_size(800.0, 600.0)
+                .inner_size(1000.0, 700.0)
                 .min_inner_size(800.0, 600.0)
                 .build()
                 .unwrap();

@@ -13,7 +13,7 @@ use tauri::api::path;
 use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::{
     fern::colors::{Color, ColoredLevelConfig},
-    LogTarget, LoggerBuilder,
+    LogTarget,
 };
 
 #[tokio::main]
@@ -38,9 +38,7 @@ async fn main() {
     let mut builder = tauri::Builder::default()
         // https://github.com/tauri-apps/tauri/pull/2736
         .plugin(
-            LoggerBuilder::new()
-                .level(log::LevelFilter::Debug)
-                .with_colors(colors)
+            tauri_plugin_log::Builder::default()
                 .targets([
                     // LogTarget::LogDir,
                     // LOG PATH: ~/.chatgpt/ChatGPT.log
@@ -48,6 +46,8 @@ async fn main() {
                     LogTarget::Stdout,
                     LogTarget::Webview,
                 ])
+                .level(log::LevelFilter::Debug)
+                .with_colors(colors)
                 .build(),
         )
         .plugin(tauri_plugin_positioner::init())
