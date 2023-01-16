@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Table, Modal, Popconfirm, Button, message } from 'antd';
 import { invoke, path, shell, fs } from '@tauri-apps/api';
-import ReactMarkdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import useInit from '@/hooks/useInit';
 import useJson from '@/hooks/useJson';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
+import Markdown from '@/components/Markdown';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { chatRoot, CHAT_NOTES_JSON } from '@/utils';
 import { notesColumns } from './config';
@@ -132,29 +130,9 @@ export default function Notes() {
         onCancel={handleCancel}
         footer={false}
         destroyOnClose
+        width={600}
       >
-        <ReactMarkdown
-          children={source}
-          linkTarget="_blank"
-          components={{
-            code({node, inline, className, children, ...props}) {
-              const match = /language-(\w+)/.exec(className || '')
-              return !inline && match ? (
-                <SyntaxHighlighter
-                  children={String(children).replace(/\n$/, '')}
-                  style={a11yDark as any}
-                  language={match[1]}
-                  PreTag="div"
-                  {...props}
-                />
-              ) : (
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              )
-            }
-          }}
-        />
+        <Markdown children={source} />
       </Modal>
     </div>
   )
