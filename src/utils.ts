@@ -2,6 +2,7 @@ import { readTextFile, writeTextFile, exists, createDir } from '@tauri-apps/api/
 import { homeDir, join, dirname } from '@tauri-apps/api/path';
 import dayjs from 'dayjs';
 
+export const CHAT_CONF_JSON = 'chat.conf.json';
 export const CHAT_MODEL_JSON = 'chat.model.json';
 export const CHAT_MODEL_CMD_JSON = 'chat.model.cmd.json';
 export const CHAT_DOWNLOAD_JSON = 'chat.download.json';

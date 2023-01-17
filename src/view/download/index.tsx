@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Table, Modal, Popconfirm, Button, message } from 'antd';
-import { invoke, path, shell, fs } from '@tauri-apps/api';
+import { invoke, path, fs } from '@tauri-apps/api';
 
-import useInit from '@/hooks/useInit';
 import useJson from '@/hooks/useJson';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
+import FilePath from '@/components/FilePath';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { chatRoot, CHAT_DOWNLOAD_JSON } from '@/utils';
 import { downloadColumns } from './config';
@@ -19,7 +19,6 @@ function renderFile(buff: Uint8Array, type: string) {
 }
 
 export default function Download() {
-  const [downloadPath, setDownloadPath] = useState('');
   const [source, setSource] = useState('');
   const [isVisible, setVisible] = useState(false);
   const { opData, opInit, opReplace, opSafeKey } = useData([]);
@@ -27,11 +26,6 @@ export default function Download() {
   const { rowSelection, selectedRows, rowReset } = useTableRowSelection({ rowType: 'row' });
   const { json, refreshJson, updateJson } = useJson<any[]>(CHAT_DOWNLOAD_JSON);
   const selectedItems = rowSelection.selectedRowKeys || [];
-
-  useInit(async () => {
-    const file = await path.join(await chatRoot(), CHAT_DOWNLOAD_JSON);
-    setDownloadPath(file);
-  });
 
   useEffect(() => {
     if (!json || json.length <= 0) return;
@@ -118,11 +112,7 @@ export default function Download() {
           )}
         </div>
       </div>
-      <div className="chat-table-tip">
-        <div className="chat-file-path">
-          <div>PATH: <a onClick={() => shell.open(downloadPath)} title={downloadPath}>{downloadPath}</a></div>
-        </div>
-      </div>
+      <FilePath paths={CHAT_DOWNLOAD_JSON} />
       <Table
         rowKey="id"
         columns={columns}

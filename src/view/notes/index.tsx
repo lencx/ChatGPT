@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Table, Modal, Popconfirm, Button, message } from 'antd';
-import { invoke, path, shell, fs } from '@tauri-apps/api';
+import { invoke, path, fs } from '@tauri-apps/api';
 
-import useInit from '@/hooks/useInit';
 import useJson from '@/hooks/useJson';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
 import Markdown from '@/components/Markdown';
+import FilePath from '@/components/FilePath';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { chatRoot, CHAT_NOTES_JSON } from '@/utils';
 import { notesColumns } from './config';
 
 export default function Notes() {
-  const [notesPath, setNotesPath] = useState('');
   const [source, setSource] = useState('');
   const [isVisible, setVisible] = useState(false);
   const { opData, opInit, opReplace, opSafeKey } = useData([]);
@@ -20,11 +19,6 @@ export default function Notes() {
   const { rowSelection, selectedRows, rowReset } = useTableRowSelection({ rowType: 'row' });
   const { json, refreshJson, updateJson } = useJson<any[]>(CHAT_NOTES_JSON);
   const selectedItems = rowSelection.selectedRowKeys || [];
-
-  useInit(async () => {
-    const file = await path.join(await chatRoot(), CHAT_NOTES_JSON);
-    setNotesPath(file);
-  });
 
   useEffect(() => {
     if (!json || json.length <= 0) return;
@@ -41,9 +35,6 @@ export default function Notes() {
         setSource(data);
         setVisible(true);
         return;
-      }
-      if (opInfo.opType === 'edit') {
-        alert('TODO');
       }
       if (opInfo.opType === 'delete') {
         await fs.removeFile(file);
@@ -111,11 +102,7 @@ export default function Notes() {
           )}
         </div>
       </div>
-      <div className="chat-table-tip">
-        <div className="chat-file-path">
-          <div>PATH: <a onClick={() => shell.open(notesPath)} title={notesPath}>{notesPath}</a></div>
-        </div>
-      </div>
+      <FilePath paths={CHAT_NOTES_JSON} />
       <Table
         rowKey="id"
         columns={columns}

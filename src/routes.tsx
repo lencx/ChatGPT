@@ -17,6 +17,7 @@ import SyncCustom from '@/view/model/SyncCustom';
 import SyncRecord from '@/view/model/SyncRecord';
 import Download from '@/view/download';
 import Notes from '@/view/notes';
+import Markdown from '@/view/markdown';
 
 export type ChatRouteMetaObject = {
   label: string;
@@ -47,6 +48,11 @@ export const routes: Array<ChatRouteObject> = [
       label: 'Notes',
       icon: <FormOutlined />,
     },
+  },
+  {
+    path: '/md/:id',
+    element: <Markdown />,
+    hideMenu: true,
   },
   {
     path: '/model',

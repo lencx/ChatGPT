@@ -5,3 +5,15 @@
     font-family: monospace, monospace;
   }
 }
+
+.resize-handle {
+  width: 0.25rem;
+  transition: 250ms linear background-color;
+  background-color: #7f8082;
+  outline: none;
+
+  &:hover,
+  &[data-resize-handle-active] {
+    background-color: #5194eb;
+  }
+}

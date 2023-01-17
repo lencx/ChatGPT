@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Form, Radio, Switch, Input, Button, Space, message, Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { invoke, shell, path } from '@tauri-apps/api';
+import { invoke } from '@tauri-apps/api';
 import { platform } from '@tauri-apps/api/os';
 import { ask } from '@tauri-apps/api/dialog';
 import { relaunch } from '@tauri-apps/api/process';
 import { clone, omit, isEqual } from 'lodash';
 
 import useInit from '@/hooks/useInit';
-import { DISABLE_AUTO_COMPLETE, chatRoot } from '@/utils';
+import FilePath from '@/components/FilePath';
+import { DISABLE_AUTO_COMPLETE, CHAT_CONF_JSON } from '@/utils';
 
 const AutoUpdateLabel = () => {
   return (
@@ -68,13 +69,10 @@ const GlobalShortcutLabel = () => {
 
 export default function General() {
   const [form] = Form.useForm();
-  const [jsonPath, setJsonPath] = useState('');
   const [platformInfo, setPlatform] = useState<string>('');
   const [chatConf, setChatConf] = useState<any>(null);
 
   useInit(async () => {
-    setJsonPath(await path.join(await chatRoot(), 'chat.conf.json'));
-
     setPlatform(await platform());
     const chatData = await invoke('get_chat_conf');
     setChatConf(chatData);
@@ -117,11 +115,7 @@ export default function General() {
 
   return (
     <>
-      <div className="chat-table-tip">
-        <div className="chat-sync-path">
-          <div>PATH: <a onClick={() => shell.open(jsonPath)} title={jsonPath}>{jsonPath}</a></div>
-        </div>
-      </div>
+      <FilePath paths={CHAT_CONF_JSON} />
       <Form
         form={form}
         style={{ maxWidth: 500 }}

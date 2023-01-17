@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Table, Button } from 'antd';
-import { shell, path } from '@tauri-apps/api';
+import { path } from '@tauri-apps/api';
 
-import useColumns from '@/hooks/useColumns';
 import useData from '@/hooks/useData';
+import useColumns from '@/hooks/useColumns';
+import FilePath from '@/components/FilePath';
 import { useCacheModel } from '@/hooks/useChatModel';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
-import { fmtDate, chatRoot } from '@/utils';
 import { getPath } from '@/view/model/SyncCustom/config';
+import { fmtDate, chatRoot } from '@/utils';
 import { syncColumns } from './config';
 import useInit from '@/hooks/useInit';
 
@@ -66,8 +67,8 @@ export default function SyncRecord() {
       </div>
       <div className="chat-table-tip">
         <div className="chat-sync-path">
-          <div>PATH: <a onClick={() => shell.open(filePath)} target="_blank" title={filePath}>{filePath}</a></div>
-          <div>CACHE: <a onClick={() => shell.open(jsonPath)} target="_blank" title={jsonPath}>{jsonPath}</a></div>
+          <FilePath url={filePath} />
+          <FilePath label="CACHE" paths={`cache_model/${state?.id}.json`} />
         </div>
         {state?.last_updated && <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>Last updated on {fmtDate(state?.last_updated)}</span>}
       </div>

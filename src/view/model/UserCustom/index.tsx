@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { Table, Button, Modal, message } from 'antd';
-import { shell, path } from '@tauri-apps/api';
+import { path } from '@tauri-apps/api';
 
 import useInit from '@/hooks/useInit';
 import useData from '@/hooks/useData';
-import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
 import useColumns from '@/hooks/useColumns';
+import FilePath from '@/components/FilePath';
+import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { chatRoot, fmtDate } from '@/utils';
 import { modelColumns } from './config';
@@ -108,11 +109,8 @@ export default function LanguageModel() {
           )}
         </div>
       </div>
-      {/* <div className="chat-model-path">PATH: <span onClick={handleOpenFile}>{modelPath}</span></div> */}
       <div className="chat-table-tip">
-        <div className="chat-sync-path">
-          <div>CACHE: <a onClick={() => shell.open(jsonPath)} title={jsonPath}>{jsonPath}</a></div>
-        </div>
+        <FilePath label="CACHE" paths="cache_model/user_custom.json" />
         {lastUpdated && <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>Last updated on {fmtDate(lastUpdated)}</span>}
       </div>
       <Table

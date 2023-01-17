@@ -3,9 +3,9 @@ import { Table, Modal, Button, message } from 'antd';
 import { invoke, path, fs } from '@tauri-apps/api';
 
 import useData from '@/hooks/useData';
-import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
 import useColumns from '@/hooks/useColumns';
 import { TABLE_PAGINATION } from '@/hooks/useTable';
+import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
 import { CHAT_MODEL_JSON, chatRoot, readJSON, genCmd } from '@/utils';
 import { syncColumns, getPath } from './config';
 import SyncForm from './Form';

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Space, Popconfirm } from 'antd';
 import { path, shell } from '@tauri-apps/api';
 
@@ -40,7 +41,7 @@ export const notesColumns = () => [
       return (
         <Space>
           <a onClick={() => actions.setRecord(row, 'preview')}>Preview</a>
-          <a onClick={() => actions.setRecord(row, 'edit')}>Edit</a>
+          <Link to={`/md/${row.id}`} state={row}>Edit</Link>
           <Popconfirm
             title="Are you sure to delete this file?"
             onConfirm={() => actions.setRecord(row, 'delete')}
