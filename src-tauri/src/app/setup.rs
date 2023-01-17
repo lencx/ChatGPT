@@ -50,40 +50,20 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
     } else {
         let app = app.handle();
         tauri::async_runtime::spawn(async move {
-            #[cfg(target_os = "macos")]
-            WindowBuilder::new(&app, "core", WindowUrl::App(url.into()))
+            let mut main_win = WindowBuilder::new(&app, "core", WindowUrl::App(url.into()))
                 .title("ChatGPT")
                 .resizable(true)
                 .fullscreen(false)
-                .inner_size(800.0, 600.0)
-                .hidden_title(true)
+                .inner_size(800.0, 600.0);
+
+            if cfg!(target_os = "macos") {
+                main_win = main_win.hidden_title(true);
+            }
+
+            main_win
                 .theme(theme)
                 .always_on_top(chat_conf.stay_on_top)
                 .title_bar_style(ChatConfJson::titlebar())
-                .initialization_script(&utils::user_script())
-                .initialization_script(include_str!("../vendors/floating-ui-core.js"))
-                .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
-                .initialization_script(include_str!("../vendors/html2canvas.js"))
-                .initialization_script(include_str!("../vendors/jspdf.js"))
-                .initialization_script(include_str!("../vendors/turndown.js"))
-                .initialization_script(include_str!("../vendors/turndown-plugin-gfm.js"))
-                .initialization_script(include_str!("../scripts/core.js"))
-                .initialization_script(include_str!("../scripts/popup.core.js"))
-                .initialization_script(include_str!("../scripts/export.js"))
-                .initialization_script(include_str!("../scripts/markdown.export.js"))
-                .initialization_script(include_str!("../scripts/cmd.js"))
-                .user_agent(&chat_conf.ua_window)
-                .build()
-                .unwrap();
-
-            #[cfg(not(target_os = "macos"))]
-            WindowBuilder::new(&app, "core", WindowUrl::App(url.into()))
-                .title("ChatGPT")
-                .resizable(true)
-                .fullscreen(false)
-                .inner_size(800.0, 600.0)
-                .theme(theme)
-                .always_on_top(chat_conf.stay_on_top)
                 .initialization_script(&utils::user_script())
                 .initialization_script(include_str!("../vendors/floating-ui-core.js"))
                 .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
