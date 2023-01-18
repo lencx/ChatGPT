@@ -46,6 +46,7 @@
     "react-resizable-panels": "^0.0.33",
     "react-router-dom": "^6.4.5",
     "react-syntax-highlighter": "^15.5.0",
+    "remark-gfm": "^3.0.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

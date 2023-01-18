@@ -1,5 +1,7 @@
 import { FC } from 'react';
+import clsx from 'clsx';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import agate from 'react-syntax-highlighter/dist/esm/styles/hljs/agate';
 
@@ -7,36 +9,40 @@ import './index.scss';
 
 interface MarkdownProps {
   children: string;
+  className?: string;
 }
 
-const Markdown: FC<MarkdownProps> = ({ children }) => {
+const Markdown: FC<MarkdownProps> = ({ children, className }) => {
 
   return (
-    <div className='markdown-body'>
-      <ReactMarkdown
-        children={children}
-        linkTarget="_blank"
-        components={{
-          code({node, inline, className, children, ...props}) {
-            const match = /language-(\w+)/.exec(className || '')
-            return !inline && match ? (
-              <SyntaxHighlighter
-                children={String(children).replace(/\n$/, '')}
-                style={agate as any}
-                language={match[1]}
-                showLineNumbers
-                lineNumberStyle={{ color: '#999' }}
-                PreTag="div"
-                {...props}
-              />
-            ) : (
-              <code className={className} {...props}>
-                {children}
-              </code>
-            )
-          }
-        }}
-      />
+    <div className={clsx(className, 'markdown-body')}>
+      <div>
+        <ReactMarkdown
+          children={children}
+          linkTarget="_blank"
+          remarkPlugins={[remarkGfm]}
+          components={{
+            code({node, inline, className, children, ...props}) {
+              const match = /language-(\w+)/.exec(className || '')
+              return !inline && match ? (
+                <SyntaxHighlighter
+                  children={String(children).replace(/\n$/, '')}
+                  style={agate as any}
+                  language={match[1]}
+                  showLineNumbers
+                  lineNumberStyle={{ color: '#999' }}
+                  PreTag="div"
+                  {...props}
+                />
+              ) : (
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              )
+            }
+          }}
+        />
+      </div>
     </div>
   )
 }

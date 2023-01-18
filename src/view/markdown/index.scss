@@ -1,0 +1,15 @@
+
+.md-task {
+  margin-bottom: 5px;
+
+  .ant-breadcrumb-link {
+    padding: 3px 5px;
+    transition: all 300ms ease;
+    border-radius: 4px;
+    &:hover {
+      color: rgba(0, 0, 0, 0.88);
+      background-color: rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+    }
+  }
+}
