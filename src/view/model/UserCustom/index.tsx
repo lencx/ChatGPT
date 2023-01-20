@@ -52,14 +52,6 @@ export default function LanguageModel() {
     }
   }, [opInfo.opTime])
 
-
-  useEffect(() => {
-    if (opInfo.opType === 'enable') {
-      const data = opReplace(opInfo?.opRecord?.[opSafeKey], opInfo?.opRecord);
-      modelCacheSet(data);
-    }
-  }, [opInfo.opTime]);
-
   const handleEnable = (isEnable: boolean) => {
     const data = opReplaceItems(selectedRowIDs, { enable: isEnable })
     modelCacheSet(data);

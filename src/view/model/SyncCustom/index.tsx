@@ -96,13 +96,16 @@ export default function SyncCustom() {
   const handleOk = () => {
     formRef.current?.form?.validateFields()
       .then((vals: Record<string, any>) => {
-        let data = [];
-        switch (opInfo.opType) {
-          case 'new': data = opAdd(vals); break;
-          case 'edit': data = opReplace(opInfo?.opRecord?.[opSafeKey], vals); break;
-          default: break;
+        if (opInfo.opType === 'new') {
+          const data = opAdd(vals);
+          modelSet(data);
+          message.success('Data added successfully');
         }
-        modelSet(data);
+        if (opInfo.opType === 'edit') {
+          const data = opReplace(opInfo?.opRecord?.[opSafeKey], vals);
+          modelSet(data);
+          message.success('Data updated successfully');
+        }
         hide();
       })
   };

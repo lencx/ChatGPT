@@ -5,18 +5,19 @@ import type { FormProps } from 'antd';
 import Tags from '@comps/Tags';
 import { DISABLE_AUTO_COMPLETE } from '@/utils';
 
-interface UserCustomFormProps {
+interface AwesomeFormProps {
   record?: Record<string|symbol, any> | null;
 }
 
 const initFormValue = {
-  act: '',
+  title: '',
+  url: '',
   enable: true,
   tags: [],
-  prompt: '',
+  category: '',
 };
 
-const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> = ({ record }, ref) => {
+const AwesomeForm: ForwardRefRenderFunction<FormProps, AwesomeFormProps> = ({ record }, ref) => {
   const [form] = Form.useForm();
   useImperativeHandle(ref, () => ({ form }));
 
@@ -33,18 +34,21 @@ const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> =
       initialValues={initFormValue}
     >
       <Form.Item
-        label="/{cmd}"
-        name="cmd"
-        rules={[{ required: true, message: 'Please enter the {cmd}!' }]}
+        label="Title"
+        name="title"
+        rules={[{ required: true, message: 'Please enter a title!' }]}
       >
-        <Input placeholder="Please enter the {cmd}" {...DISABLE_AUTO_COMPLETE} />
+        <Input placeholder="Please enter a title" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
       <Form.Item
-        label="Act"
-        name="act"
-        rules={[{ required: true, message: 'Please enter the Act!' }]}
+        label="URL"
+        name="url"
+        rules={[{ required: true, message: 'Please enter the URL' }]}
       >
-        <Input placeholder="Please enter the Act" {...DISABLE_AUTO_COMPLETE} />
+        <Input placeholder="Please enter the URL" {...DISABLE_AUTO_COMPLETE} />
+      </Form.Item>
+      <Form.Item label="Category" name="category">
+        <Input placeholder="Please enter a category" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
       <Form.Item label="Tags" name="tags">
         <Tags value={record?.tags} />
@@ -52,15 +56,8 @@ const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> =
       <Form.Item label="Enable" name="enable" valuePropName="checked">
         <Switch />
       </Form.Item>
-      <Form.Item
-        label="Prompt"
-        name="prompt"
-        rules={[{ required: true, message: 'Please enter a prompt!' }]}
-      >
-        <Input.TextArea rows={4} placeholder="Please enter a prompt" {...DISABLE_AUTO_COMPLETE} />
-      </Form.Item>
     </Form>
   )
 }
 
-export default forwardRef(UserCustomForm);
+export default forwardRef(AwesomeForm);

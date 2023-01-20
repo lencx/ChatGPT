@@ -1,6 +1,8 @@
 
 .md-task {
   margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
 
   .ant-breadcrumb-link {
     padding: 3px 5px;

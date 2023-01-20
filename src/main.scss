@@ -57,6 +57,7 @@ html, body {
   margin-bottom: 5px;
 }
 
+.chat-tags,
 .chat-prompts-tags {
   .ant-tag {
     margin: 2px;
@@ -95,4 +96,8 @@ html, body {
     cursor: pointer;
     text-decoration: underline;
   }
+}
+
+.chatico {
+  cursor: pointer;
 }

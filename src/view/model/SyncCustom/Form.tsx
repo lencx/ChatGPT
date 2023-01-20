@@ -84,14 +84,14 @@ const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record, 
         <Form.Item
           label="Name"
           name="name"
-          rules={[{ required: true, message: 'Please input name!' }]}
+          rules={[{ required: true, message: 'Please enter a name!' }]}
         >
-          <Input placeholder="Please input name" {...DISABLE_AUTO_COMPLETE} />
+          <Input placeholder="Please enter a name" {...DISABLE_AUTO_COMPLETE} />
         </Form.Item>
         <Form.Item
           label="PATH"
           name="path"
-          rules={[{ required: true, message: 'Please input path!' }]}
+          rules={[{ required: true, message: 'Please enter the path!' }]}
           >
           <Input
             placeholder="YOUR_PATH"

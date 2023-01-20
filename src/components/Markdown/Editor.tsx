@@ -8,9 +8,10 @@ import './index.scss';
 interface MarkdownEditorProps {
   value?: string;
   onChange?: (v: string) => void;
+  mode?: string;
 }
 
-const MarkdownEditor: FC<MarkdownEditorProps> = ({ value = '', onChange }) => {
+const MarkdownEditor: FC<MarkdownEditorProps> = ({ value = '', onChange, mode = 'split' }) => {
   const [content, setContent] = useState(value);
 
   useEffect(() => {
@@ -23,20 +24,26 @@ const MarkdownEditor: FC<MarkdownEditorProps> = ({ value = '', onChange }) => {
     onChange && onChange(e);
   }
 
+  const isSplit = mode === 'split';
+
   return (
     <div className="md-main">
       <PanelGroup direction="horizontal">
-        <Panel>
-          <Editor
-            language="markdown"
-            value={content}
-            onChange={handleEdit}
-          />
-        </Panel>
-        <PanelResizeHandle className="resize-handle" />
-        <Panel collapsible={true}>
-          <Markdown className="edit-preview">{content}</Markdown>
-        </Panel>
+        {['md', 'split'].includes(mode) && (
+          <Panel>
+            <Editor
+              language="markdown"
+              value={content}
+              onChange={handleEdit}
+            />
+          </Panel>
+        )}
+        {isSplit && <PanelResizeHandle className="resize-handle" />}
+        {['doc', 'split'].includes(mode) && (
+          <Panel>
+            <Markdown className="edit-preview">{content}</Markdown>
+          </Panel>
+        )}
         </PanelGroup>
     </div>
   )

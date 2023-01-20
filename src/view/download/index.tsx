@@ -105,7 +105,7 @@ export default function Download() {
                 okText="Yes"
                 cancelText="No"
               >
-                <Button>Batch delete</Button>
+                <Button>Delete</Button>
               </Popconfirm>
               <span className="num">Selected {selectedItems.length} items</span>
             </>

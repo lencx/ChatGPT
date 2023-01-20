@@ -7,10 +7,12 @@ import {
   UserOutlined,
   DownloadOutlined,
   FormOutlined,
+  GlobalOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 
-import General from '@view/General';
+import General from '@/view/General';
+import Awesome from '@/view/awesome';
 import UserCustom from '@/view/model/UserCustom';
 import SyncPrompts from '@/view/model/SyncPrompts';
 import SyncCustom from '@/view/model/SyncCustom';
@@ -35,10 +37,10 @@ type ChatRouteObject = {
 export const routes: Array<ChatRouteObject> = [
   {
     path: '/',
-    element: <General />,
+    element: <Awesome />,
     meta: {
-      label: 'General',
-      icon: <SettingOutlined />,
+      label: 'Awesome',
+      icon: <GlobalOutlined />,
     },
   },
   {
@@ -99,6 +101,14 @@ export const routes: Array<ChatRouteObject> = [
     meta: {
       label: 'Download',
       icon: <DownloadOutlined />,
+    },
+  },
+  {
+    path: '/general',
+    element: <General />,
+    meta: {
+      label: 'General',
+      icon: <SettingOutlined />,
     },
   },
 ];

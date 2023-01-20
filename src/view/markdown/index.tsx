@@ -6,12 +6,20 @@ import MarkdownEditor from '@/components/Markdown/Editor';
 import { fs, shell } from '@tauri-apps/api';
 
 import useInit from '@/hooks/useInit';
+import SplitIcon from '@/icons/SplitIcon';
 import { getPath } from '@/view/notes/config';
 import './index.scss';
+
+const modeMap: any = {
+  0: 'split',
+  1: 'md',
+  2: 'doc',
+}
 
 export default function Markdown() {
   const [filePath, setFilePath] = useState('');
   const [source, setSource] = useState('');
+  const [previewMode, setPreviewMode] = useState(0);
   const location = useLocation();
   const state = location?.state;
 
@@ -25,6 +33,12 @@ export default function Markdown() {
     await fs.writeTextFile(filePath, v);
   };
 
+  const handlePreview = () => {
+    let mode = previewMode + 1;
+    if (mode > 2) mode = 0;
+    setPreviewMode(mode);
+  };
+
   return (
     <>
       <div className="md-task">
@@ -36,8 +50,11 @@ export default function Markdown() {
             {filePath}
           </Breadcrumb.Item>
         </Breadcrumb>
+        <div>
+          <SplitIcon onClick={handlePreview} style={{ fontSize: 18, color: 'rgba(0,0,0,0.5)' }} />
+        </div>
       </div>
-      <MarkdownEditor value={source} onChange={handleChange} />
+      <MarkdownEditor value={source} onChange={handleChange} mode={modeMap[previewMode]} />
     </>
   );
 }

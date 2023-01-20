@@ -66,7 +66,7 @@ export default function ChatLayout() {
             theme={ appInfo.appTheme === "dark" ? "dark" : "light" }
             inlineIndent={12}
             items={menuItems}
-            defaultOpenKeys={['/model']}
+            // defaultOpenKeys={['/model']}
             onClick={(i) => go(i.key)}
           />
         </Sider>
