@@ -31,7 +31,12 @@ pub fn tray_window(handle: &tauri::AppHandle) {
   });
 }
 
-pub fn dalle2_window(handle: &tauri::AppHandle, query: Option<String>, title: Option<String>, is_new: Option<bool>) {
+pub fn dalle2_window(
+  handle: &tauri::AppHandle,
+  query: Option<String>,
+  title: Option<String>,
+  is_new: Option<bool>,
+) {
   info!("dalle2_query: {:?}", query);
   let theme = conf::ChatConfJson::theme();
   let app = handle.clone();
@@ -57,18 +62,22 @@ pub fn dalle2_window(handle: &tauri::AppHandle, query: Option<String>, title: Op
 
   if app.get_window("dalle2").is_none() {
     tauri::async_runtime::spawn(async move {
-      WindowBuilder::new(&app, label, WindowUrl::App("https://labs.openai.com".into()))
-        .title(title.unwrap_or_else(|| "DALL·E 2".to_string()))
-        .resizable(true)
-        .fullscreen(false)
-        .inner_size(800.0, 600.0)
-        .always_on_top(false)
-        .theme(theme)
-        .initialization_script(include_str!("../scripts/core.js"))
-        .initialization_script(&query)
-        .initialization_script(include_str!("../scripts/dalle2.js"))
-        .build()
-        .unwrap();
+      WindowBuilder::new(
+        &app,
+        label,
+        WindowUrl::App("https://labs.openai.com".into()),
+      )
+      .title(title.unwrap_or_else(|| "DALL·E 2".to_string()))
+      .resizable(true)
+      .fullscreen(false)
+      .inner_size(800.0, 600.0)
+      .always_on_top(false)
+      .theme(theme)
+      .initialization_script(include_str!("../scripts/core.js"))
+      .initialization_script(&query)
+      .initialization_script(include_str!("../scripts/dalle2.js"))
+      .build()
+      .unwrap();
     });
   } else {
     let dalle2_win = app.get_window("dalle2").unwrap();

@@ -267,7 +267,9 @@ pub fn download_list(pathname: &str, dir: &str, filename: Option<String>, id: Op
 
 #[command]
 pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>> {
-  let res = utils::get_data(GITHUB_PROMPTS_CSV_URL, Some(&app)).await.unwrap();
+  let res = utils::get_data(GITHUB_PROMPTS_CSV_URL, Some(&app))
+    .await
+    .unwrap();
 
   if let Some(v) = res {
     let data = parse_prompt(v)
@@ -289,7 +291,9 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
 
     let model = utils::chat_root().join("chat.model.json");
     let model_cmd = utils::chat_root().join("chat.model.cmd.json");
-    let chatgpt_prompts = utils::chat_root().join("cache_model").join("chatgpt_prompts.json");
+    let chatgpt_prompts = utils::chat_root()
+      .join("cache_model")
+      .join("chatgpt_prompts.json");
 
     if !utils::exists(&model) {
       fs::write(
@@ -304,7 +308,11 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
     }
 
     // chatgpt_prompts.json
-    fs::write(chatgpt_prompts, serde_json::to_string_pretty(&data).unwrap()).unwrap();
+    fs::write(
+      chatgpt_prompts,
+      serde_json::to_string_pretty(&data).unwrap(),
+    )
+    .unwrap();
     let cmd_data = cmd_list();
 
     // chat.model.cmd.json

@@ -64,7 +64,11 @@ pub fn open_file(path: PathBuf) {
   Command::new("open").arg("-R").arg(path).spawn().unwrap();
 
   #[cfg(target_os = "windows")]
-  Command::new("explorer").arg("/select,").arg(path).spawn().unwrap();
+  Command::new("explorer")
+    .arg("/select,")
+    .arg(path)
+    .spawn()
+    .unwrap();
 
   // https://askubuntu.com/a/31071
   #[cfg(target_os = "linux")]
@@ -78,12 +82,17 @@ pub fn clear_conf(app: &tauri::AppHandle) {
     "Path: {}\nAre you sure to clear all ChatGPT configurations? Please backup in advance if necessary!",
     root.to_string_lossy()
   );
-  tauri::api::dialog::ask(app.get_window("core").as_ref(), "Clear Config", msg, move |is_ok| {
-    if is_ok {
-      fs::remove_dir_all(root).unwrap();
-      tauri::api::process::restart(&app2.env());
-    }
-  });
+  tauri::api::dialog::ask(
+    app.get_window("core").as_ref(),
+    "Clear Config",
+    msg,
+    move |is_ok| {
+      if is_ok {
+        fs::remove_dir_all(root).unwrap();
+        tauri::api::process::restart(&app2.env());
+      }
+    },
+  );
 }
 
 pub fn merge(v: &Value, fields: &HashMap<String, Value>) -> Value {
@@ -104,7 +113,10 @@ pub fn gen_cmd(name: String) -> String {
   re.replace_all(&name, "_").to_lowercase()
 }
 
-pub async fn get_data(url: &str, app: Option<&tauri::AppHandle>) -> Result<Option<String>, reqwest::Error> {
+pub async fn get_data(
+  url: &str,
+  app: Option<&tauri::AppHandle>,
+) -> Result<Option<String>, reqwest::Error> {
   let res = reqwest::get(url).await?;
   let is_ok = res.status() == 200;
   let body = res.text().await?;
@@ -222,7 +234,11 @@ pub async fn silent_install(app: AppHandle<Wry>, update: UpdateResponse<Wry>) ->
 }
 
 pub fn is_hidden(entry: &walkdir::DirEntry) -> bool {
-  entry.file_name().to_str().map(|s| s.starts_with('.')).unwrap_or(false)
+  entry
+    .file_name()
+    .to_str()
+    .map(|s| s.starts_with('.'))
+    .unwrap_or(false)
 }
 
 pub fn vec_to_hashmap(

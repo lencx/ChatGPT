@@ -1,4 +1,7 @@
-#![cfg_attr(all(not(debug_assertions), target_os = "windows"), windows_subsystem = "windows")]
+#![cfg_attr(
+  all(not(debug_assertions), target_os = "windows"),
+  windows_subsystem = "windows"
+)]
 
 mod app;
 mod conf;
@@ -48,7 +51,10 @@ async fn main() {
         .build(),
     )
     .plugin(tauri_plugin_positioner::init())
-    .plugin(tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, None))
+    .plugin(tauri_plugin_autostart::init(
+      MacosLauncher::LaunchAgent,
+      None,
+    ))
     .invoke_handler(tauri::generate_handler![
       cmd::drag_window,
       cmd::fullscreen,
