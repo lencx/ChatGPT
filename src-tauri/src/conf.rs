@@ -18,32 +18,32 @@ pub const BUY_COFFEE: &str = "https://www.buymeacoffee.com/lencx";
 pub const GITHUB_PROMPTS_CSV_URL: &str =
   "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv";
 pub const DEFAULT_CHAT_CONF: &str = r#"{
-    "stay_on_top": false,
-    "auto_update": "Prompt",
-    "theme": "Light",
-    "tray": true,
-    "titlebar": true,
-    "popup_search": false,
-    "global_shortcut": "",
-    "hide_dock_icon": false,
-    "default_origin": "https://chat.openai.com",
-    "origin": "https://chat.openai.com",
-    "ua_window": "",
-    "ua_tray": ""
+  "stay_on_top": false,
+  "auto_update": "Prompt",
+  "theme": "Light",
+  "tray": true,
+  "titlebar": true,
+  "popup_search": false,
+  "global_shortcut": "",
+  "hide_dock_icon": false,
+  "default_origin": "https://chat.openai.com",
+  "origin": "https://chat.openai.com",
+  "ua_window": "",
+  "ua_tray": ""
 }"#;
 pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
-    "stay_on_top": false,
-    "auto_update": "Prompt",
-    "theme": "Light",
-    "tray": true,
-    "titlebar": false,
-    "popup_search": false,
-    "global_shortcut": "",
-    "hide_dock_icon": false,
-    "default_origin": "https://chat.openai.com",
-    "origin": "https://chat.openai.com",
-    "ua_window": "",
-    "ua_tray": ""
+  "stay_on_top": false,
+  "auto_update": "Prompt",
+  "theme": "Light",
+  "tray": true,
+  "titlebar": false,
+  "popup_search": false,
+  "global_shortcut": "",
+  "hide_dock_icon": false,
+  "default_origin": "https://chat.openai.com",
+  "origin": "https://chat.openai.com",
+  "ua_window": "",
+  "ua_tray": ""
 }"#;
 
 #[derive(serde::Serialize, serde::Deserialize, Debug, Clone)]

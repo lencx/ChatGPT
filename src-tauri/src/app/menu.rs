@@ -348,18 +348,18 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     "scroll_top" => win
       .eval(
         r#"window.scroll({
-                top: 0,
-                left: 0,
-                behavior: "smooth"
-                })"#,
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+          })"#,
       )
       .unwrap(),
     "scroll_bottom" => win
       .eval(
         r#"window.scroll({
-                top: document.body.scrollHeight,
-                left: 0,
-                behavior: "smooth"})"#,
+          top: document.body.scrollHeight,
+          left: 0,
+          behavior: "smooth"})"#,
       )
       .unwrap(),
     // Help

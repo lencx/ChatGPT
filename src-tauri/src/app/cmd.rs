@@ -299,8 +299,8 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
       fs::write(
         &model,
         serde_json::json!({
-            "name": "ChatGPT Model",
-            "link": "https://github.com/lencx/ChatGPT"
+          "name": "ChatGPT Model",
+          "link": "https://github.com/lencx/ChatGPT"
         })
         .to_string(),
       )
@@ -319,9 +319,9 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
     fs::write(
       model_cmd,
       serde_json::to_string_pretty(&serde_json::json!({
-          "name": "ChatGPT CMD",
-          "last_updated": time,
-          "data": cmd_data,
+        "name": "ChatGPT CMD",
+        "last_updated": time,
+        "data": cmd_data,
       }))
       .unwrap(),
     )
