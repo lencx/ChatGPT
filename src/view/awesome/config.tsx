@@ -12,7 +12,7 @@ export const awesomeColumns = () => [
     title: 'URL',
     dataIndex: 'url',
     key: 'url',
-    width: 120,
+    width: 200,
   },
   // {
   //   title: 'Icon',
@@ -33,7 +33,7 @@ export const awesomeColumns = () => [
     title: 'Category',
     dataIndex: 'category',
     key: 'category',
-    width: 200,
+    width: 120,
     render: (v: string) => <Tag color="geekblue">{v}</Tag>
   },
   {
