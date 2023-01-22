@@ -44,7 +44,14 @@ pub fn script_path() -> PathBuf {
   let script_file = chat_root().join("main.js");
   if !exists(&script_file) {
     create_file(&script_file).unwrap();
-    fs::write(&script_file, format!("// *** ChatGPT User Script ***\n// @github: https://github.com/lencx/ChatGPT \n// @path: {}\n\nconsole.log('🤩 Hello ChatGPT!!!');", &script_file.to_string_lossy())).unwrap();
+    fs::write(
+      &script_file,
+      format!(
+        "// *** ChatGPT User Script ***\n// @github: https://github.com/lencx/ChatGPT \n// @path: {}\n\nconsole.log('🤩 Hello ChatGPT!!!');",
+        &script_file.to_string_lossy()
+      ),
+    )
+    .unwrap();
   }
 
   script_file

@@ -42,10 +42,7 @@ pub fn dalle2_window(
   let app = handle.clone();
 
   let query = if query.is_some() {
-    format!(
-      "window.addEventListener('DOMContentLoaded', function() {{\nwindow.__CHATGPT_QUERY__='{}';\n}})",
-      query.unwrap()
-    )
+    format!("window.addEventListener('DOMContentLoaded', function() {{\nwindow.__CHATGPT_QUERY__='{}';\n}})", query.unwrap())
   } else {
     "".to_string()
   };
