@@ -35,6 +35,7 @@ export default function Awesome() {
       opInfo.resetRecord();
     }
   }, [opInfo.opType,
+
     formRef]);
 
   const hide = () => {
