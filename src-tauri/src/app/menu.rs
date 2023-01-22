@@ -137,16 +137,12 @@ pub fn init() -> Menu {
       CustomMenuItem::new("go_conf".to_string(), "Go to Config")
         .accelerator("CmdOrCtrl+Shift+G")
         .into(),
-      CustomMenuItem::new("clear_conf".to_string(), "Clear Config")
-        .accelerator("CmdOrCtrl+Shift+D")
-        .into(),
       CustomMenuItem::new("restart".to_string(), "Restart ChatGPT")
         .accelerator("CmdOrCtrl+Shift+R")
         .into(),
+      CustomMenuItem::new("clear_conf".to_string(), "Clear Config").into(),
       MenuItem::Separator.into(),
-      CustomMenuItem::new("awesome".to_string(), "Awesome ChatGPT")
-        .accelerator("CmdOrCtrl+Shift+A")
-        .into(),
+      CustomMenuItem::new("awesome".to_string(), "Awesome ChatGPT").into(),
       CustomMenuItem::new("buy_coffee".to_string(), "Buy lencx a coffee").into(),
     ]),
   );

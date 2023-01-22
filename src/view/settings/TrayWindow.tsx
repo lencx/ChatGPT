@@ -1,6 +1,7 @@
 import { Form, Switch, Input } from 'antd';
 
 import { DISABLE_AUTO_COMPLETE } from '@/utils';
+import SwitchOrigin from '@/components/SwitchOrigin';
 
 export default function General() {
   return (
@@ -8,6 +9,7 @@ export default function General() {
       <Form.Item label="Enable SystemTray" name="tray" valuePropName="checked">
         <Switch />
       </Form.Item>
+      <SwitchOrigin name="tray_origin" />
       <Form.Item label="User Agent (SystemTray)" name="ua_tray">
         <Input.TextArea
           autoSize={{ minRows: 4, maxRows: 4 }}

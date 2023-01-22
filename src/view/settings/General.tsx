@@ -68,6 +68,11 @@ export default function General() {
           <Switch />
         </Form.Item>
       )}
+      {platformInfo === 'darwin' && (
+        <Form.Item label="Hide Dock Icon" name="hide_dock_icon" valuePropName="checked">
+          <Switch />
+        </Form.Item>
+      )}
       <Form.Item label="Theme" name="theme">
         <Radio.Group>
           <Radio value="Light">Light</Radio>

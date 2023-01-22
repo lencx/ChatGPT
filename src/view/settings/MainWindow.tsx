@@ -1,21 +1,8 @@
-import { useState } from 'react';
 import { Form, Switch, Input, Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { invoke } from '@tauri-apps/api';
 
-import useInit from '@/hooks/useInit';
+import SwitchOrigin from '@/components/SwitchOrigin';
 import { DISABLE_AUTO_COMPLETE } from '@/utils';
-
-const OriginLabel = ({ url }: { url: string }) => {
-  return (
-    <span>
-      Switch Origin{' '}
-      <Tooltip title={`Default: ${url}`}>
-        <QuestionCircleOutlined style={{ color: '#1677ff' }} />
-      </Tooltip>
-    </span>
-  );
-};
 
 const PopupSearchLabel = () => {
   return (
@@ -44,21 +31,12 @@ const PopupSearchLabel = () => {
 };
 
 export default function General() {
-  const [chatConf, setChatConf] = useState<any>(null);
-
-  useInit(async () => {
-    const chatData = await invoke('get_chat_conf');
-    setChatConf(chatData);
-  });
-
   return (
     <>
       <Form.Item label={<PopupSearchLabel />} name="popup_search" valuePropName="checked">
         <Switch />
       </Form.Item>
-      <Form.Item label={<OriginLabel url={chatConf?.default_origin} />} name="origin">
-        <Input placeholder="https://chat.openai.com" {...DISABLE_AUTO_COMPLETE} />
-      </Form.Item>
+      <SwitchOrigin name="origin" />
       <Form.Item label="User Agent (Main)" name="ua_window">
         <Input.TextArea
           autoSize={{ minRows: 4, maxRows: 4 }}

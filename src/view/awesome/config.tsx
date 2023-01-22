@@ -1,4 +1,5 @@
 import { Tag, Space, Popconfirm, Switch } from 'antd';
+import { open } from '@tauri-apps/api/shell';
 
 export const awesomeColumns = () => [
   {
@@ -13,6 +14,7 @@ export const awesomeColumns = () => [
     dataIndex: 'url',
     key: 'url',
     width: 200,
+    render: (v: string) => <a onClick={() => open(v)}>{v}</a>,
   },
   // {
   //   title: 'Icon',

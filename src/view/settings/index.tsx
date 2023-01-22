@@ -61,8 +61,8 @@ export default function Settings() {
         form={form}
         style={{ maxWidth: 500 }}
         onFinish={onFinish}
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 15, offset: 1 }}
+        labelCol={{ span: 10 }}
+        wrapperCol={{ span: 13, offset: 1 }}
       >
         <Tabs
           items={[

@@ -84,9 +84,10 @@ pub fn open_file(path: PathBuf) {
 
 pub fn clear_conf(app: &tauri::AppHandle) {
   let root = chat_root();
-  let app2 = app.clone();
   let msg = format!(
-    "Path: {}\nAre you sure to clear all ChatGPT configurations? Please backup in advance if necessary!",
+    "Path: {}\n
+    Are you sure you want to clear all ChatGPT configurations? Performing this operation data can not be restored, please back up in advance.\n
+    Note: The application will exit automatically after the configuration cleanup!",
     root.to_string_lossy()
   );
   tauri::api::dialog::ask(
@@ -96,7 +97,7 @@ pub fn clear_conf(app: &tauri::AppHandle) {
     move |is_ok| {
       if is_ok {
         fs::remove_dir_all(root).unwrap();
-        tauri::api::process::restart(&app2.env());
+        std::process::exit(0);
       }
     },
   );
