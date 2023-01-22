@@ -15,8 +15,9 @@
     "fmt:rs": "cargo fmt",
     "tr": "tr",
     "tauri": "tauri",
-    "prettier": "prettier -c --write '**/*'",
-    "pretty-quick": "pretty-quick"
+    "prettier": "prettier -c --write '**/*.{js,md,ts,tsx,yml}'",
+    "pretty-quick": "pretty-quick --staged",
+    "prepare": "husky install"
   },
   "license": "MIT",
   "author": "lencx <cxin1314@gmail.com>",
@@ -34,11 +35,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/lencx/ChatGPT"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   },
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
