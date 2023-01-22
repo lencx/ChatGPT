@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 
-import General from '@/view/General';
+import Settings from '@/view/settings';
 import Awesome from '@/view/awesome';
 import UserCustom from '@/view/model/UserCustom';
 import SyncPrompts from '@/view/model/SyncPrompts';
@@ -104,10 +104,10 @@ export const routes: Array<ChatRouteObject> = [
     },
   },
   {
-    path: '/general',
-    element: <General />,
+    path: '/settings',
+    element: <Settings />,
     meta: {
-      label: 'General',
+      label: 'Settings',
       icon: <SettingOutlined />,
     },
   },
