@@ -21,7 +21,7 @@ export default function Settings() {
 
   useEffect(() => {
     form.setFieldsValue(clone(chatConf));
-  }, [chatConf])
+  }, [chatConf]);
 
   const onCancel = () => {
     form.setFieldsValue(chatConf);
@@ -31,7 +31,7 @@ export default function Settings() {
     const chatData = await invoke('reset_chat_conf');
     setChatConf(chatData);
     const isOk = await dialog.ask(`Configuration reset successfully, whether to restart?`, {
-      title: 'ChatGPT Preferences'
+      title: 'ChatGPT Preferences',
     });
     if (isOk) {
       process.relaunch();
@@ -44,7 +44,7 @@ export default function Settings() {
     if (!isEqual(omit(chatConf, ['default_origin']), values)) {
       await invoke('form_confirm', { data: values, label: 'main' });
       const isOk = await dialog.ask(`Configuration saved successfully, whether to restart?`, {
-        title: 'ChatGPT Preferences'
+        title: 'ChatGPT Preferences',
       });
       if (isOk) {
         process.relaunch();
@@ -75,11 +75,15 @@ export default function Settings() {
         <Form.Item>
           <Space size={20}>
             <Button onClick={onCancel}>Cancel</Button>
-            <Button type="primary" htmlType="submit">Submit</Button>
-            <Button type="dashed" onClick={onReset}>Reset to defaults</Button>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+            <Button type="dashed" onClick={onReset}>
+              Reset to defaults
+            </Button>
           </Space>
         </Form.Item>
       </Form>
     </div>
-  )
+  );
 }

@@ -1,4 +1,10 @@
-import { useEffect, useState, ForwardRefRenderFunction, useImperativeHandle, forwardRef } from 'react';
+import {
+  useEffect,
+  useState,
+  ForwardRefRenderFunction,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import { Form, Input, Select, Tooltip } from 'antd';
 import { v4 } from 'uuid';
 import type { FormProps } from 'antd';
@@ -7,7 +13,7 @@ import { DISABLE_AUTO_COMPLETE, chatRoot } from '@/utils';
 import useInit from '@/hooks/useInit';
 
 interface SyncFormProps {
-  record?: Record<string|symbol, any> | null;
+  record?: Record<string | symbol, any> | null;
   type: string;
 }
 
@@ -54,10 +60,18 @@ const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record, 
 
   const jsonTip = (
     <Tooltip
-      title={<pre>{JSON.stringify([
-        { cmd: '', act: '', prompt: '' },
-        { cmd: '', act: '', prompt: '' },
-      ], null, 2)}</pre>}
+      title={
+        <pre>
+          {JSON.stringify(
+            [
+              { cmd: '', act: '', prompt: '' },
+              { cmd: '', act: '', prompt: '' },
+            ],
+            null,
+            2,
+          )}
+        </pre>
+      }
     >
       <a>JSON</a>
     </Tooltip>
@@ -65,10 +79,12 @@ const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record, 
 
   const csvTip = (
     <Tooltip
-      title={<pre>{`"cmd","act","prompt"
+      title={
+        <pre>{`"cmd","act","prompt"
 "cmd","act","prompt"
 "cmd","act","prompt"
-"cmd","act","prompt"`}</pre>}
+"cmd","act","prompt"`}</pre>
+      }
     >
       <a>CSV</a>
     </Tooltip>
@@ -76,11 +92,7 @@ const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record, 
 
   return (
     <>
-      <Form
-        form={form}
-        labelCol={{ span: 4 }}
-        initialValues={initFormValue}
-      >
+      <Form form={form} labelCol={{ span: 4 }} initialValues={initFormValue}>
         <Form.Item
           label="Name"
           name="name"
@@ -92,7 +104,7 @@ const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record, 
           label="PATH"
           name="path"
           rules={[{ required: true, message: 'Please enter the path!' }]}
-          >
+        >
           <Input
             placeholder="YOUR_PATH"
             addonBefore={pathOptions}
@@ -100,13 +112,17 @@ const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record, 
             {...DISABLE_AUTO_COMPLETE}
           />
         </Form.Item>
-        <Form.Item style={{ display: 'none' }} name="id" initialValue={v4().replace(/-/g, '')}><input /></Form.Item>
+        <Form.Item style={{ display: 'none' }} name="id" initialValue={v4().replace(/-/g, '')}>
+          <input />
+        </Form.Item>
       </Form>
       <div className="tip">
-        <p>The file supports only {csvTip} and {jsonTip} formats.</p>
+        <p>
+          The file supports only {csvTip} and {jsonTip} formats.
+        </p>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default forwardRef(SyncForm);

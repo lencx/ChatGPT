@@ -21,21 +21,21 @@ export default function ChatLayout() {
     setAppInfo({
       appName: await getName(),
       appVersion: await getVersion(),
-      appTheme: await invoke("get_theme"),
+      appTheme: await invoke('get_theme'),
     });
-  })
+  });
 
   const checkAppUpdate = async () => {
     await invoke('run_check_update', { silent: false, hasMsg: true });
-  }
+  };
 
-  const isDark = appInfo.appTheme === "dark";
+  const isDark = appInfo.appTheme === 'dark';
 
   return (
     <ConfigProvider theme={{ algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm }}>
       <Layout style={{ minHeight: '100vh' }} hasSider>
         <Sider
-          theme={isDark ? "dark" : "light"}
+          theme={isDark ? 'dark' : 'light'}
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
@@ -49,41 +49,51 @@ export default function ChatLayout() {
             zIndex: 999,
           }}
         >
-          <div className="chat-logo"><img src="/logo.png" /></div>
+          <div className="chat-logo">
+            <img src="/logo.png" />
+          </div>
           <div className="chat-info">
             <Tag>{appInfo.appName}</Tag>
             <Tag>
-                <span style={{ marginRight: 5 }}>{appInfo.appVersion}</span>
-                <Tooltip title="click to check update">
-                  <a onClick={checkAppUpdate}><SyncOutlined /></a>
-                </Tooltip>
+              <span style={{ marginRight: 5 }}>{appInfo.appVersion}</span>
+              <Tooltip title="click to check update">
+                <a onClick={checkAppUpdate}>
+                  <SyncOutlined />
+                </a>
+              </Tooltip>
             </Tag>
           </div>
 
           <Menu
             defaultSelectedKeys={[location.pathname]}
             mode="inline"
-            theme={ appInfo.appTheme === "dark" ? "dark" : "light" }
+            theme={appInfo.appTheme === 'dark' ? 'dark' : 'light'}
             inlineIndent={12}
             items={menuItems}
             // defaultOpenKeys={['/model']}
             onClick={(i) => go(i.key)}
           />
         </Sider>
-        <Layout className="chat-layout" style={{ marginLeft: collapsed ? 80 : 200, transition: 'margin-left 300ms ease-out' }}>
+        <Layout
+          className="chat-layout"
+          style={{ marginLeft: collapsed ? 80 : 200, transition: 'margin-left 300ms ease-out' }}
+        >
           <Content
             className="chat-container"
             style={{
-              overflow: 'inherit'
+              overflow: 'inherit',
             }}
           >
             <Routes />
           </Content>
           <Footer style={{ textAlign: 'center' }}>
-            <a href="https://github.com/lencx/chatgpt" target="_blank">ChatGPT Desktop Application</a> ©2022 Created by lencx
+            <a href="https://github.com/lencx/chatgpt" target="_blank">
+              ChatGPT Desktop Application
+            </a>{' '}
+            ©2022 Created by lencx
           </Footer>
         </Layout>
       </Layout>
     </ConfigProvider>
   );
-};
+}

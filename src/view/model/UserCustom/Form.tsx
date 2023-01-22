@@ -6,7 +6,7 @@ import Tags from '@comps/Tags';
 import { DISABLE_AUTO_COMPLETE } from '@/utils';
 
 interface UserCustomFormProps {
-  record?: Record<string|symbol, any> | null;
+  record?: Record<string | symbol, any> | null;
 }
 
 const initFormValue = {
@@ -16,7 +16,10 @@ const initFormValue = {
   prompt: '',
 };
 
-const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> = ({ record }, ref) => {
+const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> = (
+  { record },
+  ref,
+) => {
   const [form] = Form.useForm();
   useImperativeHandle(ref, () => ({ form }));
 
@@ -27,11 +30,7 @@ const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> =
   }, [record]);
 
   return (
-    <Form
-      form={form}
-      labelCol={{ span: 4 }}
-      initialValues={initFormValue}
-    >
+    <Form form={form} labelCol={{ span: 4 }} initialValues={initFormValue}>
       <Form.Item
         label="/{cmd}"
         name="cmd"
@@ -60,7 +59,7 @@ const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> =
         <Input.TextArea rows={4} placeholder="Please enter a prompt" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
     </Form>
-  )
-}
+  );
+};
 
 export default forwardRef(UserCustomForm);

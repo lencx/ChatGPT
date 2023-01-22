@@ -14,7 +14,7 @@ const modeMap: any = {
   0: 'split',
   1: 'md',
   2: 'doc',
-}
+};
 
 export default function Markdown() {
   const [filePath, setFilePath] = useState('');
@@ -26,8 +26,8 @@ export default function Markdown() {
   useInit(async () => {
     const file = await getPath(state);
     setFilePath(file);
-    setSource(await fs.readTextFile(file))
-  })
+    setSource(await fs.readTextFile(file));
+  });
 
   const handleChange = async (v: string) => {
     await fs.writeTextFile(filePath, v);
@@ -46,9 +46,7 @@ export default function Markdown() {
           <Breadcrumb.Item onClick={() => history.go(-1)}>
             <ArrowLeftOutlined />
           </Breadcrumb.Item>
-          <Breadcrumb.Item onClick={() => shell.open(filePath)}>
-            {filePath}
-          </Breadcrumb.Item>
+          <Breadcrumb.Item onClick={() => shell.open(filePath)}>{filePath}</Breadcrumb.Item>
         </Breadcrumb>
         <div>
           <SplitIcon onClick={handlePreview} style={{ fontSize: 18, color: 'rgba(0,0,0,0.5)' }} />

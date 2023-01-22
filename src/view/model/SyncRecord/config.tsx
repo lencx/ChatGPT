@@ -25,7 +25,11 @@ export const syncColumns = () => [
     key: 'tags',
     // width: 150,
     render: (v: string[]) => (
-      <span className="chat-prompts-tags">{v?.map(i => <Tag key={i}>{i}</Tag>)}</span>
+      <span className="chat-prompts-tags">
+        {v?.map((i) => (
+          <Tag key={i}>{i}</Tag>
+        ))}
+      </span>
     ),
   },
   {
@@ -43,8 +47,6 @@ export const syncColumns = () => [
     dataIndex: 'prompt',
     key: 'prompt',
     // width: 300,
-    render: (v: string) => (
-      <span className="chat-prompts-val">{v}</span>
-    ),
+    render: (v: string) => <span className="chat-prompts-val">{v}</span>,
   },
 ];

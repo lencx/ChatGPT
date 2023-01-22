@@ -1,15 +1,16 @@
 .markdown-body {
   height: 100%;
   overflow: auto;
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
-
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
 
   &.edit-preview {
     padding: 10px;
     font-size: 14px;
   }
 
-  pre, code {
+  pre,
+  code {
     font-family: monospace, monospace;
   }
 }

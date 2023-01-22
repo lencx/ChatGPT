@@ -30,7 +30,7 @@ export default function SyncRecord() {
   useInit(async () => {
     setFilePath(await getPath(state));
     setJsonPath(await path.join(await chatRoot(), 'cache_model', `${state?.id}.json`));
-  })
+  });
 
   useEffect(() => {
     if (modelCacheJson.length <= 0) return;
@@ -45,7 +45,7 @@ export default function SyncRecord() {
   }, [opInfo.opTime]);
 
   const handleEnable = (isEnable: boolean) => {
-    const data = opReplaceItems(selectedRowIDs, { enable: isEnable })
+    const data = opReplaceItems(selectedRowIDs, { enable: isEnable });
     modelCacheSet(data);
   };
 
@@ -58,7 +58,9 @@ export default function SyncRecord() {
         <div>
           {selectedItems.length > 0 && (
             <>
-              <Button type="primary" onClick={() => handleEnable(true)}>Enable</Button>
+              <Button type="primary" onClick={() => handleEnable(true)}>
+                Enable
+              </Button>
               <Button onClick={() => handleEnable(false)}>Disable</Button>
               <span className="num">Selected {selectedItems.length} items</span>
             </>
@@ -70,7 +72,11 @@ export default function SyncRecord() {
           <FilePath url={filePath} />
           <FilePath label="CACHE" paths={`cache_model/${state?.id}.json`} />
         </div>
-        {state?.last_updated && <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>Last updated on {fmtDate(state?.last_updated)}</span>}
+        {state?.last_updated && (
+          <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>
+            Last updated on {fmtDate(state?.last_updated)}
+          </span>
+        )}
       </div>
       <Table
         key="prompt"
@@ -80,8 +86,10 @@ export default function SyncRecord() {
         dataSource={opData}
         rowSelection={rowSelection}
         pagination={TABLE_PAGINATION}
-        expandable={{expandedRowRender: (record) => <div style={{ padding: 10 }}>{record.prompt}</div>}}
+        expandable={{
+          expandedRowRender: (record) => <div style={{ padding: 10 }}>{record.prompt}</div>,
+        }}
       />
     </div>
-  )
+  );
 }

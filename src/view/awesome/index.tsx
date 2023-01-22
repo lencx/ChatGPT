@@ -34,7 +34,8 @@ export default function Awesome() {
       updateJson(data);
       opInfo.resetRecord();
     }
-  }, [opInfo.opType, formRef]);
+  }, [opInfo.opType,
+    formRef]);
 
   const hide = () => {
     setVisible(false);
@@ -46,45 +47,46 @@ export default function Awesome() {
       const data = opReplace(opInfo?.opRecord?.[opSafeKey], opInfo?.opRecord);
       updateJson(data);
     }
-  }, [opInfo.opTime])
+  }, [opInfo.opTime]);
 
-  const handleDelete = () => {
-
-  };
+  const handleDelete = () => {};
 
   const handleOk = () => {
-    formRef.current?.form?.validateFields()
-      .then(async (vals: Record<string, any>) => {
-        if (opInfo.opType === 'new') {
-          const data = opAdd(vals);
-          await updateJson(data);
-          opInit(data);
-          message.success('Data added successfully');
-        }
-        if (opInfo.opType === 'edit') {
-          const data = opReplace(opInfo?.opRecord?.[opSafeKey], vals);
-          await updateJson(data);
-          message.success('Data updated successfully');
-        }
-        hide();
-      })
+    formRef.current?.form?.validateFields().then(async (vals: Record<string, any>) => {
+      if (opInfo.opType === 'new') {
+        const data = opAdd(vals);
+        await updateJson(data);
+        opInit(data);
+        message.success('Data added successfully');
+      }
+      if (opInfo.opType === 'edit') {
+        const data = opReplace(opInfo?.opRecord?.[opSafeKey], vals);
+        await updateJson(data);
+        message.success('Data updated successfully');
+      }
+      hide();
+    });
   };
 
   const handleEnable = (isEnable: boolean) => {
-    const data = opReplaceItems(selectedRowIDs, { enable: isEnable })
+    const data = opReplaceItems(selectedRowIDs, { enable: isEnable });
     updateJson(data);
   };
 
-  const modalTitle = `${({ new: 'Create', edit: 'Edit' })[opInfo.opType]} URL`;
+  const modalTitle = `${{ new: 'Create', edit: 'Edit' }[opInfo.opType]} URL`;
 
   return (
     <div>
       <div className="chat-table-btns">
-        <Button className="chat-add-btn" type="primary" onClick={opInfo.opNew}>Add URL</Button>
+        <Button className="chat-add-btn" type="primary" onClick={opInfo.opNew}>
+          Add URL
+        </Button>
         <div>
           {selectedItems.length > 0 && (
             <>
-              <Button type="primary" onClick={() => handleEnable(true)}>Enable</Button>
+              <Button type="primary" onClick={() => handleEnable(true)}>
+                Enable
+              </Button>
               <Button onClick={() => handleEnable(false)}>Disable</Button>
               <Popconfirm
                 overlayStyle={{ width: 250 }}
@@ -121,5 +123,5 @@ export default function Awesome() {
         <AwesomeForm ref={formRef} record={opInfo?.opRecord} />
       </Modal>
     </div>
-  )
+  );
 }

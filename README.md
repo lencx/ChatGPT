@@ -10,6 +10,7 @@
 [![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
 [![chat](https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord)](https://discord.gg/aPhCRf4zZr)
 [![lencx](https://img.shields.io/badge/follow-lencx__-blue?style=flat&logo=Twitter)](https://twitter.com/lencx_)
+
 <!-- [![lencx](https://img.shields.io/twitter/follow/lencx_.svg?style=social)](https://twitter.com/lencx_) -->
 
 <!-- [![中文版 badge](https://img.shields.io/badge/%E4%B8%AD%E6%96%87-Traditional%20Chinese-blue)](./README-ZH.md) -->
@@ -27,6 +28,7 @@
 
 - [ChatGPT_0.9.2_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.9.2/ChatGPT_0.9.2_x64_en-US.msi): Direct download installer
 - Use [winget](https://winstall.app/apps/lencx.ChatGPT):
+
   ```bash
   # install the latest version
   winget install --id=lencx.ChatGPT -e
@@ -174,6 +176,7 @@ Currently, only json and csv are supported for synchronizing custom files, and t
 ## 📌 TODO
 
 <!-- - Web access capability ([#20](https://github.com/lencx/ChatGPT/issues/20)) -->
+
 - `Control Center` enhancement
 - `Pop-up Search` enhancement
 - ...

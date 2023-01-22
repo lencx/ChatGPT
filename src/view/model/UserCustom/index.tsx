@@ -50,10 +50,10 @@ export default function LanguageModel() {
       const data = opReplace(opInfo?.opRecord?.[opSafeKey], opInfo?.opRecord);
       modelCacheSet(data);
     }
-  }, [opInfo.opTime])
+  }, [opInfo.opTime]);
 
   const handleEnable = (isEnable: boolean) => {
-    const data = opReplaceItems(selectedRowIDs, { enable: isEnable })
+    const data = opReplaceItems(selectedRowIDs, { enable: isEnable });
     modelCacheSet(data);
   };
 
@@ -63,38 +63,51 @@ export default function LanguageModel() {
   };
 
   const handleOk = () => {
-    formRef.current?.form?.validateFields()
-      .then(async (vals: Record<string, any>) => {
-        if (modelCacheJson.map((i: any) => i.cmd).includes(vals.cmd) && opInfo?.opRecord?.cmd !== vals.cmd) {
-          message.warning(`"cmd: /${vals.cmd}" already exists, please change the "${vals.cmd}" name and resubmit.`);
-          return;
-        }
-        let data = [];
-        switch (opInfo.opType) {
-          case 'new': data = opAdd(vals); break;
-          case 'edit': data = opReplace(opInfo?.opRecord?.[opSafeKey], vals); break;
-          default: break;
-        }
-        await modelCacheSet(data);
-        opInit(data);
-        modelSet({
-          id: 'user_custom',
-          last_updated: Date.now(),
-        });
-        hide();
-      })
+    formRef.current?.form?.validateFields().then(async (vals: Record<string, any>) => {
+      if (
+        modelCacheJson.map((i: any) => i.cmd).includes(vals.cmd) &&
+        opInfo?.opRecord?.cmd !== vals.cmd
+      ) {
+        message.warning(
+          `"cmd: /${vals.cmd}" already exists, please change the "${vals.cmd}" name and resubmit.`,
+        );
+        return;
+      }
+      let data = [];
+      switch (opInfo.opType) {
+        case 'new':
+          data = opAdd(vals);
+          break;
+        case 'edit':
+          data = opReplace(opInfo?.opRecord?.[opSafeKey], vals);
+          break;
+        default:
+          break;
+      }
+      await modelCacheSet(data);
+      opInit(data);
+      modelSet({
+        id: 'user_custom',
+        last_updated: Date.now(),
+      });
+      hide();
+    });
   };
 
-  const modalTitle = `${({ new: 'Create', edit: 'Edit' })[opInfo.opType]} Model`;
+  const modalTitle = `${{ new: 'Create', edit: 'Edit' }[opInfo.opType]} Model`;
 
   return (
     <div>
       <div className="chat-table-btns">
-        <Button className="chat-add-btn" type="primary" onClick={opInfo.opNew}>Add Model</Button>
+        <Button className="chat-add-btn" type="primary" onClick={opInfo.opNew}>
+          Add Model
+        </Button>
         <div>
           {selectedItems.length > 0 && (
             <>
-              <Button type="primary" onClick={() => handleEnable(true)}>Enable</Button>
+              <Button type="primary" onClick={() => handleEnable(true)}>
+                Enable
+              </Button>
               <Button onClick={() => handleEnable(false)}>Disable</Button>
               <span className="num">Selected {selectedItems.length} items</span>
             </>
@@ -103,7 +116,11 @@ export default function LanguageModel() {
       </div>
       <div className="chat-table-tip">
         <FilePath label="CACHE" paths="cache_model/user_custom.json" />
-        {lastUpdated && <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>Last updated on {fmtDate(lastUpdated)}</span>}
+        {lastUpdated && (
+          <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>
+            Last updated on {fmtDate(lastUpdated)}
+          </span>
+        )}
       </div>
       <Table
         key={lastUpdated}
@@ -113,7 +130,9 @@ export default function LanguageModel() {
         dataSource={opData}
         rowSelection={rowSelection}
         pagination={TABLE_PAGINATION}
-        expandable={{expandedRowRender: (record) => <div style={{ padding: 10 }}>{record.prompt}</div>}}
+        expandable={{
+          expandedRowRender: (record) => <div style={{ padding: 10 }}>{record.prompt}</div>,
+        }}
       />
       <Modal
         open={isVisible}
@@ -126,5 +145,5 @@ export default function LanguageModel() {
         <UserCustomForm record={opInfo?.opRecord} ref={formRef} />
       </Modal>
     </div>
-  )
+  );
 }

@@ -9,37 +9,47 @@ import { DISABLE_AUTO_COMPLETE } from '@/utils';
 const AutoUpdateLabel = () => {
   return (
     <span>
-      Auto Update
-      {' '}
-      <Tooltip title={(
-        <div>
-          <div>Auto Update Policy</div>
-          <div><strong>Prompt</strong>: prompt to install</div>
-          <div><strong>Silent</strong>: install silently</div>
-          {/* <div><strong>Disable</strong>: disable auto update</div> */}
-        </div>
-      )}><QuestionCircleOutlined style={{ color: '#1677ff' }} /></Tooltip>
+      Auto Update{' '}
+      <Tooltip
+        title={
+          <div>
+            <div>Auto Update Policy</div>
+            <div>
+              <strong>Prompt</strong>: prompt to install
+            </div>
+            <div>
+              <strong>Silent</strong>: install silently
+            </div>
+            {/* <div><strong>Disable</strong>: disable auto update</div> */}
+          </div>
+        }
+      >
+        <QuestionCircleOutlined style={{ color: '#1677ff' }} />
+      </Tooltip>
     </span>
-  )
-}
+  );
+};
 
 const GlobalShortcutLabel = () => {
   return (
     <div>
-      Global Shortcut
-      {' '}
-      <Tooltip title={(
-        <div>
-          <div>Shortcut definition, modifiers and key separated by "+" e.g. CmdOrControl+Q</div>
-          <div style={{ margin: '10px 0'}}>If empty, the shortcut is disabled.</div>
-          <a href="https://tauri.app/v1/api/js/globalshortcut" target="_blank">https://tauri.app/v1/api/js/globalshortcut</a>
-        </div>
-      )}>
+      Global Shortcut{' '}
+      <Tooltip
+        title={
+          <div>
+            <div>Shortcut definition, modifiers and key separated by "+" e.g. CmdOrControl+Q</div>
+            <div style={{ margin: '10px 0' }}>If empty, the shortcut is disabled.</div>
+            <a href="https://tauri.app/v1/api/js/globalshortcut" target="_blank">
+              https://tauri.app/v1/api/js/globalshortcut
+            </a>
+          </div>
+        }
+      >
         <QuestionCircleOutlined style={{ color: '#1677ff' }} />
       </Tooltip>
     </div>
-  )
-}
+  );
+};
 
 export default function General() {
   const [platformInfo, setPlatform] = useState('');
@@ -62,9 +72,7 @@ export default function General() {
         <Radio.Group>
           <Radio value="Light">Light</Radio>
           <Radio value="Dark">Dark</Radio>
-          {["darwin", "windows"].includes(platformInfo) && (
-            <Radio value="System">System</Radio>
-          )}
+          {['darwin', 'windows'].includes(platformInfo) && <Radio value="System">System</Radio>}
         </Radio.Group>
       </Form.Item>
       <Form.Item label={<AutoUpdateLabel />} name="auto_update">
@@ -78,5 +86,5 @@ export default function General() {
         <Input placeholder="CmdOrCtrl+Shift+O" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
     </>
-  )
+  );
 }

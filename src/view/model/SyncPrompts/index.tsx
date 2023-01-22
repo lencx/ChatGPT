@@ -52,7 +52,7 @@ export default function SyncPrompts() {
   }, [opInfo.opTime]);
 
   const handleEnable = (isEnable: boolean) => {
-    const data = opReplaceItems(selectedRowIDs, { enable: isEnable })
+    const data = opReplaceItems(selectedRowIDs, { enable: isEnable });
     modelCacheSet(data);
   };
 
@@ -72,7 +72,9 @@ export default function SyncPrompts() {
         <div>
           {selectedItems.length > 0 && (
             <>
-              <Button type="primary" onClick={() => handleEnable(true)}>Enable</Button>
+              <Button type="primary" onClick={() => handleEnable(true)}>
+                Enable
+              </Button>
               <Button onClick={() => handleEnable(false)}>Disable</Button>
               <span className="num">Selected {selectedItems.length} items</span>
             </>
@@ -84,7 +86,11 @@ export default function SyncPrompts() {
           <FilePath url={promptsURL} content="f/awesome-chatgpt-prompts/prompts.csv" />
           <FilePath label="CACHE" paths="cache_model/chatgpt_prompts.json" />
         </div>
-        {lastUpdated && <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>Last updated on {fmtDate(lastUpdated)}</span>}
+        {lastUpdated && (
+          <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>
+            Last updated on {fmtDate(lastUpdated)}
+          </span>
+        )}
       </div>
       <Table
         key={lastUpdated}
@@ -94,8 +100,10 @@ export default function SyncPrompts() {
         dataSource={opData}
         rowSelection={rowSelection}
         pagination={TABLE_PAGINATION}
-        expandable={{expandedRowRender: (record) => <div style={{ padding: 10 }}>{record.prompt}</div>}}
+        expandable={{
+          expandedRowRender: (record) => <div style={{ padding: 10 }}>{record.prompt}</div>,
+        }}
       />
     </div>
-  )
+  );
 }

@@ -1,43 +1,43 @@
-name: "🕷️ Bug report"
-description: "report bugs"
-title: "[Bug]"
+name: '🕷️ Bug report'
+description: 'report bugs'
+title: '[Bug]'
 labels:
-  - "bug"
+  - 'bug'
 body:
-- type: markdown
-  attributes:
-    value: "Please make sure to [search for existing issues](https://github.com/lencx/ChatGPT/issues) before filing a new one!"
-- type: markdown
-  attributes:
-    value: |
-      ## Bug report
-      Please fill in the following information to help us reproduce the bug:
-- type: input
-  id: version
-  attributes:
-    label: Version
-    description: "Please specify the version of ChatGPT you are using, a newer version may have fixed the bug you encountered.Check the [UPDATE_LOG](https://github.com/lencx/ChatGPT/blob/main/UPDATE_LOG.md) for more information."
-    placeholder: "e.g. v0.1.0"
-  validations:
-    required: true
-- type: textarea
-  id: bug
-  attributes:
-    label: Bug description
-    description: |
-      Please describe the bug here,if possible, please provide a minimal example to reproduce the bug.The content of `~/.chatgpt/chatgpt.log` may be helpful if you encounter a crash.
-  validations:
-    required: true
-- type: input
-  id: OS
-  attributes:
-    label: OS
-    description: "Please specify the OS you are using."
-    placeholder: "e.g. Ubuntu 22.04"
-  validations:
-    required: true
-- type: textarea
-  id: environment
-  attributes:
-    label: Environment
-    description: "If you think your environment may be related to the problem, please describe it here."
+  - type: markdown
+    attributes:
+      value: 'Please make sure to [search for existing issues](https://github.com/lencx/ChatGPT/issues) before filing a new one!'
+  - type: markdown
+    attributes:
+      value: |
+        ## Bug report
+        Please fill in the following information to help us reproduce the bug:
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: 'Please specify the version of ChatGPT you are using, a newer version may have fixed the bug you encountered.Check the [UPDATE_LOG](https://github.com/lencx/ChatGPT/blob/main/UPDATE_LOG.md) for more information.'
+      placeholder: 'e.g. v0.1.0'
+    validations:
+      required: true
+  - type: textarea
+    id: bug
+    attributes:
+      label: Bug description
+      description: |
+        Please describe the bug here,if possible, please provide a minimal example to reproduce the bug.The content of `~/.chatgpt/chatgpt.log` may be helpful if you encounter a crash.
+    validations:
+      required: true
+  - type: input
+    id: OS
+    attributes:
+      label: OS
+      description: 'Please specify the OS you are using.'
+      placeholder: 'e.g. Ubuntu 22.04'
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: 'If you think your environment may be related to the problem, please describe it here.'

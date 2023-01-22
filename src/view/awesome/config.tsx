@@ -34,7 +34,7 @@ export const awesomeColumns = () => [
     dataIndex: 'category',
     key: 'category',
     width: 120,
-    render: (v: string) => <Tag color="geekblue">{v}</Tag>
+    render: (v: string) => <Tag color="geekblue">{v}</Tag>,
   },
   {
     title: 'Tags',
@@ -42,7 +42,11 @@ export const awesomeColumns = () => [
     key: 'tags',
     width: 150,
     render: (v: string[]) => (
-      <span className="chat-tags">{v?.map(i => <Tag key={i}>{i}</Tag>)}</span>
+      <span className="chat-tags">
+        {v?.map((i) => (
+          <Tag key={i}>{i}</Tag>
+        ))}
+      </span>
     ),
   },
   {
@@ -62,7 +66,7 @@ export const awesomeColumns = () => [
             <a>Delete</a>
           </Popconfirm>
         </Space>
-      )
-    }
-  }
+      );
+    },
+  },
 ];

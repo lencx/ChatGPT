@@ -10,7 +10,13 @@ import { CHAT_MODEL_JSON, chatRoot, readJSON, genCmd } from '@/utils';
 import { syncColumns, getPath } from './config';
 import SyncForm from './Form';
 
-const fmtData = (data: Record<string, any>[] = []) => (Array.isArray(data) ? data : []).map((i) => ({ ...i, cmd: i.cmd ? i.cmd : genCmd(i.act), tags: ['user-sync'], enable: true }));
+const fmtData = (data: Record<string, any>[] = []) =>
+  (Array.isArray(data) ? data : []).map((i) => ({
+    ...i,
+    cmd: i.cmd ? i.cmd : genCmd(i.act),
+    tags: ['user-sync'],
+    enable: true,
+  }));
 
 export default function SyncCustom() {
   const [isVisible, setVisible] = useState(false);
@@ -37,7 +43,10 @@ export default function SyncCustom() {
       handleSync(filename).then((isOk: boolean) => {
         opInfo.resetRecord();
         if (!isOk) return;
-        const data = opReplace(opInfo?.opRecord?.[opSafeKey], { ...opInfo?.opRecord, last_updated: Date.now() });
+        const data = opReplace(opInfo?.opRecord?.[opSafeKey], {
+          ...opInfo?.opRecord,
+          last_updated: Date.now(),
+        });
         modelSet(data);
         opInfo.resetRecord();
       });
@@ -48,9 +57,13 @@ export default function SyncCustom() {
     if (['delete'].includes(opInfo.opType)) {
       (async () => {
         try {
-          const file = await path.join(await chatRoot(), 'cache_model', `${opInfo?.opRecord?.id}.json`);
+          const file = await path.join(
+            await chatRoot(),
+            'cache_model',
+            `${opInfo?.opRecord?.id}.json`,
+          );
           await fs.removeFile(file);
-        } catch(e) {}
+        } catch (e) {}
         const data = opRemove(opInfo?.opRecord?.[opSafeKey]);
         modelSet(data);
         opInfo.resetRecord();
@@ -94,29 +107,24 @@ export default function SyncCustom() {
   };
 
   const handleOk = () => {
-    formRef.current?.form?.validateFields()
-      .then((vals: Record<string, any>) => {
-        if (opInfo.opType === 'new') {
-          const data = opAdd(vals);
-          modelSet(data);
-          message.success('Data added successfully');
-        }
-        if (opInfo.opType === 'edit') {
-          const data = opReplace(opInfo?.opRecord?.[opSafeKey], vals);
-          modelSet(data);
-          message.success('Data updated successfully');
-        }
-        hide();
-      })
+    formRef.current?.form?.validateFields().then((vals: Record<string, any>) => {
+      if (opInfo.opType === 'new') {
+        const data = opAdd(vals);
+        modelSet(data);
+        message.success('Data added successfully');
+      }
+      if (opInfo.opType === 'edit') {
+        const data = opReplace(opInfo?.opRecord?.[opSafeKey], vals);
+        modelSet(data);
+        message.success('Data updated successfully');
+      }
+      hide();
+    });
   };
 
   return (
     <div>
-      <Button
-        className="chat-add-btn"
-        type="primary"
-        onClick={opInfo.opNew}
-      >
+      <Button className="chat-add-btn" type="primary" onClick={opInfo.opNew}>
         Add PATH
       </Button>
       <Table
@@ -138,5 +146,5 @@ export default function SyncCustom() {
         <SyncForm ref={formRef} record={opInfo?.opRecord} type={opInfo.opType} />
       </Modal>
     </div>
-  )
+  );
 }

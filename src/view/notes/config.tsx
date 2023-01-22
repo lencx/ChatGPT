@@ -41,7 +41,9 @@ export const notesColumns = () => [
       return (
         <Space>
           <a onClick={() => actions.setRecord(row, 'preview')}>Preview</a>
-          <Link to={`/md/${row.id}`} state={row}>Edit</Link>
+          <Link to={`/md/${row.id}`} state={row}>
+            Edit
+          </Link>
           <Popconfirm
             title="Are you sure to delete this file?"
             onConfirm={() => actions.setRecord(row, 'delete')}
@@ -51,20 +53,20 @@ export const notesColumns = () => [
             <a>Delete</a>
           </Popconfirm>
         </Space>
-      )
-    }
-  }
+      );
+    },
+  },
 ];
 
 const RenderPath = ({ row }: any) => {
   const [filePath, setFilePath] = useState('');
   useInit(async () => {
-      setFilePath(await getPath(row));
-  })
+    setFilePath(await getPath(row));
+  });
   return <a onClick={() => shell.open(filePath)}>{filePath}</a>;
 };
 
 export const getPath = async (row: any) => {
   const isImg = ['png'].includes(row?.ext);
-  return await path.join(await chatRoot(), 'notes', row.id) + `.${row.ext}`;
-}
+  return (await path.join(await chatRoot(), 'notes', row.id)) + `.${row.ext}`;
+};

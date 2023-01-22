@@ -9,27 +9,28 @@ export const CHAT_DOWNLOAD_JSON = 'chat.download.json';
 export const CHAT_AWESOME_JSON = 'chat.awesome.json';
 export const CHAT_NOTES_JSON = 'chat.notes.json';
 export const CHAT_PROMPTS_CSV = 'chat.prompts.csv';
-export const GITHUB_PROMPTS_CSV_URL = 'https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv';
+export const GITHUB_PROMPTS_CSV_URL =
+  'https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv';
 
 export const DISABLE_AUTO_COMPLETE = {
   autoCapitalize: 'off',
   autoComplete: 'off',
-  spellCheck: false
+  spellCheck: false,
 };
 
 export const chatRoot = async () => {
-  return join(await homeDir(), '.chatgpt')
-}
+  return join(await homeDir(), '.chatgpt');
+};
 
 export const chatModelPath = async (): Promise<string> => {
   return join(await chatRoot(), CHAT_MODEL_JSON);
-}
+};
 
 export const chatPromptsPath = async (): Promise<string> => {
   return join(await chatRoot(), CHAT_PROMPTS_CSV);
-}
+};
 
-type readJSONOpts = { defaultVal?: Record<string, any>, isRoot?: boolean, isList?: boolean };
+type readJSONOpts = { defaultVal?: Record<string, any>; isRoot?: boolean; isList?: boolean };
 export const readJSON = async (path: string, opts: readJSONOpts = {}) => {
   const { defaultVal = {}, isRoot = false, isList = false } = opts;
   const root = await chatRoot();
@@ -39,26 +40,39 @@ export const readJSON = async (path: string, opts: readJSONOpts = {}) => {
     file = await join(root, path);
   }
 
-  if (!await exists(file)) {
-    if (await dirname(file) !== root) {
+  if (!(await exists(file))) {
+    if ((await dirname(file)) !== root) {
       await createDir(await dirname(file), { recursive: true });
     }
-    await writeTextFile(file, isList ? '[]' : JSON.stringify({
-      name: 'ChatGPT',
-      link: 'https://github.com/lencx/ChatGPT',
-      ...defaultVal,
-    }, null, 2))
+    await writeTextFile(
+      file,
+      isList
+        ? '[]'
+        : JSON.stringify(
+            {
+              name: 'ChatGPT',
+              link: 'https://github.com/lencx/ChatGPT',
+              ...defaultVal,
+            },
+            null,
+            2,
+          ),
+    );
   }
 
   try {
     return JSON.parse(await readTextFile(file));
-  } catch(e) {
+  } catch (e) {
     return {};
   }
-}
+};
 
-type writeJSONOpts = { dir?: string, isRoot?: boolean };
-export const writeJSON = async (path: string, data: Record<string, any>, opts: writeJSONOpts = {}) => {
+type writeJSONOpts = { dir?: string; isRoot?: boolean };
+export const writeJSON = async (
+  path: string,
+  data: Record<string, any>,
+  opts: writeJSONOpts = {},
+) => {
   const { isRoot = false } = opts;
   const root = await chatRoot();
   let file = path;
@@ -67,13 +81,17 @@ export const writeJSON = async (path: string, data: Record<string, any>, opts: w
     file = await join(root, path);
   }
 
-  if (isRoot && !await exists(await dirname(file))) {
+  if (isRoot && !(await exists(await dirname(file)))) {
     await createDir(await dirname(file), { recursive: true });
   }
 
   await writeTextFile(file, JSON.stringify(data, null, 2));
-}
+};
 
 export const fmtDate = (date: any) => dayjs(date).format('YYYY-MM-DD HH:mm:ss');
 
-export const genCmd = (act: string) => act.replace(/\s+|\/+/g, '_').replace(/[^\d\w]/g, '').toLocaleLowerCase();
+export const genCmd = (act: string) =>
+  act
+    .replace(/\s+|\/+/g, '_')
+    .replace(/[^\d\w]/g, '')
+    .toLocaleLowerCase();

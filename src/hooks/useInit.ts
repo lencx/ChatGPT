@@ -8,5 +8,5 @@ export default function useInit(callback: () => void) {
       callback();
       isInit.current = false;
     }
-  })
+  });
 }

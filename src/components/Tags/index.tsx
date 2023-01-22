@@ -20,7 +20,7 @@ const Tags: FC<TagsProps> = ({ max = 99, value = [], onChange, addTxt = 'New Tag
 
   useEffect(() => {
     setTags(value);
-  }, [value])
+  }, [value]);
 
   useEffect(() => {
     if (inputVisible) {

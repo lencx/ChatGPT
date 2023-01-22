@@ -6,7 +6,7 @@ import Tags from '@comps/Tags';
 import { DISABLE_AUTO_COMPLETE } from '@/utils';
 
 interface AwesomeFormProps {
-  record?: Record<string|symbol, any> | null;
+  record?: Record<string | symbol, any> | null;
 }
 
 const initFormValue = {
@@ -28,11 +28,7 @@ const AwesomeForm: ForwardRefRenderFunction<FormProps, AwesomeFormProps> = ({ re
   }, [record]);
 
   return (
-    <Form
-      form={form}
-      labelCol={{ span: 4 }}
-      initialValues={initFormValue}
-    >
+    <Form form={form} labelCol={{ span: 4 }} initialValues={initFormValue}>
       <Form.Item
         label="Title"
         name="title"
@@ -57,7 +53,7 @@ const AwesomeForm: ForwardRefRenderFunction<FormProps, AwesomeFormProps> = ({ re
         <Switch />
       </Form.Item>
     </Form>
-  )
-}
+  );
+};
 
 export default forwardRef(AwesomeForm);

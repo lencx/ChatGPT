@@ -37,7 +37,12 @@ export default function Download() {
     (async () => {
       const record = opInfo?.opRecord;
       const isImg = ['png'].includes(record?.ext);
-      const file = await path.join(await chatRoot(), 'download', isImg ? 'img' : record?.ext, `${record?.id}.${record?.ext}`);
+      const file = await path.join(
+        await chatRoot(),
+        'download',
+        isImg ? 'img' : record?.ext,
+        `${record?.id}.${record?.ext}`,
+      );
       if (opInfo.opType === 'preview') {
         const data = await fs.readBinaryFile(file);
         const sourceData = renderFile(data, record?.ext);
@@ -55,8 +60,8 @@ export default function Download() {
         message.success('Name has been changed!');
       }
       opInfo.resetRecord();
-    })()
-  }, [opInfo.opType])
+    })();
+  }, [opInfo.opType]);
 
   const handleDelete = async () => {
     if (opData?.length === selectedRows.length) {
@@ -69,10 +74,15 @@ export default function Download() {
 
     const rows = selectedRows.map(async (i) => {
       const isImg = ['png'].includes(i?.ext);
-      const file = await path.join(await chatRoot(), 'download', isImg ? 'img' : i?.ext, `${i?.id}.${i?.ext}`);
+      const file = await path.join(
+        await chatRoot(),
+        'download',
+        isImg ? 'img' : i?.ext,
+        `${i?.id}.${i?.ext}`,
+      );
       await fs.removeFile(file);
       return file;
-    })
+    });
     Promise.all(rows).then(async () => {
       await handleRefresh();
       message.success('All files selected are cleared!');
@@ -131,5 +141,5 @@ export default function Download() {
         <img style={{ maxWidth: '100%' }} src={source} />
       </Modal>
     </div>
-  )
+  );
 }

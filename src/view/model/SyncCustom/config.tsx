@@ -26,7 +26,7 @@ export const syncColumns = () => [
     dataIndex: 'path',
     key: 'path',
     width: 180,
-    render: (_: string, row: any) => <RenderPath row={row} />
+    render: (_: string, row: any) => <RenderPath row={row} />,
   },
   {
     title: 'Last updated',
@@ -36,7 +36,7 @@ export const syncColumns = () => [
     render: (v: number) => (
       <div>
         <HistoryOutlined style={{ marginRight: 5, color: v ? '#52c41a' : '#ff4d4f' }} />
-        { v ? fmtDate(v) : ''}
+        {v ? fmtDate(v) : ''}
       </div>
     ),
   },
@@ -56,7 +56,11 @@ export const syncColumns = () => [
           >
             <a>Sync</a>
           </Popconfirm>
-          {row.last_updated && <Link to={`${row.id}`} state={row}>View</Link>}
+          {row.last_updated && (
+            <Link to={`${row.id}`} state={row}>
+              View
+            </Link>
+          )}
           <a onClick={() => actions.setRecord(row, 'edit')}>Edit</a>
           <Popconfirm
             title="Are you sure to delete this path?"
@@ -67,23 +71,23 @@ export const syncColumns = () => [
             <a>Delete</a>
           </Popconfirm>
         </Space>
-      )
-    }
-  }
+      );
+    },
+  },
 ];
 
 const RenderPath = ({ row }: any) => {
   const [filePath, setFilePath] = useState('');
   useInit(async () => {
-      setFilePath(await getPath(row));
-  })
-  return <a onClick={() => shell.open(filePath)}>{filePath}</a>
+    setFilePath(await getPath(row));
+  });
+  return <a onClick={() => shell.open(filePath)}>{filePath}</a>;
 };
 
 export const getPath = async (row: any) => {
   if (!/^http/.test(row.protocol)) {
-    return await path.join(await chatRoot(), row.path) + `.${row.ext}`;
+    return (await path.join(await chatRoot(), row.path)) + `.${row.ext}`;
   } else {
     return `${row.protocol}://${row.path}.${row.ext}`;
   }
-}
+};

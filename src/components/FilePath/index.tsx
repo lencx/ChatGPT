@@ -22,15 +22,20 @@ const FilePath: FC<FilePathProps> = ({ className, label = 'PATH', paths = '', ur
         setPath(url);
         return;
       }
-      setPath(await path.join(await chatRoot(), ...paths.split('/').filter(i => !!i)));
-    })()
-  }, [url, paths])
+      setPath(await path.join(await chatRoot(), ...paths.split('/').filter((i) => !!i)));
+    })();
+  }, [url, paths]);
 
   return (
     <div className={clsx(className, 'chat-file-path')}>
-      <div>{label}: <a onClick={() => shell.open(filePath)} title={filePath}>{content ? content : filePath}</a></div>
+      <div>
+        {label}:{' '}
+        <a onClick={() => shell.open(filePath)} title={filePath}>
+          {content ? content : filePath}
+        </a>
+      </div>
     </div>
   );
-}
+};
 
 export default FilePath;

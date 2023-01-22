@@ -7,14 +7,17 @@ import { safeKey } from '@/hooks/useData';
 type rowSelectionOptions = {
   key: 'id' | string;
   rowType: 'id' | 'row' | 'all';
-}
+};
 export function useTableRowSelection(options: Partial<rowSelectionOptions> = {}) {
   const { key = 'id', rowType = 'id' } = options;
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [selectedRowIDs, setSelectedRowIDs] = useState<string[]>([]);
-  const [selectedRows, setSelectedRows] = useState<Record<string|symbol, any>[]>([]);
+  const [selectedRows, setSelectedRows] = useState<Record<string | symbol, any>[]>([]);
 
-  const onSelectChange = (newSelectedRowKeys: React.Key[], newSelectedRows: Record<string|symbol, any>[]) => {
+  const onSelectChange = (
+    newSelectedRowKeys: React.Key[],
+    newSelectedRows: Record<string | symbol, any>[],
+  ) => {
     const keys = newSelectedRows.map((i: any) => i[safeKey] || i[key]);
     setSelectedRowKeys(newSelectedRowKeys);
     if (rowType === 'id') {
@@ -38,11 +41,7 @@ export function useTableRowSelection(options: Partial<rowSelectionOptions> = {})
   const rowSelection: TableRowSelection<Record<string, any>> = {
     selectedRowKeys,
     onChange: onSelectChange,
-    selections: [
-      Table.SELECTION_ALL,
-      Table.SELECTION_INVERT,
-      Table.SELECTION_NONE,
-    ],
+    selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT, Table.SELECTION_NONE],
   };
 
   return { rowSelection, selectedRowIDs, selectedRows, rowReset };

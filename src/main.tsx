@@ -9,8 +9,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
     <Suspense fallback={null}>
       <BrowserRouter>
-        <Layout/>
+        <Layout />
       </BrowserRouter>
     </Suspense>
-  </StrictMode>
+  </StrictMode>,
 );

@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import Editor from "@monaco-editor/react";
+import Editor from '@monaco-editor/react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
 import Markdown from '@/components/Markdown';
@@ -17,12 +17,12 @@ const MarkdownEditor: FC<MarkdownEditorProps> = ({ value = '', onChange, mode = 
   useEffect(() => {
     setContent(value);
     onChange && onChange(value);
-  }, [value])
+  }, [value]);
 
   const handleEdit = (e: any) => {
     setContent(e);
     onChange && onChange(e);
-  }
+  };
 
   const isSplit = mode === 'split';
 
@@ -31,11 +31,7 @@ const MarkdownEditor: FC<MarkdownEditorProps> = ({ value = '', onChange, mode = 
       <PanelGroup direction="horizontal">
         {['md', 'split'].includes(mode) && (
           <Panel>
-            <Editor
-              language="markdown"
-              value={content}
-              onChange={handleEdit}
-            />
+            <Editor language="markdown" value={content} onChange={handleEdit} />
           </Panel>
         )}
         {isSplit && <PanelResizeHandle className="resize-handle" />}
@@ -44,9 +40,9 @@ const MarkdownEditor: FC<MarkdownEditorProps> = ({ value = '', onChange, mode = 
             <Markdown className="edit-preview">{content}</Markdown>
           </Panel>
         )}
-        </PanelGroup>
+      </PanelGroup>
     </div>
-  )
+  );
 };
 
 export default MarkdownEditor;

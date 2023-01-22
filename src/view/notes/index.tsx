@@ -46,8 +46,8 @@ export default function Notes() {
         message.success('Name has been changed!');
       }
       opInfo.resetRecord();
-    })()
-  }, [opInfo.opType])
+    })();
+  }, [opInfo.opType]);
 
   const handleDelete = async () => {
     if (opData?.length === selectedRows.length) {
@@ -62,7 +62,7 @@ export default function Notes() {
       const file = await path.join(await chatRoot(), 'notes', `${i?.id}.${i?.ext}`);
       await fs.removeFile(file);
       return file;
-    })
+    });
     Promise.all(rows).then(async () => {
       await handleRefresh();
       message.success('All files selected are cleared!');
@@ -122,5 +122,5 @@ export default function Notes() {
         <Markdown children={source} />
       </Modal>
     </div>
-  )
+  );
 }

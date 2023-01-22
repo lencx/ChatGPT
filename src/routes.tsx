@@ -23,7 +23,7 @@ import Markdown from '@/view/markdown';
 
 export type ChatRouteMetaObject = {
   label: string;
-  icon?: React.ReactNode,
+  icon?: React.ReactNode;
 };
 
 type ChatRouteObject = {
@@ -32,7 +32,7 @@ type ChatRouteObject = {
   hideMenu?: boolean;
   meta?: ChatRouteMetaObject;
   children?: ChatRouteObject[];
-}
+};
 
 export const routes: Array<ChatRouteObject> = [
   {
@@ -116,12 +116,12 @@ export const routes: Array<ChatRouteObject> = [
 type MenuItem = Required<MenuProps>['items'][number];
 export const menuItems: MenuItem[] = routes
   .filter((j) => !j.hideMenu)
-  .map(i => ({
+  .map((i) => ({
     ...i.meta,
     key: i.path || '',
     children: i?.children
       ?.filter((j) => !j.hideMenu)
-      ?.map((j) => ({ ...j.meta, key: `${i.path}/${j.path}` || ''})),
+      ?.map((j) => ({ ...j.meta, key: `${i.path}/${j.path}` || '' })),
   }));
 
 export default () => {
