@@ -23,6 +23,10 @@
   -webkit-user-select: none;
 }
 
+.ant-layout-sider-children {
+  overflow-y: auto;
+}
+
 .chat-container {
   padding: 20px;
   overflow: hidden;

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Form, Tabs, Space, Button, message } from 'antd';
-import { invoke, dialog, process } from '@tauri-apps/api';
+import { Form, Tabs, Space, Button, Popconfirm, message } from 'antd';
+import { invoke, dialog, process, path, shell } from '@tauri-apps/api';
 import { clone, omit, isEqual } from 'lodash';
 
 import useInit from '@/hooks/useInit';
 import FilePath from '@/components/FilePath';
-import { CHAT_CONF_JSON } from '@/utils';
+import { chatRoot, CHAT_CONF_JSON } from '@/utils';
 import General from './General';
 import MainWindow from './MainWindow';
 import TrayWindow from './TrayWindow';
@@ -13,10 +13,11 @@ import TrayWindow from './TrayWindow';
 export default function Settings() {
   const [form] = Form.useForm();
   const [chatConf, setChatConf] = useState<any>(null);
+  const [filePath, setPath] = useState('');
 
   useInit(async () => {
-    const chatData = await invoke('get_chat_conf');
-    setChatConf(chatData);
+    setChatConf(await invoke('get_chat_conf'));
+    setPath(await path.join(await chatRoot(), CHAT_CONF_JSON));
   });
 
   useEffect(() => {
@@ -78,9 +79,22 @@ export default function Settings() {
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
-            <Button type="dashed" onClick={onReset}>
-              Reset to defaults
-            </Button>
+            <Popconfirm
+              title={
+                <div style={{ width: 360 }}>
+                  Are you sure you want to reset the configuration file
+                  <a onClick={() => shell.open(filePath)} style={{ margin: '0 5px' }}>
+                    {filePath}
+                  </a>
+                  to the default?
+                </div>
+              }
+              onConfirm={onReset}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="dashed">Reset to defaults</Button>
+            </Popconfirm>
           </Space>
         </Form.Item>
       </Form>

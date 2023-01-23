@@ -1,7 +1,21 @@
-import { Form, Switch, Input } from 'antd';
+import { Form, Switch, Input, Tooltip } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 
 import { DISABLE_AUTO_COMPLETE } from '@/utils';
 import SwitchOrigin from '@/components/SwitchOrigin';
+
+const UALabel = () => {
+  return (
+    <span>
+      User Agent (SystemTray){' '}
+      <Tooltip
+        title={<div>For a better experience, we recommend using the Mobile User-Agent.</div>}
+      >
+        <QuestionCircleOutlined style={{ color: '#1677ff' }} />
+      </Tooltip>
+    </span>
+  );
+};
 
 export default function General() {
   return (
@@ -10,7 +24,7 @@ export default function General() {
         <Switch />
       </Form.Item>
       <SwitchOrigin name="tray_origin" />
-      <Form.Item label="User Agent (SystemTray)" name="ua_tray">
+      <Form.Item label={<UALabel />} name="ua_tray">
         <Input.TextArea
           autoSize={{ minRows: 4, maxRows: 4 }}
           {...DISABLE_AUTO_COMPLETE}

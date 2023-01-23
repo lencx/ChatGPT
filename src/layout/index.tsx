@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Layout, Menu, Tooltip, ConfigProvider, theme, Tag } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -15,7 +15,12 @@ export default function ChatLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const [appInfo, setAppInfo] = useState<Record<string, any>>({});
   const location = useLocation();
+  const [menuKey, setMenuKey] = useState(location.pathname);
   const go = useNavigate();
+
+  useEffect(() => {
+    setMenuKey(location.pathname);
+  }, [location.pathname]);
 
   useInit(async () => {
     setAppInfo({
@@ -65,7 +70,7 @@ export default function ChatLayout() {
           </div>
 
           <Menu
-            defaultSelectedKeys={[location.pathname]}
+            selectedKeys={[menuKey]}
             mode="inline"
             theme={appInfo.appTheme === 'dark' ? 'dark' : 'light'}
             inlineIndent={12}

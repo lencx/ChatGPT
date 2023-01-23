@@ -124,7 +124,12 @@ export default function SyncCustom() {
 
   return (
     <div>
-      <Button className="chat-add-btn" type="primary" onClick={opInfo.opNew}>
+      <Button
+        style={{ marginBottom: 10 }}
+        className="chat-add-btn"
+        type="primary"
+        onClick={opInfo.opNew}
+      >
         Add PATH
       </Button>
       <Table
