@@ -2,6 +2,7 @@ import { FC } from 'react';
 import clsx from 'clsx';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import agate from 'react-syntax-highlighter/dist/esm/styles/hljs/agate';
 
@@ -20,6 +21,7 @@ const Markdown: FC<MarkdownProps> = ({ children, className }) => {
           children={children}
           linkTarget="_blank"
           remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw]}
           components={{
             code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || '');

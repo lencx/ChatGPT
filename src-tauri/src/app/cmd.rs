@@ -355,6 +355,20 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
 }
 
 #[command]
+pub async fn get_data(app: AppHandle, url: String, is_msg: Option<bool>) -> Option<String> {
+  let is_msg = is_msg.unwrap_or(false);
+  let res = if is_msg {
+    utils::get_data(&url, Some(&app)).await
+  } else {
+    utils::get_data(&url, None).await
+  };
+  res.unwrap_or_else(|err| {
+    info!("chatgpt_client_http_error: {}", err);
+    None
+  })
+}
+
+#[command]
 pub async fn sync_user_prompts(url: String, data_type: String) -> Option<Vec<ModelRecord>> {
   let res = utils::get_data(&url, None).await.unwrap_or_else(|err| {
     info!("chatgpt_http_error: {}", err);

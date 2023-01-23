@@ -50,6 +50,8 @@
     "react-resizable-panels": "^0.0.33",
     "react-router-dom": "^6.4.5",
     "react-syntax-highlighter": "^15.5.0",
+    "rehype-raw": "^6.1.1",
+    "remark-comment-config": "^7.0.1",
     "remark-gfm": "^3.0.1",
     "uuid": "^9.0.0"
   },

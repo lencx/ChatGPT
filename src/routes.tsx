@@ -8,10 +8,12 @@ import {
   DownloadOutlined,
   FormOutlined,
   GlobalOutlined,
+  InfoCircleOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 
 import Settings from '@/view/settings';
+import About from '@/view/about';
 import Awesome from '@/view/awesome';
 import UserCustom from '@/view/model/UserCustom';
 import SyncPrompts from '@/view/model/SyncPrompts';
@@ -96,7 +98,7 @@ export const routes: Array<ChatRouteObject> = [
     ],
   },
   {
-    path: 'download',
+    path: '/download',
     element: <Download />,
     meta: {
       label: 'Download',
@@ -109,6 +111,14 @@ export const routes: Array<ChatRouteObject> = [
     meta: {
       label: 'Settings',
       icon: <SettingOutlined />,
+    },
+  },
+  {
+    path: '/about',
+    element: <About />,
+    meta: {
+      label: 'About',
+      icon: <InfoCircleOutlined />,
     },
   },
 ];

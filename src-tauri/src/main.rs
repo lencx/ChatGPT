@@ -78,6 +78,7 @@ async fn main() {
       cmd::cmd_list,
       cmd::download_list,
       cmd::get_download_list,
+      cmd::get_data,
       fs_extra::metadata,
     ])
     .setup(setup::init)
