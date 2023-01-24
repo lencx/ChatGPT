@@ -64,6 +64,14 @@ async function init() {
     topDom.id = "chatgpt-app-window-top";
     document.body.appendChild(topDom);
 
+    const nav = document.body.querySelector('nav');
+    if (nav) {
+      const currentPaddingTop = parseInt(window.getComputedStyle(document.querySelector('nav'), null).getPropertyValue('padding-top').replace('px', ''), 10);
+      const navStyleDom = document.createElement("style");
+      navStyleDom.innerHTML = `nav{padding-top:${currentPaddingTop + topDom.clientHeight}px !important}`;
+      document.head.appendChild(navStyleDom);
+    }
+
     topDom.addEventListener("mousedown", () => invoke("drag_window"));
     topDom.addEventListener("touchstart", () => invoke("drag_window"));
     topDom.addEventListener("dblclick", () => invoke("fullscreen"));
