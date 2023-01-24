@@ -9,22 +9,24 @@ pub fn tray_window(handle: &tauri::AppHandle) {
   let app = handle.clone();
 
   tauri::async_runtime::spawn(async move {
-    let mut tray_win = WindowBuilder::new(
-      &app,
-      "tray",
-      WindowUrl::App(chat_conf.tray_origin.clone().into()),
-    )
-    .title("ChatGPT")
-    .resizable(false)
-    .fullscreen(false)
-    .inner_size(360.0, 540.0)
-    .decorations(false)
-    .always_on_top(true)
-    .theme(theme)
-    .initialization_script(&utils::user_script())
-    .initialization_script(include_str!("../scripts/core.js"));
+    let link = if chat_conf.tray_dashboard {
+      "index.html"
+    } else {
+      &chat_conf.tray_origin
+    };
+    let mut tray_win = WindowBuilder::new(&app, "tray", WindowUrl::App(link.into()))
+      .title("ChatGPT")
+      .resizable(false)
+      .fullscreen(false)
+      .inner_size(360.0, 540.0)
+      .decorations(false)
+      .always_on_top(true)
+      .theme(theme)
+      .initialization_script(&utils::user_script())
+      .initialization_script(include_str!("../scripts/core.js"))
+      .user_agent(&chat_conf.ua_tray);
 
-    if chat_conf.tray_origin == "https://chat.openai.com" {
+    if chat_conf.tray_origin == "https://chat.openai.com" && !chat_conf.tray_dashboard {
       tray_win = tray_win
         .initialization_script(include_str!("../vendors/floating-ui-core.js"))
         .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
@@ -32,12 +34,7 @@ pub fn tray_window(handle: &tauri::AppHandle) {
         .initialization_script(include_str!("../scripts/popup.core.js"))
     }
 
-    tray_win
-      .user_agent(&chat_conf.ua_tray)
-      .build()
-      .unwrap()
-      .hide()
-      .unwrap();
+    tray_win.build().unwrap().hide().unwrap();
   });
 }
 

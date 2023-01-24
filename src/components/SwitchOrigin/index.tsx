@@ -74,16 +74,18 @@ const SwitchOrigin: FC<SwitchOriginProps> = ({ name }) => {
         name={originName}
       >
         <Select disabled={isEnable} showSearch {...DISABLE_AUTO_COMPLETE} optionLabelProp="url">
-          {[{ title: 'ChatGPT', url: 'https://chat.openai.com' }, ...list].map((i, idx) => (
-            <Select.Option
-              key={`${idx}_${i.url}`}
-              label={i.title}
-              value={i.url}
-              title={`${i.title}: ${i.url}`}
-            >
-              <Tag color={i.title === 'ChatGPT' ? 'orange' : 'geekblue'}>{i.title}</Tag> {i.url}
-            </Select.Option>
-          ))}
+          {[{ title: 'ChatGPT', url: 'https://chat.openai.com', init: true }, ...list].map(
+            (i, idx) => (
+              <Select.Option
+                key={`${idx}_${i.url}`}
+                label={i.title}
+                value={i.url}
+                title={`${i.title}${i.init ? '(Built-in)' : ''}: ${i.url}`}
+              >
+                <Tag color={i.init ? 'orange' : 'geekblue'}>{i.title}</Tag> {i.url}
+              </Select.Option>
+            ),
+          )}
         </Select>
       </Form.Item>
     </>

@@ -59,7 +59,13 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         .title("ChatGPT")
         .resizable(true)
         .fullscreen(false)
-        .inner_size(800.0, 600.0);
+        .inner_size(800.0, 600.0)
+        .theme(theme)
+        .always_on_top(chat_conf.stay_on_top)
+        .title_bar_style(ChatConfJson::titlebar())
+        .initialization_script(&utils::user_script())
+        .initialization_script(include_str!("../scripts/core.js"))
+        .user_agent(&chat_conf.ua_window);
 
       if cfg!(target_os = "macos") {
         main_win = main_win.hidden_title(true);
@@ -79,15 +85,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
           .initialization_script(include_str!("../scripts/cmd.js"))
       }
 
-      main_win
-        .theme(theme)
-        .always_on_top(chat_conf.stay_on_top)
-        .title_bar_style(ChatConfJson::titlebar())
-        .initialization_script(&utils::user_script())
-        .initialization_script(include_str!("../scripts/core.js"))
-        .user_agent(&chat_conf.ua_window)
-        .build()
-        .unwrap();
+      main_win.build().unwrap();
     });
   }
 
