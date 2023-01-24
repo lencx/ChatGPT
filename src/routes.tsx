@@ -39,6 +39,14 @@ type ChatRouteObject = {
 
 export const routes: Array<ChatRouteObject> = [
   {
+    path: '/settings',
+    element: <Settings />,
+    meta: {
+      label: 'Settings',
+      icon: <SettingOutlined />,
+    },
+  },
+  {
     path: '/awesome',
     element: <Awesome />,
     meta: {
@@ -104,14 +112,6 @@ export const routes: Array<ChatRouteObject> = [
     meta: {
       label: 'Download',
       icon: <DownloadOutlined />,
-    },
-  },
-  {
-    path: '/settings',
-    element: <Settings />,
-    meta: {
-      label: 'Settings',
-      icon: <SettingOutlined />,
     },
   },
   {

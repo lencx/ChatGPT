@@ -94,6 +94,16 @@ pub fn dalle2_window(
 }
 
 #[tauri::command]
+pub fn dalle2_search_window(app: tauri::AppHandle, query: String) {
+  dalle2_window(
+    &app.app_handle(),
+    Some(query),
+    Some("ChatGPT & DALL·E 2".to_string()),
+    None,
+  );
+}
+
+#[tauri::command]
 pub fn control_window(handle: tauri::AppHandle) {
   tauri::async_runtime::spawn(async move {
     if handle.get_window("main").is_none() {
@@ -105,8 +115,8 @@ pub fn control_window(handle: tauri::AppHandle) {
       .title("Control Center")
       .resizable(true)
       .fullscreen(false)
-      .inner_size(1000.0, 700.0)
-      .min_inner_size(800.0, 600.0)
+      .inner_size(1200.0, 700.0)
+      .min_inner_size(1000.0, 600.0)
       .build()
       .unwrap();
     } else {
@@ -140,6 +150,11 @@ pub async fn wa_window(
     if !win.clone().unwrap().is_visible().unwrap() {
       win.clone().unwrap().show().unwrap();
     }
+    win
+      .clone()
+      .unwrap()
+      .eval("window.location.reload()")
+      .unwrap();
     win.unwrap().set_focus().unwrap();
   }
 }

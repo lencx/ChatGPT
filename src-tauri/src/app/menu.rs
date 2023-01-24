@@ -235,7 +235,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
       utils::run_check_update(app, false, None);
     }
     // Preferences
-    "control_center" => window::control_window(app.clone()),
+    "control_center" => window::control_window(app),
     "restart" => tauri::api::process::restart(&app.env()),
     "inject_script" => open(&app, script_path),
     "go_conf" => utils::open_file(utils::chat_root()),
@@ -340,7 +340,6 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     "reload" => win.eval("window.location.reload()").unwrap(),
     "go_back" => win.eval("window.history.go(-1)").unwrap(),
     "go_forward" => win.eval("window.history.go(1)").unwrap(),
-    // core: document.querySelector('main .overflow-y-auto')
     "scroll_top" => win
       .eval(
         r#"window.scroll({

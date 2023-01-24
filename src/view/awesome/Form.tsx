@@ -43,7 +43,11 @@ const AwesomeForm: ForwardRefRenderFunction<FormProps, AwesomeFormProps> = ({ re
       >
         <Input placeholder="Please enter the URL" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
-      <Form.Item label="Category" name="category">
+      <Form.Item
+        label="Category"
+        name="category"
+        rules={[{ required: true, message: 'Please enter a category' }]}
+      >
         <Input placeholder="Please enter a category" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
       <Form.Item label="Tags" name="tags">

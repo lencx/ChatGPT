@@ -20,7 +20,9 @@
     }
 
     .txt {
+      padding: 10px;
       font-size: 12px;
+      line-height: 16px;
 
       a {
         color: #1677ff;
@@ -35,6 +37,10 @@
 
   &.has-top-dom {
     padding-top: 30px;
+  }
+
+  &.preview {
+    padding-top: 15px;
   }
 
   .group-item {

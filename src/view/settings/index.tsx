@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Form, Tabs, Space, Button, Popconfirm, message } from 'antd';
 import { invoke, dialog, process, path, shell } from '@tauri-apps/api';
 import { clone, omit, isEqual } from 'lodash';
@@ -11,9 +12,16 @@ import MainWindow from './MainWindow';
 import TrayWindow from './TrayWindow';
 
 export default function Settings() {
+  const [params] = useSearchParams();
+  const [activeKey, setActiveKey] = useState('general');
   const [form] = Form.useForm();
   const [chatConf, setChatConf] = useState<any>(null);
   const [filePath, setPath] = useState('');
+  const key = params.get('type');
+
+  useEffect(() => {
+    setActiveKey(key ? key : 'general');
+  }, [key]);
 
   useInit(async () => {
     setChatConf(await invoke('get_chat_conf'));
@@ -55,6 +63,10 @@ export default function Settings() {
     }
   };
 
+  const handleTab = (v: string) => {
+    setActiveKey(v);
+  };
+
   return (
     <div>
       <FilePath paths={CHAT_CONF_JSON} />
@@ -66,6 +78,8 @@ export default function Settings() {
         wrapperCol={{ span: 13, offset: 1 }}
       >
         <Tabs
+          activeKey={activeKey}
+          onChange={handleTab}
           items={[
             { label: 'General', key: 'general', children: <General /> },
             { label: 'Main Window', key: 'main_window', children: <MainWindow /> },

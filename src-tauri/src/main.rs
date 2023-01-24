@@ -7,7 +7,7 @@ mod app;
 mod conf;
 mod utils;
 
-use app::{cmd, fs_extra, menu, setup, window};
+use app::{cmd, fs_extra, gpt, menu, setup, window};
 use conf::ChatConfJson;
 use tauri::api::path;
 use tauri_plugin_autostart::MacosLauncher;
@@ -30,8 +30,8 @@ async fn main() {
     trace: Color::Cyan,
   };
 
-  cmd::download_list("chat.download.json", "download", None, None);
-  cmd::download_list("chat.notes.json", "notes", None, None);
+  gpt::download_list("chat.download.json", "download", None, None);
+  gpt::download_list("chat.notes.json", "notes", None, None);
 
   let chat_conf = ChatConfJson::get_chat_conf();
 
@@ -69,19 +69,19 @@ async fn main() {
       cmd::form_confirm,
       cmd::form_msg,
       cmd::open_file,
-      cmd::get_chat_model_cmd,
-      cmd::parse_prompt,
-      cmd::sync_prompts,
-      cmd::sync_user_prompts,
-      cmd::dalle2_window,
-      cmd::cmd_list,
-      cmd::download_list,
-      cmd::get_download_list,
       cmd::get_data,
-      fs_extra::metadata,
-      window::window_reload,
+      gpt::get_chat_model_cmd,
+      gpt::parse_prompt,
+      gpt::sync_prompts,
+      gpt::sync_user_prompts,
+      gpt::cmd_list,
+      gpt::download_list,
+      gpt::get_download_list,
       window::wa_window,
       window::control_window,
+      window::window_reload,
+      window::dalle2_search_window,
+      fs_extra::metadata,
     ])
     .setup(setup::init)
     .menu(menu::init());

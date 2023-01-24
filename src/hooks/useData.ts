@@ -28,6 +28,12 @@ export default function useData(oData: any[]) {
     return nData;
   };
 
+  const opRemoveItems = (ids: string[]) => {
+    const nData = opData.filter((i) => !ids.includes(i[safeKey]));
+    setData(nData);
+    return nData;
+  };
+
   const opReplace = (id: string, data: any) => {
     const nData = [...opData];
     const idx = opData.findIndex((v) => v[safeKey] === id);
@@ -51,5 +57,14 @@ export default function useData(oData: any[]) {
     return nData;
   };
 
-  return { opSafeKey: safeKey, opInit, opReplace, opAdd, opRemove, opData, opReplaceItems };
+  return {
+    opSafeKey: safeKey,
+    opInit,
+    opReplace,
+    opAdd,
+    opRemove,
+    opRemoveItems,
+    opData,
+    opReplaceItems,
+  };
 }

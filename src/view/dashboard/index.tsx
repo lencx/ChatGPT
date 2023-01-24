@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import { useSearchParams } from 'react-router-dom';
 import { Row, Col, Card } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { os, invoke } from '@tauri-apps/api';
@@ -10,6 +11,7 @@ import { CHAT_AWESOME_JSON, CHAT_CONF_JSON, readJSON } from '@/utils';
 import './index.scss';
 
 export default function Dashboard() {
+  const [params] = useSearchParams();
   const { json } = useJson<Record<string, any>[]>(CHAT_AWESOME_JSON);
   const [list, setList] = useState<Array<[string, Record<string, any>[]]>>();
   const [hasClass, setClass] = useState(false);
@@ -56,14 +58,19 @@ export default function Dashboard() {
         </div>
         <div className="txt">
           Go to <a onClick={() => invoke('control_window')}>{'Control Center -> Awesome'}</a> to add
-          data
+          data and make sure they are enabled.
         </div>
       </div>
     );
   }
 
   return (
-    <div className={clsx('dashboard', theme, { 'has-top-dom': hasClass })}>
+    <div
+      className={clsx('dashboard', theme, {
+        'has-top-dom': hasClass,
+        preview: params.get('type') === 'preview',
+      })}
+    >
       <div>
         {list.map((i) => {
           return (

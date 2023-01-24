@@ -1,5 +1,8 @@
 import { useRef, useEffect, useState } from 'react';
-import { Table, Modal, Popconfirm, Button, message } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { Table, Modal, Popconfirm, Button, Tooltip, Tag, message } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { invoke } from '@tauri-apps/api';
 
 import useJson from '@/hooks/useJson';
 import useData from '@/hooks/useData';
@@ -13,9 +16,10 @@ import AwesomeForm from './Form';
 export default function Awesome() {
   const formRef = useRef<any>(null);
   const [isVisible, setVisible] = useState(false);
-  const { opData, opInit, opAdd, opReplace, opReplaceItems, opRemove, opSafeKey } = useData([]);
+  const { opData, opInit, opAdd, opReplace, opReplaceItems, opRemove, opRemoveItems, opSafeKey } =
+    useData([]);
   const { columns, ...opInfo } = useColumns(awesomeColumns());
-  const { rowSelection, selectedRowIDs } = useTableRowSelection();
+  const { rowSelection, selectedRowIDs, rowReset } = useTableRowSelection();
   const { json, updateJson } = useJson<any[]>(CHAT_AWESOME_JSON);
   const selectedItems = rowSelection.selectedRowKeys || [];
 
@@ -48,11 +52,19 @@ export default function Awesome() {
     }
   }, [opInfo.opTime]);
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    const data = opRemoveItems(selectedRowIDs);
+    updateJson(data);
+    rowReset();
+    message.success('All selected URLs have been deleted');
+  };
 
   const handleOk = () => {
     formRef.current?.form?.validateFields().then(async (vals: Record<string, any>) => {
-      const idx = opData.findIndex((i) => i.url === vals.url);
+      let idx = opData.findIndex((i) => i.url === vals.url);
+      if (vals.url === opInfo?.opRecord?.url) {
+        idx = -1;
+      }
       if (idx === -1) {
         if (opInfo.opType === 'new') {
           const data = opAdd(vals);
@@ -87,14 +99,28 @@ export default function Awesome() {
     updateJson(data);
   };
 
+  const handlePreview = () => {
+    invoke('wa_window', {
+      label: 'awesome_preview',
+      url: 'index.html?type=preview',
+      title: 'Preview Dashboard',
+    });
+  };
+
   const modalTitle = `${{ new: 'Create', edit: 'Edit' }[opInfo.opType]} URL`;
 
   return (
     <div>
       <div className="chat-table-btns">
-        <Button className="chat-add-btn" type="primary" onClick={opInfo.opNew}>
-          Add URL
-        </Button>
+        <div>
+          <Button className="chat-add-btn" type="primary" onClick={opInfo.opNew}>
+            Add URL
+          </Button>
+          <Button type="dashed" onClick={handlePreview}>
+            Preview Dashboard
+          </Button>
+          <PreviewTip />
+        </div>
         <div>
           {selectedItems.length > 0 && (
             <>
@@ -139,3 +165,33 @@ export default function Awesome() {
     </div>
   );
 }
+
+const PreviewTip = () => {
+  const go = useNavigate();
+  const handleGo = (v: string) => {
+    go(`/settings?type=${v}`);
+  };
+
+  return (
+    <Tooltip
+      overlayInnerStyle={{ width: 400 }}
+      title={
+        <div className="awesome-tips">
+          Click the button to preview, and in
+          <Link to="/settings"> Settings </Link>
+          you can set a single URL or Dashboard as the default window for the app.
+          <br />
+          <Tag onClick={() => handleGo('main_window')} color="blue">
+            Main Window
+          </Tag>
+          {'or '}
+          <Tag onClick={() => handleGo('tray_window')} color="blue">
+            SystemTray Window
+          </Tag>
+        </div>
+      }
+    >
+      <QuestionCircleOutlined style={{ marginLeft: 5, color: '#1677ff' }} />
+    </Tooltip>
+  );
+};

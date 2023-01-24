@@ -21,7 +21,10 @@ export default function ChatLayout() {
 
   useEffect(() => {
     if (location.search === '?type=control') {
-      go('/awesome');
+      go('/settings');
+    }
+    if (location.search === '?type=preview') {
+      go('/?type=preview');
     }
     setMenuKey(location.pathname);
     setDashboard(location.pathname === '/');

@@ -28,7 +28,7 @@ const SwitchOrigin: FC<SwitchOriginProps> = ({ name }) => {
               title={
                 <div>
                   <p>
-                    <b>Set the URL dashboard as an application window.</b>
+                    <b>Set Dashboard as the application default window.</b>
                   </p>
                   <p>
                     If this is enabled, the <Tag color="blue">Switch Origin {labelName}</Tag>{' '}
@@ -58,7 +58,7 @@ const SwitchOrigin: FC<SwitchOriginProps> = ({ name }) => {
               title={
                 <div>
                   <p>
-                    <b>Set a single URL as an application window.</b>
+                    <b>Set a single URL as the application default window.</b>
                   </p>
                   <p>
                     If you need to set a new URL as the application loading window, please add the
