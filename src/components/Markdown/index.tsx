@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import agate from 'react-syntax-highlighter/dist/esm/styles/hljs/agate';
+import 'github-markdown-css';
 
 import './index.scss';
 
