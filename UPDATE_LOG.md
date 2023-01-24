@@ -4,7 +4,7 @@
 
 Fix:
 
-- After exporting the file, open an empty file explorer (https://github.com/lencx/ChatGPT/issues/242)
+- After exporting a file in Windows, open an empty file explorer (https://github.com/lencx/ChatGPT/issues/242)
 
 Feat:
 
