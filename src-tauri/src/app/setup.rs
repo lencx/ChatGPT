@@ -62,13 +62,14 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         .inner_size(800.0, 600.0)
         .theme(theme)
         .always_on_top(chat_conf.stay_on_top)
-        .title_bar_style(ChatConfJson::titlebar())
         .initialization_script(&utils::user_script())
         .initialization_script(include_str!("../scripts/core.js"))
         .user_agent(&chat_conf.ua_window);
 
       if cfg!(target_os = "macos") {
-        main_win = main_win.hidden_title(true);
+        main_win = main_win
+          .title_bar_style(ChatConfJson::titlebar())
+          .hidden_title(true);
       }
 
       if url == "https://chat.openai.com" && !chat_conf.main_dashboard {
