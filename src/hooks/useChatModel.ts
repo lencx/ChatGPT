@@ -15,12 +15,12 @@ export default function useChatModel(key: string, file = CHAT_MODEL_JSON) {
     setModelJson(data);
   });
 
-  const modelSet = async (data: Record<string, any>[]|Record<string, any>) => {
+  const modelSet = async (data: Record<string, any>[] | Record<string, any>) => {
     const oData = clone(modelJson);
     oData[key] = data;
     await writeJSON(file, oData);
     setModelJson(oData);
-  }
+  };
 
   return { modelJson, modelSet, modelData: modelJson?.[key] || [] };
 }
@@ -40,12 +40,16 @@ export function useCacheModel(file = '') {
     await writeJSON(newFile ? newFile : file, data, { isRoot: true });
     setModelCacheJson(data);
     await modelCacheCmd();
-  }
+  };
 
   const modelCacheCmd = async () => {
     // Generate the `chat.model.cmd.json` file and refresh the page for the slash command to take effect.
     const list = await invoke('cmd_list');
-    await writeJSON(CHAT_MODEL_CMD_JSON, { name: 'ChatGPT CMD', last_updated: Date.now(), data: list });
+    await writeJSON(CHAT_MODEL_CMD_JSON, {
+      name: 'ChatGPT CMD',
+      last_updated: Date.now(),
+      data: list,
+    });
     await invoke('window_reload', { label: 'core' });
     await invoke('window_reload', { label: 'tray' });
   };

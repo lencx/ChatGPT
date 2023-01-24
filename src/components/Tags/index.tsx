@@ -8,9 +8,11 @@ import { DISABLE_AUTO_COMPLETE } from '@/utils';
 interface TagsProps {
   value?: string[];
   onChange?: (v: string[]) => void;
+  addTxt?: string;
+  max?: number;
 }
 
-const Tags: FC<TagsProps> = ({ value = [], onChange }) => {
+const Tags: FC<TagsProps> = ({ max = 99, value = [], onChange, addTxt = 'New Tag' }) => {
   const [tags, setTags] = useState<string[]>(value);
   const [inputVisible, setInputVisible] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState('');
@@ -18,7 +20,7 @@ const Tags: FC<TagsProps> = ({ value = [], onChange }) => {
 
   useEffect(() => {
     setTags(value);
-  }, [value])
+  }, [value]);
 
   useEffect(() => {
     if (inputVisible) {
@@ -86,9 +88,9 @@ const Tags: FC<TagsProps> = ({ value = [], onChange }) => {
           {...DISABLE_AUTO_COMPLETE}
         />
       )}
-      {!inputVisible && (
+      {!inputVisible && tags.length < max && (
         <Tag onClick={showInput} className="chat-tag-new">
-          <PlusOutlined /> New Tag
+          <PlusOutlined /> {addTxt}
         </Tag>
       )}
     </>

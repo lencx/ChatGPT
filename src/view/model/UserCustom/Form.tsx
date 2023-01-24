@@ -6,7 +6,7 @@ import Tags from '@comps/Tags';
 import { DISABLE_AUTO_COMPLETE } from '@/utils';
 
 interface UserCustomFormProps {
-  record?: Record<string|symbol, any> | null;
+  record?: Record<string | symbol, any> | null;
 }
 
 const initFormValue = {
@@ -16,7 +16,10 @@ const initFormValue = {
   prompt: '',
 };
 
-const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> = ({ record }, ref) => {
+const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> = (
+  { record },
+  ref,
+) => {
   const [form] = Form.useForm();
   useImperativeHandle(ref, () => ({ form }));
 
@@ -27,24 +30,20 @@ const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> =
   }, [record]);
 
   return (
-    <Form
-      form={form}
-      labelCol={{ span: 4 }}
-      initialValues={initFormValue}
-    >
+    <Form form={form} labelCol={{ span: 4 }} initialValues={initFormValue}>
       <Form.Item
         label="/{cmd}"
         name="cmd"
-        rules={[{ required: true, message: 'Please input {cmd}!' }]}
+        rules={[{ required: true, message: 'Please enter the {cmd}!' }]}
       >
-        <Input placeholder="Please input {cmd}" {...DISABLE_AUTO_COMPLETE} />
+        <Input placeholder="Please enter the {cmd}" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
       <Form.Item
         label="Act"
         name="act"
-        rules={[{ required: true, message: 'Please input act!' }]}
+        rules={[{ required: true, message: 'Please enter the Act!' }]}
       >
-        <Input placeholder="Please input act" {...DISABLE_AUTO_COMPLETE} />
+        <Input placeholder="Please enter the Act" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
       <Form.Item label="Tags" name="tags">
         <Tags value={record?.tags} />
@@ -55,12 +54,12 @@ const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> =
       <Form.Item
         label="Prompt"
         name="prompt"
-        rules={[{ required: true, message: 'Please input prompt!' }]}
+        rules={[{ required: true, message: 'Please enter a prompt!' }]}
       >
-        <Input.TextArea rows={4} placeholder="Please input prompt" {...DISABLE_AUTO_COMPLETE} />
+        <Input.TextArea rows={4} placeholder="Please enter a prompt" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
     </Form>
-  )
-}
+  );
+};
 
 export default forwardRef(UserCustomForm);

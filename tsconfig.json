@@ -20,7 +20,7 @@
       "@/*": ["src/*"],
       "@view/*": ["src/view/*"],
       "@comps/*": ["src/components/*"],
-      "@layout/*": ["src/layout/*"],
+      "@layout/*": ["src/layout/*"]
     }
   },
   "include": ["src"],

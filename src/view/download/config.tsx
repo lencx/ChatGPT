@@ -10,7 +10,7 @@ import { fmtDate, chatRoot } from '@/utils';
 const colorMap: any = {
   pdf: 'blue',
   png: 'orange',
-}
+};
 
 export const downloadColumns = () => [
   {
@@ -61,20 +61,22 @@ export const downloadColumns = () => [
             <a>Delete</a>
           </Popconfirm>
         </Space>
-      )
-    }
-  }
+      );
+    },
+  },
 ];
 
 const RenderPath = ({ row }: any) => {
   const [filePath, setFilePath] = useState('');
   useInit(async () => {
-      setFilePath(await getPath(row));
-  })
+    setFilePath(await getPath(row));
+  });
   return <a onClick={() => shell.open(filePath)}>{filePath}</a>;
 };
 
 export const getPath = async (row: any) => {
   const isImg = ['png'].includes(row?.ext);
-  return await path.join(await chatRoot(), 'download', isImg ? 'img' : row.ext, row.id) + `.${row.ext}`;
-}
+  return (
+    (await path.join(await chatRoot(), 'download', isImg ? 'img' : row.ext, row.id)) + `.${row.ext}`
+  );
+};

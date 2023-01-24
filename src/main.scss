@@ -14,11 +14,15 @@
   -webkit-text-size-adjust: 100%;
 }
 
-html, body {
+html,
+body,
+#root {
   padding: 0;
   margin: 0;
+  height: 100%;
 }
 
+.ant-table-selection-col,
 .ant-table-selection-column {
   width: 50px !important;
   min-width: 50px !important;
@@ -56,6 +60,7 @@ html, body {
   margin-bottom: 5px;
 }
 
+.chat-tags,
 .chat-prompts-tags {
   .ant-tag {
     margin: 2px;
@@ -68,12 +73,11 @@ html, body {
   }
 }
 
-.chat-file-path,
-.chat-sync-path {
+.chat-file-path {
   font-size: 12px;
   font-weight: 500;
   color: #888;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
   line-height: 16px;
 
   > div {
@@ -81,7 +85,6 @@ html, body {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    // color: #2a2a2a;
   }
 
   span {
@@ -94,5 +97,15 @@ html, body {
     border-radius: 4px;
     cursor: pointer;
     text-decoration: underline;
+  }
+}
+
+.chatico {
+  cursor: pointer;
+}
+
+.awesome-tips {
+  .ant-tag {
+    cursor: pointer;
   }
 }

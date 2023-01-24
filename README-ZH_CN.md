@@ -10,6 +10,7 @@
 [![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
 [![chat](https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord)](https://discord.gg/aPhCRf4zZr)
 [![lencx](https://img.shields.io/badge/follow-lencx__-blue?style=flat&logo=Twitter)](https://twitter.com/lencx_)
+
 <!-- [![lencx](https://img.shields.io/twitter/follow/lencx_.svg?style=social)](https://twitter.com/lencx_) -->
 
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
@@ -23,8 +24,9 @@
 
 ### Windows
 
-- [ChatGPT_0.9.2_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.9.2/ChatGPT_0.9.2_x64_en-US.msi):
+- [ChatGPT_0.10.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.10.0/ChatGPT_0.10.0_x64_en-US.msi):
 - 使用 [winget](https://winstall.app/apps/lencx.ChatGPT):
+
   ```bash
   # install the latest version
   winget install --id=lencx.ChatGPT -e
@@ -33,12 +35,12 @@
   winget install --id=lencx.ChatGPT -e --version 0.9.0
   ```
 
-**注意：如果安装路径和应用名称相同，会导致冲突 ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.9.2))**
+**注意：如果安装路径和应用名称相同，会导致冲突 ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.10.0))**
 
 ### Mac
 
-- [ChatGPT_0.9.2_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.9.2/ChatGPT_0.9.2_x64.dmg)
-- [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.9.2/ChatGPT.app.tar.gz)
+- [ChatGPT_0.10.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.10.0/ChatGPT_0.10.0_x64.dmg)
+- [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.10.0/ChatGPT.app.tar.gz)
 - Homebrew \
   _[Homebrew 快捷安装](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
@@ -54,8 +56,8 @@
 
 ### Linux
 
-- [chat-gpt_0.9.2_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.9.2/chat-gpt_0.9.2_amd64.deb)
-- [chat-gpt_0.9.2_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.9.2/chat-gpt_0.9.2_amd64.AppImage): **工作可靠，`.deb` 运行失败时可以尝试它**
+- [chat-gpt_0.10.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.10.0/chat-gpt_0.10.0_amd64.deb)
+- [chat-gpt_0.10.0_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.10.0/chat-gpt_0.10.0_amd64.AppImage): **工作可靠，`.deb` 运行失败时可以尝试它**
 - 使用 [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin):
   ```bash
   yay -S chatgpt-desktop-bin

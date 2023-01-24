@@ -8,7 +8,7 @@ export default function useData(oData: any[]) {
 
   useEffect(() => {
     opInit(oData);
-  }, [])
+  }, []);
 
   const opAdd = (val: any) => {
     const v = [val, ...opData];
@@ -18,19 +18,25 @@ export default function useData(oData: any[]) {
 
   const opInit = (val: any[] = []) => {
     if (!val || !Array.isArray(val)) return;
-    const nData = val.map(i => ({ [safeKey]: v4(), ...i }));
+    const nData = val.map((i) => ({ [safeKey]: v4(), ...i }));
     setData(nData);
   };
 
   const opRemove = (id: string) => {
-    const nData = opData.filter(i => i[safeKey] !== id);
+    const nData = opData.filter((i) => i[safeKey] !== id);
+    setData(nData);
+    return nData;
+  };
+
+  const opRemoveItems = (ids: string[]) => {
+    const nData = opData.filter((i) => !ids.includes(i[safeKey]));
     setData(nData);
     return nData;
   };
 
   const opReplace = (id: string, data: any) => {
     const nData = [...opData];
-    const idx = opData.findIndex(v => v[safeKey] === id);
+    const idx = opData.findIndex((v) => v[safeKey] === id);
     nData[idx] = data;
     setData(nData);
     return nData;
@@ -51,5 +57,14 @@ export default function useData(oData: any[]) {
     return nData;
   };
 
-  return { opSafeKey: safeKey, opInit, opReplace, opAdd, opRemove, opData, opReplaceItems };
+  return {
+    opSafeKey: safeKey,
+    opInit,
+    opReplace,
+    opAdd,
+    opRemove,
+    opRemoveItems,
+    opData,
+    opReplaceItems,
+  };
 }

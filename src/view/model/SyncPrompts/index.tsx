@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Table, Button, Popconfirm } from 'antd';
-import { invoke, path, shell } from '@tauri-apps/api';
+import { invoke, path } from '@tauri-apps/api';
 
 import useInit from '@/hooks/useInit';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
+import FilePath from '@/components/FilePath';
 import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { fmtDate, chatRoot } from '@/utils';
@@ -51,7 +52,7 @@ export default function SyncPrompts() {
   }, [opInfo.opTime]);
 
   const handleEnable = (isEnable: boolean) => {
-    const data = opReplaceItems(selectedRowIDs, { enable: isEnable })
+    const data = opReplaceItems(selectedRowIDs, { enable: isEnable });
     modelCacheSet(data);
   };
 
@@ -71,7 +72,9 @@ export default function SyncPrompts() {
         <div>
           {selectedItems.length > 0 && (
             <>
-              <Button type="primary" onClick={() => handleEnable(true)}>Enable</Button>
+              <Button type="primary" onClick={() => handleEnable(true)}>
+                Enable
+              </Button>
               <Button onClick={() => handleEnable(false)}>Disable</Button>
               <span className="num">Selected {selectedItems.length} items</span>
             </>
@@ -80,10 +83,14 @@ export default function SyncPrompts() {
       </div>
       <div className="chat-table-tip">
         <div className="chat-sync-path">
-          <div>PATH: <a onClick={() => shell.open(promptsURL)} target="_blank" title={promptsURL}>f/awesome-chatgpt-prompts/prompts.csv</a></div>
-          <div>CACHE: <a onClick={() => shell.open(jsonPath)} target="_blank" title={jsonPath}>{jsonPath}</a></div>
+          <FilePath url={promptsURL} content="f/awesome-chatgpt-prompts/prompts.csv" />
+          <FilePath label="CACHE" paths="cache_model/chatgpt_prompts.json" />
         </div>
-        {lastUpdated && <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>Last updated on {fmtDate(lastUpdated)}</span>}
+        {lastUpdated && (
+          <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>
+            Last updated on {fmtDate(lastUpdated)}
+          </span>
+        )}
       </div>
       <Table
         key={lastUpdated}
@@ -93,8 +100,10 @@ export default function SyncPrompts() {
         dataSource={opData}
         rowSelection={rowSelection}
         pagination={TABLE_PAGINATION}
-        expandable={{expandedRowRender: (record) => <div style={{ padding: 10 }}>{record.prompt}</div>}}
+        expandable={{
+          expandedRowRender: (record) => <div style={{ padding: 10 }}>{record.prompt}</div>,
+        }}
       />
     </div>
-  )
+  );
 }

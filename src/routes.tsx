@@ -7,20 +7,26 @@ import {
   UserOutlined,
   DownloadOutlined,
   FormOutlined,
+  GlobalOutlined,
+  InfoCircleOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 
-import General from '@view/General';
+import Settings from '@/view/settings';
+import About from '@/view/about';
+import Awesome from '@/view/awesome';
 import UserCustom from '@/view/model/UserCustom';
 import SyncPrompts from '@/view/model/SyncPrompts';
 import SyncCustom from '@/view/model/SyncCustom';
 import SyncRecord from '@/view/model/SyncRecord';
 import Download from '@/view/download';
 import Notes from '@/view/notes';
+import Markdown from '@/view/markdown';
+import Dashboard from '@/view/dashboard';
 
 export type ChatRouteMetaObject = {
   label: string;
-  icon?: React.ReactNode,
+  icon?: React.ReactNode;
 };
 
 type ChatRouteObject = {
@@ -29,15 +35,23 @@ type ChatRouteObject = {
   hideMenu?: boolean;
   meta?: ChatRouteMetaObject;
   children?: ChatRouteObject[];
-}
+};
 
 export const routes: Array<ChatRouteObject> = [
   {
-    path: '/',
-    element: <General />,
+    path: '/settings',
+    element: <Settings />,
     meta: {
-      label: 'General',
+      label: 'Settings',
       icon: <SettingOutlined />,
+    },
+  },
+  {
+    path: '/awesome',
+    element: <Awesome />,
+    meta: {
+      label: 'Awesome',
+      icon: <GlobalOutlined />,
     },
   },
   {
@@ -47,6 +61,11 @@ export const routes: Array<ChatRouteObject> = [
       label: 'Notes',
       icon: <FormOutlined />,
     },
+  },
+  {
+    path: '/md/:id',
+    element: <Markdown />,
+    hideMenu: true,
   },
   {
     path: '/model',
@@ -88,24 +107,37 @@ export const routes: Array<ChatRouteObject> = [
     ],
   },
   {
-    path: 'download',
+    path: '/download',
     element: <Download />,
     meta: {
       label: 'Download',
       icon: <DownloadOutlined />,
     },
   },
+  {
+    path: '/about',
+    element: <About />,
+    meta: {
+      label: 'About',
+      icon: <InfoCircleOutlined />,
+    },
+  },
+  {
+    path: '/',
+    element: <Dashboard />,
+    hideMenu: true,
+  },
 ];
 
 type MenuItem = Required<MenuProps>['items'][number];
 export const menuItems: MenuItem[] = routes
   .filter((j) => !j.hideMenu)
-  .map(i => ({
+  .map((i) => ({
     ...i.meta,
     key: i.path || '',
     children: i?.children
       ?.filter((j) => !j.hideMenu)
-      ?.map((j) => ({ ...j.meta, key: `${i.path}/${j.path}` || ''})),
+      ?.map((j) => ({ ...j.meta, key: `${i.path}/${j.path}` || '' })),
   }));
 
 export default () => {

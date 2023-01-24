@@ -1,20 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Table, Modal, Popconfirm, Button, message } from 'antd';
-import { invoke, path, shell, fs } from '@tauri-apps/api';
-import ReactMarkdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { invoke, path, fs } from '@tauri-apps/api';
 
-import useInit from '@/hooks/useInit';
 import useJson from '@/hooks/useJson';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
+import Markdown from '@/components/Markdown';
+import FilePath from '@/components/FilePath';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { chatRoot, CHAT_NOTES_JSON } from '@/utils';
 import { notesColumns } from './config';
 
 export default function Notes() {
-  const [notesPath, setNotesPath] = useState('');
   const [source, setSource] = useState('');
   const [isVisible, setVisible] = useState(false);
   const { opData, opInit, opReplace, opSafeKey } = useData([]);
@@ -22,11 +19,6 @@ export default function Notes() {
   const { rowSelection, selectedRows, rowReset } = useTableRowSelection({ rowType: 'row' });
   const { json, refreshJson, updateJson } = useJson<any[]>(CHAT_NOTES_JSON);
   const selectedItems = rowSelection.selectedRowKeys || [];
-
-  useInit(async () => {
-    const file = await path.join(await chatRoot(), CHAT_NOTES_JSON);
-    setNotesPath(file);
-  });
 
   useEffect(() => {
     if (!json || json.length <= 0) return;
@@ -44,9 +36,6 @@ export default function Notes() {
         setVisible(true);
         return;
       }
-      if (opInfo.opType === 'edit') {
-        alert('TODO');
-      }
       if (opInfo.opType === 'delete') {
         await fs.removeFile(file);
         await handleRefresh();
@@ -57,8 +46,8 @@ export default function Notes() {
         message.success('Name has been changed!');
       }
       opInfo.resetRecord();
-    })()
-  }, [opInfo.opType])
+    })();
+  }, [opInfo.opType]);
 
   const handleDelete = async () => {
     if (opData?.length === selectedRows.length) {
@@ -73,7 +62,7 @@ export default function Notes() {
       const file = await path.join(await chatRoot(), 'notes', `${i?.id}.${i?.ext}`);
       await fs.removeFile(file);
       return file;
-    })
+    });
     Promise.all(rows).then(async () => {
       await handleRefresh();
       message.success('All files selected are cleared!');
@@ -106,18 +95,14 @@ export default function Notes() {
                 okText="Yes"
                 cancelText="No"
               >
-                <Button>Batch delete</Button>
+                <Button>Delete</Button>
               </Popconfirm>
               <span className="num">Selected {selectedItems.length} items</span>
             </>
           )}
         </div>
       </div>
-      <div className="chat-table-tip">
-        <div className="chat-file-path">
-          <div>PATH: <a onClick={() => shell.open(notesPath)} title={notesPath}>{notesPath}</a></div>
-        </div>
-      </div>
+      <FilePath paths={CHAT_NOTES_JSON} />
       <Table
         rowKey="id"
         columns={columns}
@@ -132,30 +117,10 @@ export default function Notes() {
         onCancel={handleCancel}
         footer={false}
         destroyOnClose
+        width={600}
       >
-        <ReactMarkdown
-          children={source}
-          linkTarget="_blank"
-          components={{
-            code({node, inline, className, children, ...props}) {
-              const match = /language-(\w+)/.exec(className || '')
-              return !inline && match ? (
-                <SyntaxHighlighter
-                  children={String(children).replace(/\n$/, '')}
-                  style={a11yDark as any}
-                  language={match[1]}
-                  PreTag="div"
-                  {...props}
-                />
-              ) : (
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              )
-            }
-          }}
-        />
+        <Markdown children={source} />
       </Modal>
     </div>
-  )
+  );
 }

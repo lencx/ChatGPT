@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Table, Modal, Popconfirm, Button, message } from 'antd';
-import { invoke, path, shell, fs } from '@tauri-apps/api';
+import { invoke, path, fs } from '@tauri-apps/api';
 
-import useInit from '@/hooks/useInit';
 import useJson from '@/hooks/useJson';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
+import FilePath from '@/components/FilePath';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { chatRoot, CHAT_DOWNLOAD_JSON } from '@/utils';
 import { downloadColumns } from './config';
@@ -19,7 +19,6 @@ function renderFile(buff: Uint8Array, type: string) {
 }
 
 export default function Download() {
-  const [downloadPath, setDownloadPath] = useState('');
   const [source, setSource] = useState('');
   const [isVisible, setVisible] = useState(false);
   const { opData, opInit, opReplace, opSafeKey } = useData([]);
@@ -27,11 +26,6 @@ export default function Download() {
   const { rowSelection, selectedRows, rowReset } = useTableRowSelection({ rowType: 'row' });
   const { json, refreshJson, updateJson } = useJson<any[]>(CHAT_DOWNLOAD_JSON);
   const selectedItems = rowSelection.selectedRowKeys || [];
-
-  useInit(async () => {
-    const file = await path.join(await chatRoot(), CHAT_DOWNLOAD_JSON);
-    setDownloadPath(file);
-  });
 
   useEffect(() => {
     if (!json || json.length <= 0) return;
@@ -43,7 +37,12 @@ export default function Download() {
     (async () => {
       const record = opInfo?.opRecord;
       const isImg = ['png'].includes(record?.ext);
-      const file = await path.join(await chatRoot(), 'download', isImg ? 'img' : record?.ext, `${record?.id}.${record?.ext}`);
+      const file = await path.join(
+        await chatRoot(),
+        'download',
+        isImg ? 'img' : record?.ext,
+        `${record?.id}.${record?.ext}`,
+      );
       if (opInfo.opType === 'preview') {
         const data = await fs.readBinaryFile(file);
         const sourceData = renderFile(data, record?.ext);
@@ -61,8 +60,8 @@ export default function Download() {
         message.success('Name has been changed!');
       }
       opInfo.resetRecord();
-    })()
-  }, [opInfo.opType])
+    })();
+  }, [opInfo.opType]);
 
   const handleDelete = async () => {
     if (opData?.length === selectedRows.length) {
@@ -75,10 +74,15 @@ export default function Download() {
 
     const rows = selectedRows.map(async (i) => {
       const isImg = ['png'].includes(i?.ext);
-      const file = await path.join(await chatRoot(), 'download', isImg ? 'img' : i?.ext, `${i?.id}.${i?.ext}`);
+      const file = await path.join(
+        await chatRoot(),
+        'download',
+        isImg ? 'img' : i?.ext,
+        `${i?.id}.${i?.ext}`,
+      );
       await fs.removeFile(file);
       return file;
-    })
+    });
     Promise.all(rows).then(async () => {
       await handleRefresh();
       message.success('All files selected are cleared!');
@@ -111,18 +115,14 @@ export default function Download() {
                 okText="Yes"
                 cancelText="No"
               >
-                <Button>Batch delete</Button>
+                <Button>Delete</Button>
               </Popconfirm>
               <span className="num">Selected {selectedItems.length} items</span>
             </>
           )}
         </div>
       </div>
-      <div className="chat-table-tip">
-        <div className="chat-file-path">
-          <div>PATH: <a onClick={() => shell.open(downloadPath)} title={downloadPath}>{downloadPath}</a></div>
-        </div>
-      </div>
+      <FilePath paths={CHAT_DOWNLOAD_JSON} />
       <Table
         rowKey="id"
         columns={columns}
@@ -141,5 +141,5 @@ export default function Download() {
         <img style={{ maxWidth: '100%' }} src={source} />
       </Modal>
     </div>
-  )
+  );
 }

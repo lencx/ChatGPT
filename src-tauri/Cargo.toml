@@ -26,15 +26,10 @@ wry = "0.24.1"
 dark-light = "1.0.0"
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1.23.0", features = ["macros"] }
+tauri = { version = "1.2.4", features = ["api-all", "devtools", "global-shortcut", "system-tray", "updater"] }
 tauri-plugin-positioner = { version = "1.0.4", features = ["system-tray"] }
-tauri = { version = "1.2.3", features = ["api-all", "devtools", "global-shortcut", "system-tray", "updater"] }
-[dependencies.tauri-plugin-log]
-git = "https://github.com/lencx/tauri-plugin-log"
-branch = "dev"
-features = ["colored"]
-[dependencies.tauri-plugin-autostart]
-git = "https://github.com/lencx/tauri-plugin-autostart"
-branch = "dev"
+tauri-plugin-log = { git = "https://github.com/lencx/tauri-plugins-workspace", branch = "dev", features = ["colored"] }
+tauri-plugin-autostart = { git = "https://github.com/lencx/tauri-plugins-workspace", branch = "dev" }
 
 # sqlx = { version = "0.6.2", features = ["runtime-tokio-rustls", "sqlite"] }
 
@@ -45,10 +40,3 @@ default = [ "custom-protocol" ]
 # this feature is used used for production builds where `devPath` points to the filesystem
 # DO NOT remove this
 custom-protocol = [ "tauri/custom-protocol" ]
-
-# fix: mac v1.2.0 can not copy/paste
-# https://github.com/tauri-apps/tauri/issues/5669
-[profile.release]
-strip = true
-lto = true
-opt-level = "s"

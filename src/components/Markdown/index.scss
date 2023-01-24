@@ -1,0 +1,33 @@
+.markdown-body {
+  height: 100%;
+  overflow: auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+
+  &.edit-preview {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  pre,
+  code {
+    font-family: monospace, monospace;
+  }
+}
+
+.md-main {
+  height: calc(100vh - 130px);
+  overflow: hidden;
+}
+
+.resize-handle {
+  width: 0.25rem;
+  transition: 250ms linear background-color;
+  background-color: #7f8082;
+  outline: none;
+
+  &:hover,
+  &[data-resize-handle-active] {
+    background-color: #5194eb;
+  }
+}

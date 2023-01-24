@@ -41,8 +41,6 @@ export const syncColumns = () => [
     dataIndex: 'prompt',
     key: 'prompt',
     // width: 300,
-    render: (v: string) => (
-      <span className="chat-prompts-val">{v}</span>
-    ),
+    render: (v: string) => <span className="chat-prompts-val">{v}</span>,
   },
 ];
