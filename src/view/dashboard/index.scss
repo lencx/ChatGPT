@@ -5,6 +5,30 @@
   overflow-y: auto;
   padding: 15px;
 
+  &-no-data {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    font-weight: bold;
+
+    .icon {
+      color: #989898;
+      font-size: 24px;
+    }
+
+    .txt {
+      font-size: 12px;
+
+      a {
+        color: #1677ff;
+        cursor: pointer;
+      }
+    }
+  }
+
   &.dark {
     background-color: #000;
   }

@@ -81,6 +81,7 @@ async fn main() {
       fs_extra::metadata,
       window::window_reload,
       window::wa_window,
+      window::control_window,
     ])
     .setup(setup::init)
     .menu(menu::init());

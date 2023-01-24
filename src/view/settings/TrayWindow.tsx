@@ -23,7 +23,7 @@ export default function General() {
       <Form.Item label="Enable SystemTray" name="tray" valuePropName="checked">
         <Switch />
       </Form.Item>
-      <SwitchOrigin name="tray_origin" />
+      <SwitchOrigin name="tray" />
       <Form.Item label={<UALabel />} name="ua_tray">
         <Input.TextArea
           autoSize={{ minRows: 4, maxRows: 4 }}

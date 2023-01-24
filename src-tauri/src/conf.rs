@@ -18,7 +18,6 @@ pub const BUY_COFFEE: &str = "https://www.buymeacoffee.com/lencx";
 pub const GITHUB_PROMPTS_CSV_URL: &str =
   "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv";
 pub const DEFAULT_CHAT_CONF: &str = r#"{
-  "dashboard": false,
   "stay_on_top": false,
   "auto_update": "Prompt",
   "theme": "Light",
@@ -27,14 +26,15 @@ pub const DEFAULT_CHAT_CONF: &str = r#"{
   "popup_search": false,
   "global_shortcut": "",
   "hide_dock_icon": false,
-  "origin": "https://chat.openai.com",
+  "main_dashboard": false,
+  "tray_dashboard": false,
+  "main_origin": "https://chat.openai.com",
   "tray_origin": "https://chat.openai.com",
   "default_origin": "https://chat.openai.com",
   "ua_window": "",
   "ua_tray": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1"
 }"#;
 pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
-  "dashboard": false,
   "stay_on_top": false,
   "auto_update": "Prompt",
   "theme": "Light",
@@ -43,7 +43,9 @@ pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
   "popup_search": false,
   "global_shortcut": "",
   "hide_dock_icon": false,
-  "origin": "https://chat.openai.com",
+  "main_dashboard": false,
+  "tray_dashboard": false,
+  "main_origin": "https://chat.openai.com",
   "tray_origin": "https://chat.openai.com",
   "default_origin": "https://chat.openai.com",
   "ua_window": "",
@@ -60,11 +62,12 @@ pub struct ChatConfJson {
   pub theme: String,
   // auto update policy, Prompt/Silent/Disable
   pub auto_update: String,
-  pub dashboard: bool,
   pub tray: bool,
   pub popup_search: bool,
   pub stay_on_top: bool,
-  pub origin: String,
+  pub main_dashboard: bool,
+  pub tray_dashboard: bool,
+  pub main_origin: String,
   pub tray_origin: String,
   pub default_origin: String,
   pub ua_window: String,

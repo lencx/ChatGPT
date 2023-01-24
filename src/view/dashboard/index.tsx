@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Row, Col, Card } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
 import { os, invoke } from '@tauri-apps/api';
 
 import useInit from '@/hooks/useInit';
@@ -10,7 +11,7 @@ import './index.scss';
 
 export default function Dashboard() {
   const { json } = useJson<Record<string, any>[]>(CHAT_AWESOME_JSON);
-  const [list, setList] = useState<Array<[string, Record<string, any>[]]>>([]);
+  const [list, setList] = useState<Array<[string, Record<string, any>[]]>>();
   const [hasClass, setClass] = useState(false);
   const [theme, setTheme] = useState('');
 
@@ -23,6 +24,7 @@ export default function Dashboard() {
   });
 
   useEffect(() => {
+    if (!json) return;
     const categories = new Map();
 
     json?.forEach((i) => {
@@ -42,6 +44,23 @@ export default function Dashboard() {
       url: item.url,
     });
   };
+
+  if (!list) return null;
+  if (list?.length === 0) {
+    return (
+      <div className="dashboard-no-data">
+        <div className="icon">
+          <InboxOutlined style={{ fontSize: 80, marginBottom: 5 }} />
+          <br />
+          No data
+        </div>
+        <div className="txt">
+          Go to <a onClick={() => invoke('control_window')}>{'Control Center -> Awesome'}</a> to add
+          data
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={clsx('dashboard', theme, { 'has-top-dom': hasClass })}>

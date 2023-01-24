@@ -93,12 +93,12 @@ pub fn dalle2_window(
   }
 }
 
-pub fn control_window(handle: &tauri::AppHandle) {
-  let app = handle.clone();
+#[tauri::command]
+pub fn control_window(handle: tauri::AppHandle) {
   tauri::async_runtime::spawn(async move {
-    if app.app_handle().get_window("main").is_none() {
+    if handle.get_window("main").is_none() {
       WindowBuilder::new(
-        &app,
+        &handle,
         "main",
         WindowUrl::App("index.html?type=control".into()),
       )
@@ -110,7 +110,7 @@ pub fn control_window(handle: &tauri::AppHandle) {
       .build()
       .unwrap();
     } else {
-      let main_win = app.app_handle().get_window("main").unwrap();
+      let main_win = handle.get_window("main").unwrap();
       main_win.show().unwrap();
       main_win.set_focus().unwrap();
     }

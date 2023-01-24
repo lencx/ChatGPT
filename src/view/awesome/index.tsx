@@ -34,9 +34,7 @@ export default function Awesome() {
       updateJson(data);
       opInfo.resetRecord();
     }
-  }, [opInfo.opType,
-
-    formRef]);
+  }, [opInfo.opType, formRef]);
 
   const hide = () => {
     setVisible(false);
@@ -54,18 +52,33 @@ export default function Awesome() {
 
   const handleOk = () => {
     formRef.current?.form?.validateFields().then(async (vals: Record<string, any>) => {
-      if (opInfo.opType === 'new') {
-        const data = opAdd(vals);
-        await updateJson(data);
-        opInit(data);
-        message.success('Data added successfully');
+      const idx = opData.findIndex((i) => i.url === vals.url);
+      if (idx === -1) {
+        if (opInfo.opType === 'new') {
+          const data = opAdd(vals);
+          await updateJson(data);
+          opInit(data);
+          message.success('Data added successfully');
+        }
+        if (opInfo.opType === 'edit') {
+          const data = opReplace(opInfo?.opRecord?.[opSafeKey], vals);
+          await updateJson(data);
+          message.success('Data updated successfully');
+        }
+        hide();
+      } else {
+        const data = opData[idx];
+        message.error(
+          <div style={{ width: 360 }}>
+            <div>
+              <b>
+                {data.title}: {data.url}
+              </b>
+            </div>
+            <div>This URL already exists, please edit it and try again.</div>
+          </div>,
+        );
       }
-      if (opInfo.opType === 'edit') {
-        const data = opReplace(opInfo?.opRecord?.[opSafeKey], vals);
-        await updateJson(data);
-        message.success('Data updated successfully');
-      }
-      hide();
     });
   };
 

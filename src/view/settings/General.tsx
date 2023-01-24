@@ -6,6 +6,49 @@ import { platform } from '@tauri-apps/api/os';
 import useInit from '@/hooks/useInit';
 import { DISABLE_AUTO_COMPLETE } from '@/utils';
 
+export default function General() {
+  const [platformInfo, setPlatform] = useState('');
+
+  useInit(async () => {
+    setPlatform(await platform());
+  });
+
+  return (
+    <>
+      <Form.Item label="Stay On Top" name="stay_on_top" valuePropName="checked">
+        <Switch />
+      </Form.Item>
+      {platformInfo === 'darwin' && (
+        <Form.Item label="Titlebar" name="titlebar" valuePropName="checked">
+          <Switch />
+        </Form.Item>
+      )}
+      {platformInfo === 'darwin' && (
+        <Form.Item label="Hide Dock Icon" name="hide_dock_icon" valuePropName="checked">
+          <Switch />
+        </Form.Item>
+      )}
+      <Form.Item label="Theme" name="theme">
+        <Radio.Group>
+          <Radio value="Light">Light</Radio>
+          <Radio value="Dark">Dark</Radio>
+          {['darwin', 'windows'].includes(platformInfo) && <Radio value="System">System</Radio>}
+        </Radio.Group>
+      </Form.Item>
+      <Form.Item label={<AutoUpdateLabel />} name="auto_update">
+        <Radio.Group>
+          <Radio value="Prompt">Prompt</Radio>
+          <Radio value="Silent">Silent</Radio>
+          {/*<Radio value="Disable">Disable</Radio>*/}
+        </Radio.Group>
+      </Form.Item>
+      <Form.Item label={<GlobalShortcutLabel />} name="global_shortcut">
+        <Input placeholder="CmdOrCtrl+Shift+O" {...DISABLE_AUTO_COMPLETE} />
+      </Form.Item>
+    </>
+  );
+}
+
 const AutoUpdateLabel = () => {
   return (
     <span>
@@ -50,49 +93,3 @@ const GlobalShortcutLabel = () => {
     </div>
   );
 };
-
-export default function General() {
-  const [platformInfo, setPlatform] = useState('');
-
-  useInit(async () => {
-    setPlatform(await platform());
-  });
-
-  return (
-    <>
-      <Form.Item label="Dashboard" name="dashboard" valuePropName="checked">
-        <Switch />
-      </Form.Item>
-      <Form.Item label="Stay On Top" name="stay_on_top" valuePropName="checked">
-        <Switch />
-      </Form.Item>
-      {platformInfo === 'darwin' && (
-        <Form.Item label="Titlebar" name="titlebar" valuePropName="checked">
-          <Switch />
-        </Form.Item>
-      )}
-      {platformInfo === 'darwin' && (
-        <Form.Item label="Hide Dock Icon" name="hide_dock_icon" valuePropName="checked">
-          <Switch />
-        </Form.Item>
-      )}
-      <Form.Item label="Theme" name="theme">
-        <Radio.Group>
-          <Radio value="Light">Light</Radio>
-          <Radio value="Dark">Dark</Radio>
-          {['darwin', 'windows'].includes(platformInfo) && <Radio value="System">System</Radio>}
-        </Radio.Group>
-      </Form.Item>
-      <Form.Item label={<AutoUpdateLabel />} name="auto_update">
-        <Radio.Group>
-          <Radio value="Prompt">Prompt</Radio>
-          <Radio value="Silent">Silent</Radio>
-          {/*<Radio value="Disable">Disable</Radio>*/}
-        </Radio.Group>
-      </Form.Item>
-      <Form.Item label={<GlobalShortcutLabel />} name="global_shortcut">
-        <Input placeholder="CmdOrCtrl+Shift+O" {...DISABLE_AUTO_COMPLETE} />
-      </Form.Item>
-    </>
-  );
-}

@@ -36,7 +36,7 @@ export default function General() {
       <Form.Item label={<PopupSearchLabel />} name="popup_search" valuePropName="checked">
         <Switch />
       </Form.Item>
-      <SwitchOrigin name="origin" />
+      <SwitchOrigin name="main" />
       <Form.Item label="User Agent (Main)" name="ua_window">
         <Input.TextArea
           autoSize={{ minRows: 4, maxRows: 4 }}

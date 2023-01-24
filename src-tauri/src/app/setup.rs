@@ -6,7 +6,7 @@ use wry::application::accelerator::Accelerator;
 pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
   info!("stepup");
   let chat_conf = ChatConfJson::get_chat_conf();
-  let url = chat_conf.origin.to_string();
+  let url = chat_conf.main_origin.to_string();
   let theme = ChatConfJson::theme();
   let handle = app.app_handle();
 
@@ -50,7 +50,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
   } else {
     let app = app.handle();
     tauri::async_runtime::spawn(async move {
-      let link = if chat_conf.dashboard {
+      let link = if chat_conf.main_dashboard {
         "index.html"
       } else {
         &url
@@ -65,7 +65,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         main_win = main_win.hidden_title(true);
       }
 
-      if url == "https://chat.openai.com" && !chat_conf.dashboard {
+      if url == "https://chat.openai.com" && !chat_conf.main_dashboard {
         main_win = main_win
           .initialization_script(include_str!("../vendors/floating-ui-core.js"))
           .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
