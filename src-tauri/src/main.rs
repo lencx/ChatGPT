@@ -7,7 +7,7 @@ mod app;
 mod conf;
 mod utils;
 
-use app::{cmd, fs_extra, menu, setup};
+use app::{cmd, fs_extra, menu, setup, window};
 use conf::ChatConfJson;
 use tauri::api::path;
 use tauri_plugin_autostart::MacosLauncher;
@@ -73,13 +73,14 @@ async fn main() {
       cmd::parse_prompt,
       cmd::sync_prompts,
       cmd::sync_user_prompts,
-      cmd::window_reload,
       cmd::dalle2_window,
       cmd::cmd_list,
       cmd::download_list,
       cmd::get_download_list,
       cmd::get_data,
       fs_extra::metadata,
+      window::window_reload,
+      window::wa_window,
     ])
     .setup(setup::init)
     .menu(menu::init());

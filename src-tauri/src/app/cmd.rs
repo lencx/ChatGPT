@@ -140,16 +140,6 @@ pub fn parse_prompt(data: String) -> Vec<PromptRecord> {
   list
 }
 
-#[command]
-pub fn window_reload(app: AppHandle, label: &str) {
-  app
-    .app_handle()
-    .get_window(label)
-    .unwrap()
-    .eval("window.location.reload()")
-    .unwrap();
-}
-
 #[derive(serde::Serialize, serde::Deserialize, Debug, Clone)]
 pub struct ModelRecord {
   pub cmd: String,
@@ -345,8 +335,8 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
       "Sync Prompts",
       "ChatGPT Prompts data has been synchronized!",
     );
-    window_reload(app.clone(), "core");
-    window_reload(app, "tray");
+    window::window_reload(app.clone(), "core");
+    window::window_reload(app, "tray");
 
     return Some(data2);
   }

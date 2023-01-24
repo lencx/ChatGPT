@@ -1,0 +1,43 @@
+.dashboard {
+  position: fixed;
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+  overflow-y: auto;
+  padding: 15px;
+
+  &.dark {
+    background-color: #000;
+  }
+
+  &.has-top-dom {
+    padding-top: 30px;
+  }
+
+  .group-item {
+    margin-bottom: 20px;
+
+    .title {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .item {
+      .ant-card-body {
+        padding: 10px;
+        text-align: center;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      span {
+        display: block;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+}

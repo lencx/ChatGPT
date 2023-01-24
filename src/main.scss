@@ -15,9 +15,11 @@
 }
 
 html,
-body {
+body,
+#root {
   padding: 0;
   margin: 0;
+  height: 100%;
 }
 
 .ant-table-selection-col,

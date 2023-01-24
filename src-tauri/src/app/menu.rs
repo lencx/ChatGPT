@@ -1,5 +1,5 @@
 use crate::{
-  app::{cmd, window},
+  app::window,
   conf::{self, ChatConfJson},
   utils,
 };
@@ -250,8 +250,8 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
         .set_selected(popup_search)
         .unwrap();
       ChatConfJson::amend(&serde_json::json!({ "popup_search": popup_search }), None).unwrap();
-      cmd::window_reload(app.clone(), "core");
-      cmd::window_reload(app, "tray");
+      window::window_reload(app.clone(), "core");
+      window::window_reload(app, "tray");
     }
     "sync_prompts" => {
       tauri::api::dialog::ask(

@@ -97,18 +97,59 @@ pub fn control_window(handle: &tauri::AppHandle) {
   let app = handle.clone();
   tauri::async_runtime::spawn(async move {
     if app.app_handle().get_window("main").is_none() {
-      WindowBuilder::new(&app, "main", WindowUrl::App("index.html".into()))
-        .title("Control Center")
-        .resizable(true)
-        .fullscreen(false)
-        .inner_size(1000.0, 700.0)
-        .min_inner_size(800.0, 600.0)
-        .build()
-        .unwrap();
+      WindowBuilder::new(
+        &app,
+        "main",
+        WindowUrl::App("index.html?type=control".into()),
+      )
+      .title("Control Center")
+      .resizable(true)
+      .fullscreen(false)
+      .inner_size(1000.0, 700.0)
+      .min_inner_size(800.0, 600.0)
+      .build()
+      .unwrap();
     } else {
       let main_win = app.app_handle().get_window("main").unwrap();
       main_win.show().unwrap();
       main_win.set_focus().unwrap();
     }
   });
+}
+
+#[tauri::command]
+pub async fn wa_window(
+  app: tauri::AppHandle,
+  label: String,
+  title: String,
+  url: String,
+  script: Option<String>,
+) {
+  info!("wa_window: {} :=> {}", title, url);
+  let win = app.get_window(&label);
+  if win.is_none() {
+    tauri::async_runtime::spawn(async move {
+      tauri::WindowBuilder::new(&app, label, tauri::WindowUrl::App(url.parse().unwrap()))
+        .initialization_script(&script.unwrap_or_default())
+        .initialization_script(include_str!("../scripts/core.js"))
+        .title(title)
+        .build()
+        .unwrap();
+    });
+  } else {
+    if !win.clone().unwrap().is_visible().unwrap() {
+      win.clone().unwrap().show().unwrap();
+    }
+    win.unwrap().set_focus().unwrap();
+  }
+}
+
+#[tauri::command]
+pub fn window_reload(app: tauri::AppHandle, label: &str) {
+  app
+    .app_handle()
+    .get_window(label)
+    .unwrap()
+    .eval("window.location.reload()")
+    .unwrap();
 }

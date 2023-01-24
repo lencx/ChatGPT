@@ -60,6 +60,9 @@ export default function General() {
 
   return (
     <>
+      <Form.Item label="Dashboard" name="dashboard" valuePropName="checked">
+        <Switch />
+      </Form.Item>
       <Form.Item label="Stay On Top" name="stay_on_top" valuePropName="checked">
         <Switch />
       </Form.Item>

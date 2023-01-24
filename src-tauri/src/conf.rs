@@ -18,6 +18,7 @@ pub const BUY_COFFEE: &str = "https://www.buymeacoffee.com/lencx";
 pub const GITHUB_PROMPTS_CSV_URL: &str =
   "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv";
 pub const DEFAULT_CHAT_CONF: &str = r#"{
+  "dashboard": false,
   "stay_on_top": false,
   "auto_update": "Prompt",
   "theme": "Light",
@@ -33,6 +34,7 @@ pub const DEFAULT_CHAT_CONF: &str = r#"{
   "ua_tray": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1"
 }"#;
 pub const DEFAULT_CHAT_CONF_MAC: &str = r#"{
+  "dashboard": false,
   "stay_on_top": false,
   "auto_update": "Prompt",
   "theme": "Light",
@@ -58,6 +60,7 @@ pub struct ChatConfJson {
   pub theme: String,
   // auto update policy, Prompt/Silent/Disable
   pub auto_update: String,
+  pub dashboard: bool,
   pub tray: bool,
   pub popup_search: bool,
   pub stay_on_top: bool,
@@ -159,15 +162,6 @@ impl ChatConfJson {
 
     if let Some(handle) = app {
       tauri::api::process::restart(&handle.env());
-      // tauri::api::dialog::ask(
-      //     handle.get_window("core").as_ref(),
-      //     "ChatGPT Restart",
-      //     "Whether to restart immediately?",
-      //     move |is_restart| {
-      //         if is_restart {
-      //         }
-      //     },
-      // );
     }
 
     Ok(())

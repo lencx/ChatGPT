@@ -22,6 +22,7 @@ import SyncRecord from '@/view/model/SyncRecord';
 import Download from '@/view/download';
 import Notes from '@/view/notes';
 import Markdown from '@/view/markdown';
+import Dashboard from '@/view/dashboard';
 
 export type ChatRouteMetaObject = {
   label: string;
@@ -38,7 +39,7 @@ type ChatRouteObject = {
 
 export const routes: Array<ChatRouteObject> = [
   {
-    path: '/',
+    path: '/awesome',
     element: <Awesome />,
     meta: {
       label: 'Awesome',
@@ -120,6 +121,11 @@ export const routes: Array<ChatRouteObject> = [
       label: 'About',
       icon: <InfoCircleOutlined />,
     },
+  },
+  {
+    path: '/',
+    element: <Dashboard />,
+    hideMenu: true,
   },
 ];
 
