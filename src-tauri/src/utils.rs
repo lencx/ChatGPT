@@ -66,20 +66,33 @@ pub fn user_script() -> String {
 }
 
 pub fn open_file(path: PathBuf) {
-  info!("open_file: {}", path.to_string_lossy());
+  let pathname = convert_path(path.to_str().unwrap());
+  info!("open_file: {}", pathname);
   #[cfg(target_os = "macos")]
-  Command::new("open").arg("-R").arg(path).spawn().unwrap();
+  Command::new("open")
+    .arg("-R")
+    .arg(pathname)
+    .spawn()
+    .unwrap();
 
   #[cfg(target_os = "windows")]
-  Command::new("explorer")
+  Command::new("explorer.exe")
     .arg("/select,")
-    .arg(path)
+    .arg(pathname)
     .spawn()
     .unwrap();
 
   // https://askubuntu.com/a/31071
   #[cfg(target_os = "linux")]
-  Command::new("xdg-open").arg(path).spawn().unwrap();
+  Command::new("xdg-open").arg(pathname).spawn().unwrap();
+}
+
+pub fn convert_path(path_str: &str) -> String {
+  if cfg!(target_os = "windows") {
+    path_str.replace('/', "\\")
+  } else {
+    String::from(path_str)
+  }
 }
 
 pub fn clear_conf(app: &tauri::AppHandle) {
