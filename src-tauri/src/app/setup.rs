@@ -66,7 +66,8 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         .initialization_script(include_str!("../scripts/core.js"))
         .user_agent(&chat_conf.ua_window);
 
-      if cfg!(target_os = "macos") {
+      #[cfg(target_os = "macos")]
+      {
         main_win = main_win
           .title_bar_style(ChatConfJson::titlebar())
           .hidden_title(true);

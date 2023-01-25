@@ -1,5 +1,17 @@
 # UPDATE LOG
 
+## v0.10.1
+
+Fix:
+
+- Program exception when `Awesome` data is empty (https://github.com/lencx/ChatGPT/issues/248)
+
+Feat:
+
+- New shortcut key to change zoom level (30% - 200%), `+` or `-` 10% each time, `0` will be reset to 100% (https://github.com/lencx/ChatGPT/issues/202)
+  - Windows: `Ctrl +`, `Ctrl -`, `Ctrl 0`
+  - MacOS: `Cmd +`, `Cmd -`, `Cmd 0`
+
 ## v0.10.0
 
 Fix:

@@ -18,6 +18,11 @@ const SwitchOrigin: FC<SwitchOriginProps> = ({ name }) => {
   const originName = `${name}_origin`;
   const isEnable = Form.useWatch(dashboardName, form);
 
+  let urlList = [{ title: 'ChatGPT', url: 'https://chat.openai.com', init: true }];
+  if (Array.isArray(list)) {
+    urlList = urlList.concat(list);
+  }
+
   return (
     <>
       <Form.Item
@@ -74,18 +79,16 @@ const SwitchOrigin: FC<SwitchOriginProps> = ({ name }) => {
         name={originName}
       >
         <Select disabled={isEnable} showSearch {...DISABLE_AUTO_COMPLETE} optionLabelProp="url">
-          {[{ title: 'ChatGPT', url: 'https://chat.openai.com', init: true }, ...list].map(
-            (i, idx) => (
-              <Select.Option
-                key={`${idx}_${i.url}`}
-                label={i.title}
-                value={i.url}
-                title={`${i.title}${i.init ? '(Built-in)' : ''}: ${i.url}`}
-              >
-                <Tag color={i.init ? 'orange' : 'geekblue'}>{i.title}</Tag> {i.url}
-              </Select.Option>
-            ),
-          )}
+          {urlList.map((i, idx) => (
+            <Select.Option
+              key={`${idx}_${i.url}`}
+              label={i.title}
+              value={i.url}
+              title={`${i.title}${i.init ? '(Built-in)' : ''}: ${i.url}`}
+            >
+              <Tag color={i.init ? 'orange' : 'geekblue'}>{i.title}</Tag> {i.url}
+            </Select.Option>
+          ))}
         </Select>
       </Form.Item>
     </>

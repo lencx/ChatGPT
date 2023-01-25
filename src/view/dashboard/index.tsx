@@ -29,15 +29,19 @@ export default function Dashboard() {
     if (!json) return;
     const categories = new Map();
 
-    json?.forEach((i) => {
-      if (!i.enable) return;
-      if (!categories.has(i.category)) {
-        categories.set(i.category, []);
-      }
-      categories.get(i?.category).push(i);
-    });
-    setList(Array.from(categories));
-  }, [json?.length]);
+    if (Array.isArray(json)) {
+      json?.forEach((i) => {
+        if (!i.enable) return;
+        if (!categories.has(i.category)) {
+          categories.set(i.category, []);
+        }
+        categories.get(i?.category).push(i);
+      });
+      setList(Array.from(categories) || []);
+    } else {
+      setList([]);
+    }
+  }, [JSON.stringify(json)]);
 
   const handleLink = async (item: Record<string, any>) => {
     await invoke('wa_window', {
