@@ -1,5 +1,11 @@
 # UPDATE LOG
 
+## v0.10.1
+
+Fix:
+
+- Program exception when `Awesome` data is empty (https://github.com/lencx/ChatGPT/issues/248)
+
 ## v0.10.0
 
 Fix:
