@@ -87,6 +87,7 @@
 
 - 跨平台: `macOS` `Linux` `Windows`
 - 导出 ChatGPT 聊天记录 (支持 PNG, PDF 和生成分享链接)
+- 主窗口和系统托盘支持自定义 URL，将任意网站包装成一个桌面应用
 - 应用自动升级通知
 - 丰富的快捷键
 - 系统托盘悬浮窗
@@ -129,6 +130,7 @@
 
 - `[.chatgpt]` - 应用配置根路径
   - `chat.conf.json` - 应用喜好配置
+  - `chat.awesome.json` - 自定义 URL 列表，类似于浏览器书签。可以将任意 URL 作为主窗口或托盘窗口 (**Control Conter -> Awesome**)
   - `chat.model.json` - ChatGPT 输入提示，通过斜杠命令来快速完成输入，主要包含三部分:
     - `user_custom` - 需要手动录入 (**Control Conter -> Language Model -> User Custom**)
     - `sync_prompts` - 从 [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) 同步数据 (**Control Conter -> Language Model -> Sync Prompts**)

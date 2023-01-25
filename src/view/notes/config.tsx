@@ -67,6 +67,5 @@ const RenderPath = ({ row }: any) => {
 };
 
 export const getPath = async (row: any) => {
-  const isImg = ['png'].includes(row?.ext);
   return (await path.join(await chatRoot(), 'notes', row.id)) + `.${row.ext}`;
 };

@@ -12,7 +12,7 @@ import { chatRoot, fmtDate } from '@/utils';
 import { modelColumns } from './config';
 import UserCustomForm from './Form';
 
-export default function LanguageModel() {
+export default function UserCustom() {
   const { rowSelection, selectedRowIDs } = useTableRowSelection();
   const [isVisible, setVisible] = useState(false);
   const [jsonPath, setJsonPath] = useState('');

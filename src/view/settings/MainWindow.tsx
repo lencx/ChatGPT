@@ -30,7 +30,7 @@ const PopupSearchLabel = () => {
   );
 };
 
-export default function General() {
+export default function MainWindow() {
   return (
     <>
       <Form.Item label={<PopupSearchLabel />} name="popup_search" valuePropName="checked">
