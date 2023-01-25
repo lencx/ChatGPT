@@ -90,6 +90,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 
 - Multi-platform: `macOS` `Linux` `Windows`
 - Export ChatGPT history (PNG, PDF and Markdown)
+- The main window and system tray support custom URLs to wrap any website into a desktop application
 - Automatic application upgrade notification
 - Common shortcut keys
 - System tray hover window
