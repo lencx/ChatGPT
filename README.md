@@ -133,6 +133,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 
 - `[.chatgpt]` - application configuration root folder
   - `chat.conf.json` - preferences configuration
+  - `chat.awesome.json` - Custom URL lists, similar to browser bookmarks. Any URL can be used as the main window or tray window (**Control Conter -> Awesome**)
   - `chat.model.json` - prompts configuration，contains three parts:
     - `user_custom` - Requires manual data entry (**Control Conter -> Language Model -> User Custom**)
     - `sync_prompts` - Synchronizing data from [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) (**Control Conter -> Language Model -> Sync Prompts**)
