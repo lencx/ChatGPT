@@ -176,6 +176,12 @@ pub fn init() -> Menu {
       )
       .add_native_item(MenuItem::Separator)
       .add_item(
+        CustomMenuItem::new("zoom_0".to_string(), "Zoom to Actual Size").accelerator("CmdOrCtrl+0"),
+      )
+      .add_item(CustomMenuItem::new("zoom_out".to_string(), "Zoom Out").accelerator("CmdOrCtrl+-"))
+      .add_item(CustomMenuItem::new("zoom_in".to_string(), "Zoom In").accelerator("CmdOrCtrl+Plus"))
+      .add_native_item(MenuItem::Separator)
+      .add_item(
         CustomMenuItem::new("reload".to_string(), "Refresh the Screen").accelerator("CmdOrCtrl+R"),
       ),
   );
@@ -337,6 +343,9 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     // Window
     "dalle2" => window::dalle2_window(&app, None, None, Some(false)),
     // View
+    "zoom_0" => win.eval("window.__zoom0 && window.__zoom0()").unwrap(),
+    "zoom_out" => win.eval("window.__zoomOut && window.__zoomOut()").unwrap(),
+    "zoom_in" => win.eval("window.__zoomIn && window.__zoomIn()").unwrap(),
     "reload" => win.eval("window.location.reload()").unwrap(),
     "go_back" => win.eval("window.history.go(-1)").unwrap(),
     "go_forward" => win.eval("window.history.go(1)").unwrap(),
