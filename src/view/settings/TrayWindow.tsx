@@ -17,7 +17,7 @@ const UALabel = () => {
   );
 };
 
-export default function General() {
+export default function TrayWindow() {
   return (
     <>
       <Form.Item label="Enable SystemTray" name="tray" valuePropName="checked">
