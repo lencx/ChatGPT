@@ -1,7 +1,7 @@
 // *** Core Script - DALL·E 2 Core ***
 
 async function init() {
-  const chatConf = await invoke('get_chat_conf') || {};
+  const chatConf = await invoke('get_app_conf') || {};
   if (!chatConf.popup_search) return;
   if (!window.FloatingUIDOM) return;
 

@@ -8,8 +8,7 @@ mod conf;
 mod utils;
 
 use app::{cmd, fs_extra, gpt, menu, setup, window};
-use conf::ChatConfJson;
-use tauri::api::path;
+use conf::AppConf;
 use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::{
   fern::colors::{Color, ColoredLevelConfig},
@@ -18,56 +17,59 @@ use tauri_plugin_log::{
 
 #[tokio::main]
 async fn main() {
-  ChatConfJson::init();
+  let app_conf = AppConf::read().write();
   // If the file does not exist, creating the file will block menu synchronization
   utils::create_chatgpt_prompts();
   let context = tauri::generate_context!();
-  let colors = ColoredLevelConfig {
-    error: Color::Red,
-    warn: Color::Yellow,
-    debug: Color::Blue,
-    info: Color::BrightGreen,
-    trace: Color::Cyan,
-  };
 
   gpt::download_list("chat.download.json", "download", None, None);
   gpt::download_list("chat.notes.json", "notes", None, None);
 
-  let chat_conf = ChatConfJson::get_chat_conf();
+  let mut log = tauri_plugin_log::Builder::default()
+    .targets([
+      // LogTarget::LogDir,
+      // LOG PATH: ~/.chatgpt/ChatGPT.log
+      LogTarget::Folder(utils::app_root()),
+      LogTarget::Stdout,
+      LogTarget::Webview,
+    ])
+    .level(log::LevelFilter::Debug);
+
+  if cfg!(debug_assertions) {
+    log = log.with_colors(ColoredLevelConfig {
+      error: Color::Red,
+      warn: Color::Yellow,
+      debug: Color::Blue,
+      info: Color::BrightGreen,
+      trace: Color::Cyan,
+    });
+  }
 
   let mut builder = tauri::Builder::default()
     // https://github.com/tauri-apps/tauri/pull/2736
-    .plugin(
-      tauri_plugin_log::Builder::default()
-        .targets([
-          // LogTarget::LogDir,
-          // LOG PATH: ~/.chatgpt/ChatGPT.log
-          LogTarget::Folder(path::home_dir().unwrap().join(".chatgpt")),
-          LogTarget::Stdout,
-          LogTarget::Webview,
-        ])
-        .level(log::LevelFilter::Debug)
-        .with_colors(colors)
-        .build(),
-    )
+    .plugin(log.build())
     .plugin(tauri_plugin_positioner::init())
     .plugin(tauri_plugin_autostart::init(
       MacosLauncher::LaunchAgent,
       None,
     ))
     .invoke_handler(tauri::generate_handler![
+      conf::cmd::get_app_conf,
+      conf::cmd::reset_app_conf,
+      conf::cmd::get_theme,
+      conf::cmd::form_confirm,
+      conf::cmd::form_cancel,
+      conf::cmd::form_msg,
+      window::cmd::wa_window,
+      window::cmd::control_window,
+      window::cmd::window_reload,
+      window::cmd::dalle2_search_window,
       cmd::drag_window,
       cmd::fullscreen,
       cmd::download,
       cmd::save_file,
       cmd::open_link,
-      cmd::get_chat_conf,
-      cmd::get_theme,
-      cmd::reset_chat_conf,
       cmd::run_check_update,
-      cmd::form_cancel,
-      cmd::form_confirm,
-      cmd::form_msg,
       cmd::open_file,
       cmd::get_data,
       gpt::get_chat_model_cmd,
@@ -77,16 +79,12 @@ async fn main() {
       gpt::cmd_list,
       gpt::download_list,
       gpt::get_download_list,
-      window::wa_window,
-      window::control_window,
-      window::window_reload,
-      window::dalle2_search_window,
       fs_extra::metadata,
     ])
     .setup(setup::init)
     .menu(menu::init());
 
-  if chat_conf.tray {
+  if app_conf.tray {
     builder = builder.system_tray(menu::tray_menu());
   }
 

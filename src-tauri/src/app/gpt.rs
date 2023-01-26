@@ -1,7 +1,7 @@
 use crate::{
   app::{fs_extra, window},
   conf::GITHUB_PROMPTS_CSV_URL,
-  utils::{self, chat_root},
+  utils,
 };
 use log::info;
 use regex::Regex;
@@ -11,7 +11,7 @@ use walkdir::WalkDir;
 
 #[command]
 pub fn get_chat_model_cmd() -> serde_json::Value {
-  let path = utils::chat_root().join("chat.model.cmd.json");
+  let path = utils::app_root().join("chat.model.cmd.json");
   let content = fs::read_to_string(path).unwrap_or_else(|_| r#"{"data":[]}"#.to_string());
   serde_json::from_str(&content).unwrap()
 }
@@ -55,7 +55,7 @@ pub struct ModelRecord {
 #[command]
 pub fn cmd_list() -> Vec<ModelRecord> {
   let mut list = vec![];
-  for entry in WalkDir::new(utils::chat_root().join("cache_model"))
+  for entry in WalkDir::new(utils::app_root().join("cache_model"))
     .into_iter()
     .filter_map(|e| e.ok())
   {
@@ -82,7 +82,7 @@ pub struct FileMetadata {
 #[tauri::command]
 pub fn get_download_list(pathname: &str) -> (Vec<serde_json::Value>, PathBuf) {
   info!("get_download_list: {}", pathname);
-  let download_path = chat_root().join(PathBuf::from(pathname));
+  let download_path = utils::app_root().join(PathBuf::from(pathname));
   let content = fs::read_to_string(&download_path).unwrap_or_else(|err| {
     info!("download_list_error: {}", err);
     fs::write(&download_path, "[]").unwrap();
@@ -104,7 +104,7 @@ pub fn download_list(pathname: &str, dir: &str, filename: Option<String>, id: Op
   let mut idmap = HashMap::new();
   utils::vec_to_hashmap(data.0.into_iter(), "id", &mut idmap);
 
-  for entry in WalkDir::new(utils::chat_root().join(dir))
+  for entry in WalkDir::new(utils::app_root().join(dir))
     .into_iter()
     .filter_entry(|e| !utils::is_hidden(e))
     .filter_map(|e| e.ok())
@@ -182,9 +182,9 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
 
     let data2 = data.clone();
 
-    let model = utils::chat_root().join("chat.model.json");
-    let model_cmd = utils::chat_root().join("chat.model.cmd.json");
-    let chatgpt_prompts = utils::chat_root()
+    let model = utils::app_root().join("chat.model.json");
+    let model_cmd = utils::app_root().join("chat.model.cmd.json");
+    let chatgpt_prompts = utils::app_root()
       .join("cache_model")
       .join("chatgpt_prompts.json");
 
@@ -238,8 +238,8 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
       "Sync Prompts",
       "ChatGPT Prompts data has been synchronized!",
     );
-    window::window_reload(app.clone(), "core");
-    window::window_reload(app, "tray");
+    window::cmd::window_reload(app.clone(), "core");
+    window::cmd::window_reload(app, "tray");
 
     return Some(data2);
   }

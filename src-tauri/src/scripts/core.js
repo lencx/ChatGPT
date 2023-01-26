@@ -54,7 +54,7 @@ async function init() {
 
   if (__TAURI_METADATA__.__currentWindow.label !== 'tray') {
     const _platform = await platform();
-    const chatConf = await invoke('get_chat_conf') || {};
+    const chatConf = await invoke('get_app_conf') || {};
     if (/darwin/.test(_platform) && !chatConf.titlebar) {
       const topStyleDom = document.createElement("style");
       topStyleDom.innerHTML = `#chatgpt-app-window-top{position:fixed;top:0;z-index:999999999;width:100%;height:24px;background:transparent;cursor:grab;cursor:-webkit-grab;user-select:none;-webkit-user-select:none;}#chatgpt-app-window-top:active {cursor:grabbing;cursor:-webkit-grabbing;}`;

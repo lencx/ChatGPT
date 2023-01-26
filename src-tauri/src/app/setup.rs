@@ -1,20 +1,20 @@
-use crate::{app::window, conf::ChatConfJson, utils};
+use crate::{app::window, conf::AppConf, utils};
 use log::info;
 use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, GlobalShortcutManager, Manager};
 use wry::application::accelerator::Accelerator;
 
 pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
   info!("stepup");
-  let chat_conf = ChatConfJson::get_chat_conf();
-  let url = chat_conf.main_origin.to_string();
-  let theme = ChatConfJson::theme();
+  let app_conf = AppConf::read();
+  let url = app_conf.main_origin.to_string();
+  let theme = AppConf::theme_mode();
   let handle = app.app_handle();
 
   tauri::async_runtime::spawn(async move {
     window::tray_window(&handle);
   });
 
-  if let Some(v) = chat_conf.global_shortcut {
+  if let Some(v) = app_conf.clone().global_shortcut {
     info!("global_shortcut: `{}`", v);
     match v.parse::<Accelerator>() {
       Ok(_) => {
@@ -44,13 +44,14 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
     info!("global_shortcut_unregister");
   };
 
-  if chat_conf.hide_dock_icon {
+  let app_conf2 = app_conf.clone();
+  if app_conf.hide_dock_icon {
     #[cfg(target_os = "macos")]
     app.set_activation_policy(tauri::ActivationPolicy::Accessory);
   } else {
     let app = app.handle();
     tauri::async_runtime::spawn(async move {
-      let link = if chat_conf.main_dashboard {
+      let link = if app_conf2.main_dashboard {
         "index.html"
       } else {
         &url
@@ -60,20 +61,20 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         .resizable(true)
         .fullscreen(false)
         .inner_size(800.0, 600.0)
-        .theme(theme)
-        .always_on_top(chat_conf.stay_on_top)
+        .theme(Some(theme))
+        .always_on_top(app_conf2.stay_on_top)
         .initialization_script(&utils::user_script())
         .initialization_script(include_str!("../scripts/core.js"))
-        .user_agent(&chat_conf.ua_window);
+        .user_agent(&app_conf2.ua_window);
 
       #[cfg(target_os = "macos")]
       {
         main_win = main_win
-          .title_bar_style(ChatConfJson::titlebar())
+          .title_bar_style(app_conf2.clone().titlebar())
           .hidden_title(true);
       }
 
-      if url == "https://chat.openai.com" && !chat_conf.main_dashboard {
+      if url == "https://chat.openai.com" && !app_conf2.main_dashboard {
         main_win = main_win
           .initialization_script(include_str!("../vendors/floating-ui-core.js"))
           .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
@@ -92,10 +93,10 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
   }
 
   // auto_update
-  if chat_conf.auto_update != "Disable" {
+  if app_conf.auto_update != "Disable" {
     info!("stepup::run_check_update");
     let app = app.handle();
-    utils::run_check_update(app, chat_conf.auto_update == "Silent", None);
+    utils::run_check_update(app, app_conf.auto_update == "Silent", None);
   }
 
   Ok(())

@@ -6,7 +6,7 @@ import { clone, omit, isEqual } from 'lodash';
 
 import useInit from '@/hooks/useInit';
 import FilePath from '@/components/FilePath';
-import { chatRoot, CHAT_CONF_JSON } from '@/utils';
+import { chatRoot, APP_CONF_JSON } from '@/utils';
 import General from './General';
 import MainWindow from './MainWindow';
 import TrayWindow from './TrayWindow';
@@ -24,8 +24,8 @@ export default function Settings() {
   }, [key]);
 
   useInit(async () => {
-    setChatConf(await invoke('get_chat_conf'));
-    setPath(await path.join(await chatRoot(), CHAT_CONF_JSON));
+    setChatConf(await invoke('get_app_conf'));
+    setPath(await path.join(await chatRoot(), APP_CONF_JSON));
   });
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function Settings() {
   };
 
   const onReset = async () => {
-    const chatData = await invoke('reset_chat_conf');
+    const chatData = await invoke('reset_app_conf');
     setChatConf(chatData);
     const isOk = await dialog.ask(`Configuration reset successfully, whether to restart?`, {
       title: 'ChatGPT Preferences',
@@ -69,7 +69,7 @@ export default function Settings() {
 
   return (
     <div>
-      <FilePath paths={CHAT_CONF_JSON} />
+      <FilePath paths={APP_CONF_JSON} />
       <Form
         form={form}
         style={{ maxWidth: 500 }}
