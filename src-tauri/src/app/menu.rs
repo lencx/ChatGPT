@@ -1,6 +1,6 @@
 use crate::{
   app::window,
-  conf::{self, ChatConfJson},
+  conf::{self, AppConf},
   utils,
 };
 use tauri::{
@@ -14,7 +14,7 @@ use tauri::AboutMetadata;
 
 // --- Menu
 pub fn init() -> Menu {
-  let chat_conf = ChatConfJson::get_chat_conf();
+  let app_conf = AppConf::read();
   let name = "ChatGPT";
   let app_menu = Submenu::new(
     name,
@@ -35,7 +35,7 @@ pub fn init() -> Menu {
 
   let stay_on_top =
     CustomMenuItem::new("stay_on_top".to_string(), "Stay On Top").accelerator("CmdOrCtrl+T");
-  let stay_on_top_menu = if chat_conf.stay_on_top {
+  let stay_on_top_menu = if app_conf.stay_on_top {
     stay_on_top.selected()
   } else {
     stay_on_top
@@ -44,15 +44,15 @@ pub fn init() -> Menu {
   let theme_light = CustomMenuItem::new("theme_light".to_string(), "Light");
   let theme_dark = CustomMenuItem::new("theme_dark".to_string(), "Dark");
   let theme_system = CustomMenuItem::new("theme_system".to_string(), "System");
-  let is_dark = chat_conf.theme == "Dark";
-  let is_system = chat_conf.theme == "System";
+  let is_dark = app_conf.clone().theme_check("dark");
+  let is_system = app_conf.clone().theme_check("system");
 
   let update_prompt = CustomMenuItem::new("update_prompt".to_string(), "Prompt");
   let update_silent = CustomMenuItem::new("update_silent".to_string(), "Silent");
   let _update_disable = CustomMenuItem::new("update_disable".to_string(), "Disable");
 
   let popup_search = CustomMenuItem::new("popup_search".to_string(), "Pop-up Search");
-  let popup_search_menu = if chat_conf.popup_search {
+  let popup_search_menu = if app_conf.popup_search {
     popup_search.selected()
   } else {
     popup_search
@@ -61,14 +61,14 @@ pub fn init() -> Menu {
   #[cfg(target_os = "macos")]
   let titlebar = CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
   #[cfg(target_os = "macos")]
-  let titlebar_menu = if chat_conf.titlebar {
+  let titlebar_menu = if app_conf.titlebar {
     titlebar.selected()
   } else {
     titlebar
   };
 
   let system_tray = CustomMenuItem::new("system_tray".to_string(), "System Tray");
-  let system_tray_menu = if chat_conf.tray {
+  let system_tray_menu = if app_conf.tray {
     system_tray.selected()
   } else {
     system_tray
@@ -114,16 +114,16 @@ pub fn init() -> Menu {
       Submenu::new(
         "Auto Update",
         Menu::new()
-          .add_item(if chat_conf.auto_update == "Prompt" {
+          .add_item(if app_conf.auto_update == "Prompt" {
             update_prompt.selected()
           } else {
             update_prompt
           })
-          .add_item(if chat_conf.auto_update == "Silent" {
+          .add_item(if app_conf.auto_update == "Silent" {
             update_silent.selected()
           } else {
             update_silent
-          }), // .add_item(if chat_conf.auto_update == "Disable" {
+          }), // .add_item(if app_conf.auto_update == "Disable" {
               //     update_disable.selected()
               // } else {
               //     update_disable
@@ -241,23 +241,25 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
       utils::run_check_update(app, false, None);
     }
     // Preferences
-    "control_center" => window::control_window(app),
+    "control_center" => window::cmd::control_window(app),
     "restart" => tauri::api::process::restart(&app.env()),
     "inject_script" => open(&app, script_path),
-    "go_conf" => utils::open_file(utils::chat_root()),
+    "go_conf" => utils::open_file(utils::app_root()),
     "clear_conf" => utils::clear_conf(&app),
     "awesome" => open(&app, conf::AWESOME_URL.to_string()),
     "buy_coffee" => open(&app, conf::BUY_COFFEE.to_string()),
     "popup_search" => {
-      let chat_conf = conf::ChatConfJson::get_chat_conf();
-      let popup_search = !chat_conf.popup_search;
+      let app_conf = AppConf::read();
+      let popup_search = !app_conf.popup_search;
       menu_handle
         .get_item(menu_id)
         .set_selected(popup_search)
         .unwrap();
-      ChatConfJson::amend(&serde_json::json!({ "popup_search": popup_search }), None).unwrap();
-      window::window_reload(app.clone(), "core");
-      window::window_reload(app, "tray");
+      app_conf
+        .amend(serde_json::json!({ "popup_search": popup_search }))
+        .write();
+      window::cmd::window_reload(app.clone(), "core");
+      window::cmd::window_reload(app, "tray");
     }
     "sync_prompts" => {
       tauri::api::dialog::ask(
@@ -276,29 +278,37 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
       );
     }
     "hide_dock_icon" => {
-      ChatConfJson::amend(&serde_json::json!({ "hide_dock_icon": true }), Some(app)).unwrap()
+      AppConf::read()
+        .amend(serde_json::json!({ "hide_dock_icon": true }))
+        .write()
+        .restart(app);
     }
     "titlebar" => {
-      let chat_conf = conf::ChatConfJson::get_chat_conf();
-      ChatConfJson::amend(
-        &serde_json::json!({ "titlebar": !chat_conf.titlebar }),
-        None,
-      )
-      .unwrap();
-      tauri::api::process::restart(&app.env());
+      let app_conf = AppConf::read();
+      app_conf
+        .clone()
+        .amend(serde_json::json!({ "titlebar": !app_conf.titlebar }))
+        .write()
+        .restart(app);
     }
     "system_tray" => {
-      let chat_conf = conf::ChatConfJson::get_chat_conf();
-      ChatConfJson::amend(&serde_json::json!({ "tray": !chat_conf.tray }), None).unwrap();
-      tauri::api::process::restart(&app.env());
+      let app_conf = AppConf::read();
+      app_conf
+        .clone()
+        .amend(serde_json::json!({ "tray": !app_conf.tray }))
+        .write()
+        .restart(app);
     }
     "theme_light" | "theme_dark" | "theme_system" => {
       let theme = match menu_id {
-        "theme_dark" => "Dark",
-        "theme_system" => "System",
-        _ => "Light",
+        "theme_dark" => "dark",
+        "theme_system" => "system",
+        _ => "light",
       };
-      ChatConfJson::amend(&serde_json::json!({ "theme": theme }), Some(app)).unwrap();
+      AppConf::read()
+        .amend(serde_json::json!({ "theme": theme }))
+        .write()
+        .restart(app);
     }
     "update_prompt" | "update_silent" | "update_disable" => {
       // for id in ["update_prompt", "update_silent", "update_disable"] {
@@ -328,17 +338,21 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
           "Prompt"
         }
       };
-      ChatConfJson::amend(&serde_json::json!({ "auto_update": auto_update }), None).unwrap();
+      AppConf::read()
+        .amend(serde_json::json!({ "auto_update": auto_update }))
+        .write();
     }
     "stay_on_top" => {
-      let chat_conf = conf::ChatConfJson::get_chat_conf();
-      let stay_on_top = !chat_conf.stay_on_top;
+      let app_conf = AppConf::read();
+      let stay_on_top = !app_conf.stay_on_top;
       menu_handle
         .get_item(menu_id)
         .set_selected(stay_on_top)
         .unwrap();
       win.set_always_on_top(stay_on_top).unwrap();
-      ChatConfJson::amend(&serde_json::json!({ "stay_on_top": stay_on_top }), None).unwrap();
+      app_conf
+        .amend(serde_json::json!({ "stay_on_top": stay_on_top }))
+        .write();
     }
     // Window
     "dalle2" => window::dalle2_window(&app, None, None, Some(false)),
@@ -367,7 +381,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
       )
       .unwrap(),
     // Help
-    "chatgpt_log" => utils::open_file(utils::chat_root().join("chatgpt.log")),
+    "chatgpt_log" => utils::open_file(utils::app_root().join("chatgpt.log")),
     "update_log" => open(&app, conf::UPDATE_LOG_URL.to_string()),
     "report_bug" => open(&app, conf::ISSUES_URL.to_string()),
     "dev_tools" => {
@@ -422,9 +436,9 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
 
   match event {
     SystemTrayEvent::LeftClick { .. } => {
-      let chat_conf = conf::ChatConfJson::get_chat_conf();
+      let app_conf = AppConf::read();
 
-      if !chat_conf.hide_dock_icon {
+      if !app_conf.hide_dock_icon {
         let core_win = handle.get_window("core").unwrap();
         core_win.minimize().unwrap();
       }
@@ -439,15 +453,21 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
       }
     }
     SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
-      "control_center" => window::control_window(app),
+      "control_center" => window::cmd::control_window(app),
       "restart" => tauri::api::process::restart(&handle.env()),
       "show_dock_icon" => {
-        ChatConfJson::amend(&serde_json::json!({ "hide_dock_icon": false }), Some(app)).unwrap();
+        AppConf::read()
+          .amend(serde_json::json!({ "hide_dock_icon": false }))
+          .write()
+          .restart(app);
       }
       "hide_dock_icon" => {
-        let chat_conf = conf::ChatConfJson::get_chat_conf();
-        if !chat_conf.hide_dock_icon {
-          ChatConfJson::amend(&serde_json::json!({ "hide_dock_icon": true }), Some(app)).unwrap();
+        let app_conf = AppConf::read();
+        if !app_conf.hide_dock_icon {
+          app_conf
+            .amend(serde_json::json!({ "hide_dock_icon": true }))
+            .write()
+            .restart(app);
         }
       }
       "show_core" => {

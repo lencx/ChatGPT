@@ -11,7 +11,7 @@ use std::{
 use tauri::updater::UpdateResponse;
 use tauri::{utils::config::Config, AppHandle, Manager, Wry};
 
-pub fn chat_root() -> PathBuf {
+pub fn app_root() -> PathBuf {
   tauri::api::path::home_dir().unwrap().join(".chatgpt")
 }
 
@@ -33,7 +33,7 @@ pub fn create_file(path: &Path) -> Result<File> {
 }
 
 pub fn create_chatgpt_prompts() {
-  let sync_file = chat_root().join("cache_model").join("chatgpt_prompts.json");
+  let sync_file = app_root().join("cache_model").join("chatgpt_prompts.json");
   if !exists(&sync_file) {
     create_file(&sync_file).unwrap();
     fs::write(&sync_file, "[]").unwrap();
@@ -41,7 +41,7 @@ pub fn create_chatgpt_prompts() {
 }
 
 pub fn script_path() -> PathBuf {
-  let script_file = chat_root().join("main.js");
+  let script_file = app_root().join("main.js");
   if !exists(&script_file) {
     create_file(&script_file).unwrap();
     fs::write(
@@ -96,7 +96,7 @@ pub fn convert_path(path_str: &str) -> String {
 }
 
 pub fn clear_conf(app: &tauri::AppHandle) {
-  let root = chat_root();
+  let root = app_root();
   let msg = format!(
     "Path: {}\n
     Are you sure you want to clear all ChatGPT configurations? Performing this operation data can not be restored, please back up in advance.\n

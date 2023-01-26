@@ -7,7 +7,7 @@ import { os, invoke } from '@tauri-apps/api';
 
 import useInit from '@/hooks/useInit';
 import useJson from '@/hooks/useJson';
-import { CHAT_AWESOME_JSON, CHAT_CONF_JSON, readJSON } from '@/utils';
+import { CHAT_AWESOME_JSON, APP_CONF_JSON, readJSON } from '@/utils';
 import './index.scss';
 
 export default function Dashboard() {
@@ -19,7 +19,7 @@ export default function Dashboard() {
 
   useInit(async () => {
     const getOS = await os.platform();
-    const conf = await readJSON(CHAT_CONF_JSON);
+    const conf = await readJSON(APP_CONF_JSON);
     const appTheme = await invoke('get_theme');
     setTheme(appTheme as string);
     setClass(!conf?.titlebar && getOS === 'darwin');

@@ -1,18 +1,18 @@
-use crate::{conf, utils};
+use crate::{conf::AppConf, utils};
 use log::info;
 use std::time::SystemTime;
 use tauri::{utils::config::WindowUrl, window::WindowBuilder, Manager};
 
 pub fn tray_window(handle: &tauri::AppHandle) {
-  let chat_conf = conf::ChatConfJson::get_chat_conf();
-  let theme = conf::ChatConfJson::theme();
+  let app_conf = AppConf::read();
+  let theme = AppConf::theme_mode();
   let app = handle.clone();
 
   tauri::async_runtime::spawn(async move {
-    let link = if chat_conf.tray_dashboard {
+    let link = if app_conf.tray_dashboard {
       "index.html"
     } else {
-      &chat_conf.tray_origin
+      &app_conf.tray_origin
     };
     let mut tray_win = WindowBuilder::new(&app, "tray", WindowUrl::App(link.into()))
       .title("ChatGPT")
@@ -21,12 +21,12 @@ pub fn tray_window(handle: &tauri::AppHandle) {
       .inner_size(360.0, 540.0)
       .decorations(false)
       .always_on_top(true)
-      .theme(theme)
+      .theme(Some(theme))
       .initialization_script(&utils::user_script())
       .initialization_script(include_str!("../scripts/core.js"))
-      .user_agent(&chat_conf.ua_tray);
+      .user_agent(&app_conf.ua_tray);
 
-    if chat_conf.tray_origin == "https://chat.openai.com" && !chat_conf.tray_dashboard {
+    if app_conf.tray_origin == "https://chat.openai.com" && !app_conf.tray_dashboard {
       tray_win = tray_win
         .initialization_script(include_str!("../vendors/floating-ui-core.js"))
         .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
@@ -45,7 +45,7 @@ pub fn dalle2_window(
   is_new: Option<bool>,
 ) {
   info!("dalle2_query: {:?}", query);
-  let theme = conf::ChatConfJson::theme();
+  let theme = AppConf::theme_mode();
   let app = handle.clone();
 
   let query = if query.is_some() {
@@ -76,7 +76,7 @@ pub fn dalle2_window(
       .fullscreen(false)
       .inner_size(800.0, 600.0)
       .always_on_top(false)
-      .theme(theme)
+      .theme(Some(theme))
       .initialization_script(include_str!("../scripts/core.js"))
       .initialization_script(&query)
       .initialization_script(include_str!("../scripts/dalle2.js"))
@@ -90,78 +90,84 @@ pub fn dalle2_window(
   }
 }
 
-#[tauri::command]
-pub fn dalle2_search_window(app: tauri::AppHandle, query: String) {
-  dalle2_window(
-    &app.app_handle(),
-    Some(query),
-    Some("ChatGPT & DALL·E 2".to_string()),
-    None,
-  );
-}
+pub mod cmd {
+  use super::*;
+  use log::info;
+  use tauri::{command, utils::config::WindowUrl, window::WindowBuilder, Manager};
 
-#[tauri::command]
-pub fn control_window(handle: tauri::AppHandle) {
-  tauri::async_runtime::spawn(async move {
-    if handle.get_window("main").is_none() {
-      WindowBuilder::new(
-        &handle,
-        "main",
-        WindowUrl::App("index.html?type=control".into()),
-      )
-      .title("Control Center")
-      .resizable(true)
-      .fullscreen(false)
-      .inner_size(1200.0, 700.0)
-      .min_inner_size(1000.0, 600.0)
-      .build()
-      .unwrap();
-    } else {
-      let main_win = handle.get_window("main").unwrap();
-      main_win.show().unwrap();
-      main_win.set_focus().unwrap();
-    }
-  });
-}
+  #[tauri::command]
+  pub fn dalle2_search_window(app: tauri::AppHandle, query: String) {
+    dalle2_window(
+      &app.app_handle(),
+      Some(query),
+      Some("ChatGPT & DALL·E 2".to_string()),
+      None,
+    );
+  }
 
-#[tauri::command]
-pub async fn wa_window(
-  app: tauri::AppHandle,
-  label: String,
-  title: String,
-  url: String,
-  script: Option<String>,
-) {
-  info!("wa_window: {} :=> {}", title, url);
-  let win = app.get_window(&label);
-  if win.is_none() {
+  #[tauri::command]
+  pub fn control_window(handle: tauri::AppHandle) {
     tauri::async_runtime::spawn(async move {
-      tauri::WindowBuilder::new(&app, label, tauri::WindowUrl::App(url.parse().unwrap()))
-        .initialization_script(&script.unwrap_or_default())
-        .initialization_script(include_str!("../scripts/core.js"))
-        .title(title)
+      if handle.get_window("main").is_none() {
+        WindowBuilder::new(
+          &handle,
+          "main",
+          WindowUrl::App("index.html?type=control".into()),
+        )
+        .title("Control Center")
+        .resizable(true)
+        .fullscreen(false)
+        .inner_size(1200.0, 700.0)
+        .min_inner_size(1000.0, 600.0)
         .build()
         .unwrap();
+      } else {
+        let main_win = handle.get_window("main").unwrap();
+        main_win.show().unwrap();
+        main_win.set_focus().unwrap();
+      }
     });
-  } else {
-    if !win.clone().unwrap().is_visible().unwrap() {
-      win.clone().unwrap().show().unwrap();
+  }
+
+  #[command]
+  pub async fn wa_window(
+    app: tauri::AppHandle,
+    label: String,
+    title: String,
+    url: String,
+    script: Option<String>,
+  ) {
+    info!("wa_window: {} :=> {}", title, url);
+    let win = app.get_window(&label);
+    if win.is_none() {
+      tauri::async_runtime::spawn(async move {
+        tauri::WindowBuilder::new(&app, label, tauri::WindowUrl::App(url.parse().unwrap()))
+          .initialization_script(&script.unwrap_or_default())
+          .initialization_script(include_str!("../scripts/core.js"))
+          .title(title)
+          .build()
+          .unwrap();
+      });
+    } else {
+      if !win.clone().unwrap().is_visible().unwrap() {
+        win.clone().unwrap().show().unwrap();
+      }
+      win
+        .clone()
+        .unwrap()
+        .eval("window.location.reload()")
+        .unwrap();
+      win.unwrap().set_focus().unwrap();
     }
-    win
-      .clone()
+  }
+
+  #[command]
+  pub fn window_reload(app: tauri::AppHandle, label: &str) {
+    app
+      .app_handle()
+      .get_window(label)
       .unwrap()
       .eval("window.location.reload()")
       .unwrap();
-    win.unwrap().set_focus().unwrap();
   }
-}
-
-#[tauri::command]
-pub fn window_reload(app: tauri::AppHandle, label: &str) {
-  app
-    .app_handle()
-    .get_window(label)
-    .unwrap()
-    .eval("window.location.reload()")
-    .unwrap();
 }

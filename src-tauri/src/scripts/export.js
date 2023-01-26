@@ -3,7 +3,7 @@
 async function init() {
   const buttonOuterHTMLFallback = `<button class="btn flex justify-center gap-2 btn-neutral" id="download-png-button">Try Again</button>`;
   if (window.innerWidth < 767) return;
-  const chatConf = await invoke('get_chat_conf') || {};
+  const chatConf = await invoke('get_app_conf') || {};
   if (window.buttonsInterval) {
     clearInterval(window.buttonsInterval);
   }
