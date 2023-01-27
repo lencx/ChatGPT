@@ -1,5 +1,5 @@
 use anyhow::Result;
-use log::info;
+use log::{error, info};
 use regex::Regex;
 use serde_json::Value;
 use std::{
@@ -145,7 +145,7 @@ pub async fn get_data(
   if is_ok {
     Ok(Some(body))
   } else {
-    info!("chatgpt_http_error: {}", body);
+    error!("chatgpt_http: {}", body);
     if let Some(v) = app {
       tauri::api::dialog::message(v.get_window("core").as_ref(), "ChatGPT HTTP", body);
     }

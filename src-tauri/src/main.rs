@@ -54,16 +54,6 @@ async fn main() {
       None,
     ))
     .invoke_handler(tauri::generate_handler![
-      conf::cmd::get_app_conf,
-      conf::cmd::reset_app_conf,
-      conf::cmd::get_theme,
-      conf::cmd::form_confirm,
-      conf::cmd::form_cancel,
-      conf::cmd::form_msg,
-      window::cmd::wa_window,
-      window::cmd::control_window,
-      window::cmd::window_reload,
-      window::cmd::dalle2_search_window,
       cmd::drag_window,
       cmd::fullscreen,
       cmd::download,
@@ -80,6 +70,16 @@ async fn main() {
       gpt::download_list,
       gpt::get_download_list,
       fs_extra::metadata,
+      conf::cmd::get_app_conf,
+      conf::cmd::reset_app_conf,
+      conf::cmd::get_theme,
+      conf::cmd::form_confirm,
+      conf::cmd::form_cancel,
+      conf::cmd::form_msg,
+      window::cmd::wa_window,
+      window::cmd::control_window,
+      window::cmd::window_reload,
+      window::cmd::dalle2_search_window,
     ])
     .setup(setup::init)
     .menu(menu::init());

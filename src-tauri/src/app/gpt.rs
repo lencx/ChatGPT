@@ -3,7 +3,7 @@ use crate::{
   conf::GITHUB_PROMPTS_CSV_URL,
   utils,
 };
-use log::info;
+use log::{error, info};
 use regex::Regex;
 use std::{collections::HashMap, fs, path::PathBuf, vec};
 use tauri::{api, command, AppHandle, Manager};
@@ -29,7 +29,7 @@ pub fn parse_prompt(data: String) -> Vec<PromptRecord> {
   let mut list = vec![];
   for result in rdr.deserialize() {
     let record: PromptRecord = result.unwrap_or_else(|err| {
-      info!("parse_prompt_error: {}", err);
+      error!("parse_prompt: {}", err);
       PromptRecord {
         cmd: None,
         act: "".to_string(),
@@ -84,12 +84,12 @@ pub fn get_download_list(pathname: &str) -> (Vec<serde_json::Value>, PathBuf) {
   info!("get_download_list: {}", pathname);
   let download_path = utils::app_root().join(PathBuf::from(pathname));
   let content = fs::read_to_string(&download_path).unwrap_or_else(|err| {
-    info!("download_list_error: {}", err);
+    error!("download_list: {}", err);
     fs::write(&download_path, "[]").unwrap();
     "[]".to_string()
   });
   let list = serde_json::from_str::<Vec<serde_json::Value>>(&content).unwrap_or_else(|err| {
-    info!("download_list_parse_error: {}", err);
+    error!("download_list_parse: {}", err);
     vec![]
   });
 
@@ -249,12 +249,11 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<ModelRecord>>
 
 #[command]
 pub async fn sync_user_prompts(url: String, data_type: String) -> Option<Vec<ModelRecord>> {
+  info!("sync_user_prompts: url => {}", url);
   let res = utils::get_data(&url, None).await.unwrap_or_else(|err| {
-    info!("chatgpt_http_error: {}", err);
+    error!("chatgpt_http: {}", err);
     None
   });
-
-  info!("chatgpt_http_url: {}", url);
 
   if let Some(v) = res {
     let data;
@@ -264,11 +263,11 @@ pub async fn sync_user_prompts(url: String, data_type: String) -> Option<Vec<Mod
     } else if data_type == "json" {
       info!("chatgpt_http_json_parse");
       data = serde_json::from_str(&v).unwrap_or_else(|err| {
-        info!("chatgpt_http_json_parse_error: {}", err);
+        error!("chatgpt_http_json_parse: {}", err);
         vec![]
       });
     } else {
-      info!("chatgpt_http_unknown_type");
+      error!("chatgpt_http_unknown_type");
       data = vec![];
     }
 

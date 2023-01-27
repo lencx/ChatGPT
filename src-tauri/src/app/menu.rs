@@ -49,7 +49,7 @@ pub fn init() -> Menu {
 
   let update_prompt = CustomMenuItem::new("update_prompt".to_string(), "Prompt");
   let update_silent = CustomMenuItem::new("update_silent".to_string(), "Silent");
-  let _update_disable = CustomMenuItem::new("update_disable".to_string(), "Disable");
+  // let _update_disable = CustomMenuItem::new("update_disable".to_string(), "Disable");
 
   let popup_search = CustomMenuItem::new("popup_search".to_string(), "Pop-up Search");
   let popup_search_menu = if app_conf.popup_search {
@@ -74,6 +74,7 @@ pub fn init() -> Menu {
     system_tray
   };
 
+  let auto_update = app_conf.get_auto_update();
   let preferences_menu = Submenu::new(
     "Preferences",
     Menu::with_items([
@@ -114,16 +115,16 @@ pub fn init() -> Menu {
       Submenu::new(
         "Auto Update",
         Menu::new()
-          .add_item(if app_conf.auto_update == "Prompt" {
+          .add_item(if auto_update == "prompt" {
             update_prompt.selected()
           } else {
             update_prompt
           })
-          .add_item(if app_conf.auto_update == "Silent" {
+          .add_item(if auto_update == "silent" {
             update_silent.selected()
           } else {
             update_silent
-          }), // .add_item(if app_conf.auto_update == "Disable" {
+          }), // .add_item(if auto_update == "disable" {
               //     update_disable.selected()
               // } else {
               //     update_disable
@@ -321,21 +322,21 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
             .get_item("update_silent")
             .set_selected(true)
             .unwrap();
-          "Silent"
+          "silent"
         }
         "update_disable" => {
           menu_handle
             .get_item("update_disable")
             .set_selected(true)
             .unwrap();
-          "Disable"
+          "disable"
         }
         _ => {
           menu_handle
             .get_item("update_prompt")
             .set_selected(true)
             .unwrap();
-          "Prompt"
+          "prompt"
         }
       };
       AppConf::read()
