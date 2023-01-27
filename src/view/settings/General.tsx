@@ -30,16 +30,16 @@ export default function General() {
       )}
       <Form.Item label="Theme" name="theme">
         <Radio.Group>
-          <Radio value="Light">Light</Radio>
-          <Radio value="Dark">Dark</Radio>
+          <Radio value="light">Light</Radio>
+          <Radio value="dark">Dark</Radio>
           {['darwin', 'windows'].includes(platformInfo) && <Radio value="System">System</Radio>}
         </Radio.Group>
       </Form.Item>
       <Form.Item label={<AutoUpdateLabel />} name="auto_update">
         <Radio.Group>
-          <Radio value="Prompt">Prompt</Radio>
-          <Radio value="Silent">Silent</Radio>
-          {/*<Radio value="Disable">Disable</Radio>*/}
+          <Radio value="prompt">Prompt</Radio>
+          <Radio value="silent">Silent</Radio>
+          {/*<Radio value="disable">Disable</Radio>*/}
         </Radio.Group>
       </Form.Item>
       <Form.Item label={<GlobalShortcutLabel />} name="global_shortcut">

@@ -1,5 +1,5 @@
 use crate::utils;
-use log::info;
+use log::error;
 use std::{fs, path::PathBuf};
 use tauri::{api, command, AppHandle, Manager};
 
@@ -58,7 +58,7 @@ pub async fn get_data(app: AppHandle, url: String, is_msg: Option<bool>) -> Opti
     utils::get_data(&url, None).await
   };
   res.unwrap_or_else(|err| {
-    info!("chatgpt_client_http_error: {}", err);
+    error!("chatgpt_client_http: {}", err);
     None
   })
 }

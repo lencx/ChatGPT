@@ -1,5 +1,5 @@
 use crate::{app::window, conf::AppConf, utils};
-use log::info;
+use log::{error, info};
 use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, GlobalShortcutManager, Manager};
 use wry::application::accelerator::Accelerator;
 
@@ -33,11 +33,11 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
             }
           })
           .unwrap_or_else(|err| {
-            info!("global_shortcut_register_error: {}", err);
+            error!("global_shortcut_register_error: {}", err);
           });
       }
       Err(err) => {
-        info!("global_shortcut_parse_error: {}", err);
+        error!("global_shortcut_parse_error: {}", err);
       }
     }
   } else {
@@ -93,10 +93,11 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
   }
 
   // auto_update
-  if app_conf.auto_update != "Disable" {
-    info!("stepup::run_check_update");
+  let auto_update = app_conf.get_auto_update();
+  if auto_update != "disable" {
+    info!("run_check_update");
     let app = app.handle();
-    utils::run_check_update(app, app_conf.auto_update == "Silent", None);
+    utils::run_check_update(app, auto_update == "silent", None);
   }
 
   Ok(())

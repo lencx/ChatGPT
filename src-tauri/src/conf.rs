@@ -31,9 +31,9 @@ macro_rules! pub_struct {
 pub_struct!(AppConf {
   titlebar: bool,
   hide_dock_icon: bool,
-  // macOS and Windows: Light / Dark / System
+  // macOS and Windows: light / dark / system
   theme: String,
-  // auto update policy: Prompt / Silent / Disable
+  // auto update policy: prompt / silent / disable
   auto_update: String,
   tray: bool,
   popup_search: bool,
@@ -54,8 +54,8 @@ impl AppConf {
     Self {
       titlebar: !cfg!(target_os = "macos"),
       hide_dock_icon: false,
-      theme: "Light".into(),
-      auto_update: "Prompt".into(),
+      theme: "light".into(),
+      auto_update: "prompt".into(),
       tray: true,
       popup_search: false,
       stay_on_top: false,
@@ -88,15 +88,15 @@ impl AppConf {
     let path = &Self::file_path();
     if !exists(path) {
       create_file(path).unwrap();
-      info!("conf_init")
+      info!("conf_create");
     }
     if let Ok(v) = serde_json::to_string_pretty(&self) {
       std::fs::write(path, v).unwrap_or_else(|err| {
-        error!("conf_write_error: {}", err);
+        error!("conf_write: {}", err);
         Self::default().write();
       });
     } else {
-      error!("conf_ser_error");
+      error!("conf_ser");
     }
     self
   }
@@ -114,12 +114,12 @@ impl AppConf {
       Ok(v) => match serde_json::from_str::<AppConf>(&v) {
         Ok(v) => v,
         Err(err) => {
-          error!("conf_amend_parse_error: {}", err);
+          error!("conf_amend_parse: {}", err);
           self
         }
       },
       Err(err) => {
-        error!("conf_amend_str_error: {}", err);
+        error!("conf_amend_str: {}", err);
         self
       }
     }
@@ -135,7 +135,7 @@ impl AppConf {
   }
 
   pub fn theme_mode() -> Theme {
-    match cmd::get_theme().to_lowercase().as_str() {
+    match Self::get_theme().as_str() {
       "system" => match dark_light::detect() {
         // Dark mode
         dark_light::Mode::Dark => Theme::Dark,
@@ -147,6 +147,14 @@ impl AppConf {
       "dark" => Theme::Dark,
       _ => Theme::Light,
     }
+  }
+
+  pub fn get_theme() -> String {
+    Self::read().theme.to_lowercase()
+  }
+
+  pub fn get_auto_update(self) -> String {
+    self.auto_update.to_lowercase()
   }
 
   pub fn theme_check(self, mode: &str) -> bool {
@@ -180,7 +188,7 @@ pub mod cmd {
 
   #[command]
   pub fn get_theme() -> String {
-    AppConf::read().theme
+    AppConf::get_theme()
   }
 
   #[command]
