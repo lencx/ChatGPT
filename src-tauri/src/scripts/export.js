@@ -200,7 +200,7 @@ class Elements {
   }
   init() {
     // this.threadWrapper = document.querySelector(".cdfdFe");
-    this.spacer = document.querySelector(".w-full.h-48.flex-shrink-0");
+    this.spacer = document.querySelector("[class*='h-48'].w-full.flex-shrink-0");
     this.thread = document.querySelector(
       "[class*='react-scroll-to-bottom']>[class*='react-scroll-to-bottom']>div"
     );

@@ -46,7 +46,6 @@ async fn main() {
   }
 
   let mut builder = tauri::Builder::default()
-    // https://github.com/tauri-apps/tauri/pull/2736
     .plugin(log.build())
     .plugin(tauri_plugin_positioner::init())
     .plugin(tauri_plugin_autostart::init(
@@ -92,19 +91,10 @@ async fn main() {
     .on_menu_event(menu::menu_handler)
     .on_system_tray_event(menu::tray_handler)
     .on_window_event(|event| {
-      // https://github.com/tauri-apps/tauri/discussions/2684
       if let tauri::WindowEvent::CloseRequested { api, .. } = event.event() {
         let win = event.window();
         if win.label() == "core" {
-          // TODO: https://github.com/tauri-apps/tauri/issues/3084
-          // event.window().hide().unwrap();
-          // https://github.com/tauri-apps/tao/pull/517
-          #[cfg(target_os = "macos")]
           event.window().minimize().unwrap();
-
-          // fix: https://github.com/lencx/ChatGPT/issues/93
-          #[cfg(not(target_os = "macos"))]
-          event.window().hide().unwrap();
         } else {
           win.close().unwrap();
         }
