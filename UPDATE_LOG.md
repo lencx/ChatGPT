@@ -1,5 +1,11 @@
 # UPDATE LOG
 
+## v0.10.2
+
+Fix:
+
+- PNG and PDF buttons do not work (https://github.com/lencx/ChatGPT/issues/274)
+
 ## v0.10.1
 
 Fix:

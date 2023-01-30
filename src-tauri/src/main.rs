@@ -9,6 +9,7 @@ mod utils;
 
 use app::{cmd, fs_extra, gpt, menu, setup, window};
 use conf::AppConf;
+use log::info;
 use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::{
   fern::colors::{Color, ColoredLevelConfig},
