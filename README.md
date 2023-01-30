@@ -42,7 +42,7 @@
 
 
 ## Getting Started
-You can get started with ChatGPT Desktop by downloading the latest version of ChatGPT Desktop for your select operating system below. Alternatively, if you want to contribute you can set up a local development environment. LINK
+You can get started with ChatGPT Desktop by downloading the latest version of ChatGPT Desktop for your select operating system below. Alternatively, if you want to contribute you can set up a local development environment and start contributing [here](#-Contributing).
 
 💻**Windows:** [Install for windows](https://github.com/lencx/ChatGPT/blob/main/docs/install-docs/windows-install.md)
 
@@ -59,7 +59,7 @@ See offical ChatGPT Desktop documentation vist this  [link](https://app.nofwl.co
 We welcome all contributions to the community please read the code of conduct and the contribution guidlines below to get started.
 
 - [Contributing](https://github.com/lencx/ChatGPT/blob/main/docs/contribute-docs/CONTRIBUTING.md)
-- [Code of conduct](https://github.com/lencx/ChatGPT/blob/main/docs/contribute-docs/Code%20of%20Conduct.md)
+- [Code of conduct](https://github.com/lencx/ChatGPT/blob/main/docs/contribute-docs/CODE_OF_CONDUCT.md)
 ## Development Environment (Local)
 - [Local development](https://github.com/lencx/ChatGPT/blob/main/docs/development/development.md)
 ## Platform, Build, and Deployment Status
