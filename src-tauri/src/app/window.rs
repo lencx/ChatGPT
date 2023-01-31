@@ -145,6 +145,8 @@ pub mod cmd {
           .initialization_script(&script.unwrap_or_default())
           .initialization_script(include_str!("../scripts/core.js"))
           .title(title)
+          .inner_size(960.0, 700.0)
+          .resizable(true)
           .build()
           .unwrap();
       });

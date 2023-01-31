@@ -81,7 +81,6 @@ pub fn init() -> Menu {
       CustomMenuItem::new("control_center".to_string(), "Control Center")
         .accelerator("CmdOrCtrl+Shift+P")
         .into(),
-      CustomMenuItem::new("app_website".to_string(), "ChatGPT User's Guide").into(),
       MenuItem::Separator.into(),
       stay_on_top_menu.into(),
       #[cfg(target_os = "macos")]
@@ -190,6 +189,10 @@ pub fn init() -> Menu {
   let window_menu = Submenu::new(
     "Window",
     Menu::new()
+      .add_item(CustomMenuItem::new(
+        "app_website".to_string(),
+        "ChatGPT User's Guide",
+      ))
       .add_item(CustomMenuItem::new("dalle2".to_string(), "DALL·E 2"))
       .add_native_item(MenuItem::Separator)
       .add_native_item(MenuItem::Minimize)
