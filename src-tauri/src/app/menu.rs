@@ -162,9 +162,9 @@ pub fn init() -> Menu {
   let view_menu = Submenu::new(
     "View",
     Menu::new()
-      .add_item(CustomMenuItem::new("go_back".to_string(), "Go Back").accelerator("CmdOrCtrl+Left"))
+      .add_item(CustomMenuItem::new("go_back".to_string(), "Go Back").accelerator("CmdOrCtrl+["))
       .add_item(
-        CustomMenuItem::new("go_forward".to_string(), "Go Forward").accelerator("CmdOrCtrl+Right"),
+        CustomMenuItem::new("go_forward".to_string(), "Go Forward").accelerator("CmdOrCtrl+]"),
       )
       .add_item(
         CustomMenuItem::new("scroll_top".to_string(), "Scroll to Top of Screen")

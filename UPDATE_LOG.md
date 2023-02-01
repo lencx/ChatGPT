@@ -6,6 +6,10 @@ Fix:
 
 - PNG and PDF buttons do not work (https://github.com/lencx/ChatGPT/issues/274)
 
+Feat:
+
+- Copy a single record to the clipboard (https://github.com/lencx/ChatGPT/issues/191)
+
 ## v0.10.1
 
 Fix:
