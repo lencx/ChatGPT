@@ -130,7 +130,7 @@ pub mod cmd {
   }
 
   #[command]
-  pub async fn wa_window(
+  pub fn wa_window(
     app: tauri::AppHandle,
     label: String,
     title: String,
@@ -145,19 +145,18 @@ pub mod cmd {
           .initialization_script(&script.unwrap_or_default())
           .initialization_script(include_str!("../scripts/core.js"))
           .title(title)
+          .inner_size(960.0, 700.0)
+          .resizable(true)
           .build()
           .unwrap();
       });
-    } else {
-      if !win.clone().unwrap().is_visible().unwrap() {
-        win.clone().unwrap().show().unwrap();
+    }
+    if let Some(v) = win {
+      if !v.is_visible().unwrap() {
+        v.show().unwrap();
       }
-      win
-        .clone()
-        .unwrap()
-        .eval("window.location.reload()")
-        .unwrap();
-      win.unwrap().set_focus().unwrap();
+      v.eval("window.location.reload()").unwrap();
+      v.set_focus().unwrap();
     }
   }
 

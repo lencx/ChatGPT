@@ -36,8 +36,22 @@ async function invoke(cmd, args) {
   });
 }
 
+async function message(message) {
+  invoke('messageDialog', {
+    __tauriModule: 'Dialog',
+    message: {
+      cmd: 'messageDialog',
+      message: message.toString(),
+      title: null,
+      type: null,
+      buttonLabel: null
+    }
+  });
+}
+
 window.uid = uid;
 window.invoke = invoke;
+window.message = message;
 window.transformCallback = transformCallback;
 
 async function init() {
@@ -84,17 +98,6 @@ async function init() {
     if (!origin || !origin.target) return;
     if (origin && origin.href && origin.target !== '_self') {
       invoke('open_link', { url: origin.href });
-    }
-  });
-
-  document.addEventListener('wheel', function(event) {
-    const deltaX = event.wheelDeltaX;
-    if (Math.abs(deltaX) >= 50) {
-      if (deltaX > 0) {
-        window.history.go(-1);
-      } else {
-        window.history.go(1);
-      }
     }
   });
 

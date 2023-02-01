@@ -11,6 +11,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
   let handle = app.app_handle();
 
   tauri::async_runtime::spawn(async move {
+    info!("stepup_tray");
     window::tray_window(&handle);
   });
 
@@ -56,6 +57,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
       } else {
         &url
       };
+      info!("main_window: {}", link);
       let mut main_win = WindowBuilder::new(&app, "core", WindowUrl::App(link.into()))
         .title("ChatGPT")
         .resizable(true)

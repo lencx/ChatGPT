@@ -19,19 +19,29 @@ pub fn fullscreen(app: AppHandle) {
 }
 
 #[command]
-pub fn download(_app: AppHandle, name: String, blob: Vec<u8>) {
+pub fn download(app: AppHandle, name: String, blob: Vec<u8>) {
+  let win = app.app_handle().get_window("core");
   let path = utils::app_root().join(PathBuf::from(name));
   utils::create_file(&path).unwrap();
   fs::write(&path, blob).unwrap();
-  utils::open_file(path);
+  tauri::api::dialog::message(
+    win.as_ref(),
+    "Save File",
+    format!("PATH: {}", path.display()),
+  );
 }
 
 #[command]
-pub fn save_file(_app: AppHandle, name: String, content: String) {
+pub fn save_file(app: AppHandle, name: String, content: String) {
+  let win = app.app_handle().get_window("core");
   let path = utils::app_root().join(PathBuf::from(name));
   utils::create_file(&path).unwrap();
   fs::write(&path, content).unwrap();
-  utils::open_file(path);
+  tauri::api::dialog::message(
+    win.as_ref(),
+    "Save File",
+    format!("PATH: {}", path.display()),
+  );
 }
 
 #[command]

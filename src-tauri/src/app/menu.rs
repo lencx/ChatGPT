@@ -143,7 +143,6 @@ pub fn init() -> Menu {
         .into(),
       CustomMenuItem::new("clear_conf".to_string(), "Clear Config").into(),
       MenuItem::Separator.into(),
-      CustomMenuItem::new("awesome".to_string(), "Awesome ChatGPT").into(),
       CustomMenuItem::new("buy_coffee".to_string(), "Buy lencx a coffee").into(),
     ]),
   );
@@ -163,9 +162,9 @@ pub fn init() -> Menu {
   let view_menu = Submenu::new(
     "View",
     Menu::new()
-      .add_item(CustomMenuItem::new("go_back".to_string(), "Go Back").accelerator("CmdOrCtrl+Left"))
+      .add_item(CustomMenuItem::new("go_back".to_string(), "Go Back").accelerator("CmdOrCtrl+["))
       .add_item(
-        CustomMenuItem::new("go_forward".to_string(), "Go Forward").accelerator("CmdOrCtrl+Right"),
+        CustomMenuItem::new("go_forward".to_string(), "Go Forward").accelerator("CmdOrCtrl+]"),
       )
       .add_item(
         CustomMenuItem::new("scroll_top".to_string(), "Scroll to Top of Screen")
@@ -190,6 +189,10 @@ pub fn init() -> Menu {
   let window_menu = Submenu::new(
     "Window",
     Menu::new()
+      .add_item(CustomMenuItem::new(
+        "app_website".to_string(),
+        "ChatGPT User's Guide",
+      ))
       .add_item(CustomMenuItem::new("dalle2".to_string(), "DALL·E 2"))
       .add_native_item(MenuItem::Separator)
       .add_native_item(MenuItem::Minimize)
@@ -247,7 +250,13 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     "inject_script" => open(&app, script_path),
     "go_conf" => utils::open_file(utils::app_root()),
     "clear_conf" => utils::clear_conf(&app),
-    "awesome" => open(&app, conf::AWESOME_URL.to_string()),
+    "app_website" => window::cmd::wa_window(
+      app,
+      "app_website".into(),
+      "ChatGPT User's Guide".into(),
+      conf::APP_WEBSITE.into(),
+      None,
+    ),
     "buy_coffee" => open(&app, conf::BUY_COFFEE.to_string()),
     "popup_search" => {
       let app_conf = AppConf::read();
@@ -396,22 +405,29 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
 // --- SystemTray Menu
 pub fn tray_menu() -> SystemTray {
   if cfg!(target_os = "macos") {
-    SystemTray::new().with_menu(
-      SystemTrayMenu::new()
-        .add_item(CustomMenuItem::new(
-          "control_center".to_string(),
-          "Control Center",
-        ))
-        .add_native_item(SystemTrayMenuItem::Separator)
-        .add_item(CustomMenuItem::new(
-          "show_dock_icon".to_string(),
-          "Show Dock Icon",
-        ))
+    let mut tray_menu = SystemTrayMenu::new()
+      .add_item(CustomMenuItem::new(
+        "control_center".to_string(),
+        "Control Center",
+      ))
+      .add_native_item(SystemTrayMenuItem::Separator);
+
+    if AppConf::read().hide_dock_icon {
+      tray_menu = tray_menu.add_item(CustomMenuItem::new(
+        "show_dock_icon".to_string(),
+        "Show Dock Icon",
+      ));
+    } else {
+      tray_menu = tray_menu
         .add_item(CustomMenuItem::new(
           "hide_dock_icon".to_string(),
           "Hide Dock Icon",
         ))
-        .add_item(CustomMenuItem::new("show_core".to_string(), "Show ChatGPT"))
+        .add_item(CustomMenuItem::new("show_core".to_string(), "Show ChatGPT"));
+    }
+
+    SystemTray::new().with_menu(
+      tray_menu
         .add_native_item(SystemTrayMenuItem::Separator)
         .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
     )
@@ -440,17 +456,19 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
       let app_conf = AppConf::read();
 
       if !app_conf.hide_dock_icon {
-        let core_win = handle.get_window("core").unwrap();
-        core_win.minimize().unwrap();
+        if let Some(core_win) = handle.get_window("core") {
+          core_win.minimize().unwrap();
+        }
       }
 
-      let tray_win = handle.get_window("tray").unwrap();
-      tray_win.move_window(Position::TrayCenter).unwrap();
+      if let Some(tray_win) = handle.get_window("tray") {
+        tray_win.move_window(Position::TrayCenter).unwrap();
 
-      if tray_win.is_visible().unwrap() {
-        tray_win.hide().unwrap();
-      } else {
-        tray_win.show().unwrap();
+        if tray_win.is_visible().unwrap() {
+          tray_win.hide().unwrap();
+        } else {
+          tray_win.show().unwrap();
+        }
       }
     }
     SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
@@ -472,13 +490,14 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
         }
       }
       "show_core" => {
-        let core_win = app.get_window("core").unwrap();
-        let tray_win = app.get_window("tray").unwrap();
-        if !core_win.is_visible().unwrap() {
-          core_win.show().unwrap();
-          core_win.set_focus().unwrap();
-          tray_win.hide().unwrap();
-        }
+        if let Some(core_win) = app.get_window("core") {
+          let tray_win = app.get_window("tray").unwrap();
+          if !core_win.is_visible().unwrap() {
+            core_win.show().unwrap();
+            core_win.set_focus().unwrap();
+            tray_win.hide().unwrap();
+          }
+        };
       }
       "quit" => std::process::exit(0),
       _ => (),

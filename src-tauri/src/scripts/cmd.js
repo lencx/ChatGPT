@@ -75,6 +75,10 @@ function init() {
     width: 22px;
     height: 22px;
   }
+  .chatappico.copy {
+    width: 16px;
+    height: 16px;
+  }
   @media screen and (max-width: 767px) {
     #download-png-button, #download-pdf-button, #download-html-button {
       display: none;
