@@ -5,6 +5,10 @@
 Fix:
 
 - PNG and PDF buttons do not work (https://github.com/lencx/ChatGPT/issues/274)
+- Change the window size and the Send button is obscured by the Export button (https://github.com/lencx/ChatGPT/issues/286)
+- Change forward and backward shortcuts (https://github.com/lencx/ChatGPT/issues/254)
+  - MacOS: `Cmd [`, `Cmd ]`
+  - Windows and Linux: `Ctrl [`, `Ctrl ]`
 
 Feat:
 

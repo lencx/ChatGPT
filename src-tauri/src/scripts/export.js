@@ -2,11 +2,13 @@
 
 async function init() {
   const buttonOuterHTMLFallback = `<button class="btn flex justify-center gap-2 btn-neutral" id="download-png-button">Try Again</button>`;
-  if (window.innerWidth < 767) return;
-  const chatConf = await invoke('get_app_conf') || {};
+  removeButtons();
   if (window.buttonsInterval) {
     clearInterval(window.buttonsInterval);
   }
+  if (window.innerWidth < 767) return;
+
+  const chatConf = await invoke('get_app_conf') || {};
   window.buttonsInterval = setInterval(() => {
     const actionsArea = document.querySelector("form>div>div");
     if (!actionsArea) {
@@ -26,6 +28,8 @@ async function init() {
     }
   }, 1000);
 }
+
+window.addEventListener('resize', init);
 
 const Format = {
   PNG: "png",
