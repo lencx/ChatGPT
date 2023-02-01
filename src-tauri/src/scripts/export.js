@@ -275,14 +275,37 @@ function setIcon(type) {
 }
 
 function copyBtns() {
-  document.querySelectorAll("main >div>div>div>div>div").forEach(i => {
-    if (!/flex-shrink/i.test(i.getAttribute('class'))) return;
-    const btn = i.querySelector('button').cloneNode(true);
-    btn.innerHTML = setIcon('copy');
-    i.querySelector('.self-end').appendChild(btn);
-  })
+  Array.from(document.querySelectorAll("main >div>div>div>div>div"))
+    .forEach(i => {
+      if (i.querySelector('.chat-item-copy')) return;
+      if (!i.querySelector('button.rounded-md')) return;
+      const btn = i.querySelector('button.rounded-md').cloneNode(true);
+      btn.classList.add('chat-item-copy');
+      btn.title = 'Copy to clipboard';
+      btn.innerHTML = setIcon('copy');
+      i.querySelector('.self-end').appendChild(btn);
+      btn.onclick = () => {
+        copyToClipboard(i?.innerText?.trim() || '');
+      }
+    })
 }
 
+function copyToClipboard(text) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text);
+  } else {
+    var textarea = document.createElement('textarea');
+    document.body.appendChild(textarea);
+    textarea.style.position = 'fixed';
+    textarea.style.clip = 'rect(0 0 0 0)';
+    textarea.style.top = '10px';
+    textarea.value = text;
+    textarea.select();
+    document.execCommand('copy', true);
+    document.body.removeChild(textarea);
+  }
+  message('Copied to clipboard');
+}
 
 if (
   document.readyState === "complete" ||
