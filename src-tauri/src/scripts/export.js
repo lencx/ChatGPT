@@ -137,7 +137,14 @@ function addActionsButtons(actionsArea, TryAgainButton) {
 }
 
 async function exportMarkdown() {
-  const data = ExportMD.turndown(document.querySelector("main div>div>div").innerHTML);
+  const content = Array.from(document.querySelectorAll("main >div>div>div>div")).map(i => {
+    let j = i.cloneNode(true);
+    if (/dark\:bg-gray-800/.test(i.getAttribute('class'))) {
+      j.innerHTML = `<blockquote>${i.innerHTML}</blockquote>`;
+    }
+    return j.innerHTML;
+  }).join('<hr />');
+  const data = ExportMD.turndown(content);
   const { id, filename } = getName();
   await invoke('save_file', { name: `notes/${id}.md`, content: data });
   await invoke('download_list', { pathname: 'chat.notes.json', filename, id, dir: 'notes' });

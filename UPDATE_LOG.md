@@ -1,5 +1,16 @@
 # UPDATE LOG
 
+## v0.10.3
+
+Fix:
+
+- Incompatible configuration data causes program crashes (https://github.com/lencx/ChatGPT/issues/295)
+- Silent copy text
+
+Feat:
+
+- markdown export support distinguishes between users and bots (https://github.com/lencx/ChatGPT/issues/233)
+
 ## v0.10.2
 
 Fix:
