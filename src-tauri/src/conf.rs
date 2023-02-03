@@ -76,7 +76,14 @@ impl AppConf {
 
   pub fn read() -> Self {
     match std::fs::read_to_string(Self::file_path()) {
-      Ok(v) => serde_json::from_str::<AppConf>(&v).unwrap(),
+      Ok(v) => {
+        if let Ok(v2) = serde_json::from_str::<AppConf>(&v) {
+          v2
+        } else {
+          error!("conf_read_parse_error");
+          Self::default()
+        }
+      }
       Err(err) => {
         error!("conf_read_error: {}", err);
         Self::default()

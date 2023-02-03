@@ -2,7 +2,9 @@ var ExportMD = (function () {
   if (!TurndownService || !turndownPluginGfm) return;
   const hljsREG = /^.*(hljs).*(language-[a-z0-9]+).*$/i;
   const gfm = turndownPluginGfm.gfm
-  const turndownService = new TurndownService()
+  const turndownService = new TurndownService({
+    hr: '---'
+  })
     .use(gfm)
     .addRule('code', {
       filter: (node) => {
