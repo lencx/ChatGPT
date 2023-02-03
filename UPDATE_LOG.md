@@ -2,14 +2,16 @@
 
 ## v0.10.3
 
+> Note: As of now the ChatGPT desktop app has added a lot of exciting features and it continues to improve, as the app grows it has gone far beyond what ChatGPT was intended for. I want to make it the ultimate goal that any website can be easily wrapped to the desktop through user customization. So it needed an international user guide to guide users to use it more professionally. And https://app.nofwl.com is the manual for the app, which will be built into the app (`Menu -> Window -> ChatGPT User's Guide`) so you can access it anytime. It's just starting at the moment, so stay tuned.
+
 Fix:
 
 - Incompatible configuration data causes program crashes (https://github.com/lencx/ChatGPT/issues/295)
-- Silent copy text
 
 Feat:
 
-- markdown export support distinguishes between users and bots (https://github.com/lencx/ChatGPT/issues/233)
+- Silent copy text
+- Markdown export support distinguishes between users and bots (https://github.com/lencx/ChatGPT/issues/233)
 
 ## v0.10.2
 
