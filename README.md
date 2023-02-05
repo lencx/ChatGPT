@@ -62,6 +62,8 @@
 - [chat-gpt_0.10.3_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.10.3/chat-gpt_0.10.3_amd64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
 - [chat-gpt_0.10.3_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.10.3/chat-gpt_0.10.3_amd64.AppImage): Works reliably, you can try it if `.deb` fails to run
 - Available on [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin) with the package name `chatgpt-desktop-bin`, and you can use your favourite AUR package manager to install it.
+- Also, [Aur](https://aur.archlinux.org/packages/chatgpt-desktop-git) available with the package name `chatgpt-desktop-git`.
+<!-- chatgpt-desktop-git always builds the latest commits of main branch  -->
 
 <!-- download end -->
 
