@@ -4,8 +4,8 @@
   "scripts": {
     "dev:fe": "vite",
     "build:fe": "tsc && vite build",
-    "dev": "yarn tauri dev",
-    "build": "yarn tauri build",
+    "dev": "tauri dev",
+    "build": "tauri build",
     "updater": "tr updater",
     "release": "tr release --git",
     "fix:conf": "tr override --json.tauri_updater_active=false",
@@ -45,6 +45,7 @@
     "dayjs": "^1.11.7",
     "github-markdown-css": "^5.1.0",
     "lodash": "^4.17.21",
+    "monaco-editor": "^0.34.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^8.0.4",

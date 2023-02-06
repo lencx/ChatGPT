@@ -24,5 +24,19 @@ export default defineConfig({
     minify: !process.env.TAURI_DEBUG ? 'esbuild' : false,
     // produce sourcemaps for debug builds
     sourcemap: !!process.env.TAURI_DEBUG,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          ant: ['antd'],
+          antico: ['@ant-design/icons'],
+          editor: ['@monaco-editor/react'],
+          utils: ['lodash', 'uuid', 'dayjs', 'clsx'],
+          rrr: ['react', 'react-dom', 'react-router-dom'],
+          rm: ['react-markdown'],
+          rsh: ['react-syntax-highlighter'],
+          md: ['github-markdown-css', 'rehype-raw', 'remark-comment-config', 'remark-gfm'],
+        },
+      },
+    },
   },
 });

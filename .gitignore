@@ -1,11 +1,11 @@
 package-lock.json
 node_modules/
-yarn.lock
-*.lock
+
+.yarn/*
+.pnp.*
 
 # rust
 target/
-Cargo.lock
 
 # Logs
 logs
