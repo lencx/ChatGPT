@@ -8,6 +8,7 @@
 [![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](./README-ZH_CN.md)\
 ![License](https://img.shields.io/badge/License-Apache%202-green.svg)
 ![visitor](https://visitor-badge.glitch.me/badge?page_id=lencx.chatgpt)
+[![Web App](https://badgen.net/badge/streamlit/webapp/red?icon=azurepipelines)](https://vaibhavard-inta-streamlit-app-m71v91.streamlit.app/?name=%27GITHUB_USER%27)
 [![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
 [![chat](https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord)](https://discord.gg/aPhCRf4zZr)
 [![lencx](https://img.shields.io/badge/follow-lencx__-blue?style=flat&logo=Twitter)](https://twitter.com/lencx_)
@@ -22,7 +23,7 @@
 
 - [📝 Update Log](./UPDATE_LOG.md)
 - [🕒 History versions...](https://github.com/lencx/ChatGPT/releases)
-
+- **Note: If you dont want to install the app , you can also use the  [Streamlit Webapp](https://vaibhavard-inta-streamlit-app-m71v91.streamlit.app/?name=%27GITHUB_USER%27)**
 <!-- download start -->
 
 ### Windows
