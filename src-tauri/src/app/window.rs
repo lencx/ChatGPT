@@ -150,8 +150,7 @@ pub mod cmd {
           .build()
           .unwrap();
       });
-    }
-    if let Some(v) = win {
+    } else if let Some(v) = win {
       if !v.is_visible().unwrap() {
         v.show().unwrap();
       }

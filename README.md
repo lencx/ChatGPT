@@ -23,7 +23,7 @@
 - [📝 Update Log](./UPDATE_LOG.md)
 - [🕒 History versions...](https://github.com/lencx/ChatGPT/releases)
 
-<!-- download start -->
+<!-- tr-download-start -->
 
 ### Windows
 
@@ -65,7 +65,7 @@
 - Also, [Aur](https://aur.archlinux.org/packages/chatgpt-desktop-git) available with the package name `chatgpt-desktop-git`.
 <!-- chatgpt-desktop-git always builds the latest commits of main branch  -->
 
-<!-- download end -->
+<!-- tr-download-end -->
 
 ## 📢 Announcement
 

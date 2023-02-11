@@ -20,7 +20,7 @@
 - [📝 更新日志](./UPDATE_LOG.md)
 - [🕒 历史版本...](https://github.com/lencx/ChatGPT/releases)
 
-<!-- download start -->
+<!-- tr-download-start -->
 
 ### Windows
 
@@ -63,7 +63,7 @@
   yay -S chatgpt-desktop-bin
   ```
 
-<!-- download end -->
+<!-- tr-download-end -->
 
 ## 📢 公告
 

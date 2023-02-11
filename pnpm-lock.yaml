@@ -5,7 +5,7 @@ specifiers:
   '@monaco-editor/react': ^4.4.6
   '@tauri-apps/api': ^1.2.0
   '@tauri-apps/cli': ^1.2.2
-  '@tauri-release/cli': ^0.2.3
+  '@tauri-release/cli': ^0.2.5
   '@types/lodash': ^4.14.191
   '@types/node': ^18.7.10
   '@types/react': ^18.0.15
@@ -60,7 +60,7 @@ dependencies:
 
 devDependencies:
   '@tauri-apps/cli': 1.2.3
-  '@tauri-release/cli': 0.2.3
+  '@tauri-release/cli': 0.2.5
   '@types/lodash': 4.14.191
   '@types/node': 18.11.19
   '@types/react': 18.0.27
@@ -1221,10 +1221,10 @@ packages:
       '@tauri-apps/cli-win32-x64-msvc': 1.2.3
     dev: true
 
-  /@tauri-release/cli/0.2.3:
+  /@tauri-release/cli/0.2.5:
     resolution:
       {
-        integrity: sha512-Xzn/UtOpu68Ic21GmhTMKWqBXo1Al6TfUkuBy7EMuy6p2LPoLGHT3rND1yjqbqco0drU8wsAU8xGahFuvXLY6A==,
+        integrity: sha512-cP6+pKjVOkJu/ZpBW0YtpDxlZOzCnsz+s5cE259zpxM9EWZpgNwpxu7MMvVJZ6ZBUSBWWkDpwxOW9llfPphHuQ==,
       }
     engines: { node: '>=v14.16.0' }
     hasBin: true
