@@ -213,6 +213,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a4a4ddaa51a5bc52a6948f74c06d20aaaddb71924eab79b8c97a8c556e942d6a"
 
 [[package]]
+name = "bincode"
+version = "1.3.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b1f45e9417d87227c7a56d22e471c6206462cba514c7590c09aff4cf6d1ddcad"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "bitflags"
 version = "1.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -407,6 +416,7 @@ dependencies = [
  "tauri-plugin-autostart",
  "tauri-plugin-log",
  "tauri-plugin-positioner",
+ "tauri-plugin-window-state",
  "thiserror",
  "tokio",
  "walkdir",
@@ -3440,6 +3450,20 @@ dependencies = [
  "serde_json",
  "serde_repr",
  "tauri",
+]
+
+[[package]]
+name = "tauri-plugin-window-state"
+version = "0.1.0"
+source = "git+https://github.com/lencx/tauri-plugins-workspace?branch=dev#bf1106a0a5e178ce38ecde56751ba037307a7ae8"
+dependencies = [
+ "bincode",
+ "bitflags",
+ "log",
+ "serde",
+ "serde_json",
+ "tauri",
+ "thiserror",
 ]
 
 [[package]]
