@@ -30,10 +30,24 @@ const PopupSearchLabel = () => {
   );
 };
 
+const MainCloseLabel = () => {
+  return (
+    <span>
+      Close Exit{' '}
+      <Tooltip title="Click the close button whether to exit directly, the default minimized.">
+        <QuestionCircleOutlined style={{ color: '#1677ff' }} />
+      </Tooltip>
+    </span>
+  );
+};
+
 export default function MainWindow() {
   return (
     <>
       <Form.Item label={<PopupSearchLabel />} name="popup_search" valuePropName="checked">
+        <Switch />
+      </Form.Item>
+      <Form.Item label={<MainCloseLabel />} name="main_close" valuePropName="checked">
         <Switch />
       </Form.Item>
       <SwitchOrigin name="main" />

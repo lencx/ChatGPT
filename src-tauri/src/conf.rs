@@ -34,6 +34,8 @@ pub_struct!(AppConf {
   // macOS and Windows: light / dark / system
   theme: String,
   // auto update policy: prompt / silent / disable
+  isinit: bool,
+  main_close: bool,
   auto_update: String,
   tray: bool,
   popup_search: bool,
@@ -58,6 +60,8 @@ impl AppConf {
       auto_update: "prompt".into(),
       tray: true,
       popup_search: false,
+      isinit: true,
+      main_close: false,
       stay_on_top: false,
       main_dashboard: false,
       tray_dashboard: false,
