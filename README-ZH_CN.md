@@ -15,6 +15,8 @@
 
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
 
+<a href="https://t.zsxq.com/0bQikmcVw"><img width="360" src="./assets/zsxq-small.png"></a>
+
 ## 📦 安装
 
 - [📝 更新日志](./UPDATE_LOG.md)
