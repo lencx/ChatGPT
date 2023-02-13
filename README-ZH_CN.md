@@ -15,8 +15,6 @@
 
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
 
-<a href="https://t.zsxq.com/0bQikmcVw"><img width="360" src="./assets/zsxq-small.png"></a>
-
 ## 📦 安装
 
 - [📝 更新日志](./UPDATE_LOG.md)
@@ -250,7 +248,7 @@ yarn build
 
 <img width="180" src="https://user-images.githubusercontent.com/16164244/207228300-ea5c4688-c916-4c55-a8c3-7f862888f351.png"> <img width="200" src="https://user-images.githubusercontent.com/16164244/207228025-117b5f77-c5d2-48c2-a070-774b7a1596f2.png">
 
-<img width="360" src="./assets/zsxq.png">
+<a href="https://t.zsxq.com/0bQikmcVw"><img width="360" src="./assets/zsxq.png"></a>
 
 ## License
 
