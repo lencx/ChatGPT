@@ -101,6 +101,11 @@ async function init() {
     }
   });
 
+  // Fix Chinese input method "Enter" on Safari
+  document.addEventListener("keydown",(e)=>{
+    if(e.keyCode==229) e.stopPropagation();
+  }, true)
+
   if (window.location.host === 'chat.openai.com') {
     window.__sync_prompts = async function() {
       await invoke('sync_prompts', { time: Date.now() });
