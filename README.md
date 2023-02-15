@@ -37,6 +37,12 @@
   # install the specified version
   winget install --id=lencx.ChatGPT -e --version 0.10.0
   ```
+- Use [Chocolatey](https://community.chocolatey.org/packages/chatgpt/0.8.1#versionhistory):
+  
+  ```bash
+  # install the package
+  choco install chatgpt -y
+  ```
 
 **Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.10.3))**
 
