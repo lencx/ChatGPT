@@ -52,7 +52,6 @@ async fn main() {
       MacosLauncher::LaunchAgent,
       None,
     ))
-    .plugin(tauri_plugin_window_state::Builder::default().build())
     .invoke_handler(tauri::generate_handler![
       cmd::drag_window,
       cmd::fullscreen,
@@ -86,6 +85,10 @@ async fn main() {
 
   if app_conf.tray {
     builder = builder.system_tray(menu::tray_menu());
+  }
+
+  if app_conf.save_window_state {
+    builder = builder.plugin(tauri_plugin_window_state::Builder::default().build());
   }
 
   builder

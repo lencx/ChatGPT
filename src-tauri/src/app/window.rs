@@ -18,7 +18,7 @@ pub fn tray_window(handle: &tauri::AppHandle) {
       .title("ChatGPT")
       .resizable(false)
       .fullscreen(false)
-      .inner_size(360.0, 540.0)
+      .inner_size(app_conf.tray_width, app_conf.tray_height)
       .decorations(false)
       .always_on_top(true)
       .theme(Some(theme))

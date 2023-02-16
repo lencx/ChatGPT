@@ -1,4 +1,4 @@
-import { Form, Switch, Input, Tooltip } from 'antd';
+import { Form, Switch, Input, InputNumber, Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 import SwitchOrigin from '@/components/SwitchOrigin';
@@ -49,6 +49,12 @@ export default function MainWindow() {
       </Form.Item>
       <Form.Item label={<MainCloseLabel />} name="main_close" valuePropName="checked">
         <Switch />
+      </Form.Item>
+      <Form.Item label="Default Width" name="main_width">
+        <InputNumber />
+      </Form.Item>
+      <Form.Item label="Default Height" name="main_height">
+        <InputNumber />
       </Form.Item>
       <SwitchOrigin name="main" />
       <Form.Item label="User Agent (Main)" name="ua_window">
