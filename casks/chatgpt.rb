@@ -1,8 +1,8 @@
 cask "chatgpt" do
-   version "0.10.3"
-   sha256 "f44838a80844999191a303684fd7ae1811dd2fae6709aebe8bff23c70f9b8a10"
+  version "0.10.3"
+  sha256 "f44838a80844999191a303684fd7ae1811dd2fae6709aebe8bff23c70f9b8a10"
 
-  url "https://github.com/lencx/ChatGPT/releases/download/v#{version}/ChatGPT_#{version}_x64.dmg"
+  url "https://github.com/lencx/ChatGPT/releases/download/v#{version}/ChatGPT_#{version}_macos_x86_64.dmg"
   name "ChatGPT"
   desc "Desktop wrapper for OpenAI ChatGPT"
   homepage "https://github.com/lencx/ChatGPT#readme"

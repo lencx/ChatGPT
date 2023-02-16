@@ -137,7 +137,7 @@ function addActionsButtons(actionsArea, TryAgainButton) {
 }
 
 async function exportMarkdown() {
-  const content = Array.from(document.querySelectorAll("main >div>div>div>div")).map(i => {
+  const content = Array.from(document.querySelectorAll('main .items-center>div')).map(i => {
     let j = i.cloneNode(true);
     if (/dark\:bg-gray-800/.test(i.getAttribute('class'))) {
       j.innerHTML = `<blockquote>${i.innerHTML}</blockquote>`;

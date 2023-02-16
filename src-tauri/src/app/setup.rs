@@ -62,7 +62,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         .title("ChatGPT")
         .resizable(true)
         .fullscreen(false)
-        .inner_size(800.0, 600.0)
+        .inner_size(app_conf2.main_width, app_conf2.main_height)
         .theme(Some(theme))
         .always_on_top(app_conf2.stay_on_top)
         .initialization_script(&utils::user_script())

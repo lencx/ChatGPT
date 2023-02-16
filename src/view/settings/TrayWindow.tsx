@@ -1,4 +1,4 @@
-import { Form, Switch, Input, Tooltip } from 'antd';
+import { Form, Switch, Input, InputNumber, Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 import { DISABLE_AUTO_COMPLETE } from '@/utils';
@@ -22,6 +22,12 @@ export default function TrayWindow() {
     <>
       <Form.Item label="Enable SystemTray" name="tray" valuePropName="checked">
         <Switch />
+      </Form.Item>
+      <Form.Item label="Default Width" name="tray_width">
+        <InputNumber />
+      </Form.Item>
+      <Form.Item label="Default Height" name="tray_height">
+        <InputNumber />
       </Form.Item>
       <SwitchOrigin name="tray" />
       <Form.Item label={<UALabel />} name="ua_tray">

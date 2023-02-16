@@ -35,17 +35,28 @@ pub_struct!(AppConf {
   theme: String,
   // auto update policy: prompt / silent / disable
   auto_update: String,
-  tray: bool,
-  popup_search: bool,
   stay_on_top: bool,
-  main_dashboard: bool,
-  tray_dashboard: bool,
-  main_origin: String,
-  tray_origin: String,
-  default_origin: String,
-  ua_window: String,
-  ua_tray: String,
+  save_window_state: bool,
   global_shortcut: Option<String>,
+  default_origin: String,
+
+  // Main Window
+  isinit: bool,
+  popup_search: bool,
+  main_close: bool,
+  main_dashboard: bool,
+  main_origin: String,
+  ua_window: String,
+  main_width: f64,
+  main_height: f64,
+
+  // Tray Window
+  tray_width: f64,
+  tray_height: f64,
+  tray: bool,
+  tray_dashboard: bool,
+  tray_origin: String,
+  ua_tray: String,
 });
 
 impl AppConf {
@@ -54,13 +65,20 @@ impl AppConf {
     Self {
       titlebar: !cfg!(target_os = "macos"),
       hide_dock_icon: false,
+      save_window_state: false,
       theme: "light".into(),
       auto_update: "prompt".into(),
       tray: true,
       popup_search: false,
+      isinit: true,
+      main_close: false,
       stay_on_top: false,
       main_dashboard: false,
       tray_dashboard: false,
+      main_width: 800.0,
+      main_height: 600.0,
+      tray_width: 360.0,
+      tray_height: 540.0,
       main_origin: CHATGPT_URL.into(),
       tray_origin: CHATGPT_URL.into(),
       default_origin: CHATGPT_URL.into(),

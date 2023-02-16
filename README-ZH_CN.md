@@ -20,11 +20,11 @@
 - [📝 更新日志](./UPDATE_LOG.md)
 - [🕒 历史版本...](https://github.com/lencx/ChatGPT/releases)
 
-<!-- download start -->
+<!-- tr-download-start -->
 
 ### Windows
 
-- [ChatGPT_0.10.3_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.10.3/ChatGPT_0.10.3_x64_en-US.msi):
+- [ChatGPT_0.11.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_x64_en-US.msi):
 - 使用 [winget](https://winstall.app/apps/lencx.ChatGPT):
 
   ```bash
@@ -35,12 +35,12 @@
   winget install --id=lencx.ChatGPT -e --version 0.10.0
   ```
 
-**注意：如果安装路径和应用名称相同，会导致冲突 ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.10.3))**
+**注意：如果安装路径和应用名称相同，会导致冲突 ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.11.0))**
 
 ### Mac
 
-- [ChatGPT_0.10.3_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.10.3/ChatGPT_0.10.3_x64.dmg)
-- [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.10.3/ChatGPT.app.tar.gz)
+- [ChatGPT_0.11.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_x64.dmg)
+- [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT.app.tar.gz)
 - Homebrew \
   _[Homebrew 快捷安装](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
@@ -56,14 +56,14 @@
 
 ### Linux
 
-- [chat-gpt_0.10.3_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.10.3/chat-gpt_0.10.3_amd64.deb)
-- [chat-gpt_0.10.3_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.10.3/chat-gpt_0.10.3_amd64.AppImage): **工作可靠，`.deb` 运行失败时可以尝试它**
+- [chat-gpt_0.11.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/chat-gpt_0.11.0_amd64.deb)
+- [chat-gpt_0.11.0_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/chat-gpt_0.11.0_amd64.AppImage): **工作可靠，`.deb` 运行失败时可以尝试它**
 - 使用 [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin):
   ```bash
   yay -S chatgpt-desktop-bin
   ```
 
-<!-- download end -->
+<!-- tr-download-end -->
 
 ## 📢 公告
 

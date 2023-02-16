@@ -18,6 +18,9 @@ export default function General() {
       <Form.Item label="Stay On Top" name="stay_on_top" valuePropName="checked">
         <Switch />
       </Form.Item>
+      <Form.Item label="Save Window State" name="save_window_state" valuePropName="checked">
+        <Switch />
+      </Form.Item>
       {platformInfo === 'darwin' && (
         <Form.Item label="Titlebar" name="titlebar" valuePropName="checked">
           <Switch />

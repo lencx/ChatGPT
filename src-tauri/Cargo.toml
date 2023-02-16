@@ -30,6 +30,7 @@ tauri = { version = "1.2.4", features = ["api-all", "devtools", "global-shortcut
 tauri-plugin-positioner = { version = "1.0.4", features = ["system-tray"] }
 tauri-plugin-log = { git = "https://github.com/lencx/tauri-plugins-workspace", branch = "dev", features = ["colored"] }
 tauri-plugin-autostart = { git = "https://github.com/lencx/tauri-plugins-workspace", branch = "dev" }
+tauri-plugin-window-state = { git = "https://github.com/lencx/tauri-plugins-workspace", branch = "dev" }
 
 # sqlx = { version = "0.6.2", features = ["runtime-tokio-rustls", "sqlite"] }
 

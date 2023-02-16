@@ -87,16 +87,41 @@ async fn main() {
     builder = builder.system_tray(menu::tray_menu());
   }
 
+  if app_conf.save_window_state {
+    builder = builder.plugin(tauri_plugin_window_state::Builder::default().build());
+  }
+
   builder
     .on_menu_event(menu::menu_handler)
     .on_system_tray_event(menu::tray_handler)
-    .on_window_event(|event| {
+    .on_window_event(move |event| {
       if let tauri::WindowEvent::CloseRequested { api, .. } = event.event() {
-        let win = event.window();
+        let win = event.window().clone();
+        let app_conf = AppConf::read();
         if win.label() == "core" {
-          event.window().minimize().unwrap();
+          if app_conf.isinit {
+            tauri::api::dialog::ask(
+              Some(event.window()),
+              "",
+              "Do you want to exit the application when you click the [x] button?",
+              move |is_ok| {
+                app_conf
+                  .amend(serde_json::json!({ "isinit" : false, "main_close": is_ok }))
+                  .write();
+                if is_ok {
+                  std::process::exit(0);
+                } else {
+                  win.minimize().unwrap();
+                }
+              },
+            );
+          } else if app_conf.main_close {
+            std::process::exit(0);
+          } else {
+            win.minimize().unwrap();
+          }
         } else {
-          win.close().unwrap();
+          event.window().close().unwrap();
         }
         api.prevent_close();
       }

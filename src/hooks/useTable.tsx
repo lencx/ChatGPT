@@ -8,8 +8,8 @@ type rowSelectionOptions = {
   key: 'id' | string;
   rowType: 'id' | 'row' | 'all';
 };
-export function useTableRowSelection(options: Partial<rowSelectionOptions> = {}) {
-  const { key = 'id', rowType = 'id' } = options;
+export function useTableRowSelection(options?: Partial<rowSelectionOptions>) {
+  const { key = 'id', rowType = 'id' } = options || {};
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [selectedRowIDs, setSelectedRowIDs] = useState<string[]>([]);
   const [selectedRows, setSelectedRows] = useState<Record<string | symbol, any>[]>([]);
