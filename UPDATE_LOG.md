@@ -1,5 +1,18 @@
 # UPDATE LOG
 
+## v0.11.0
+
+Fix:
+
+- User-defined close button behavior (exit or minimize) (`Control Center -> Settings -> Main Window -> Close Exit`). (https://github.com/lencx/ChatGPT/issues/359)
+- Markdown content layout (https://github.com/lencx/ChatGPT/issues/378)
+
+Feat:
+
+- Set the main window and tray window size (https://github.com/lencx/ChatGPT/issues/405)
+- Save window positions and sizes and restore them when the app is reopened (`Control Center -> Settings -> General -> Save Window State`)
+- macOS support for aarch64 installer (https://github.com/lencx/ChatGPT/issues/380)
+
 ## v0.10.3
 
 > Note: As of now the ChatGPT desktop app has added a lot of exciting features and it continues to improve, as the app grows it has gone far beyond what ChatGPT was intended for. I want to make it the ultimate goal that any website can be easily wrapped to the desktop through user customization. So it needed an international user guide to guide users to use it more professionally. And https://app.nofwl.com is the manual for the app, which will be built into the app (`Menu -> Window -> ChatGPT User's Guide`) so you can access it anytime. It's just starting at the moment, so stay tuned.
