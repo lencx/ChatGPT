@@ -24,7 +24,7 @@
 
 ### Windows
 
-- [ChatGPT_0.11.0_x64_en-US.msi](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_x64_en-US.msi):
+- [ChatGPT_0.11.0_windows_x86_64.msi](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_windows_x86_64.msi)
 - 使用 [winget](https://winstall.app/apps/lencx.ChatGPT):
 
   ```bash
@@ -39,8 +39,8 @@
 
 ### Mac
 
-- [ChatGPT_0.11.0_x64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_x64.dmg)
-- [ChatGPT.app.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT.app.tar.gz)
+- [ChatGPT_0.11.0_macos_aarch64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_macos_aarch64.dmg)
+- [ChatGPT_0.11.0_macos_x86_64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_macos_x86_64.dmg)
 - Homebrew \
   _[Homebrew 快捷安装](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
@@ -56,8 +56,8 @@
 
 ### Linux
 
-- [chat-gpt_0.11.0_amd64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/chat-gpt_0.11.0_amd64.deb)
-- [chat-gpt_0.11.0_amd64.AppImage](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/chat-gpt_0.11.0_amd64.AppImage): **工作可靠，`.deb` 运行失败时可以尝试它**
+- [ChatGPT_0.11.0_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_linux_x86_64.deb)
+- [ChatGPT_0.11.0_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_linux_x86_64.AppImage.tar.gz): **工作可靠，`.deb` 运行失败时可以尝试它**
 - 使用 [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin):
   ```bash
   yay -S chatgpt-desktop-bin
