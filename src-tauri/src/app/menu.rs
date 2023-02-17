@@ -423,13 +423,13 @@ pub fn tray_menu() -> SystemTray {
           "hide_dock_icon".to_string(),
           "Hide Dock Icon",
         ))
-        .add_item(CustomMenuItem::new("show_core".to_string(), "Show ChatGPT"));
+        .add_item(CustomMenuItem::new("show_core".to_string(), "Show Window"));
     }
 
     SystemTray::new().with_menu(
       tray_menu
         .add_native_item(SystemTrayMenuItem::Separator)
-        .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
+        .add_item(CustomMenuItem::new("quit".to_string(), "Quit")),
     )
   } else {
     SystemTray::new().with_menu(
@@ -438,9 +438,9 @@ pub fn tray_menu() -> SystemTray {
           "control_center".to_string(),
           "Control Center",
         ))
-        .add_item(CustomMenuItem::new("show_core".to_string(), "Show ChatGPT"))
+        .add_item(CustomMenuItem::new("show_core".to_string(), "Show Window"))
         .add_native_item(SystemTrayMenuItem::Separator)
-        .add_item(CustomMenuItem::new("quit".to_string(), "Quit ChatGPT")),
+        .add_item(CustomMenuItem::new("quit".to_string(), "Quit")),
     )
   }
 }
