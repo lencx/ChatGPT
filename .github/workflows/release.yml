@@ -151,6 +151,13 @@ jobs:
           generate_release_notes: false
           files: ./artifacts/**/*
 
+      - name: Update Homebrew Version
+        run: |
+          bash updateBrewVersion.sh
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update ChatGPT release version for Homebrew
+
   updater:
     runs-on: ubuntu-latest
     needs: release-chatgpt
