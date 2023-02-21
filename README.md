@@ -141,15 +141,15 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 | macOS    | `/Users/lencx/.chatgpt`   |
 | Windows  | `C:\Users\lencx\.chatgpt` |
 
-- `[.chatgpt]` - application configuration root folder
-  - `chat.conf.json` - preferences configuration
+- `[.chatgpt]` - Application configuration root folder
+  - `chat.conf.json` - Preferences configuration
   - `chat.awesome.json` - Custom URL lists, similar to browser bookmarks. Any URL can be used as the main window or tray window (**Control Conter -> Awesome**)
   - `chat.model.json` - prompts configuration，contains three parts:
     - `user_custom` - Requires manual data entry (**Control Conter -> Language Model -> User Custom**)
     - `sync_prompts` - Synchronizing data from [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) (**Control Conter -> Language Model -> Sync Prompts**)
     - `sync_custom` - Synchronize custom json and csv file data, support local and remote (**Control Conter -> Language Model -> Sync Custom**)
-  - `chat.model.cmd.json` - filtered (whether to enable) and sorted slash commands
-  - `[cache_model]` - caching model data
+  - `chat.model.cmd.json` - Filtered (whether to enable) and sorted slash commands
+  - `[cache_model]` - Caching model data
     - `chatgpt_prompts.json` - Cache `sync_prompts` data
     - `user_custom.json` - Cache `user_custom` data
     - `ae6cf32a6f8541b499d6bfe549dbfca3.json` - Randomly generated file names, cache `sync_custom` data
@@ -158,7 +158,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 
 ### Sync Custom
 
-Currently, only json and csv are supported for synchronizing custom files, and the following formats need to be met, otherwise the application will be abnormal：
+Currently, only JSON and CSV are supported for synchronizing custom files, and the following formats need to be met, otherwise the application will be abnormal：
 
 `JSON format:`
 
@@ -249,7 +249,7 @@ yarn dev
 yarn build
 ```
 
-- [The distDir configuration is set to "../dist" but this path doesn't exist](https://github.com/lencx/ChatGPT/discussions/180)
+- [The distDir configuration is set to "../dist" but this path doesn't exist.](https://github.com/lencx/ChatGPT/discussions/180)
 - [Error A public key has been found, but no private key. Make sure to set TAURI_PRIVATE_KEY environment variable.](https://github.com/lencx/ChatGPT/discussions/182)
 
 ## ❤️ Thanks
