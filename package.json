@@ -74,5 +74,8 @@
     "typescript": "^4.9.4",
     "vite": "^4.0.0",
     "vite-tsconfig-paths": "^4.0.2"
+  },
+  "engines": {
+    "node": "^14.18.0 || ^16.0.0"
   }
 }
