@@ -18,6 +18,15 @@
 
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
 
+**It is an unofficial project intended for personal learning and research purposes only. During the period of its open source, it has received a lot of attention, and I would like to thank everyone for their support. However, as things have developed, I am no longer able to control it. There are two issues that seriously affect the project's next development plan:**
+
+- **Some people have used it for repackaging and selling for profit.**
+- **The name and icon of ChatGPT may be involved in infringement issues.**
+
+**New repository: https://github.com/lencx/nofwl**
+
+---
+
 ## 📦 Install
 
 - [📝 Update Log](./UPDATE_LOG.md)
