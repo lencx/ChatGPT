@@ -15,7 +15,7 @@
 
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
 
-**它是一个非官方项目，仅供个人学习研究，开源的这段时间，受到了很多关注，谢谢大家的支持。但是随着事情的发展，我已经无法掌控。有两个问题严重影响了项目的下一步开发计划:**
+**它是一个非官方项目，仅供个人学习研究。ChatGPT 桌面应用开源的这段时间，受到了很多关注，谢谢大家的支持。随着事情的发展，有两个问题严重影响了项目的下一步开发计划:**
 
 - **有人利用它进行二次打包销售，谋取私利**
 - **ChatGPT 因名称和图标问题可能会涉及侵权**
