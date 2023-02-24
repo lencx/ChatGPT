@@ -39,7 +39,7 @@ export default function Settings() {
   const onReset = async () => {
     const chatData = await invoke('reset_app_conf');
     setChatConf(chatData);
-    const isOk = await dialog.ask(`Configuration reset successfully, whether to restart?`, {
+    const isOk = await dialog.ask(`Configuration reset successfully, do you want to restart?`, {
       title: 'ChatGPT Preferences',
     });
     if (isOk) {
@@ -52,7 +52,7 @@ export default function Settings() {
   const onFinish = async (values: any) => {
     if (!isEqual(omit(chatConf, ['default_origin']), values)) {
       await invoke('form_confirm', { data: values, label: 'main' });
-      const isOk = await dialog.ask(`Configuration saved successfully, whether to restart?`, {
+      const isOk = await dialog.ask(`Configuration saved successfully, do you want to restart?`, {
         title: 'ChatGPT Preferences',
       });
       if (isOk) {
