@@ -18,6 +18,12 @@
 
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
 
+**🛑 URGENT NOTICE: A hacker has been found to take advantage of the heat of `lencx/ChatGPT` to plant a Trojan horse after the fork project and rebuild the installer. If you have friends around you who are using this desktop application, please remind them not to download unknown links freely. Now the project will remove other installation ways and only provide this download link https://github.com/lencx/ChatGPT/releases.**
+
+**🛑 紧急通知：目前发现有黑客利用 `lencx/ChatGPT` 的热度，在 fork 项目后植入木马，重新构建安装程序。如果你身边有朋友正在使用此桌面应用，请提醒 TA 们不要随意下载不明链接。现在项目将删除其他安装途径，仅提供此下载链接 https://github.com/lencx/ChatGPT/releases。**
+
+---
+
 **It is an unofficial project intended for personal learning and research purposes only. During the time that the ChatGPT desktop application was open-sourced, it received a lot of attention, and I would like to thank everyone for their support. However, as things have developed, there are two issues that seriously affect the project's next development plan:**
 
 - **Some people have used it for repackaging and selling for profit.**
@@ -47,13 +53,6 @@
   winget install --id=lencx.ChatGPT -e --version 0.10.0
   ```
 
-- Use [Chocolatey](https://community.chocolatey.org/packages/chatgpt/0.11.0#versionhistory):
-
-  ```bash
-  # install the package
-  choco install chatgpt -y
-  ```
-
 **Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.11.0))**
 
 ### Mac
@@ -77,9 +76,6 @@
 
 - [ChatGPT_0.11.0_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_linux_x86_64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
 - [ChatGPT_0.11.0_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_linux_x86_64.AppImage.tar.gz): Works reliably, you can try it if `.deb` fails to run
-- Available on [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin) with the package name `chatgpt-desktop-bin`, and you can use your favourite AUR package manager to install it.
-- Also, [Aur](https://aur.archlinux.org/packages/chatgpt-desktop-git) available with the package name `chatgpt-desktop-git`.
-<!-- chatgpt-desktop-git always builds the latest commits of main branch  -->
 
 <!-- tr-download-end -->
 
