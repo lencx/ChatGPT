@@ -18,9 +18,9 @@
 
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
 
-**🛑 URGENT NOTICE: A hacker has been found to take advantage of the heat of `lencx/ChatGPT` to plant a Trojan horse after the fork project and rebuild the installer. If you have friends around you who are using this desktop application, please remind them not to download unknown links freely. Now the project will remove other installation ways and only provide this download link https://github.com/lencx/ChatGPT/releases.**
+**🛑 URGENT NOTICE: A hacker has been found to take advantage of the heat of `lencx/ChatGPT` to plant a Trojan horse after the fork project and rebuild the installer. If you have friends around you who are using this desktop application, please remind them not to download unknown links freely. Now the project will remove other installation ways and only provide this download link https://github.com/lencx/ChatGPT/releases**
 
-**🛑 紧急通知：目前发现有黑客利用 `lencx/ChatGPT` 的热度，在 fork 项目后植入木马，重新构建安装程序。如果你身边有朋友正在使用此桌面应用，请提醒 TA 们不要随意下载不明链接。现在项目将删除其他安装途径，仅提供此下载链接 https://github.com/lencx/ChatGPT/releases。**
+**🛑 紧急通知：目前发现有黑客利用 `lencx/ChatGPT` 的热度，在 fork 项目后植入木马，重新构建安装程序。如果你身边有朋友正在使用此桌面应用，请提醒 TA 们不要随意下载不明链接。现在项目将删除其他安装途径，仅提供此下载链接 https://github.com/lencx/ChatGPT/releases**
 
 ---
 
