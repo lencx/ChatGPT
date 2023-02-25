@@ -67,10 +67,6 @@
 
 - [ChatGPT_0.11.0_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_linux_x86_64.deb)
 - [ChatGPT_0.11.0_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_linux_x86_64.AppImage.tar.gz): **工作可靠，`.deb` 运行失败时可以尝试它**
-- 使用 [AUR](https://aur.archlinux.org/packages/chatgpt-desktop-bin):
-  ```bash
-  yay -S chatgpt-desktop-bin
-  ```
 
 <!-- tr-download-end -->
 
