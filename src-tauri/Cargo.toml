@@ -26,8 +26,8 @@ wry = "0.24.1"
 dark-light = "1.0.0"
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1.23.0", features = ["macros"] }
-tauri = { version = "1.2.4", features = ["api-all", "devtools", "global-shortcut", "system-tray", "updater"] }
-tauri-plugin-positioner = { version = "1.0.4", features = ["system-tray"] }
+tauri = { version = "1.2.4", features = ["devtools", "fs-create-dir", "fs-exists", "fs-read-dir", "fs-read-file", "fs-remove-dir", "fs-remove-file", "fs-write-file", "global-shortcut", "global-shortcut-all", "os-all", "path-all", "process-all", "shell-open-api", "system-tray", "updater"] }
+tauri-plugin-positioner = { git = "https://github.com/lencx/tauri-plugins-workspace", features = ["system-tray"] }
 tauri-plugin-log = { git = "https://github.com/lencx/tauri-plugins-workspace", branch = "dev", features = ["colored"] }
 tauri-plugin-autostart = { git = "https://github.com/lencx/tauri-plugins-workspace", branch = "dev" }
 tauri-plugin-window-state = { git = "https://github.com/lencx/tauri-plugins-workspace", branch = "dev" }

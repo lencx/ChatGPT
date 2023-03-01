@@ -166,6 +166,7 @@ async function cmdTip() {
     // Enter a command starting with `/` and press a space to automatically fill `chatgpt prompt`.
     // If more than one command appears in the search results, the first one will be used by default.
     function cmdKeydown(event) {
+
       if (!window.__CHAT_MODEL_CMD_PROMPT__) {
         return;
       }
@@ -245,7 +246,13 @@ async function cmdTip() {
         searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
 
         initDom();
+
         event.preventDefault();
+      }
+
+      if (event.keyCode === 13 && __TAURI_METADATA__.__currentWindow.label === 'tray') {
+        const btn = document.querySelector('form button');
+        if (btn) btn.click();
       }
     }
     searchInput.removeEventListener('keydown', cmdKeydown, { capture: true });

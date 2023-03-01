@@ -1,6 +1,7 @@
 // *** Core Script - Export ***
 
 async function init() {
+  if (window.location.pathname === '/auth/login') return;
   const buttonOuterHTMLFallback = `<button class="btn flex justify-center gap-2 btn-neutral" id="download-png-button">Try Again</button>`;
   removeButtons();
   if (window.buttonsInterval) {

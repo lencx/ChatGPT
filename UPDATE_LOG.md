@@ -13,8 +13,6 @@
 
 **New repository: https://github.com/lencx/nofwl**
 
-<img width="250" src="https://user-images.githubusercontent.com/16164244/219439614-d5c3710c-e0b3-4df9-9b3c-c150ba0ba5f1.png" />
-
 ## v0.11.0
 
 Fix:
