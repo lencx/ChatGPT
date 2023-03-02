@@ -26,7 +26,7 @@
 
 ---
 
-**This is an unofficial project intended for personal learning and research purposes only. Since, when ChatGPT desktop application was open-sourced, it received a lot of attention, and I would like to thank everyone for their support. However, as things have developed, there are two issues that seriously affect the project's next development plan:**
+**This is an unofficial project intended for personal learning and research purposes only. Since, ChatGPT desktop application was open-sourced, it received a lot of attention, and I would like to thank everyone for their support. However, as things have developed, there are two issues that seriously affect the project's next development plan:**
 
 - **Some people have used it for repackaging and selling for profit.**
 - **The name and icon of ChatGPT may be involved in infringement issues.**
@@ -262,7 +262,7 @@ yarn build
 ## ❤️ Thanks
 
 - The core implementation of the share button code was copied from the [@liady](https://github.com/liady) extension with some modifications.
-- Thank you to  [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts) repository for inspiring the custom command function for this application.
+- Thank you   [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts) repository for inspiring the custom command function for this application.
 
 ---
 
