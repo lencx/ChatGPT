@@ -21,9 +21,12 @@
 
 **🛑 紧急通知：目前发现有黑客利用 `lencx/ChatGPT` 的热度，在 fork 项目后植入木马，重新构建安装程序。如果你身边有朋友正在使用此桌面应用，请提醒 TA 们不要随意下载不明链接。现在项目将删除其他安装途径，仅提供此下载链接 https://github.com/lencx/ChatGPT/releases**
 
+**🛑 अत्यावश्यक सूचना: फोर्क परियोजना के बाद ट्रोजन हॉर्स लगाने और इंस्टॉलर को फिर से बनाने के लिए एक हैकर ने `lencx/ChatGPT` की गर्मी का फायदा उठाते हुए पाया गया है। यदि आपके आस-पास ऐसे मित्र हैं जो इस डेस्कटॉप एप्लिकेशन का उपयोग कर रहे हैं, तो कृपया उन्हें याद दिलाएं कि अज्ञात लिंक को स्वतंत्र रूप से डाउनलोड न करें। अब परियोजना अन्य स्थापना तरीकों को हटा देगी और केवल यह डाउनलोड लिंक प्रदान करेगी https://github.com/lencx/ChatGPT/releases**
+
+
 ---
 
-**It is an unofficial project intended for personal learning and research purposes only. During the time that the ChatGPT desktop application was open-sourced, it received a lot of attention, and I would like to thank everyone for their support. However, as things have developed, there are two issues that seriously affect the project's next development plan:**
+**This is an unofficial project intended for personal learning and research purposes only. Since, ChatGPT desktop application was open-sourced, it received a lot of attention, and I would like to thank everyone for their support. However, as things have developed, there are two issues that seriously affect the project's next development plan:**
 
 - **Some people have used it for repackaging and selling for profit.**
 - **The name and icon of ChatGPT may be involved in infringement issues.**
@@ -32,14 +35,14 @@
 
 ---
 
-## 📦 Install
+## 📦 Install:
 
 - [📝 Update Log](./UPDATE_LOG.md)
 - [🕒 History versions...](https://github.com/lencx/ChatGPT/releases)
 
 <!-- tr-download-start -->
 
-### Windows
+### Windows:
 
 - [ChatGPT_0.11.0_windows_x86_64.msi](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_windows_x86_64.msi): Direct download installer
 - Use [winget](https://winstall.app/apps/lencx.ChatGPT):
@@ -54,7 +57,7 @@
 
 **Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.11.0))**
 
-### Mac
+### Mac:
 
 - [ChatGPT_0.11.0_macos_aarch64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_macos_aarch64.dmg): Direct download installer
 - [ChatGPT_0.11.0_macos_x86_64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_macos_x86_64.dmg): Direct download installer
@@ -71,14 +74,14 @@
   cask "chatgpt", args: { "no-quarantine": true }
   ```
 
-### Linux
+### Linux:
 
 - [ChatGPT_0.11.0_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_linux_x86_64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
 - [ChatGPT_0.11.0_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.11.0/ChatGPT_0.11.0_linux_x86_64.AppImage.tar.gz): Works reliably, you can try it if `.deb` fails to run
 
 <!-- tr-download-end -->
 
-## 📢 Announcement
+## 📢 Announcement:
 
 ### ChatGPT Prompts!
 
@@ -100,7 +103,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 ![chatgpt](assets/chatgpt.gif)
 ![chatgpt-cmd](assets/chatgpt-cmd.gif)
 
-## ✨ Features
+## ✨ Features:
 
 - Multi-platform: `macOS` `Linux` `Windows`
 - Export ChatGPT history (PNG, PDF and Markdown)
@@ -113,7 +116,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 - Customize global shortcuts ([#108](https://github.com/lencx/ChatGPT/issues/108))
 - Pop-up Search ([#122](https://github.com/lencx/ChatGPT/issues/122) mouse selected content, no more than 400 characters): The application is built using Tauri, and due to its security restrictions, some of the action buttons will not work, so we recommend going to your browser.
 
-## #️⃣ MenuItem
+## #️⃣ MenuItem:
 
 - **Preferences**
   - `Theme` - `Light`, `Dark`, `System` (Only macOS and Windows are supported).
@@ -137,7 +140,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
   - `Report Bug`: Report a bug or give feedback.
   - `Toggle Developer Tools`: Developer debugging tools.
 
-## ⚙️ Application Configuration
+## ⚙️ Application Configuration:
 
 | Platform | Path                      |
 | -------- | ------------------------- |
@@ -160,7 +163,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
     - `4f695d3cfbf8491e9b1f3fab6d85715c.json` - Randomly generated file names, cache `sync_custom` data
     - `bd1b96f15a1644f7bd647cc53073ff8f.json` - Randomly generated file names, cache `sync_custom` data
 
-### Sync Custom
+### Sync Custom:
 
 Currently, only JSON and CSV are supported for synchronizing custom files, and the following formats need to be met, otherwise the application will be abnormal：
 
@@ -189,7 +192,7 @@ Currently, only JSON and CSV are supported for synchronizing custom files, and t
 "b","bb","bbb bbb bbb"
 ```
 
-## 📌 TODO
+## 📌 TODO:
 
 <!-- - Web access capability ([#20](https://github.com/lencx/ChatGPT/issues/20)) -->
 
@@ -197,13 +200,13 @@ Currently, only JSON and CSV are supported for synchronizing custom files, and t
 - `Pop-up Search` enhancement
 - ...
 
-## 👀 Preview
+## 👀 Preview:
 
 <img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chatgpt-popup-search.png" alt="popup search">
 <img width="320" src="./assets/chatgpt-control-center-general.png" alt="control center"> <img width="320" src="./assets/chatgpt-export.png" alt="export">
 <img width="320" src="./assets/chatgpt-dalle2-tray.png" alt="dalle2 tray"> <img width="320" src="./assets/auto-update.png" alt="auto update">
 
-## ❓FAQ
+## ❓FAQ:
 
 ### Can't open ChatGPT
 
@@ -225,7 +228,7 @@ It's safe, just a wrapper for [OpenAI ChatGPT](https://chat.openai.com) website,
 
 ### How do I build it?
 
-#### PreInstall
+#### PreInstall:
 
 - [Rust (Required)](https://www.rust-lang.org/)
 - [Node.js (Required)](https://nodejs.org/)
@@ -233,22 +236,22 @@ It's safe, just a wrapper for [OpenAI ChatGPT](https://chat.openai.com) website,
   - [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
   - [tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode)
 
-#### Start
+#### Start:
 
 ```bash
-# step1:
+# Step 1:
 git clone https://github.com/lencx/ChatGPT.git
 
-# step2:
+# Step 2:
 cd ChatGPT
 
-# step3: install deps
+# Step 3: install deps
 yarn
 
-# step4:
+# Step 4:
 yarn dev
 
-# step5:
+# Step 5:
 # bundle path: src-tauri/target/release/bundle
 yarn build
 ```
@@ -259,7 +262,7 @@ yarn build
 ## ❤️ Thanks
 
 - The core implementation of the share button code was copied from the [@liady](https://github.com/liady) extension with some modifications.
-- Thanks to the [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts) repository for inspiring the custom command function for this application.
+- Thank you   [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts) repository for inspiring the custom command function for this application.
 
 ---
 
@@ -273,6 +276,6 @@ yarn build
 
 <a href="https://t.zsxq.com/0bQikmcVw"><img width="360" src="./assets/zsxq.png"></a>
 
-## License
+## License:
 
 Apache License
