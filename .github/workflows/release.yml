@@ -54,6 +54,10 @@ jobs:
         with:
           key: ${{ matrix.target }}
 
+      - name: Install dependencies (macos only)
+        if: matrix.os == 'macos-latest'
+        run: pip install xattr
+
       - name: Install dependencies (ubuntu only)
         if: matrix.os == 'ubuntu-latest'
         run: |
