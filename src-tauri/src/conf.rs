@@ -10,6 +10,7 @@ use crate::utils::{app_root, create_file, exists};
 
 pub const APP_WEBSITE: &str = "https://lencx.github.io/app/";
 pub const ISSUES_URL: &str = "https://github.com/lencx/ChatGPT/issues";
+pub const NOFWL_APP: &str = "https://github.com/lencx/nofwl";
 pub const UPDATE_LOG_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/UPDATE_LOG.md";
 pub const BUY_COFFEE: &str = "https://www.buymeacoffee.com/lencx";
 pub const GITHUB_PROMPTS_CSV_URL: &str =

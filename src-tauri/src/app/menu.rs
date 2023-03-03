@@ -143,6 +143,7 @@ pub fn init() -> Menu {
         .into(),
       CustomMenuItem::new("clear_conf".to_string(), "Clear Config").into(),
       MenuItem::Separator.into(),
+      CustomMenuItem::new("nofwl".to_string(), "NoFWL Desktop Application").into(),
       CustomMenuItem::new("buy_coffee".to_string(), "Buy lencx a coffee").into(),
     ]),
   );
@@ -257,6 +258,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
       conf::APP_WEBSITE.into(),
       None,
     ),
+    "nofwl" => open(&app, conf::NOFWL_APP.to_string()),
     "buy_coffee" => open(&app, conf::BUY_COFFEE.to_string()),
     "popup_search" => {
       let app_conf = AppConf::read();
