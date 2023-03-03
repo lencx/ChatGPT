@@ -38,12 +38,7 @@ const Format = {
 };
 
 function shouldRemoveButtons() {
-  const isOpenScreen = document.querySelector("h1.text-4xl");
-  if(isOpenScreen){
-    return true;
-  }
-  const inConversation = document.querySelector("form button>div");
-  if(inConversation){
+  if (document.querySelector("form .text-2xl")) {
     return true;
   }
   return false;
@@ -144,7 +139,7 @@ async function exportMarkdown() {
       j.innerHTML = `<blockquote>${i.innerHTML}</blockquote>`;
     }
     return j.innerHTML;
-  }).join('<hr />');
+  }).join('');
   const data = ExportMD.turndown(content);
   const { id, filename } = getName();
   await invoke('save_file', { name: `notes/${id}.md`, content: data });
