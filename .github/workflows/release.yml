@@ -84,11 +84,10 @@ jobs:
       - name: fix macos install
         if: matrix.os == 'macos-latest'
         run: |
-          rm -rf ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app
           tar -xzf ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app.tar.gz
-          xattr -r -d com.apple.quarantine ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app
+          xattr -r -d com.apple.quarantine ChatGPT.app
           rm -rf ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app.tar.gz
-          tar -czf ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app.tar.gz ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app
+          tar -czf ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app.tar.gz ChatGPT.app
 
       - uses: actions/upload-artifact@v3
         if: matrix.os == 'ubuntu-latest'
