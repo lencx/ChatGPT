@@ -71,6 +71,12 @@
   cask "chatgpt", args: { "no-quarantine": true }
   ```
 
+**If you encounter the error message `"ChatGPT" is damaged and can't be opened. You should move it to the Trash`. while installing software on macOS, it may be due to security settings restrictions in macOS. To solve this problem, please try the following command in Terminal:**
+
+```bash
+sudo xattr -r -d com.apple.quarantine /YOUR_PATH/ChatGPT.app
+```
+
 ### Linux
 
 - [ChatGPT_0.11.1_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.11.1/ChatGPT_0.11.1_linux_x86_64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
