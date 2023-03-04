@@ -54,6 +54,10 @@ jobs:
         with:
           key: ${{ matrix.target }}
 
+      - name: Install xattr (macos only)
+        if: matrix.os == 'macos-latest'
+        run: pip install xattr
+
       - name: Install dependencies (ubuntu only)
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -76,6 +80,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+
+      - name: fix macos install
+        if: matrix.os == 'macos-latest'
+        run: |
+          rm ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app
+          tar -xzf ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app.tar.gz
+          xattr -r -d com.apple.quarantine ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app
+          rm ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app.tar.gz
+          tar -czf ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app.tar.gz ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app
 
       - uses: actions/upload-artifact@v3
         if: matrix.os == 'ubuntu-latest'
@@ -129,18 +142,12 @@ jobs:
       - name: Rename artifacts
         run: |
           mv "artifacts/aarch64/dmg/ChatGPT_${{ env.version }}_aarch64.dmg" "artifacts/ChatGPT_${{ env.version }}_macos_aarch64.dmg"
+          mv "artifacts/aarch64/macos/ChatGPT.app.tar.gz" "artifacts/ChatGPT_${{ env.version }}_macos_aarch64.app.tar.gz"
           mv "artifacts/aarch64/macos/ChatGPT.app.tar.gz.sig" "artifacts/ChatGPT_${{ env.version }}_macos_aarch64.app.tar.gz.sig"
-          tar -xzf "artifacts/aarch64/macos/ChatGPT.app.tar.gz"
-          xattr -r -d com.apple.quarantine "artifacts/aarch64/macos/ChatGPT.app"
-          tar -czf "artifacts/ChatGPT_${{ env.version }}_macos_aarch64.app.tar.gz" "artifacts/aarch64/macos/ChatGPT.app"
-          rm -rf "artifacts/aarch64/macos"
 
           mv "artifacts/x86_64/dmg/ChatGPT_${{ env.version }}_x64.dmg" "artifacts/ChatGPT_${{ env.version }}_macos_x86_64.dmg"
+          mv "artifacts/x86_64/macos/ChatGPT.app.tar.gz" "artifacts/ChatGPT_${{ env.version }}_macos_x86_64.app.tar.gz"
           mv "artifacts/x86_64/macos/ChatGPT.app.tar.gz.sig" "artifacts/ChatGPT_${{ env.version }}_macos_x86_64.app.tar.gz.sig"
-          tar -xzf "artifacts/x86_64/macos/ChatGPT.app.tar.gz"
-          xattr -r -d com.apple.quarantine "artifacts/x86_64/macos/ChatGPT.app"
-          tar -czf "artifacts/ChatGPT_${{ env.version }}_macos_x86_64.app.tar.gz" "artifacts/x86_64/macos/ChatGPT.app"
-          rm -rf "artifacts/x86_64/macos"
 
           mv "artifacts/x86_64/deb/chat-gpt_${{ env.version }}_amd64.deb" "artifacts/x86_64/deb/ChatGPT_${{ env.version }}_linux_x86_64.deb"
           mv "artifacts/x86_64/appimage/chat-gpt_${{ env.version }}_amd64.AppImage.tar.gz" "artifacts/ChatGPT_${{ env.version }}_linux_x86_64.AppImage.tar.gz"
