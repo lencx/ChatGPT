@@ -81,14 +81,6 @@ jobs:
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
 
-      - name: fix macos install
-        if: matrix.os == 'macos-latest'
-        run: |
-          tar -xzf ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app.tar.gz
-          xattr -r -d com.apple.quarantine ChatGPT.app
-          rm -rf ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app.tar.gz
-          tar -czf ./target/${{ matrix.target }}/release/bundle/macos/ChatGPT.app.tar.gz ChatGPT.app
-
       - uses: actions/upload-artifact@v3
         if: matrix.os == 'ubuntu-latest'
         with:
