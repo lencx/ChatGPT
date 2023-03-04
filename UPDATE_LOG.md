@@ -13,7 +13,12 @@
 
 **New repository: https://github.com/lencx/nofwl**
 
-<img width="250" src="https://user-images.githubusercontent.com/16164244/219439614-d5c3710c-e0b3-4df9-9b3c-c150ba0ba5f1.png" />
+## v0.11.1
+
+Fix:
+
+- Export button blinks (https://github.com/lencx/ChatGPT/issues/541)
+- System tray supports sending with Enter key, for text line breaks please use the shortcut key `Shift + Enter` (https://github.com/lencx/ChatGPT/issues/533)
 
 ## v0.11.0
 

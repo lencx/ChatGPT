@@ -11,7 +11,7 @@
     "fix:conf": "tr override --json.tauri_updater_active=false",
     "fix:tray": "tr override --json.tauri_systemTray_iconPath=\"icons/tray-icon-light.png\" --json.tauri_systemTray_iconAsTemplate=false",
     "fix:tray:mac": "tr override --json.tauri_systemTray_iconPath=\"icons/tray-icon.png\" --json.tauri_systemTray_iconAsTemplate=true",
-    "download": "tr download --mdfile=README.md,README-ZH_CN.md --f1=38 --f2=35",
+    "download": "tr download --mdfile=README.md,README-ZH_CN.md --f1=52 --f2=43",
     "fmt:rs": "cargo fmt",
     "tr": "tr",
     "tauri": "tauri",
@@ -76,6 +76,6 @@
     "vite-tsconfig-paths": "^4.0.2"
   },
   "engines": {
-    "node": "^14.18.0 || ^16.0.0"
+    "node": "^14.18.0 || ^16.0.0 || ^18.0.0"
   }
 }

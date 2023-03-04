@@ -56,7 +56,7 @@ const AboutChatGPT = () => {
         helps you, you can buy me a cup of coffee (Chinese users can use WeChat to scan the code),
         thanks!
       </p>
-      <p className="imgs">
+      <p className="imgs" style={{ float: 'left' }}>
         <a href="https://www.buymeacoffee.com/lencx" target="_blank">
           <img
             src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png"
@@ -67,8 +67,12 @@ const AboutChatGPT = () => {
         <img
           width="200"
           src="https://user-images.githubusercontent.com/16164244/207228025-117b5f77-c5d2-48c2-a070-774b7a1596f2.png"
-        ></img>
+        />
       </p>
+      <img
+        width="250"
+        src="https://user-images.githubusercontent.com/16164244/219439614-d5c3710c-e0b3-4df9-9b3c-c150ba0ba5f1.png"
+      />
     </div>
   );
 };

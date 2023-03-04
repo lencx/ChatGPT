@@ -7,19 +7,38 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.11.0"
+    "version": "0.11.1"
   },
   "tauri": {
     "allowlist": {
-      "all": true,
+      "all": false,
       "globalShortcut": {
         "all": true
       },
       "fs": {
-        "all": true,
+        "all": false,
+        "readFile": true,
+        "writeFile": true,
+        "readDir": true,
+        "createDir": true,
+        "exists": true,
+        "removeFile": true,
+        "removeDir": true,
         "scope": [
           "$HOME/.chatgpt/**"
         ]
+      },
+      "path": {
+        "all": true
+      },
+      "os": {
+        "all": true
+      },
+      "process": {
+        "all": true,
+        "exit": true,
+        "relaunch": true,
+        "relaunchDangerousAllowSymlinkMacos": true
       }
     },
     "systemTray": {
