@@ -83,6 +83,16 @@ function init() {
     width: 16px;
     height: 16px;
   }
+  .chatappico.refresh {
+    width: 22px;
+    height: 22px;
+  }
+  #download-markdown-button,
+  #download-png-button,
+  #download-pdf-button,
+  #refresh-page-button {
+    border: none;
+  }
   @media screen and (max-width: 767px) {
     #download-png-button, #download-pdf-button, #download-html-button {
       display: none;

@@ -13,6 +13,14 @@
 
 **New repository: https://github.com/lencx/nofwl**
 
+## v0.12.0
+
+Feat:
+
+- Add refresh button
+- Add text-to-speech (`Control Center -> Settings -> General -> Set Speech Language`) (https://github.com/lencx/ChatGPT/issues/534)
+- Automatically focus input field (https://github.com/lencx/ChatGPT/issues/550)
+
 ## v0.11.1
 
 Fix:

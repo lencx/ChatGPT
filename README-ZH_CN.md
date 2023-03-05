@@ -32,7 +32,7 @@
 
 ### Windows
 
-- [ChatGPT_0.11.1_windows_x86_64.msi](https://github.com/lencx/ChatGPT/releases/download/v0.11.1/ChatGPT_0.11.1_windows_x86_64.msi)
+- [ChatGPT_0.12.0_windows_x86_64.msi](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_windows_x86_64.msi)
 - 使用 [winget](https://winstall.app/apps/lencx.ChatGPT):
 
   ```bash
@@ -43,12 +43,12 @@
   winget install --id=lencx.ChatGPT -e --version 0.10.0
   ```
 
-**注意：如果安装路径和应用名称相同，会导致冲突 ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.11.1))**
+**注意：如果安装路径和应用名称相同，会导致冲突 ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.12.0))**
 
 ### Mac
 
-- [ChatGPT_0.11.1_macos_aarch64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.11.1/ChatGPT_0.11.1_macos_aarch64.dmg)
-- [ChatGPT_0.11.1_macos_x86_64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.11.1/ChatGPT_0.11.1_macos_x86_64.dmg)
+- [ChatGPT_0.12.0_macos_aarch64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_macos_aarch64.dmg)
+- [ChatGPT_0.12.0_macos_x86_64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_macos_x86_64.dmg)
 - Homebrew \
   _[Homebrew 快捷安装](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
@@ -70,8 +70,8 @@ sudo xattr -r -d com.apple.quarantine /YOUR_PATH/ChatGPT.app
 
 ### Linux
 
-- [ChatGPT_0.11.1_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.11.1/ChatGPT_0.11.1_linux_x86_64.deb)
-- [ChatGPT_0.11.1_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.11.1/ChatGPT_0.11.1_linux_x86_64.AppImage.tar.gz): **工作可靠，`.deb` 运行失败时可以尝试它**
+- [ChatGPT_0.12.0_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_linux_x86_64.deb)
+- [ChatGPT_0.12.0_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_linux_x86_64.AppImage.tar.gz): **工作可靠，`.deb` 运行失败时可以尝试它**
 
 <!-- tr-download-end -->
 

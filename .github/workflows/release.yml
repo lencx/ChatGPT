@@ -194,13 +194,13 @@ jobs:
       - name: Query version number
         run: echo "version=${GITHUB_REF:11}" >> $GITHUB_ENV
 
-  publish-winget:
-    # Action can only be run on windows
-    runs-on: windows-latest
-    needs: [build-chatgpt, release-chatgpt]
-    steps:
-      - uses: vedantmgoyal2009/winget-releaser@v1
-        with:
-          identifier: lencx.ChatGPT
-          token: ${{ secrets.WINGET_TOKEN }}
-          version: ${{ github.event.release.tag_name }}
+  # publish-winget:
+  #   # Action can only be run on windows
+  #   runs-on: windows-latest
+  #   needs: [build-chatgpt, release-chatgpt]
+  #   steps:
+  #     - uses: vedantmgoyal2009/winget-releaser@v1
+  #       with:
+  #         identifier: lencx.ChatGPT
+  #         token: ${{ secrets.WINGET_TOKEN }}
+  #         version: ${{ github.event.release.tag_name }}

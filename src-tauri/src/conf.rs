@@ -40,6 +40,7 @@ pub_struct!(AppConf {
   save_window_state: bool,
   global_shortcut: Option<String>,
   default_origin: String,
+  speech_lang: String,
 
   // Main Window
   isinit: bool,
@@ -69,6 +70,10 @@ impl AppConf {
       save_window_state: false,
       theme: "light".into(),
       auto_update: "prompt".into(),
+      #[cfg(target_os = "macos")]
+      speech_lang: "com.apple.eloquence.en-US.Rocko".into(),
+      #[cfg(not(target_os = "macos"))]
+      speech_lang: "".into(),
       tray: true,
       popup_search: false,
       isinit: true,

@@ -88,6 +88,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
           .initialization_script(include_str!("../scripts/export.js"))
           .initialization_script(include_str!("../scripts/markdown.export.js"))
           .initialization_script(include_str!("../scripts/cmd.js"))
+          .initialization_script(include_str!("../scripts/chat.js"))
       }
 
       main_win.build().unwrap();
