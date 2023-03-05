@@ -12,10 +12,14 @@ async function init() {
 }
 
 function chatBtns() {
-  Array.from(document.querySelectorAll("main >div>div>div>div>div"))
-    .forEach(i => {
+  const synth = window.speechSynthesis;
+  let currentUtterance = null;
+  let currentIndex = -1;
+  const list = Array.from(document.querySelectorAll("main >div>div>div>div>div"));
+  list.forEach((i, idx) => {
       if (i.querySelector('.chat-item-copy')) return;
       if (!i.querySelector('button.rounded-md')) return;
+      if (!i.querySelector('.self-end')) return;
       const cpbtn = i.querySelector('button.rounded-md').cloneNode(true);
       cpbtn.classList.add('chat-item-copy');
       cpbtn.title = 'Copy to clipboard';
@@ -30,27 +34,39 @@ function chatBtns() {
       saybtn.title = 'Say';
       saybtn.innerHTML = setIcon('voice');
       i.querySelector('.self-end').appendChild(saybtn);
-      let amISpeaking = null;
-      const synth = window.speechSynthesis;
       saybtn.onclick = () => {
+        if (currentUtterance && currentIndex !== -1) {
+          synth.cancel();
+          if (idx === currentIndex) {
+            saybtn.innerHTML = setIcon('voice');
+            currentUtterance = null;
+            currentIndex = -1;
+            return;
+          } else if (list[currentIndex].querySelector('.chat-item-voice')) {
+            list[currentIndex].querySelector('.chat-item-voice').innerHTML = setIcon('voice');
+            list[idx].querySelector('.chat-item-voice').innerHTML = setIcon('speaking');
+          }
+        }
         const txt = i?.innerText?.trim() || '';
         const lang = 'en-US';
         if (!txt) return;
-        if (amISpeaking) {
-          amISpeaking = null;
-          synth.cancel();
-          saybtn.innerHTML = setIcon('voice');
-          return;
-        }
         const utterance = new SpeechSynthesisUtterance(txt);
-        utterance.lang = lang;
         utterance.voice = speechSynthesis.getVoices().find(voice => voice.lang === lang);
+        currentIndex = idx;
+        utterance.lang = lang;
+        utterance.rate = 0.7;
+        utterance.pitch = 1.1;
+        utterance.volume = 1;
         synth.speak(utterance);
         amISpeaking = synth.speaking;
         saybtn.innerHTML = setIcon('speaking');
-        utterance.addEventListener('end', () => {
+        currentUtterance = utterance;
+        currentIndex = idx;
+        utterance.onend = () => {
           saybtn.innerHTML = setIcon('voice');
-        });
+          currentUtterance = null;
+          currentIndex = -1;
+        }
       }
     })
 }
