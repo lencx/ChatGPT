@@ -41,7 +41,7 @@
 
 ### Windows
 
-- [ChatGPT_0.11.1_windows_x86_64.msi](https://github.com/lencx/ChatGPT/releases/download/v0.11.1/ChatGPT_0.11.1_windows_x86_64.msi): Direct download installer
+- [ChatGPT_0.12.0_windows_x86_64.msi](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_windows_x86_64.msi): Direct download installer
 - Use [winget](https://winstall.app/apps/lencx.ChatGPT):
 
   ```bash
@@ -52,12 +52,12 @@
   winget install --id=lencx.ChatGPT -e --version 0.10.0
   ```
 
-**Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.11.1))**
+**Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.12.0))**
 
 ### Mac
 
-- [ChatGPT_0.11.1_macos_aarch64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.11.1/ChatGPT_0.11.1_macos_aarch64.dmg): Direct download installer
-- [ChatGPT_0.11.1_macos_x86_64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.11.1/ChatGPT_0.11.1_macos_x86_64.dmg): Direct download installer
+- [ChatGPT_0.12.0_macos_aarch64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_macos_aarch64.dmg): Direct download installer
+- [ChatGPT_0.12.0_macos_x86_64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_macos_x86_64.dmg): Direct download installer
 - Homebrew \
   Or you can install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
@@ -79,8 +79,8 @@ sudo xattr -r -d com.apple.quarantine /YOUR_PATH/ChatGPT.app
 
 ### Linux
 
-- [ChatGPT_0.11.1_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.11.1/ChatGPT_0.11.1_linux_x86_64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
-- [ChatGPT_0.11.1_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.11.1/ChatGPT_0.11.1_linux_x86_64.AppImage.tar.gz): Works reliably, you can try it if `.deb` fails to run
+- [ChatGPT_0.12.0_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_linux_x86_64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
+- [ChatGPT_0.12.0_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_linux_x86_64.AppImage.tar.gz): Works reliably, you can try it if `.deb` fails to run
 
 <!-- tr-download-end -->
 
