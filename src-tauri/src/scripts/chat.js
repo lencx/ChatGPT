@@ -9,6 +9,9 @@ async function init() {
     childList: true,
     subtree: true,
   });
+  document.addEventListener('visibilitychange', () =>
+    document.getElementsByTagName('textarea')[0]?.focus()
+  );
 }
 
 function chatBtns() {
@@ -90,6 +93,11 @@ function copyToClipboard(text, btn) {
   window.__cpTimeout = setTimeout(() => {
     btn.innerHTML = setIcon('copy');
   }, 1000);
+}
+
+function focusOnInput() {
+  // This currently works because there is only a single `<textarea>` element on the ChatGPT UI page.
+  document.getElementsByTagName("textarea")[0].focus();
 }
 
 function setIcon(type) {
