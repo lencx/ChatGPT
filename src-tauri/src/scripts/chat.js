@@ -14,7 +14,8 @@ async function init() {
   );
 }
 
-function chatBtns() {
+async function chatBtns() {
+  const chatConf = await invoke('get_app_conf') || {};
   const synth = window.speechSynthesis;
   let currentUtterance = null;
   let currentIndex = -1;
@@ -51,15 +52,19 @@ function chatBtns() {
           }
         }
         const txt = i?.innerText?.trim() || '';
-        const lang = 'en-US';
         if (!txt) return;
         const utterance = new SpeechSynthesisUtterance(txt);
-        utterance.voice = speechSynthesis.getVoices().find(voice => voice.lang === lang);
+        const voices = speechSynthesis.getVoices();
+        let voice = voices.find(voice => voice.voiceURI === chatConf.speech_lang);
+        if (!voice) {
+          voice = voices.find(voice => voice.lang === 'en-US');
+        }
+        utterance.voice = voice;
         currentIndex = idx;
-        utterance.lang = lang;
-        utterance.rate = 0.7;
-        utterance.pitch = 1.1;
-        utterance.volume = 1;
+        utterance.lang = voice.lang;
+        // utterance.rate = 0.7;
+        // utterance.pitch = 1.1;
+        // utterance.volume = 1;
         synth.speak(utterance);
         amISpeaking = synth.speaking;
         saybtn.innerHTML = setIcon('speaking');

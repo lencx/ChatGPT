@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, Radio, Switch, Input, Tooltip } from 'antd';
+import { Form, Radio, Switch, Input, Tooltip, Select, Tag } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { platform } from '@tauri-apps/api/os';
 
@@ -8,9 +8,11 @@ import { DISABLE_AUTO_COMPLETE } from '@/utils';
 
 export default function General() {
   const [platformInfo, setPlatform] = useState('');
+  const [vlist, setVoices] = useState<any[]>([]);
 
   useInit(async () => {
     setPlatform(await platform());
+    setVoices(speechSynthesis.getVoices());
   });
 
   return (
@@ -47,6 +49,18 @@ export default function General() {
       </Form.Item>
       <Form.Item label={<GlobalShortcutLabel />} name="global_shortcut">
         <Input placeholder="CmdOrCtrl+Shift+O" {...DISABLE_AUTO_COMPLETE} />
+      </Form.Item>
+      <Form.Item label="Set Speech Language" name="speech_lang">
+        <Select>
+          {vlist.map((voice: any) => {
+            return (
+              <Select.Option key={voice.voiceURI} value={voice.voiceURI}>
+                {voice.name} {': '}
+                <Tag>{voice.lang}</Tag>
+              </Select.Option>
+            );
+          })}
+        </Select>
       </Form.Item>
     </>
   );
