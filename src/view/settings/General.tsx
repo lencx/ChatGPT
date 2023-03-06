@@ -12,6 +12,11 @@ export default function General() {
 
   useInit(async () => {
     setPlatform(await platform());
+    speechSynthesis.addEventListener('voiceschanged', () => {
+      const voices = speechSynthesis.getVoices();
+      console.log(voices);
+      setVoices(voices);
+    });
     setVoices(speechSynthesis.getVoices());
   });
 
