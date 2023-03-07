@@ -22,8 +22,8 @@ pub fn init() -> Menu {
       #[cfg(target_os = "macos")]
       MenuItem::About(name.into(), AboutMetadata::default()).into(),
       #[cfg(not(target_os = "macos"))]
-      CustomMenuItem::new("about".to_string(), "About ChatGPT").into(),
-      CustomMenuItem::new("check_update".to_string(), "Check for Updates").into(),
+      CustomMenuItem::new("about", "About ChatGPT").into(),
+      CustomMenuItem::new("check_update", "Check for Updates").into(),
       MenuItem::Services.into(),
       MenuItem::Hide.into(),
       MenuItem::HideOthers.into(),
@@ -33,25 +33,24 @@ pub fn init() -> Menu {
     ]),
   );
 
-  let stay_on_top =
-    CustomMenuItem::new("stay_on_top".to_string(), "Stay On Top").accelerator("CmdOrCtrl+T");
+  let stay_on_top = CustomMenuItem::new("stay_on_top", "Stay On Top").accelerator("CmdOrCtrl+T");
   let stay_on_top_menu = if app_conf.stay_on_top {
     stay_on_top.selected()
   } else {
     stay_on_top
   };
 
-  let theme_light = CustomMenuItem::new("theme_light".to_string(), "Light");
-  let theme_dark = CustomMenuItem::new("theme_dark".to_string(), "Dark");
-  let theme_system = CustomMenuItem::new("theme_system".to_string(), "System");
+  let theme_light = CustomMenuItem::new("theme_light", "Light");
+  let theme_dark = CustomMenuItem::new("theme_dark", "Dark");
+  let theme_system = CustomMenuItem::new("theme_system", "System");
   let is_dark = app_conf.clone().theme_check("dark");
   let is_system = app_conf.clone().theme_check("system");
 
-  let update_prompt = CustomMenuItem::new("update_prompt".to_string(), "Prompt");
-  let update_silent = CustomMenuItem::new("update_silent".to_string(), "Silent");
-  // let _update_disable = CustomMenuItem::new("update_disable".to_string(), "Disable");
+  let update_prompt = CustomMenuItem::new("update_prompt", "Prompt");
+  let update_silent = CustomMenuItem::new("update_silent", "Silent");
+  // let _update_disable = CustomMenuItem::new("update_disable", "Disable");
 
-  let popup_search = CustomMenuItem::new("popup_search".to_string(), "Pop-up Search");
+  let popup_search = CustomMenuItem::new("popup_search", "Pop-up Search");
   let popup_search_menu = if app_conf.popup_search {
     popup_search.selected()
   } else {
@@ -59,7 +58,7 @@ pub fn init() -> Menu {
   };
 
   #[cfg(target_os = "macos")]
-  let titlebar = CustomMenuItem::new("titlebar".to_string(), "Titlebar").accelerator("CmdOrCtrl+B");
+  let titlebar = CustomMenuItem::new("titlebar", "Titlebar").accelerator("CmdOrCtrl+B");
   #[cfg(target_os = "macos")]
   let titlebar_menu = if app_conf.titlebar {
     titlebar.selected()
@@ -67,7 +66,7 @@ pub fn init() -> Menu {
     titlebar
   };
 
-  let system_tray = CustomMenuItem::new("system_tray".to_string(), "System Tray");
+  let system_tray = CustomMenuItem::new("system_tray", "System Tray");
   let system_tray_menu = if app_conf.tray {
     system_tray.selected()
   } else {
@@ -78,7 +77,7 @@ pub fn init() -> Menu {
   let preferences_menu = Submenu::new(
     "Preferences",
     Menu::with_items([
-      CustomMenuItem::new("control_center".to_string(), "Control Center")
+      CustomMenuItem::new("control_center", "Control Center")
         .accelerator("CmdOrCtrl+Shift+P")
         .into(),
       MenuItem::Separator.into(),
@@ -86,9 +85,9 @@ pub fn init() -> Menu {
       #[cfg(target_os = "macos")]
       titlebar_menu.into(),
       #[cfg(target_os = "macos")]
-      CustomMenuItem::new("hide_dock_icon".to_string(), "Hide Dock Icon").into(),
+      CustomMenuItem::new("hide_dock_icon", "Hide Dock Icon").into(),
       system_tray_menu.into(),
-      CustomMenuItem::new("inject_script".to_string(), "Inject Script")
+      CustomMenuItem::new("inject_script", "Inject Script")
         .accelerator("CmdOrCtrl+J")
         .into(),
       MenuItem::Separator.into(),
@@ -133,18 +132,18 @@ pub fn init() -> Menu {
       .into(),
       MenuItem::Separator.into(),
       popup_search_menu.into(),
-      CustomMenuItem::new("sync_prompts".to_string(), "Sync Prompts").into(),
+      CustomMenuItem::new("sync_prompts", "Sync Prompts").into(),
       MenuItem::Separator.into(),
-      CustomMenuItem::new("go_conf".to_string(), "Go to Config")
+      CustomMenuItem::new("go_conf", "Go to Config")
         .accelerator("CmdOrCtrl+Shift+G")
         .into(),
-      CustomMenuItem::new("restart".to_string(), "Restart ChatGPT")
+      CustomMenuItem::new("restart", "Restart ChatGPT")
         .accelerator("CmdOrCtrl+Shift+R")
         .into(),
-      CustomMenuItem::new("clear_conf".to_string(), "Clear Config").into(),
+      CustomMenuItem::new("clear_conf", "Clear Config").into(),
       MenuItem::Separator.into(),
-      CustomMenuItem::new("nofwl".to_string(), "NoFWL Desktop Application").into(),
-      CustomMenuItem::new("buy_coffee".to_string(), "Buy lencx a coffee").into(),
+      CustomMenuItem::new("nofwl", "NoFWL Desktop Application").into(),
+      CustomMenuItem::new("buy_coffee", "Buy lencx a coffee").into(),
     ]),
   );
 
@@ -163,38 +162,28 @@ pub fn init() -> Menu {
   let view_menu = Submenu::new(
     "View",
     Menu::new()
-      .add_item(CustomMenuItem::new("go_back".to_string(), "Go Back").accelerator("CmdOrCtrl+["))
+      .add_item(CustomMenuItem::new("go_back", "Go Back").accelerator("CmdOrCtrl+["))
+      .add_item(CustomMenuItem::new("go_forward", "Go Forward").accelerator("CmdOrCtrl+]"))
       .add_item(
-        CustomMenuItem::new("go_forward".to_string(), "Go Forward").accelerator("CmdOrCtrl+]"),
+        CustomMenuItem::new("scroll_top", "Scroll to Top of Screen").accelerator("CmdOrCtrl+Up"),
       )
       .add_item(
-        CustomMenuItem::new("scroll_top".to_string(), "Scroll to Top of Screen")
-          .accelerator("CmdOrCtrl+Up"),
-      )
-      .add_item(
-        CustomMenuItem::new("scroll_bottom".to_string(), "Scroll to Bottom of Screen")
+        CustomMenuItem::new("scroll_bottom", "Scroll to Bottom of Screen")
           .accelerator("CmdOrCtrl+Down"),
       )
       .add_native_item(MenuItem::Separator)
-      .add_item(
-        CustomMenuItem::new("zoom_0".to_string(), "Zoom to Actual Size").accelerator("CmdOrCtrl+0"),
-      )
-      .add_item(CustomMenuItem::new("zoom_out".to_string(), "Zoom Out").accelerator("CmdOrCtrl+-"))
-      .add_item(CustomMenuItem::new("zoom_in".to_string(), "Zoom In").accelerator("CmdOrCtrl+Plus"))
+      .add_item(CustomMenuItem::new("zoom_0", "Zoom to Actual Size").accelerator("CmdOrCtrl+0"))
+      .add_item(CustomMenuItem::new("zoom_out", "Zoom Out").accelerator("CmdOrCtrl+-"))
+      .add_item(CustomMenuItem::new("zoom_in", "Zoom In").accelerator("CmdOrCtrl+Plus"))
       .add_native_item(MenuItem::Separator)
-      .add_item(
-        CustomMenuItem::new("reload".to_string(), "Refresh the Screen").accelerator("CmdOrCtrl+R"),
-      ),
+      .add_item(CustomMenuItem::new("reload", "Refresh the Screen").accelerator("CmdOrCtrl+R")),
   );
 
   let window_menu = Submenu::new(
     "Window",
     Menu::new()
-      .add_item(CustomMenuItem::new(
-        "app_website".to_string(),
-        "ChatGPT User's Guide",
-      ))
-      .add_item(CustomMenuItem::new("dalle2".to_string(), "DALL·E 2"))
+      .add_item(CustomMenuItem::new("app_website", "ChatGPT User's Guide"))
+      .add_item(CustomMenuItem::new("dalle2", "DALL·E 2"))
       .add_native_item(MenuItem::Separator)
       .add_native_item(MenuItem::Minimize)
       .add_native_item(MenuItem::Zoom),
@@ -203,15 +192,11 @@ pub fn init() -> Menu {
   let help_menu = Submenu::new(
     "Help",
     Menu::new()
-      .add_item(CustomMenuItem::new(
-        "chatgpt_log".to_string(),
-        "ChatGPT Log",
-      ))
-      .add_item(CustomMenuItem::new("update_log".to_string(), "Update Log"))
-      .add_item(CustomMenuItem::new("report_bug".to_string(), "Report Bug"))
+      .add_item(CustomMenuItem::new("chatgpt_log", "ChatGPT Log"))
+      .add_item(CustomMenuItem::new("update_log", "Update Log"))
+      .add_item(CustomMenuItem::new("report_bug", "Report Bug"))
       .add_item(
-        CustomMenuItem::new("dev_tools".to_string(), "Toggle Developer Tools")
-          .accelerator("CmdOrCtrl+Shift+I"),
+        CustomMenuItem::new("dev_tools", "Toggle Developer Tools").accelerator("CmdOrCtrl+Shift+I"),
       ),
   );
 
@@ -248,7 +233,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     // Preferences
     "control_center" => window::cmd::control_window(app),
     "restart" => tauri::api::process::restart(&app.env()),
-    "inject_script" => open(&app, script_path),
+    "inject_script" => open(&app, &script_path),
     "go_conf" => utils::open_file(utils::app_root()),
     "clear_conf" => utils::clear_conf(&app),
     "app_website" => window::cmd::wa_window(
@@ -258,8 +243,8 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
       conf::APP_WEBSITE.into(),
       None,
     ),
-    "nofwl" => open(&app, conf::NOFWL_APP.to_string()),
-    "buy_coffee" => open(&app, conf::BUY_COFFEE.to_string()),
+    "nofwl" => open(&app, conf::NOFWL_APP),
+    "buy_coffee" => open(&app, conf::BUY_COFFEE),
     "popup_search" => {
       let app_conf = AppConf::read();
       let popup_search = !app_conf.popup_search;
@@ -394,8 +379,8 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
       .unwrap(),
     // Help
     "chatgpt_log" => utils::open_file(utils::app_root().join("chatgpt.log")),
-    "update_log" => open(&app, conf::UPDATE_LOG_URL.to_string()),
-    "report_bug" => open(&app, conf::ISSUES_URL.to_string()),
+    "update_log" => open(&app, conf::UPDATE_LOG_URL),
+    "report_bug" => open(&app, conf::ISSUES_URL),
     "dev_tools" => {
       win.open_devtools();
       win.close_devtools();
@@ -408,41 +393,29 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
 pub fn tray_menu() -> SystemTray {
   if cfg!(target_os = "macos") {
     let mut tray_menu = SystemTrayMenu::new()
-      .add_item(CustomMenuItem::new(
-        "control_center".to_string(),
-        "Control Center",
-      ))
+      .add_item(CustomMenuItem::new("control_center", "Control Center"))
       .add_native_item(SystemTrayMenuItem::Separator);
 
     if AppConf::read().hide_dock_icon {
-      tray_menu = tray_menu.add_item(CustomMenuItem::new(
-        "show_dock_icon".to_string(),
-        "Show Dock Icon",
-      ));
+      tray_menu = tray_menu.add_item(CustomMenuItem::new("show_dock_icon", "Show Dock Icon"));
     } else {
       tray_menu = tray_menu
-        .add_item(CustomMenuItem::new(
-          "hide_dock_icon".to_string(),
-          "Hide Dock Icon",
-        ))
-        .add_item(CustomMenuItem::new("show_core".to_string(), "Show Window"));
+        .add_item(CustomMenuItem::new("hide_dock_icon", "Hide Dock Icon"))
+        .add_item(CustomMenuItem::new("show_core", "Show Window"));
     }
 
     SystemTray::new().with_menu(
       tray_menu
         .add_native_item(SystemTrayMenuItem::Separator)
-        .add_item(CustomMenuItem::new("quit".to_string(), "Quit")),
+        .add_item(CustomMenuItem::new("quit", "Quit")),
     )
   } else {
     SystemTray::new().with_menu(
       SystemTrayMenu::new()
-        .add_item(CustomMenuItem::new(
-          "control_center".to_string(),
-          "Control Center",
-        ))
-        .add_item(CustomMenuItem::new("show_core".to_string(), "Show Window"))
+        .add_item(CustomMenuItem::new("control_center", "Control Center"))
+        .add_item(CustomMenuItem::new("show_core", "Show Window"))
         .add_native_item(SystemTrayMenuItem::Separator)
-        .add_item(CustomMenuItem::new("quit".to_string(), "Quit")),
+        .add_item(CustomMenuItem::new("quit", "Quit")),
     )
   }
 }
@@ -508,6 +481,6 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
   }
 }
 
-pub fn open(app: &AppHandle, path: String) {
+pub fn open(app: &AppHandle, path: &str) {
   tauri::api::shell::open(&app.shell_scope(), path, None).unwrap();
 }
