@@ -282,4 +282,4 @@ yarn build
 
 ## License
 
-Apache License
+AGPL-3.0 License
