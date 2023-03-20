@@ -80,6 +80,8 @@ sudo xattr -r -d com.apple.quarantine /YOUR_PATH/ChatGPT.app
 ### Linux
 
 - [ChatGPT_0.12.0_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_linux_x86_64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
+  - sudo dpkg -i Downloads/ChatGPT_0.12.0_linux_x86_64.deb
+  - sudo apt-get install -f
 - [ChatGPT_0.12.0_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_linux_x86_64.AppImage.tar.gz): Works reliably, you can try it if `.deb` fails to run
 
 <!-- tr-download-end -->
