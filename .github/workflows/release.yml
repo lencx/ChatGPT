@@ -20,7 +20,7 @@ jobs:
             os: macos-latest
             arch: x86_64
             target: x86_64-apple-darwin
-          - buid: macos
+          - build: macos
             os: macos-latest
             arch: aarch64
             target: aarch64-apple-darwin
