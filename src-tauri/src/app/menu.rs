@@ -464,7 +464,7 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
       }
 
       if let Some(tray_win) = handle.get_window("tray") {
-        tray_win.move_window(Position::TrayFixedCenter).unwrap();
+        tray_win.move_window(Position::TrayCenter).unwrap();
 
         if tray_win.is_visible().unwrap() {
           tray_win.hide().unwrap();
