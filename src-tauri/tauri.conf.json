@@ -15,6 +15,9 @@
       "globalShortcut": {
         "all": true
       },
+      "shell": {
+        "all": true
+      },
       "fs": {
         "all": false,
         "readFile": true,
@@ -25,7 +28,8 @@
         "removeFile": true,
         "removeDir": true,
         "scope": [
-          "$HOME/.chatgpt/**"
+          "$HOME/.chatgpt/**",
+          "$DOWNLOAD/**"
         ]
       },
       "path": {

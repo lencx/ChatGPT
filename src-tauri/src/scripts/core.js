@@ -176,6 +176,13 @@ function coreZoom() {
   window.__zoomIn = zoomIn;
   window.__zoomOut = zoomOut;
   window.__zoom0 = zoom0;
+
+  window.__clearCache = () => {
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    window.applicationCache && window.applicationCache.update();
+    window.location.reload();
+  }
 }
 
 if (

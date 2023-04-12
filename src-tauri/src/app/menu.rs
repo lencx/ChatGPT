@@ -72,6 +72,12 @@ pub fn init() -> Menu {
   } else {
     system_tray
   };
+  let hide_dock_icon = CustomMenuItem::new("hide_dock_icon", "Hide Dock Icon");
+  let hide_dock_icon_menu = if app_conf.tray {
+    hide_dock_icon
+  } else {
+    hide_dock_icon.disabled()
+  };
 
   let auto_update = app_conf.get_auto_update();
   let preferences_menu = Submenu::new(
@@ -85,7 +91,7 @@ pub fn init() -> Menu {
       #[cfg(target_os = "macos")]
       titlebar_menu.into(),
       #[cfg(target_os = "macos")]
-      CustomMenuItem::new("hide_dock_icon", "Hide Dock Icon").into(),
+      hide_dock_icon_menu.into(),
       system_tray_menu.into(),
       CustomMenuItem::new("inject_script", "Inject Script")
         .accelerator("CmdOrCtrl+J")
@@ -134,6 +140,7 @@ pub fn init() -> Menu {
       popup_search_menu.into(),
       CustomMenuItem::new("sync_prompts", "Sync Prompts").into(),
       MenuItem::Separator.into(),
+      CustomMenuItem::new("clear_cache", "Clear Cache").into(),
       CustomMenuItem::new("go_conf", "Go to Config")
         .accelerator("CmdOrCtrl+Shift+G")
         .into(),
@@ -236,6 +243,20 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     "inject_script" => open(&app, &script_path),
     "go_conf" => utils::open_file(utils::app_root()),
     "clear_conf" => utils::clear_conf(&app),
+    "clear_cache" => {
+      let main_win = app.get_window("core");
+      let tray_win = app.get_window("tray");
+      if let Some(main) = main_win {
+        main
+          .eval("window.__clearCache && window.__clearCache()")
+          .unwrap();
+      }
+      if let Some(tray) = tray_win {
+        tray
+          .eval("window.__clearCache && window.__clearCache()")
+          .unwrap();
+      }
+    }
     "app_website" => window::cmd::wa_window(
       app,
       "app_website".into(),
