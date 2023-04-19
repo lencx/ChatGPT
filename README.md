@@ -4,12 +4,15 @@
   <p align="center">ChatGPT Desktop Application (Mac, Windows and Linux)</p>
 </p>
 
-[![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](./README.md)
-[![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](./README-ZH_CN.md)\
 ![visitor](https://visitor-badge.glitch.me/badge?page_id=lencx.chatgpt)
 [![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
 [![chat](https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord)](https://discord.gg/aPhCRf4zZr)
 [![lencx](https://img.shields.io/badge/follow-lencx__-blue?style=flat&logo=Twitter)](https://twitter.com/lencx_)
+
+# Readme translations:
+<kbd>[<img title="English" alt="English" src="https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/gb.svg" width="22">](./README.md)</kbd>
+<kbd>[<img title="Russian" alt="Russian" src="https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/ru.svg" width="22">](docs/README-RU.md)</kbd>
+<kbd>[<img title="Simplified Chinese" alt="Simplified Chinese" src="https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/cn.svg" width="22">](docs/README-ZH_CN.md)</kbd>
 
 <!-- [![lencx](https://img.shields.io/twitter/follow/lencx_.svg?style=social)](https://twitter.com/lencx_) -->
 
@@ -129,4 +132,4 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 
 ## License
 
-AGPL-3.0 License
+[AGPL-3.0 License](./LICENSE)
