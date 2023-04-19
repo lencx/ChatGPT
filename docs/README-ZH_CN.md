@@ -1,11 +1,11 @@
 <p align="center">
-  <img width="180" src="./public/logo.png" alt="ChatGPT">
+  <img width="180" src="../public/logo.png" alt="ChatGPT">
   <h1 align="center">ChatGPT</h1>
   <p align="center">ChatGPT 桌面应用（Mac, Windows and Linux）</p>
 </p>
 
-[![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](./README.md)
-[![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](./README-ZH_CN.md)\
+[![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](../README.md)
+[![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](README-ZH_CN.md)\
 [![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
 [![chat](https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord)](https://discord.gg/aPhCRf4zZr)
 [![lencx](https://img.shields.io/badge/follow-lencx__-blue?style=flat&logo=Twitter)](https://twitter.com/lencx_)
@@ -25,7 +25,7 @@
 
 ## 📦 安装
 
-- [📝 更新日志](./UPDATE_LOG.md)
+- [📝 更新日志](../UPDATE_LOG.md)
 - [🕒 历史版本...](https://github.com/lencx/ChatGPT/releases)
 
 <!-- tr-download-start -->
@@ -83,15 +83,15 @@ sudo xattr -r -d com.apple.quarantine /YOUR_PATH/ChatGPT.app
 
 你可以从 [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) 来寻找有趣的功能来导入到应用。也可以使用 `Sync Prompts`，来一键同步所有，如果你不想让某些提示出现在你的斜杠命令，你可以禁用它们。
 
-![chatgpt cmd](./assets/chatgpt-cmd.png)
-![chatgpt sync prompts](./assets/chatgpt-sync-prompts.png)
+![chatgpt cmd](../assets/chatgpt-cmd.png)
+![chatgpt sync prompts](../assets/chatgpt-sync-prompts.png)
 
 <!-- 数据导入完成后，可以重新启动应用来使配置生效（`Menu -> Preferences -> Restart ChatGPT`）。 -->
 
 在 ChatGPT 文本输入区域，键入 `/` 开头的字符，则会弹出指令提示，按下空格键，它会默认将命令关联的文本填充到输入区域（注意：如果包含多个指令提示，它只会选择第一个作为填充，你可以持续输入，直到第一个提示命令为你想要时，再按下空格键。或者使用鼠标来点击多条指令中的某一个）。填充完成后，你只需要按下回车键即可。斜杠命令下，使用 TAB 键修改 `{q}` 标签内容（仅支持单个修改 [#54](https://github.com/lencx/ChatGPT/issues/54)）。使用键盘 `⇧` 和 `⇩`（上下键）来选择斜杠指令。
 
-![chatgpt](assets/chatgpt.gif)
-![chatgpt-cmd](assets/chatgpt-cmd.gif)
+![chatgpt](../assets/chatgpt.gif)
+![chatgpt-cmd](../assets/chatgpt-cmd.gif)
 
 ## ✨ 功能概览
 
@@ -184,9 +184,9 @@ sudo xattr -r -d com.apple.quarantine /YOUR_PATH/ChatGPT.app
 
 ## 👀 预览
 
-<img width="320" src="./assets/install.png" alt="install"> <img width="320" src="./assets/chatgpt-control-center-general.png" alt="control center">
-<img width="320" src="./assets/chatgpt-export.png" alt="export"> <img width="320" src="./assets/chatgpt-dalle2-tray.png" alt="dalle2 tray">
-<img width="320" src="./assets/auto-update.png" alt="auto update">
+<img width="320" src="../assets/install.png" alt="install"> <img width="320" src="../assets/chatgpt-control-center-general.png" alt="control center">
+<img width="320" src="../assets/chatgpt-export.png" alt="export"> <img width="320" src="../assets/chatgpt-dalle2-tray.png" alt="dalle2 tray">
+<img width="320" src="../assets/auto-update.png" alt="auto update">
 
 ## ❓ 常见问题
 
