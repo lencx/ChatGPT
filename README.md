@@ -129,4 +129,4 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 
 ## License
 
-AGPL-3.0 License
+AGPL-3.0 Licenseee
