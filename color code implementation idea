@@ -1,0 +1,39 @@
+use std::io::{Write, stdout};
+use termion::{color, style};
+
+fn main() {
+    // Example text to color code
+    let text = "Hello world! I'm feeling happy today.";
+
+    // Define color codes for different emotions
+    let happy_color = color::Yellow;
+    let sad_color = color::Blue;
+    let angry_color = color::Red;
+
+    // Detect emotional tone of text and assign color code
+    let tone = detect_emotional_tone(&text);
+    let color_code = match tone {
+        Emotion::Happy => happy_color,
+        Emotion::Sad => sad_color,
+        Emotion::Angry => angry_color,
+        _ => color::Reset, // default color if tone is not detected
+    };
+
+    // Output colored text
+    let mut stdout = stdout();
+    write!(stdout, "{}{}{}{}", color_code, text, style::Reset, "\n").unwrap();
+}
+
+// Example function to detect emotional tone of text
+fn detect_emotional_tone(text: &str) -> Emotion {
+    // TODO: implement emotion detection algorithm
+    Emotion::Happy
+}
+
+// Enum to represent different emotional tones
+enum Emotion {
+    Happy,
+    Sad,
+    Angry,
+    Neutral,
+}
