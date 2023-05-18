@@ -1,0 +1,41 @@
+{
+  "name": "ChatGPT Script",
+  "author": "lencx",
+  "scripts": [
+    {
+      "name": "core.js",
+      "version": "0.1.0",
+      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/chat.js"
+    },
+    {
+      "name": "cmd.js",
+      "version": "0.1.0",
+      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/cmd.js"
+    },
+    {
+      "name": "core.js",
+      "version": "0.1.0",
+      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/core.js"
+    },
+    {
+      "name": "dalle2.js",
+      "version": "0.1.0",
+      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/dalle2.js"
+    },
+    {
+      "name": "export.js",
+      "version": "0.1.0",
+      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/export.js"
+    },
+    {
+      "name": "markdown.export.js",
+      "version": "0.1.0",
+      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/markdown.export.js"
+    },
+    {
+      "name": "popup.core.js",
+      "version": "0.1.0",
+      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/popup.core.js"
+    }
+  ]
+}
