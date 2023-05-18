@@ -67,7 +67,7 @@ impl AppConf {
     Self {
       titlebar: !cfg!(target_os = "macos"),
       hide_dock_icon: false,
-      save_window_state: false,
+      save_window_state: true,
       theme: "light".into(),
       auto_update: "prompt".into(),
       #[cfg(target_os = "macos")]

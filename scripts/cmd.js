@@ -1,4 +1,8 @@
-// *** Core Script - CMD ***
+/**
+ * @name cmd.js
+ * @version 0.1.0
+ * @url https://github.com/lencx/ChatGPT/tree/main/scripts/cmd.js
+ */
 
 function init() {
   const styleDom = document.createElement('style');
@@ -105,7 +109,7 @@ function init() {
     clearInterval(window.formInterval);
   }
   window.formInterval = setInterval(() => {
-    const form = document.querySelector("form textarea");
+    const form = document.querySelector('form textarea');
     if (!form) return;
     clearInterval(window.formInterval);
     cmdTip();
@@ -117,11 +121,11 @@ function init() {
         }
         if (mutation.target.getAttribute('class') === 'chat-model-cmd-list') {
           // The `chatgpt prompt` fill can be done by clicking on the event.
-          const searchDom = document.querySelector("form .chat-model-cmd-list>div");
+          const searchDom = document.querySelector('form .chat-model-cmd-list>div');
           const searchInput = document.querySelector('form textarea');
           if (!searchDom) return;
           searchDom.addEventListener('click', (event) => {
-            const item = event.target.closest("div");
+            const item = event.target.closest('div');
             if (item) {
               const val = decodeURIComponent(item.getAttribute('data-prompt'));
               searchInput.value = val;
@@ -140,7 +144,7 @@ function init() {
 
 async function cmdTip() {
   initDom();
-  const chatModelJson = await invoke('get_chat_model_cmd') || {};
+  const chatModelJson = (await invoke('get_chat_model_cmd')) || {};
   const data = chatModelJson.data;
   if (data.length <= 0) return;
 
@@ -156,7 +160,12 @@ async function cmdTip() {
       modelDom.style.bottom = '54px';
     }
 
-    const itemDom = (v) => `<div class="cmd-item" title="${v.prompt}" data-cmd="${v.cmd}" data-prompt="${encodeURIComponent(v.prompt)}"><b title="${v.cmd}">/${v.cmd}</b><i>${v.act}</i></div>`;
+    const itemDom = (v) =>
+      `<div class="cmd-item" title="${v.prompt}" data-cmd="${
+        v.cmd
+      }" data-prompt="${encodeURIComponent(v.prompt)}"><b title="${v.cmd}">/${v.cmd}</b><i>${
+        v.act
+      }</i></div>`;
     const renderList = (v) => {
       initDom();
       modelDom.innerHTML = `<div>${v.map(itemDom).join('')}</div>`;
@@ -168,16 +177,23 @@ async function cmdTip() {
     };
     const setPrompt = (v = '') => {
       if (v.trim()) {
-        window.__CHAT_MODEL_CMD_PROMPT__ = window.__CHAT_MODEL_CMD_PROMPT__?.replace(/\{([^{}]*)\}/, `{${v.trim()}}`);
+        window.__CHAT_MODEL_CMD_PROMPT__ = window.__CHAT_MODEL_CMD_PROMPT__?.replace(
+          /\{([^{}]*)\}/,
+          `{${v.trim()}}`,
+        );
       }
-    }
+    };
     const searchInput = document.querySelector('form textarea');
 
     // Enter a command starting with `/` and press a space to automatically fill `chatgpt prompt`.
     // If more than one command appears in the search results, the first one will be used by default.
     function cmdKeydown(event) {
       if (!window.__CHAT_MODEL_CMD_PROMPT__) {
-        if (!event.shiftKey && event.keyCode === 13 && __TAURI_METADATA__.__currentWindow.label === 'tray') {
+        if (
+          !event.shiftKey &&
+          event.keyCode === 13 &&
+          __TAURI_METADATA__.__currentWindow.label === 'tray'
+        ) {
           const btn = document.querySelector('form button');
           if (btn) btn.click();
           event.preventDefault();
@@ -186,20 +202,26 @@ async function cmdTip() {
       }
 
       // ------------------ Keyboard scrolling (ArrowUp | ArrowDown) --------------------------
-      if (event.keyCode === 38 &&  window.__cmd_index > 0) { // ArrowUp
+      if (event.keyCode === 38 && window.__cmd_index > 0) {
+        // ArrowUp
         window.__cmd_list[window.__cmd_index].classList.remove('selected');
         window.__cmd_index = window.__cmd_index - 1;
         window.__cmd_list[window.__cmd_index].classList.add('selected');
-        window.__CHAT_MODEL_CMD_PROMPT__ = decodeURIComponent(window.__cmd_list[window.__cmd_index].getAttribute('data-prompt'));
+        window.__CHAT_MODEL_CMD_PROMPT__ = decodeURIComponent(
+          window.__cmd_list[window.__cmd_index].getAttribute('data-prompt'),
+        );
         searchInput.value = `/${window.__cmd_list[window.__cmd_index].getAttribute('data-cmd')}`;
         event.preventDefault();
       }
 
-      if (event.keyCode === 40 && window.__cmd_index < window.__cmd_list.length - 1) { // ArrowDown
+      if (event.keyCode === 40 && window.__cmd_index < window.__cmd_list.length - 1) {
+        // ArrowDown
         window.__cmd_list[window.__cmd_index].classList.remove('selected');
         window.__cmd_index = window.__cmd_index + 1;
         window.__cmd_list[window.__cmd_index].classList.add('selected');
-        window.__CHAT_MODEL_CMD_PROMPT__ = decodeURIComponent(window.__cmd_list[window.__cmd_index].getAttribute('data-prompt'));
+        window.__CHAT_MODEL_CMD_PROMPT__ = decodeURIComponent(
+          window.__cmd_list[window.__cmd_index].getAttribute('data-prompt'),
+        );
         searchInput.value = `/${window.__cmd_list[window.__cmd_index].getAttribute('data-cmd')}`;
         event.preventDefault();
       }
@@ -228,7 +250,8 @@ async function cmdTip() {
         event.preventDefault();
       }
 
-      if (window.__CHAT_MODEL_STATUS__ === 1 && event.keyCode === 9) { // TAB
+      if (window.__CHAT_MODEL_STATUS__ === 1 && event.keyCode === 9) {
+        // TAB
         const data = searchInput.value.split('|->');
         if (data[1]?.trim()) {
           setPrompt(data[1]);
@@ -238,7 +261,8 @@ async function cmdTip() {
       }
 
       // input text
-      if (window.__CHAT_MODEL_STATUS__ === 2 && event.keyCode === 9) { // TAB
+      if (window.__CHAT_MODEL_STATUS__ === 2 && event.keyCode === 9) {
+        // TAB
         searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
         modelDom.innerHTML = '';
         delete window.__CHAT_MODEL_STATUS__;
@@ -253,7 +277,8 @@ async function cmdTip() {
       }
 
       // ------------------ send --------------------------------------------------------------------
-      if (event.keyCode === 13 && window.__CHAT_MODEL_CMD_PROMPT__) { // Enter
+      if (event.keyCode === 13 && window.__CHAT_MODEL_CMD_PROMPT__) {
+        // Enter
         const data = searchInput.value.split('|->');
         setPrompt(data[1]);
 
@@ -286,7 +311,7 @@ async function cmdTip() {
         return;
       }
 
-      const result = data.filter(i => new RegExp(query.substring(1)).test(i.cmd));
+      const result = data.filter((i) => new RegExp(query.substring(1)).test(i.cmd));
       if (result.length > 0) {
         renderList(result);
       } else {
@@ -310,11 +335,8 @@ function initDom() {
   delete window.__cmd_index;
 }
 
-if (
-  document.readyState === "complete" ||
-  document.readyState === "interactive"
-) {
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
   init();
 } else {
-  document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener('DOMContentLoaded', init);
 }

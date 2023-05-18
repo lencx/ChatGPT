@@ -1,7 +1,7 @@
 import { Form, Switch, Input, InputNumber, Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
-import SwitchOrigin from '@/components/SwitchOrigin';
+// import SwitchOrigin from '@/components/SwitchOrigin';
 import { DISABLE_AUTO_COMPLETE } from '@/utils';
 
 const PopupSearchLabel = () => {
@@ -56,7 +56,7 @@ export default function MainWindow() {
       <Form.Item label="Default Height" name="main_height">
         <InputNumber />
       </Form.Item>
-      <SwitchOrigin name="main" />
+      {/* <SwitchOrigin name="main" /> */}
       <Form.Item label="User Agent (Main)" name="ua_window">
         <Input.TextArea
           autoSize={{ minRows: 4, maxRows: 4 }}

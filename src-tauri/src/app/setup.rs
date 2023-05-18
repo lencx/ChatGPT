@@ -52,13 +52,8 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
   } else {
     let app = app.handle();
     tauri::async_runtime::spawn(async move {
-      let link = if app_conf2.main_dashboard {
-        "index.html"
-      } else {
-        &url
-      };
-      info!("main_window: {}", link);
-      let mut main_win = WindowBuilder::new(&app, "core", WindowUrl::App(link.into()))
+      let url2 = &url;
+      let mut main_win = WindowBuilder::new(&app, "core", WindowUrl::App(url2.into()))
         .title("ChatGPT")
         .resizable(true)
         .fullscreen(false)
@@ -66,7 +61,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         .theme(Some(theme))
         .always_on_top(app_conf2.stay_on_top)
         .initialization_script(&utils::user_script())
-        .initialization_script(include_str!("../scripts/core.js"))
+        .initialization_script(include_str!("../../../scripts/core.js"))
         .user_agent(&app_conf2.ua_window);
 
       #[cfg(target_os = "macos")]
@@ -76,7 +71,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
           .hidden_title(true);
       }
 
-      if url == "https://chat.openai.com" && !app_conf2.main_dashboard {
+      if url == "https://chat.openai.com" {
         main_win = main_win
           .initialization_script(include_str!("../vendors/floating-ui-core.js"))
           .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
@@ -84,11 +79,11 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
           .initialization_script(include_str!("../vendors/jspdf.js"))
           .initialization_script(include_str!("../vendors/turndown.js"))
           .initialization_script(include_str!("../vendors/turndown-plugin-gfm.js"))
-          .initialization_script(include_str!("../scripts/popup.core.js"))
-          .initialization_script(include_str!("../scripts/export.js"))
-          .initialization_script(include_str!("../scripts/markdown.export.js"))
-          .initialization_script(include_str!("../scripts/cmd.js"))
-          .initialization_script(include_str!("../scripts/chat.js"))
+          .initialization_script(include_str!("../../../scripts/popup.core.js"))
+          .initialization_script(include_str!("../../../scripts/export.js"))
+          .initialization_script(include_str!("../../../scripts/markdown.export.js"))
+          .initialization_script(include_str!("../../../scripts/cmd.js"))
+          .initialization_script(include_str!("../../../scripts/chat.js"))
       }
 
       main_win.build().unwrap();

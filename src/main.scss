@@ -73,6 +73,11 @@ body,
   }
 }
 
+.action-btn,
+.file-path {
+  cursor: pointer;
+}
+
 .chat-file-path {
   font-size: 12px;
   font-weight: 500;

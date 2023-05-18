@@ -87,7 +87,24 @@
       }
     },
     "security": {
-      "csp": null
+      "csp": null,
+      "dangerousRemoteDomainIpcAccess": [
+        {
+          "windows": ["core", "main", "tray"],
+          "domain": "chat.openai.com",
+          "enableTauriAPI": true
+        },
+        {
+          "windows": ["core", "main"],
+          "domain": "labs.openai.com",
+          "enableTauriAPI": true
+        },
+        {
+          "windows": ["core", "main", "tray"],
+          "domain": "openai.com",
+          "enableTauriAPI": true
+        }
+      ]
     },
     "updater": {
       "active": true,

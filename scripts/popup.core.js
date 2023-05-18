@@ -1,7 +1,11 @@
-// *** Core Script - DALL·E 2 Core ***
+/**
+ * @name popup.core.js
+ * @version 0.1.0
+ * @url https://github.com/lencx/ChatGPT/tree/main/scripts/popup.core.js
+ */
 
 async function init() {
-  const chatConf = await invoke('get_app_conf') || {};
+  const chatConf = (await invoke('get_app_conf')) || {};
   if (!chatConf.popup_search) return;
   if (!window.FloatingUIDOM) return;
 
@@ -33,13 +37,15 @@ async function init() {
   document.body.addEventListener('mousedown', async (e) => {
     selectionMenu.style.display = 'none';
     if (e.target.id === 'chagpt-selection-menu') {
-      await invoke('dalle2_search_window', { query: encodeURIComponent(window.__DALLE2_CONTENT__) });
+      await invoke('dalle2_search_window', {
+        query: encodeURIComponent(window.__DALLE2_CONTENT__),
+      });
     } else {
       delete window.__DALLE2_CONTENT__;
     }
   });
 
-  document.body.addEventListener("mouseup", async (e) => {
+  document.body.addEventListener('mouseup', async (e) => {
     selectionMenu.style.display = 'none';
     const selection = window.getSelection();
     window.__DALLE2_CONTENT__ = selection.toString().trim();
@@ -59,12 +65,8 @@ async function init() {
       selectionMenu.style.display = 'block';
       computePosition(rootEl, selectionMenu, {
         placement: 'top',
-        middleware: [
-          flip(),
-          offset(5),
-          shift({ padding: 5 })
-        ]
-      }).then(({x, y}) => {
+        middleware: [flip(), offset(5), shift({ padding: 5 })],
+      }).then(({ x, y }) => {
         Object.assign(selectionMenu.style, {
           left: `${x}px`,
           top: `${y}px`,
@@ -74,11 +76,8 @@ async function init() {
   });
 }
 
-if (
-  document.readyState === "complete" ||
-  document.readyState === "interactive"
-) {
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
   init();
 } else {
-  document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener('DOMContentLoaded', init);
 }

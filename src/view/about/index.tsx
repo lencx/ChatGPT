@@ -69,10 +69,6 @@ const AboutChatGPT = () => {
           src="https://user-images.githubusercontent.com/16164244/207228025-117b5f77-c5d2-48c2-a070-774b7a1596f2.png"
         />
       </p>
-      <img
-        width="250"
-        src="https://user-images.githubusercontent.com/16164244/219439614-d5c3710c-e0b3-4df9-9b3c-c150ba0ba5f1.png"
-      />
     </div>
   );
 };

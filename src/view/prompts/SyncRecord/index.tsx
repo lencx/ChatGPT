@@ -9,7 +9,7 @@ import useColumns from '@/hooks/useColumns';
 import FilePath from '@/components/FilePath';
 import { useCacheModel } from '@/hooks/useChatModel';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
-import { getPath } from '@/view/model/SyncCustom/config';
+import { getPath } from '@/view/prompts/SyncCustom/config';
 import { fmtDate, chatRoot } from '@/utils';
 import { syncColumns } from './config';
 import useInit from '@/hooks/useInit';

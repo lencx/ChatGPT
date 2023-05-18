@@ -55,11 +55,11 @@ async fn main() {
     .invoke_handler(tauri::generate_handler![
       cmd::drag_window,
       cmd::fullscreen,
-      cmd::download,
       cmd::save_file,
       cmd::open_link,
       cmd::run_check_update,
       cmd::open_file,
+      cmd::download_file,
       cmd::get_data,
       gpt::get_chat_model_cmd,
       gpt::parse_prompt,

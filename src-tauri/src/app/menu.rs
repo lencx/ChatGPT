@@ -140,7 +140,6 @@ pub fn init() -> Menu {
       popup_search_menu.into(),
       CustomMenuItem::new("sync_prompts", "Sync Prompts").into(),
       MenuItem::Separator.into(),
-      CustomMenuItem::new("clear_cache", "Clear Cache").into(),
       CustomMenuItem::new("go_conf", "Go to Config")
         .accelerator("CmdOrCtrl+Shift+G")
         .into(),
@@ -150,7 +149,7 @@ pub fn init() -> Menu {
       CustomMenuItem::new("clear_conf", "Clear Config").into(),
       MenuItem::Separator.into(),
       CustomMenuItem::new("nofwl", "NoFWL Desktop Application").into(),
-      CustomMenuItem::new("buy_coffee", "Buy lencx a coffee").into(),
+      CustomMenuItem::new("sponsor", "Sponsor Author").into(),
     ]),
   );
 
@@ -243,20 +242,6 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     "inject_script" => open(&app, &script_path),
     "go_conf" => utils::open_file(utils::app_root()),
     "clear_conf" => utils::clear_conf(&app),
-    "clear_cache" => {
-      let main_win = app.get_window("core");
-      let tray_win = app.get_window("tray");
-      if let Some(main) = main_win {
-        main
-          .eval("window.__clearCache && window.__clearCache()")
-          .unwrap();
-      }
-      if let Some(tray) = tray_win {
-        tray
-          .eval("window.__clearCache && window.__clearCache()")
-          .unwrap();
-      }
-    }
     "app_website" => window::cmd::wa_window(
       app,
       "app_website".into(),
@@ -265,7 +250,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
       None,
     ),
     "nofwl" => open(&app, conf::NOFWL_APP),
-    "buy_coffee" => open(&app, conf::BUY_COFFEE),
+    "sponsor" => window::sponsor_window(app),
     "popup_search" => {
       let app_conf = AppConf::read();
       let popup_search = !app_conf.popup_search;

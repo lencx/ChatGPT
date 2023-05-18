@@ -1,27 +1,32 @@
-// *** Core Script - Export ***
+/**
+ * @name export.js
+ * @version 0.1.0
+ * @url https://github.com/lencx/ChatGPT/tree/main/scripts/export.js
+ */
 
 async function init() {
   if (window.location.pathname === '/auth/login') return;
-  const buttonOuterHTMLFallback = `<button class="btn flex justify-center gap-2 btn-neutral" id="download-png-button">Try Again</button>`;
+  const buttonOuterHTMLFallback = `<button class="btn flex justify-center gap-2 btn-neutral">Try Again</button>`;
   removeButtons();
   if (window.buttonsInterval) {
     clearInterval(window.buttonsInterval);
   }
   if (window.innerWidth < 767) return;
 
-  const chatConf = await invoke('get_app_conf') || {};
+  const chatConf = (await invoke('get_app_conf')) || {};
   window.buttonsInterval = setInterval(() => {
-    const actionsArea = document.querySelector("form>div>div");
-    if (!actionsArea) {
+    const actionsArea = document.querySelector('form>div>div>div');
+    const hasBtn = document.querySelector('form>div>div>div button');
+    if (!actionsArea || !hasBtn) {
       return;
     }
 
     if (shouldAddButtons(actionsArea)) {
-      let TryAgainButton = actionsArea.querySelector("button");
+      let TryAgainButton = actionsArea.querySelector('button');
       if (!TryAgainButton) {
-        const parentNode = document.createElement("div");
+        const parentNode = document.createElement('div');
         parentNode.innerHTML = buttonOuterHTMLFallback;
-        TryAgainButton = parentNode.querySelector("button");
+        TryAgainButton = parentNode.querySelector('button');
       }
       addActionsButtons(actionsArea, TryAgainButton, chatConf);
     } else if (shouldRemoveButtons()) {
@@ -30,12 +35,12 @@ async function init() {
   }, 1000);
 
   const Format = {
-    PNG: "png",
-    PDF: "pdf",
+    PNG: 'png',
+    PDF: 'pdf',
   };
 
   function shouldRemoveButtons() {
-    if (document.querySelector("form .text-2xl")) {
+    if (document.querySelector('form .text-2xl')) {
       return true;
     }
     return false;
@@ -43,7 +48,7 @@ async function init() {
 
   function shouldAddButtons(actionsArea) {
     // first, check if there's a "Try Again" button and no other buttons
-    const buttons = actionsArea.querySelectorAll("button");
+    const buttons = actionsArea.querySelectorAll('button');
 
     const hasTryAgainButton = Array.from(buttons).some((button) => {
       return !/download-/.test(button.id);
@@ -51,11 +56,14 @@ async function init() {
 
     const stopBtn = buttons?.[0]?.innerText;
 
-    if (/Stop generating/ig.test(stopBtn)) {
+    if (/Stop generating/gi.test(stopBtn)) {
       return false;
     }
 
-    if (buttons.length === 2 && (/Regenerate response/ig.test(stopBtn) || buttons[1].innerText === '')) {
+    if (
+      buttons.length === 2 &&
+      (/Regenerate response/gi.test(stopBtn) || buttons[1].innerText === '')
+    ) {
       return true;
     }
 
@@ -64,14 +72,14 @@ async function init() {
     }
 
     // otherwise, check if open screen is not visible
-    const isOpenScreen = document.querySelector("h1.text-4xl");
+    const isOpenScreen = document.querySelector('h1.text-4xl');
     if (isOpenScreen) {
       return false;
     }
 
     // check if the conversation is finished and there are no share buttons
-    const finishedConversation = document.querySelector("form button>svg");
-    const hasShareButtons = actionsArea.querySelectorAll("button[share-ext]");
+    const finishedConversation = document.querySelector('form button>svg');
+    const hasShareButtons = actionsArea.querySelectorAll('button[share-ext]');
     if (finishedConversation && !hasShareButtons.length) {
       return true;
     }
@@ -80,10 +88,10 @@ async function init() {
   }
 
   function removeButtons() {
-    const downloadPngButton = document.getElementById("download-png-button");
-    const downloadPdfButton = document.getElementById("download-pdf-button");
-    const downloadMdButton = document.getElementById("download-markdown-button");
-    const refreshButton = document.getElementById("refresh-page-button");
+    const downloadPngButton = document.getElementById('download-png-button');
+    const downloadPdfButton = document.getElementById('download-pdf-button');
+    const downloadMdButton = document.getElementById('download-markdown-button');
+    const refreshButton = document.getElementById('refresh-page-button');
     if (downloadPngButton) {
       downloadPngButton.remove();
     }
@@ -101,9 +109,9 @@ async function init() {
   function addActionsButtons(actionsArea, TryAgainButton) {
     // Export markdown
     const exportMd = TryAgainButton.cloneNode(true);
-    exportMd.id = "download-markdown-button";
-    exportMd.setAttribute("share-ext", "true");
-    exportMd.title = "Export Markdown";
+    exportMd.id = 'download-markdown-button';
+    exportMd.setAttribute('share-ext', 'true');
+    exportMd.title = 'Export Markdown';
 
     exportMd.innerHTML = setIcon('md');
     exportMd.onclick = () => {
@@ -113,9 +121,9 @@ async function init() {
 
     // Generate PNG
     const downloadPngButton = TryAgainButton.cloneNode(true);
-    downloadPngButton.id = "download-png-button";
-    downloadPngButton.setAttribute("share-ext", "true");
-    downloadPngButton.title = "Generate PNG";
+    downloadPngButton.id = 'download-png-button';
+    downloadPngButton.setAttribute('share-ext', 'true');
+    downloadPngButton.title = 'Generate PNG';
     downloadPngButton.innerHTML = setIcon('png');
     downloadPngButton.onclick = () => {
       downloadThread();
@@ -124,9 +132,9 @@ async function init() {
 
     // Generate PDF
     const downloadPdfButton = TryAgainButton.cloneNode(true);
-    downloadPdfButton.id = "download-pdf-button";
-    downloadPdfButton.setAttribute("share-ext", "true");
-    downloadPdfButton.title = "Download PDF";
+    downloadPdfButton.id = 'download-pdf-button';
+    downloadPdfButton.setAttribute('share-ext', 'true');
+    downloadPdfButton.title = 'Download PDF';
     downloadPdfButton.innerHTML = setIcon('pdf');
     downloadPdfButton.onclick = () => {
       downloadThread({ as: Format.PDF });
@@ -135,8 +143,8 @@ async function init() {
 
     // Refresh
     const refreshButton = TryAgainButton.cloneNode(true);
-    refreshButton.id = "refresh-page-button";
-    refreshButton.title = "Refresh the Page";
+    refreshButton.id = 'refresh-page-button';
+    refreshButton.title = 'Refresh the Page';
     refreshButton.innerHTML = setIcon('refresh');
     refreshButton.onclick = () => {
       window.location.reload();
@@ -145,13 +153,15 @@ async function init() {
   }
 
   async function exportMarkdown() {
-    const content = Array.from(document.querySelectorAll('main .items-center>div')).map(i => {
-      let j = i.cloneNode(true);
-      if (/dark\:bg-gray-800/.test(i.getAttribute('class'))) {
-        j.innerHTML = `<blockquote>${i.innerHTML}</blockquote>`;
-      }
-      return j.innerHTML;
-    }).join('');
+    const content = Array.from(document.querySelectorAll('main .items-center>div'))
+      .map((i) => {
+        let j = i.cloneNode(true);
+        if (/dark\:bg-gray-800/.test(i.getAttribute('class'))) {
+          j.innerHTML = `<blockquote>${i.innerHTML}</blockquote>`;
+        }
+        return j.innerHTML;
+      })
+      .join('');
     const data = ExportMD.turndown(content);
     const { id, filename } = getName();
     await invoke('save_file', { name: `notes/${id}.md`, content: data });
@@ -170,7 +180,7 @@ async function init() {
     }).then(async function (canvas) {
       elements.restoreLocation();
       window.devicePixelRatio = pixelRatio;
-      const imgData = canvas.toDataURL("image/png");
+      const imgData = canvas.toDataURL('image/png');
       requestAnimationFrame(() => {
         if (as === Format.PDF) {
           return handlePdf(imgData, canvas, pixelRatio);
@@ -182,36 +192,26 @@ async function init() {
   }
 
   async function handleImg(imgData) {
-    const binaryData = atob(imgData.split("base64,")[1]);
+    const binaryData = atob(imgData.split('base64,')[1]);
     const data = [];
     for (let i = 0; i < binaryData.length; i++) {
       data.push(binaryData.charCodeAt(i));
     }
-    const { pathname, id, filename } = getName();
-    await invoke('download', { name: `download/img/${id}.png`, blob: data });
-    await invoke('download_list', { pathname, filename, id, dir: 'download' });
+    const name = `ChatGPT_${formatDateTime()}.png`;
+    await invoke('download_file', { name: name, blob: data });
   }
 
   async function handlePdf(imgData, canvas, pixelRatio) {
     const { jsPDF } = window.jspdf;
-    const orientation = canvas.width > canvas.height ? "l" : "p";
-    var pdf = new jsPDF(orientation, "pt", [
-      canvas.width / pixelRatio,
-      canvas.height / pixelRatio,
-    ]);
+    const orientation = canvas.width > canvas.height ? 'l' : 'p';
+    var pdf = new jsPDF(orientation, 'pt', [canvas.width / pixelRatio, canvas.height / pixelRatio]);
     var pdfWidth = pdf.internal.pageSize.getWidth();
     var pdfHeight = pdf.internal.pageSize.getHeight();
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight, '', 'FAST');
-    const { pathname, id, filename } = getName();
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
     const data = pdf.__private__.getArrayBuffer(pdf.__private__.buildDocument());
-    await invoke('download', { name: `download/pdf/${id}.pdf`, blob: Array.from(new Uint8Array(data)) });
-    await invoke('download_list', { pathname, filename, id, dir: 'download' });
-  }
 
-  function getName() {
-    const id = window.crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
-    const name = document.querySelector('nav .overflow-y-auto a.hover\\:bg-gray-800')?.innerText?.trim() || '';
-    return { filename: name ? name : id, id, pathname: 'chat.download.json' };
+    const name = `ChatGPT_${formatDateTime()}.pdf`;
+    await invoke('download_file', { name: name, blob: Array.from(new Uint8Array(data)) });
   }
 
   class Elements {
@@ -222,62 +222,62 @@ async function init() {
       // this.threadWrapper = document.querySelector(".cdfdFe");
       this.spacer = document.querySelector("[class*='h-48'].w-full.flex-shrink-0");
       this.thread = document.querySelector(
-        "[class*='react-scroll-to-bottom']>[class*='react-scroll-to-bottom']>div"
+        "[class*='react-scroll-to-bottom']>[class*='react-scroll-to-bottom']>div",
       );
 
       // fix: old chat https://github.com/lencx/ChatGPT/issues/185
       if (!this.thread) {
-        this.thread = document.querySelector("main .overflow-y-auto");
+        this.thread = document.querySelector('main .overflow-y-auto');
       }
 
       // h-full overflow-y-auto
-      this.positionForm = document.querySelector("form").parentNode;
+      this.positionForm = document.querySelector('form').parentNode;
       // this.styledThread = document.querySelector("main");
       // this.threadContent = document.querySelector(".gAnhyd");
-      this.scroller = Array.from(
-        document.querySelectorAll('[class*="react-scroll-to"]')
-      ).filter((el) => el.classList.contains("h-full"))[0];
+      this.scroller = Array.from(document.querySelectorAll('[class*="react-scroll-to"]')).filter(
+        (el) => el.classList.contains('h-full'),
+      )[0];
 
       // fix: old chat
       if (!this.scroller) {
         this.scroller = document.querySelector('main .overflow-y-auto');
       }
 
-      this.hiddens = Array.from(document.querySelectorAll(".overflow-hidden"));
-      this.images = Array.from(document.querySelectorAll("img[srcset]"));
+      this.hiddens = Array.from(document.querySelectorAll('.overflow-hidden'));
+      this.images = Array.from(document.querySelectorAll('img[srcset]'));
     }
     fixLocation() {
       this.hiddens.forEach((el) => {
-        el.classList.remove("overflow-hidden");
+        el.classList.remove('overflow-hidden');
       });
-      this.spacer.style.display = "none";
-      this.thread.style.maxWidth = "960px";
-      this.thread.style.marginInline = "auto";
-      this.positionForm.style.display = "none";
-      this.scroller.classList.remove("h-full");
-      this.scroller.style.minHeight = "100vh";
+      this.spacer.style.display = 'none';
+      this.thread.style.maxWidth = '960px';
+      this.thread.style.marginInline = 'auto';
+      this.positionForm.style.display = 'none';
+      this.scroller.classList.remove('h-full');
+      this.scroller.style.minHeight = '100vh';
       this.images.forEach((img) => {
-        const srcset = img.getAttribute("srcset");
-        img.setAttribute("srcset_old", srcset);
-        img.setAttribute("srcset", "");
+        const srcset = img.getAttribute('srcset');
+        img.setAttribute('srcset_old', srcset);
+        img.setAttribute('srcset', '');
       });
       //Fix to the text shifting down when generating the canvas
-      document.body.style.lineHeight = "0.5";
+      document.body.style.lineHeight = '0.5';
     }
     restoreLocation() {
       this.hiddens.forEach((el) => {
-        el.classList.add("overflow-hidden");
+        el.classList.add('overflow-hidden');
       });
       this.spacer.style.display = null;
       this.thread.style.maxWidth = null;
       this.thread.style.marginInline = null;
       this.positionForm.style.display = null;
-      this.scroller.classList.add("h-full");
+      this.scroller.classList.add('h-full');
       this.scroller.style.minHeight = null;
       this.images.forEach((img) => {
-        const srcset = img.getAttribute("srcset_old");
-        img.setAttribute("srcset", srcset);
-        img.setAttribute("srcset_old", "");
+        const srcset = img.getAttribute('srcset_old');
+        img.setAttribute('srcset', srcset);
+        img.setAttribute('srcset_old', '');
       });
       document.body.style.lineHeight = null;
     }
@@ -292,15 +292,31 @@ async function init() {
       refresh: `<svg class="chatappico refresh" viewBox="0 0 1024 1024"><path d="M512 63.5C264.3 63.5 63.5 264.3 63.5 512S264.3 960.5 512 960.5 960.5 759.7 960.5 512 759.7 63.5 512 63.5zM198 509.6h87.6c0-136.3 102.3-243.4 233.7-238.5 43.8 0 82.8 14.6 121.7 34.1L597.2 349c-24.4-9.8-53.6-19.5-82.8-19.5-92.5 0-170.4 77.9-170.4 180.1h87.6L314.8 631.3 198 509.6z m540.3-0.1c0 131.4-102.2 243.4-228.8 243.4-43.8 0-82.8-19.4-121.7-38.9l43.8-43.8c24.4 9.8 53.6 19.5 82.8 19.5 92.5 0 170.4-77.9 170.4-180.1h-92.5l116.9-121.7L826 509.5h-87.7z" fill="currentColor"></path></svg>`,
     }[type];
   }
+
+  function formatDateTime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const formattedDateTime = `${year}_${month}_${day}_${hours}_${minutes}_${seconds}`;
+    return formattedDateTime;
+  }
+
+  function getName() {
+    const id = window.crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
+    const name =
+      document.querySelector('nav .overflow-y-auto a.hover\\:bg-gray-800')?.innerText?.trim() || '';
+    return { filename: name ? name : id, id, pathname: 'chat.download.json' };
+  }
 }
 
 window.addEventListener('resize', init);
 
-if (
-  document.readyState === "complete" ||
-  document.readyState === "interactive"
-) {
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
   init();
 } else {
-  document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener('DOMContentLoaded', init);
 }

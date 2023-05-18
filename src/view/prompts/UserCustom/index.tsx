@@ -94,13 +94,13 @@ export default function UserCustom() {
     });
   };
 
-  const modalTitle = `${{ new: 'Create', edit: 'Edit' }[opInfo.opType]} Model`;
+  const modalTitle = `${{ new: 'Create', edit: 'Edit' }[opInfo.opType]} Prompt`;
 
   return (
     <div>
       <div className="chat-table-btns">
         <Button className="chat-add-btn" type="primary" onClick={opInfo.opNew}>
-          Add Model
+          Add Prompt
         </Button>
         <div>
           {selectedItems.length > 0 && (

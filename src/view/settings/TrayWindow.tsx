@@ -2,7 +2,7 @@ import { Form, Switch, Input, InputNumber, Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 import { DISABLE_AUTO_COMPLETE } from '@/utils';
-import SwitchOrigin from '@/components/SwitchOrigin';
+// import SwitchOrigin from '@/components/SwitchOrigin';
 
 const UALabel = () => {
   return (
@@ -29,7 +29,7 @@ export default function TrayWindow() {
       <Form.Item label="Default Height" name="tray_height">
         <InputNumber />
       </Form.Item>
-      <SwitchOrigin name="tray" />
+      {/* <SwitchOrigin name="tray" /> */}
       <Form.Item label={<UALabel />} name="ua_tray">
         <Input.TextArea
           autoSize={{ minRows: 4, maxRows: 4 }}

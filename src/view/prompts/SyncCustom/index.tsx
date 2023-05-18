@@ -130,7 +130,7 @@ export default function SyncCustom() {
         type="primary"
         onClick={opInfo.opNew}
       >
-        Add PATH
+        Add Prompt
       </Button>
       <Table
         key="id"
@@ -143,7 +143,7 @@ export default function SyncCustom() {
       <Modal
         open={isVisible}
         onCancel={hide}
-        title="Sync PATH"
+        title="Add Prompt"
         onOk={handleOk}
         destroyOnClose
         maskClosable={false}

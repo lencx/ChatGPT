@@ -1,7 +1,13 @@
+/**
+ * @name chat.js
+ * @version 0.1.0
+ * @url https://github.com/lencx/ChatGPT/tree/main/scripts/chat.js
+ */
+
 async function init() {
   new MutationObserver(function (mutationsList) {
     for (const mutation of mutationsList) {
-      if (mutation.target.closest("form")) {
+      if (mutation.target.closest('form')) {
         chatBtns();
       }
     }
@@ -10,99 +16,100 @@ async function init() {
     subtree: true,
   });
   document.addEventListener('visibilitychange', () =>
-    document.getElementsByTagName('textarea')[0]?.focus()
+    document.getElementsByTagName('textarea')[0]?.focus(),
   );
 }
 
 async function chatBtns() {
-  const chatConf = await invoke('get_app_conf') || {};
+  const chatConf = (await invoke('get_app_conf')) || {};
   const synth = window.speechSynthesis;
   let currentUtterance = null;
   let currentIndex = -1;
-  const list = Array.from(document.querySelectorAll("main >div>div>div>div>div"));
+  const list = Array.from(document.querySelectorAll('main >div>div>div>div>div'));
   list.forEach((i, idx) => {
-      if (i.querySelector('.chat-item-copy')) return;
-      if (!i.querySelector('button.rounded-md')) return;
-      if (!i.querySelector('.self-end')) return;
-      const cpbtn = i.querySelector('button.rounded-md').cloneNode(true);
-      cpbtn.classList.add('chat-item-copy');
-      cpbtn.title = 'Copy to clipboard';
-      cpbtn.innerHTML = setIcon('copy');
-      i.querySelector('.self-end').appendChild(cpbtn);
-      cpbtn.onclick = () => {
-        copyToClipboard(i?.innerText?.trim() || '', cpbtn);
-      }
+    // if (i.querySelector('.chat-item-copy')) return;
+    if (i.querySelector('.chat-item-voice')) return;
+    if (!i.querySelector('button.rounded-md')) return;
+    if (!i.querySelector('.self-end')) return;
+    // const cpbtn = i.querySelector('button.rounded-md').cloneNode(true);
+    // cpbtn.classList.add('chat-item-copy');
+    // cpbtn.title = 'Copy to clipboard';
+    // cpbtn.innerHTML = setIcon('copy');
+    // i.querySelector('.self-end').appendChild(cpbtn);
+    // cpbtn.onclick = () => {
+    //   copyToClipboard(i?.innerText?.trim() || '', cpbtn);
+    // }
 
-      const saybtn = i.querySelector('button.rounded-md').cloneNode(true);
-      saybtn.classList.add('chat-item-voice');
-      saybtn.title = 'Say';
-      saybtn.innerHTML = setIcon('voice');
-      i.querySelector('.self-end').appendChild(saybtn);
-      saybtn.onclick = () => {
-        if (currentUtterance && currentIndex !== -1) {
-          synth.cancel();
-          if (idx === currentIndex) {
-            saybtn.innerHTML = setIcon('voice');
-            currentUtterance = null;
-            currentIndex = -1;
-            return;
-          } else if (list[currentIndex].querySelector('.chat-item-voice')) {
-            list[currentIndex].querySelector('.chat-item-voice').innerHTML = setIcon('voice');
-            list[idx].querySelector('.chat-item-voice').innerHTML = setIcon('speaking');
-          }
-        }
-        const txt = i?.innerText?.trim() || '';
-        if (!txt) return;
-        const utterance = new SpeechSynthesisUtterance(txt);
-        const voices = speechSynthesis.getVoices();
-        let voice = voices.find(voice => voice.voiceURI === chatConf.speech_lang);
-        if (!voice) {
-          voice = voices.find(voice => voice.lang === 'en-US');
-        }
-        utterance.voice = voice;
-        currentIndex = idx;
-        utterance.lang = voice.lang;
-        // utterance.rate = 0.7;
-        // utterance.pitch = 1.1;
-        // utterance.volume = 1;
-        synth.speak(utterance);
-        amISpeaking = synth.speaking;
-        saybtn.innerHTML = setIcon('speaking');
-        currentUtterance = utterance;
-        currentIndex = idx;
-        utterance.onend = () => {
+    const saybtn = i.querySelector('button.rounded-md').cloneNode(true);
+    saybtn.classList.add('chat-item-voice');
+    saybtn.title = 'Say';
+    saybtn.innerHTML = setIcon('voice');
+    i.querySelector('.self-end').appendChild(saybtn);
+    saybtn.onclick = () => {
+      if (currentUtterance && currentIndex !== -1) {
+        synth.cancel();
+        if (idx === currentIndex) {
           saybtn.innerHTML = setIcon('voice');
           currentUtterance = null;
           currentIndex = -1;
+          return;
+        } else if (list[currentIndex].querySelector('.chat-item-voice')) {
+          list[currentIndex].querySelector('.chat-item-voice').innerHTML = setIcon('voice');
+          list[idx].querySelector('.chat-item-voice').innerHTML = setIcon('speaking');
         }
       }
-    })
+      const txt = i?.innerText?.trim() || '';
+      if (!txt) return;
+      const utterance = new SpeechSynthesisUtterance(txt);
+      const voices = speechSynthesis.getVoices();
+      let voice = voices.find((voice) => voice.voiceURI === chatConf.speech_lang);
+      if (!voice) {
+        voice = voices.find((voice) => voice.lang === 'en-US');
+      }
+      utterance.voice = voice;
+      currentIndex = idx;
+      utterance.lang = voice.lang;
+      // utterance.rate = 0.7;
+      // utterance.pitch = 1.1;
+      // utterance.volume = 1;
+      synth.speak(utterance);
+      amISpeaking = synth.speaking;
+      saybtn.innerHTML = setIcon('speaking');
+      currentUtterance = utterance;
+      currentIndex = idx;
+      utterance.onend = () => {
+        saybtn.innerHTML = setIcon('voice');
+        currentUtterance = null;
+        currentIndex = -1;
+      };
+    };
+  });
 }
 
-function copyToClipboard(text, btn) {
-  window.clearTimeout(window.__cpTimeout);
-  btn.innerHTML = setIcon('cpok');
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text);
-  } else {
-    var textarea = document.createElement('textarea');
-    document.body.appendChild(textarea);
-    textarea.style.position = 'fixed';
-    textarea.style.clip = 'rect(0 0 0 0)';
-    textarea.style.top = '10px';
-    textarea.value = text;
-    textarea.select();
-    document.execCommand('copy', true);
-    document.body.removeChild(textarea);
-  }
-  window.__cpTimeout = setTimeout(() => {
-    btn.innerHTML = setIcon('copy');
-  }, 1000);
-}
+// function copyToClipboard(text, btn) {
+//   window.clearTimeout(window.__cpTimeout);
+//   btn.innerHTML = setIcon('cpok');
+//   if (navigator.clipboard) {
+//     navigator.clipboard.writeText(text);
+//   } else {
+//     var textarea = document.createElement('textarea');
+//     document.body.appendChild(textarea);
+//     textarea.style.position = 'fixed';
+//     textarea.style.clip = 'rect(0 0 0 0)';
+//     textarea.style.top = '10px';
+//     textarea.value = text;
+//     textarea.select();
+//     document.execCommand('copy', true);
+//     document.body.removeChild(textarea);
+//   }
+//   window.__cpTimeout = setTimeout(() => {
+//     btn.innerHTML = setIcon('copy');
+//   }, 1000);
+// }
 
 function focusOnInput() {
   // This currently works because there is only a single `<textarea>` element on the ChatGPT UI page.
-  document.getElementsByTagName("textarea")[0].focus();
+  document.getElementsByTagName('textarea')[0].focus();
 }
 
 function setIcon(type) {
@@ -114,11 +121,8 @@ function setIcon(type) {
   }[type];
 }
 
-if (
-  document.readyState === "complete" ||
-  document.readyState === "interactive"
-) {
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
   init();
 } else {
-  document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener('DOMContentLoaded', init);
 }

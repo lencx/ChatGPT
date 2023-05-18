@@ -23,16 +23,16 @@ pub fn tray_window(handle: &tauri::AppHandle) {
       .always_on_top(true)
       .theme(Some(theme))
       .initialization_script(&utils::user_script())
-      .initialization_script(include_str!("../scripts/core.js"))
+      .initialization_script(include_str!("../../../scripts/core.js"))
       .user_agent(&app_conf.ua_tray);
 
     if app_conf.tray_origin == "https://chat.openai.com" && !app_conf.tray_dashboard {
       tray_win = tray_win
         .initialization_script(include_str!("../vendors/floating-ui-core.js"))
         .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
-        .initialization_script(include_str!("../scripts/cmd.js"))
-        .initialization_script(include_str!("../scripts/chat.js"))
-        .initialization_script(include_str!("../scripts/popup.core.js"))
+        .initialization_script(include_str!("../../../scripts/cmd.js"))
+        .initialization_script(include_str!("../../../scripts/chat.js"))
+        .initialization_script(include_str!("../../../scripts/popup.core.js"))
     }
 
     tray_win.build().unwrap().hide().unwrap();
@@ -78,9 +78,9 @@ pub fn dalle2_window(
       .inner_size(800.0, 600.0)
       .always_on_top(false)
       .theme(Some(theme))
-      .initialization_script(include_str!("../scripts/core.js"))
+      .initialization_script(include_str!("../../../scripts/core.js"))
       .initialization_script(&query)
-      .initialization_script(include_str!("../scripts/dalle2.js"))
+      .initialization_script(include_str!("../../../scripts/dalle2.js"))
       .build()
       .unwrap();
     });
@@ -89,6 +89,23 @@ pub fn dalle2_window(
     dalle2_win.show().unwrap();
     dalle2_win.set_focus().unwrap();
   }
+}
+
+pub fn sponsor_window(handle: tauri::AppHandle) {
+  tauri::async_runtime::spawn(async move {
+    if let Some(win) = handle.get_window("sponsor") {
+      win.show().unwrap()
+    } else {
+      WindowBuilder::new(&handle, "sponsor", WindowUrl::App("sponsor.html".into()))
+        .title("Sponsor")
+        .resizable(true)
+        .fullscreen(false)
+        .inner_size(600.0, 600.0)
+        .min_inner_size(600.0, 600.0)
+        .build()
+        .unwrap();
+    }
+  });
 }
 
 pub mod cmd {
@@ -144,7 +161,7 @@ pub mod cmd {
       tauri::async_runtime::spawn(async move {
         tauri::WindowBuilder::new(&app, label, tauri::WindowUrl::App(url.parse().unwrap()))
           .initialization_script(&script.unwrap_or_default())
-          .initialization_script(include_str!("../scripts/core.js"))
+          .initialization_script(include_str!("../../../scripts/core.js"))
           .title(title)
           .inner_size(960.0, 700.0)
           .resizable(true)
