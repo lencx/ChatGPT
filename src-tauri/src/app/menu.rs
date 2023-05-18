@@ -448,7 +448,7 @@ pub fn tray_menu() -> SystemTray {
 }
 
 // --- SystemTray Event
-pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
+pub fn tray_handler(handle: &AppHandle<tauri::Wry>, event: SystemTrayEvent) {
   on_tray_event(handle, &event);
 
   let app = handle.clone();
@@ -464,7 +464,7 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
       }
 
       if let Some(tray_win) = handle.get_window("tray") {
-        tray_win.move_window(Position::TrayFixedCenter).unwrap();
+        tray_win.move_window(Position::TrayCenter).unwrap();
 
         if tray_win.is_visible().unwrap() {
           tray_win.hide().unwrap();
@@ -508,6 +508,6 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
   }
 }
 
-pub fn open(app: &AppHandle, path: String) {
+pub fn open(app: &AppHandle<tauri::Wry>, path: String) {
   tauri::api::shell::open(&app.shell_scope(), path, None).unwrap();
 }
