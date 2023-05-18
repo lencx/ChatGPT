@@ -1,41 +1,36 @@
 {
-  "name": "ChatGPT Script",
+  "name": "ChatGPT Scripts",
   "author": "lencx",
+  "description": "ChatGPT Desktop Application Core Extension Scripts.",
+  "url": "https://github.com/lencx/ChatGPT/tree/main/scripts",
   "scripts": [
     {
       "name": "core.js",
-      "version": "0.1.0",
-      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/chat.js"
+      "version": "0.1.0"
     },
     {
       "name": "cmd.js",
-      "version": "0.1.0",
-      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/cmd.js"
+      "version": "0.1.0"
     },
     {
       "name": "core.js",
-      "version": "0.1.0",
-      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/core.js"
+      "version": "0.1.0"
     },
     {
       "name": "dalle2.js",
-      "version": "0.1.0",
-      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/dalle2.js"
+      "version": "0.1.0"
     },
     {
       "name": "export.js",
-      "version": "0.1.0",
-      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/export.js"
+      "version": "0.1.0"
     },
     {
       "name": "markdown.export.js",
-      "version": "0.1.0",
-      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/markdown.export.js"
+      "version": "0.1.0"
     },
     {
       "name": "popup.core.js",
-      "version": "0.1.0",
-      "url": "https://github.com/lencx/ChatGPT/tree/main/scripts/popup.core.js"
+      "version": "0.1.0"
     }
   ]
 }
