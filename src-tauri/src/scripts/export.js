@@ -154,7 +154,7 @@ async function init() {
     }).join('');
     const data = ExportMD.turndown(content);
     const { id, filename } = getName();
-    await invoke('save_file', { name: `notes/${id}.md`, content: data });
+    await invoke('save_file', { name: `notes/${new Date().toISOString().slice(0, 10)}-${id}.md`, content: data });
     await invoke('download_list', { pathname: 'chat.notes.json', filename, id, dir: 'notes' });
   }
 
