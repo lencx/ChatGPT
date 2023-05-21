@@ -124,13 +124,13 @@ pub mod cmd {
   }
 
   #[tauri::command]
-  pub fn control_window(handle: tauri::AppHandle) {
+  pub fn control_window(handle: tauri::AppHandle, win_type: String) {
     tauri::async_runtime::spawn(async move {
       if handle.get_window("main").is_none() {
         WindowBuilder::new(
           &handle,
           "main",
-          WindowUrl::App("index.html?type=control".into()),
+          WindowUrl::App(format!("index.html?type={}", win_type).into()),
         )
         .title("Control Center")
         .resizable(true)

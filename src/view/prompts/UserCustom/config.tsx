@@ -1,6 +1,6 @@
 import { Tag, Switch, Space, Popconfirm, Table } from 'antd';
 
-export const modelColumns = () => [
+export const promptColumns = () => [
   {
     title: '/{cmd}',
     dataIndex: 'cmd',
@@ -54,7 +54,7 @@ export const modelColumns = () => [
       <Space size="middle">
         <a onClick={() => actions.setRecord(row, 'edit')}>Edit</a>
         <Popconfirm
-          title="Are you sure to delete this model?"
+          title="Are you sure to delete this prompt?"
           onConfirm={() => actions.setRecord(row, 'delete')}
           okText="Yes"
           cancelText="No"

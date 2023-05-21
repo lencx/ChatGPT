@@ -5,8 +5,8 @@ import { invoke, path, fs } from '@tauri-apps/api';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
 import { TABLE_PAGINATION } from '@/hooks/useTable';
-import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
-import { CHAT_MODEL_JSON, chatRoot, readJSON, genCmd } from '@/utils';
+import useChatPrompt, { useCachePrompt } from '@/hooks/useChatPrompt';
+import { CHAT_PROMPT_JSON, chatRoot, readJSON, genCmd } from '@/utils';
 import { syncColumns, getPath } from './config';
 import SyncForm from './Form';
 
@@ -20,8 +20,8 @@ const fmtData = (data: Record<string, any>[] = []) =>
 
 export default function SyncCustom() {
   const [isVisible, setVisible] = useState(false);
-  const { modelData, modelSet } = useChatModel('sync_custom', CHAT_MODEL_JSON);
-  const { modelCacheCmd, modelCacheSet } = useCacheModel();
+  const { promptData, promptSet } = useChatPrompt('sync_custom', CHAT_PROMPT_JSON);
+  const { promptCacheCmd, promptCacheSet } = useCachePrompt();
   const { opData, opInit, opAdd, opRemove, opReplace, opSafeKey } = useData([]);
   const { columns, ...opInfo } = useColumns(syncColumns());
   const formRef = useRef<any>(null);
@@ -32,9 +32,9 @@ export default function SyncCustom() {
   };
 
   useEffect(() => {
-    if (modelData.length <= 0) return;
-    opInit(modelData);
-  }, [modelData]);
+    if (promptData.length <= 0) return;
+    opInit(promptData);
+  }, [promptData]);
 
   useEffect(() => {
     if (!opInfo.opType) return;
@@ -47,7 +47,7 @@ export default function SyncCustom() {
           ...opInfo?.opRecord,
           last_updated: Date.now(),
         });
-        modelSet(data);
+        promptSet(data);
         opInfo.resetRecord();
       });
     }
@@ -59,15 +59,15 @@ export default function SyncCustom() {
         try {
           const file = await path.join(
             await chatRoot(),
-            'cache_model',
+            'cache_prompts',
             `${opInfo?.opRecord?.id}.json`,
           );
           await fs.removeFile(file);
         } catch (e) {}
         const data = opRemove(opInfo?.opRecord?.[opSafeKey]);
-        modelSet(data);
+        promptSet(data);
         opInfo.resetRecord();
-        modelCacheCmd();
+        promptCacheCmd();
       })();
     }
   }, [opInfo.opType, formRef]);
@@ -75,15 +75,15 @@ export default function SyncCustom() {
   const handleSync = async (filename: string) => {
     const record = opInfo?.opRecord;
     const isJson = /json$/.test(record?.ext);
-    const file = await path.join(await chatRoot(), 'cache_model', filename);
+    const file = await path.join(await chatRoot(), 'cache_prompts', filename);
     const filePath = await getPath(record);
 
     // https or http
     if (/^http/.test(record?.protocol)) {
       const data = await invoke('sync_user_prompts', { url: filePath, dataType: record?.ext });
       if (data) {
-        await modelCacheSet(data as [], file);
-        await modelCacheCmd();
+        await promptCacheSet(data as [], file);
+        await promptCacheCmd();
         message.success('ChatGPT Prompts data has been synchronized!');
         return true;
       } else {
@@ -95,27 +95,30 @@ export default function SyncCustom() {
     if (isJson) {
       // parse json
       const data = await readJSON(filePath, { isRoot: true });
-      await modelCacheSet(fmtData(data), file);
+      await promptCacheSet(fmtData(data), file);
     } else {
       // parse csv
       const data = await fs.readTextFile(filePath);
       const list: Record<string, string>[] = await invoke('parse_prompt', { data });
-      await modelCacheSet(fmtData(list), file);
+      await promptCacheSet(fmtData(list), file);
     }
-    await modelCacheCmd();
+    await promptCacheCmd();
     return true;
   };
 
   const handleOk = () => {
-    formRef.current?.form?.validateFields().then((vals: Record<string, any>) => {
+    formRef.current?.form?.validateFields().then(async (vals: Record<string, any>) => {
+      const file = await readFile(vals?.file?.file?.originFileObj);
+      vals.file = file;
+
       if (opInfo.opType === 'new') {
         const data = opAdd(vals);
-        modelSet(data);
+        promptSet(data);
         message.success('Data added successfully');
       }
       if (opInfo.opType === 'edit') {
         const data = opReplace(opInfo?.opRecord?.[opSafeKey], vals);
-        modelSet(data);
+        promptSet(data);
         message.success('Data updated successfully');
       }
       hide();
@@ -152,4 +155,13 @@ export default function SyncCustom() {
       </Modal>
     </div>
   );
+}
+
+function readFile(file: File) {
+  return new Promise((resolve, reject) => {
+    let reader = new FileReader();
+    reader.onload = (e: any) => resolve(e.target.result);
+    reader.onerror = (e: any) => reject(e.target.error);
+    reader.readAsText(file);
+  });
 }

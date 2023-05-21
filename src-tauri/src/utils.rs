@@ -33,7 +33,9 @@ pub fn create_file(path: &Path) -> Result<File> {
 }
 
 pub fn create_chatgpt_prompts() {
-  let sync_file = app_root().join("cache_model").join("chatgpt_prompts.json");
+  let sync_file = app_root()
+    .join("cache_prompts")
+    .join("chatgpt_prompts.json");
   if !exists(&sync_file) {
     create_file(&sync_file).unwrap();
     fs::write(&sync_file, "[]").unwrap();

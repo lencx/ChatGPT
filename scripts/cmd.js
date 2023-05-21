@@ -9,36 +9,36 @@ function init() {
   styleDom.innerHTML = `form {
     position: relative;
   }
-  .chat-model-cmd-list {
+  .chat-prompt-cmd-list {
     position: absolute;
     bottom: 60px;
     max-height: 100px;
     overflow: auto;
     z-index: 9999;
   }
-  .chat-model-cmd-list>div {
+  .chat-prompt-cmd-list>div {
     border: solid 2px rgba(80,80,80,.3);
     border-radius: 5px;
     background-color: #fff;
   }
 
-  html.dark .chat-model-cmd-list>div {
+  html.dark .chat-prompt-cmd-list>div {
     background-color: #4a4a4a;
   }
-  html.dark .chat-model-cmd-list .cmd-item {
+  html.dark .chat-prompt-cmd-list .cmd-item {
     border-color: #666;
   }
-  html.dark .chat-model-cmd-list .cmd-item b {
+  html.dark .chat-prompt-cmd-list .cmd-item b {
     color: #e8e8e8;
   }
-  html.dark .chat-model-cmd-list .cmd-item i {
+  html.dark .chat-prompt-cmd-list .cmd-item i {
     color: #999;
   }
-  html.dark .chat-model-cmd-list .cmd-item.selected {
+  html.dark .chat-prompt-cmd-list .cmd-item.selected {
     background: rgba(59,130,246,.5);
   }
 
-  .chat-model-cmd-list .cmd-item {
+  .chat-prompt-cmd-list .cmd-item {
     font-size: 12px;
     border-bottom: solid 1px rgba(80,80,80,.2);
     padding: 2px 4px;
@@ -46,13 +46,13 @@ function init() {
     user-select: none;
     cursor: pointer;
   }
-  .chat-model-cmd-list .cmd-item:last-child {
+  .chat-prompt-cmd-list .cmd-item:last-child {
     border-bottom: none;
   }
-  .chat-model-cmd-list .cmd-item.selected {
+  .chat-prompt-cmd-list .cmd-item.selected {
     background: rgba(59,130,246,.3);
   }
-  .chat-model-cmd-list .cmd-item b {
+  .chat-prompt-cmd-list .cmd-item b {
     display: inline-block;
     width: 100px;
     overflow: hidden;
@@ -62,7 +62,7 @@ function init() {
     margin-right: 10px;
     color: #2a2a2a;
   }
-  .chat-model-cmd-list .cmd-item i {
+  .chat-prompt-cmd-list .cmd-item i {
     width: 100%;
     max-width: 200px;
     overflow: hidden;
@@ -119,9 +119,9 @@ function init() {
           initDom();
           cmdTip();
         }
-        if (mutation.target.getAttribute('class') === 'chat-model-cmd-list') {
+        if (mutation.target.getAttribute('class') === 'chat-prompt-cmd-list') {
           // The `chatgpt prompt` fill can be done by clicking on the event.
-          const searchDom = document.querySelector('form .chat-model-cmd-list>div');
+          const searchDom = document.querySelector('form .chat-prompt-cmd-list>div');
           const searchInput = document.querySelector('form textarea');
           if (!searchDom) return;
           searchDom.addEventListener('click', (event) => {
@@ -144,20 +144,20 @@ function init() {
 
 async function cmdTip() {
   initDom();
-  const chatModelJson = (await invoke('get_chat_model_cmd')) || {};
-  const data = chatModelJson.data;
+  const chatPromptJson = (await invoke('get_chat_prompt_cmd')) || {};
+  const data = chatPromptJson.data;
   if (data.length <= 0) return;
 
-  let modelDom = document.querySelector('.chat-model-cmd-list');
-  if (!modelDom) {
+  let promptDom = document.querySelector('.chat-prompt-cmd-list');
+  if (!promptDom) {
     const dom = document.createElement('div');
-    dom.classList.add('chat-model-cmd-list');
+    dom.classList.add('chat-prompt-cmd-list');
     document.querySelector('form').appendChild(dom);
-    modelDom = document.querySelector('.chat-model-cmd-list');
+    promptDom = document.querySelector('.chat-prompt-cmd-list');
 
     // fix: tray window
     if (__TAURI_METADATA__.__currentWindow.label === 'tray') {
-      modelDom.style.bottom = '54px';
+      promptDom.style.bottom = '54px';
     }
 
     const itemDom = (v) =>
@@ -168,16 +168,16 @@ async function cmdTip() {
       }</i></div>`;
     const renderList = (v) => {
       initDom();
-      modelDom.innerHTML = `<div>${v.map(itemDom).join('')}</div>`;
-      window.__CHAT_MODEL_CMD_PROMPT__ = v[0]?.prompt.trim();
-      window.__CHAT_MODEL_CMD__ = v[0]?.cmd.trim();
-      window.__cmd_list = modelDom.querySelectorAll('.cmd-item');
+      promptDom.innerHTML = `<div>${v.map(itemDom).join('')}</div>`;
+      window.__CHAT_CMD_PROMPT__ = v[0]?.prompt.trim();
+      window.__CHAT_CMD__ = v[0]?.cmd.trim();
+      window.__cmd_list = promptDom.querySelectorAll('.cmd-item');
       window.__cmd_index = 0;
       window.__cmd_list[window.__cmd_index].classList.add('selected');
     };
     const setPrompt = (v = '') => {
       if (v.trim()) {
-        window.__CHAT_MODEL_CMD_PROMPT__ = window.__CHAT_MODEL_CMD_PROMPT__?.replace(
+        window.__CHAT_CMD_PROMPT__ = window.__CHAT_CMD_PROMPT__?.replace(
           /\{([^{}]*)\}/,
           `{${v.trim()}}`,
         );
@@ -188,7 +188,7 @@ async function cmdTip() {
     // Enter a command starting with `/` and press a space to automatically fill `chatgpt prompt`.
     // If more than one command appears in the search results, the first one will be used by default.
     function cmdKeydown(event) {
-      if (!window.__CHAT_MODEL_CMD_PROMPT__) {
+      if (!window.__CHAT_CMD_PROMPT__) {
         if (
           !event.shiftKey &&
           event.keyCode === 13 &&
@@ -207,7 +207,7 @@ async function cmdTip() {
         window.__cmd_list[window.__cmd_index].classList.remove('selected');
         window.__cmd_index = window.__cmd_index - 1;
         window.__cmd_list[window.__cmd_index].classList.add('selected');
-        window.__CHAT_MODEL_CMD_PROMPT__ = decodeURIComponent(
+        window.__CHAT_CMD_PROMPT__ = decodeURIComponent(
           window.__cmd_list[window.__cmd_index].getAttribute('data-prompt'),
         );
         searchInput.value = `/${window.__cmd_list[window.__cmd_index].getAttribute('data-cmd')}`;
@@ -219,70 +219,70 @@ async function cmdTip() {
         window.__cmd_list[window.__cmd_index].classList.remove('selected');
         window.__cmd_index = window.__cmd_index + 1;
         window.__cmd_list[window.__cmd_index].classList.add('selected');
-        window.__CHAT_MODEL_CMD_PROMPT__ = decodeURIComponent(
+        window.__CHAT_CMD_PROMPT__ = decodeURIComponent(
           window.__cmd_list[window.__cmd_index].getAttribute('data-prompt'),
         );
         searchInput.value = `/${window.__cmd_list[window.__cmd_index].getAttribute('data-cmd')}`;
         event.preventDefault();
       }
 
-      const containerHeight = modelDom.offsetHeight;
+      const containerHeight = promptDom.offsetHeight;
       const itemHeight = window.__cmd_list[0].offsetHeight + 1;
 
       const itemTop = window.__cmd_list[window.__cmd_index].offsetTop;
       const itemBottom = itemTop + itemHeight;
-      if (itemTop < modelDom.scrollTop || itemBottom > modelDom.scrollTop + containerHeight) {
-        modelDom.scrollTop = itemTop;
+      if (itemTop < promptDom.scrollTop || itemBottom > promptDom.scrollTop + containerHeight) {
+        promptDom.scrollTop = itemTop;
       }
 
       // ------------------ TAB key replaces `{q}` tag content -------------------------------
       // feat: https://github.com/lencx/ChatGPT/issues/54
-      if (event.keyCode === 9 && !window.__CHAT_MODEL_STATUS__) {
-        const strGroup = window.__CHAT_MODEL_CMD_PROMPT__.match(/\{([^{}]*)\}/) || [];
+      if (event.keyCode === 9 && !window.__CHAT_STATUS__) {
+        const strGroup = window.__CHAT_CMD_PROMPT__.match(/\{([^{}]*)\}/) || [];
 
         if (strGroup[1]) {
-          searchInput.value = `/${window.__CHAT_MODEL_CMD__}` + ` {${strGroup[1]}}` + ' |-> ';
-          window.__CHAT_MODEL_STATUS__ = 1;
+          searchInput.value = `/${window.__CHAT_CMD__}` + ` {${strGroup[1]}}` + ' |-> ';
+          window.__CHAT_STATUS__ = 1;
         } else {
-          searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
+          searchInput.value = window.__CHAT_CMD_PROMPT__;
           initDom();
         }
         event.preventDefault();
       }
 
-      if (window.__CHAT_MODEL_STATUS__ === 1 && event.keyCode === 9) {
+      if (window.__CHAT_STATUS__ === 1 && event.keyCode === 9) {
         // TAB
         const data = searchInput.value.split('|->');
         if (data[1]?.trim()) {
           setPrompt(data[1]);
-          window.__CHAT_MODEL_STATUS__ = 2;
+          window.__CHAT_STATUS__ = 2;
         }
         event.preventDefault();
       }
 
       // input text
-      if (window.__CHAT_MODEL_STATUS__ === 2 && event.keyCode === 9) {
+      if (window.__CHAT_STATUS__ === 2 && event.keyCode === 9) {
         // TAB
-        searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
-        modelDom.innerHTML = '';
-        delete window.__CHAT_MODEL_STATUS__;
+        searchInput.value = window.__CHAT_CMD_PROMPT__;
+        promptDom.innerHTML = '';
+        delete window.__CHAT_STATUS__;
         event.preventDefault();
       }
 
       // ------------------ type in a space to complete the fill ------------------------------------
       if (event.keyCode === 32) {
-        searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
-        modelDom.innerHTML = '';
-        delete window.__CHAT_MODEL_CMD_PROMPT__;
+        searchInput.value = window.__CHAT_CMD_PROMPT__;
+        promptDom.innerHTML = '';
+        delete window.__CHAT_CMD_PROMPT__;
       }
 
       // ------------------ send --------------------------------------------------------------------
-      if (event.keyCode === 13 && window.__CHAT_MODEL_CMD_PROMPT__) {
+      if (event.keyCode === 13 && window.__CHAT_CMD_PROMPT__) {
         // Enter
         const data = searchInput.value.split('|->');
         setPrompt(data[1]);
 
-        searchInput.value = window.__CHAT_MODEL_CMD_PROMPT__;
+        searchInput.value = window.__CHAT_CMD_PROMPT__;
 
         initDom();
 
@@ -297,7 +297,7 @@ async function cmdTip() {
         initDom();
       }
 
-      if (window.__CHAT_MODEL_STATUS__) return;
+      if (window.__CHAT_STATUS__) return;
 
       const query = searchInput.value;
       if (!query || !/^\//.test(query)) {
@@ -324,13 +324,13 @@ async function cmdTip() {
 }
 
 function initDom() {
-  const modelDom = document.querySelector('.chat-model-cmd-list');
-  if (modelDom) {
-    modelDom.innerHTML = '';
+  const promptDom = document.querySelector('.chat-prompt-cmd-list');
+  if (promptDom) {
+    promptDom.innerHTML = '';
   }
-  delete window.__CHAT_MODEL_CMD_PROMPT__;
-  delete window.__CHAT_MODEL_CMD__;
-  delete window.__CHAT_MODEL_STATUS__;
+  delete window.__CHAT_CMD_PROMPT__;
+  delete window.__CHAT_CMD__;
+  delete window.__CHAT_STATUS__;
   delete window.__cmd_list;
   delete window.__cmd_index;
 }

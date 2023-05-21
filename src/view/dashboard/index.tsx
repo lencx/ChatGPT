@@ -61,8 +61,11 @@ export default function Dashboard() {
           No data
         </div>
         <div className="txt">
-          Go to <a onClick={() => invoke('control_window')}>{'Control Center -> Awesome'}</a> to add
-          data and make sure they are enabled.
+          Go to{' '}
+          <a onClick={() => invoke('control_window', { type: 'control' })}>
+            {'Control Center -> Awesome'}
+          </a>{' '}
+          to add data and make sure they are enabled.
         </div>
       </div>
     );

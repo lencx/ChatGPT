@@ -7,7 +7,7 @@ import { path } from '@tauri-apps/api';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
 import FilePath from '@/components/FilePath';
-import { useCacheModel } from '@/hooks/useChatModel';
+import { useCachePrompt } from '@/hooks/useChatPrompt';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { getPath } from '@/view/prompts/SyncCustom/config';
 import { fmtDate, chatRoot } from '@/utils';
@@ -21,7 +21,7 @@ export default function SyncRecord() {
   const state = location?.state;
 
   const { rowSelection, selectedRowIDs } = useTableRowSelection();
-  const { modelCacheJson, modelCacheSet } = useCacheModel(jsonPath);
+  const { promptCacheJson, promptCacheSet } = useCachePrompt(jsonPath);
   const { opData, opInit, opReplace, opReplaceItems, opSafeKey } = useData([]);
   const { columns, ...opInfo } = useColumns(syncColumns());
 
@@ -29,24 +29,24 @@ export default function SyncRecord() {
 
   useInit(async () => {
     setFilePath(await getPath(state));
-    setJsonPath(await path.join(await chatRoot(), 'cache_model', `${state?.id}.json`));
+    setJsonPath(await path.join(await chatRoot(), 'cache_prompts', `${state?.id}.json`));
   });
 
   useEffect(() => {
-    if (modelCacheJson.length <= 0) return;
-    opInit(modelCacheJson);
-  }, [modelCacheJson.length]);
+    if (promptCacheJson.length <= 0) return;
+    opInit(promptCacheJson);
+  }, [promptCacheJson.length]);
 
   useEffect(() => {
     if (opInfo.opType === 'enable') {
       const data = opReplace(opInfo?.opRecord?.[opSafeKey], opInfo?.opRecord);
-      modelCacheSet(data);
+      promptCacheSet(data);
     }
   }, [opInfo.opTime]);
 
   const handleEnable = (isEnable: boolean) => {
     const data = opReplaceItems(selectedRowIDs, { enable: isEnable });
-    modelCacheSet(data);
+    promptCacheSet(data);
   };
 
   return (
@@ -70,7 +70,7 @@ export default function SyncRecord() {
       <div className="chat-table-tip">
         <div className="chat-sync-path">
           <FilePath url={filePath} />
-          <FilePath label="CACHE" paths={`cache_model/${state?.id}.json`} />
+          <FilePath label="CACHE" paths={`cache_prompts/${state?.id}.json`} />
         </div>
         {state?.last_updated && (
           <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>

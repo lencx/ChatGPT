@@ -23,8 +23,8 @@ export default function ChatLayout() {
     if (location.search === '?type=control') {
       go('/settings');
     }
-    if (location.search === '?type=preview') {
-      go('/?type=preview');
+    if (location.search === '?type=scripts') {
+      go('/scripts');
     }
     setMenuKey(location.pathname);
     setDashboard(location.pathname === '/');
@@ -88,7 +88,7 @@ export default function ChatLayout() {
               theme={appInfo.appTheme === 'dark' ? 'dark' : 'light'}
               inlineIndent={12}
               items={menuItems}
-              // defaultOpenKeys={['/model']}
+              // defaultOpenKeys={['/prompts']}
               onClick={(i) => go(i.key)}
             />
           </Sider>

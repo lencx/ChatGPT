@@ -1,18 +1,28 @@
-use crate::{app::window, conf::AppConf, utils};
+use crate::{app, conf::AppConf, utils};
 use log::{error, info};
 use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, GlobalShortcutManager, Manager};
 use wry::application::accelerator::Accelerator;
 
-pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
+pub fn init(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
   info!("stepup");
+
   let app_conf = AppConf::read();
   let url = app_conf.main_origin.to_string();
   let theme = AppConf::theme_mode();
-  let handle = app.app_handle();
 
+  let handle = app.app_handle();
+  tauri::async_runtime::spawn(async move {
+    app::script::init_script(handle)
+      .await
+      .unwrap_or_else(|err| {
+        error!("script_init_error: {}", err);
+      });
+  });
+
+  let handle = app.app_handle();
   tauri::async_runtime::spawn(async move {
     info!("stepup_tray");
-    window::tray_window(&handle);
+    app::window::tray_window(&handle);
   });
 
   if let Some(v) = app_conf.clone().global_shortcut {

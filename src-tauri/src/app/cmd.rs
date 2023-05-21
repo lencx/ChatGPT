@@ -80,3 +80,10 @@ pub async fn get_data(app: AppHandle, url: String, is_msg: Option<bool>) -> Opti
     None
   })
 }
+
+#[tauri::command]
+pub async fn fetch_image(url: String) -> Vec<u8> {
+  let response = reqwest::get(url).await.unwrap();
+  let bytes = response.bytes().await.unwrap();
+  bytes.to_vec()
+}

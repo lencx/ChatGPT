@@ -140,13 +140,13 @@ sudo xattr -r -d com.apple.quarantine /YOUR_PATH/ChatGPT.app
 
 - `[.chatgpt]` - 应用配置根路径
   - `chat.conf.json` - 应用喜好配置
-  - `chat.awesome.json` - 自定义 URL 列表，类似于浏览器书签。可以将任意 URL 作为主窗口或托盘窗口 (**Control Conter -> Awesome**)
-  - `chat.model.json` - ChatGPT 输入提示，通过斜杠命令来快速完成输入，主要包含三部分:
-    - `user_custom` - 需要手动录入 (**Control Conter -> Language Model -> User Custom**)
-    - `sync_prompts` - 从 [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) 同步数据 (**Control Conter -> Language Model -> Sync Prompts**)
-    - `sync_custom` - 同步自定义的 json 或 csv 文件数据，支持本地和远程 (**Control Conter -> Language Model -> Sync Custom**)
-  - `chat.model.cmd.json` - 过滤（是否启用）和排序处理后的斜杠命令数据
-  - `[cache_model]` - 缓存同步或录入的数据
+  <!-- - `chat.awesome.json` - 自定义 URL 列表，类似于浏览器书签。可以将任意 URL 作为主窗口或托盘窗口 (**Control Conter -> Awesome**) -->
+  - `chat.prompt.json` - ChatGPT 输入提示，通过斜杠命令来快速完成输入，主要包含三部分:
+    - `user_custom` - 需要手动录入 (**Control Conter -> Prompts -> User Custom**)
+    - `sync_prompts` - 从 [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) 同步数据 (**Control Conter -> Prompts -> Sync Prompts**)
+    - `sync_custom` - 同步自定义的 json 或 csv 文件数据，支持本地和远程 (**Control Conter -> Prompts -> Sync Custom**)
+  - `chat.prompt.cmd.json` - 过滤（是否启用）和排序处理后的斜杠命令数据
+  - `[cache_prompts]` - 缓存同步或录入的数据
     - `chatgpt_prompts.json` - 缓存 `sync_prompts` 数据
     - `user_custom.json` - 缓存 `user_custom` 数据
     - `ae6cf32a6f8541b499d6bfe549dbfca3.json` - 随机生成的文件名，缓存 `sync_custom` 数据

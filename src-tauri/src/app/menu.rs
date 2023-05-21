@@ -237,7 +237,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
       utils::run_check_update(app, false, None);
     }
     // Preferences
-    "control_center" => window::cmd::control_window(app),
+    "control_center" => window::cmd::control_window(app, "control".into()),
     "restart" => tauri::api::process::restart(&app.env()),
     "inject_script" => open(&app, &script_path),
     "go_conf" => utils::open_file(utils::app_root()),
@@ -453,7 +453,7 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
       }
     }
     SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
-      "control_center" => window::cmd::control_window(app),
+      "control_center" => window::cmd::control_window(app, "control".into()),
       "restart" => tauri::api::process::restart(&handle.env()),
       "show_dock_icon" => {
         AppConf::read()
