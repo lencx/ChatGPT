@@ -4,6 +4,7 @@ import { HistoryOutlined } from '@ant-design/icons';
 import { shell, path } from '@tauri-apps/api';
 import { Link } from 'react-router-dom';
 
+import { EditRow } from '@/hooks/useColumns';
 import useInit from '@/hooks/useInit';
 import { chatRoot, fmtDate } from '@/utils';
 
@@ -13,6 +14,9 @@ export const syncColumns = () => [
     dataIndex: 'name',
     key: 'name',
     width: 100,
+    render: (_: string, row: any, actions: any) => (
+      <EditRow rowKey="name" row={row} actions={actions} />
+    ),
   },
   {
     title: 'Protocol',
@@ -47,21 +51,22 @@ export const syncColumns = () => [
     render: (_: any, row: any, actions: any) => {
       return (
         <Space>
-          <Popconfirm
-            overlayStyle={{ width: 250 }}
-            title="Sync will overwrite the previous data, confirm to sync?"
-            onConfirm={() => actions.setRecord(row, 'sync')}
-            okText="Yes"
-            cancelText="No"
-          >
-            <a>Sync</a>
-          </Popconfirm>
+          {row.protocol !== 'local' && (
+            <Popconfirm
+              overlayStyle={{ width: 250 }}
+              title="Sync will overwrite the previous data, confirm to sync?"
+              onConfirm={() => actions.setRecord(row, 'sync')}
+              okText="Yes"
+              cancelText="No"
+            >
+              <a>Sync</a>
+            </Popconfirm>
+          )}
           {row.last_updated && (
             <Link to={`${row.id}`} state={row}>
               View
             </Link>
           )}
-          <a onClick={() => actions.setRecord(row, 'edit')}>Edit</a>
           <Popconfirm
             title="Are you sure to delete this path?"
             onConfirm={() => actions.setRecord(row, 'delete')}
@@ -86,8 +91,8 @@ const RenderPath = ({ row }: any) => {
 
 export const getPath = async (row: any) => {
   if (!/^http/.test(row.protocol)) {
-    return (await path.join(await chatRoot(), row.path)) + `.${row.ext}`;
+    return await path.join(await chatRoot(), 'cache_prompts', `${row.id}.json`);
   } else {
-    return `${row.protocol}://${row.path}.${row.ext}`;
+    return `${row.protocol}://${row.url}`;
   }
 };

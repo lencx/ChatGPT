@@ -5,17 +5,15 @@ import {
   useImperativeHandle,
   forwardRef,
 } from 'react';
-import { Form, Input, Radio, Upload, Tooltip, message } from 'antd';
+import { Form, Input, Radio, Upload, Tooltip, Button, message } from 'antd';
 import { v4 } from 'uuid';
-import { InboxOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import type { FormProps, RadioChangeEvent, UploadProps, UploadFile } from 'antd';
 
 import { DISABLE_AUTO_COMPLETE, chatRoot } from '@/utils';
-// import useInit from '@/hooks/useInit';
 
 interface SyncFormProps {
   record?: Record<string | symbol, any> | null;
-  type: string;
 }
 
 const initFormValue = {
@@ -25,42 +23,17 @@ const initFormValue = {
   protocol: 'https',
 };
 
-const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record, type }, ref) => {
-  // const isDisabled = type === 'edit';
+const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record }, ref) => {
   const [form] = Form.useForm();
   useImperativeHandle(ref, () => ({ form }));
-  // const [root, setRoot] = useState('');
   const [protocol, setProtocol] = useState('https');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-
-  // useInit(async () => {
-  //   setRoot(await chatRoot());
-  // });
 
   useEffect(() => {
     if (record) {
       form.setFieldsValue(record);
     }
   }, [record]);
-
-  // const pathOptions = (
-  //   <Form.Item noStyle name="protocol" initialValue="https">
-  //     <Select disabled={isDisabled}>
-  //       <Select.Option value="local">{root}</Select.Option>
-  //       <Select.Option value="http">http://</Select.Option>
-  //       <Select.Option value="https">https://</Select.Option>
-  //     </Select>
-  //   </Form.Item>
-  // );
-
-  // const extOptions = (
-  //   <Form.Item noStyle name="ext" initialValue="json">
-  //     <Select disabled={isDisabled}>
-  //       <Select.Option value="csv">.csv</Select.Option>
-  //       <Select.Option value="json">.json</Select.Option>
-  //     </Select>
-  //   </Form.Item>
-  // );
 
   const jsonTip = (
     <Tooltip
@@ -135,49 +108,50 @@ const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record, 
             <Radio value="local">local</Radio>
           </Radio.Group>
         </Form.Item>
-        <div style={{ marginLeft: 30, color: '#888' }}>
-          <p>
-            <b>.ext</b>: The file supports only {csvTip} and {jsonTip} formats.
-          </p>
-        </div>
         {['http', 'https'].includes(protocol) && (
-          <Form.Item
-            label="URL"
-            name="url"
-            rules={[
-              { required: true, message: 'Please enter the URL!' },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || /\.json$|\.csv$/.test(getFieldValue('url'))) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(new Error('The file supports only .csv and .json formats'));
-                },
-              }),
-            ]}
-            style={{ height: 200 }}
-          >
-            <Input
-              placeholder="your_path/file_name.ext"
-              addonBefore={`${protocol}://`}
-              // addonAfter={extOptions}
-              {...DISABLE_AUTO_COMPLETE}
-            />
-          </Form.Item>
+          <div style={{ height: 180 }}>
+            <Form.Item
+              label="URL"
+              name="url"
+              rules={[
+                { required: true, message: 'Please enter the URL!' },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || /\.json$|\.csv$/.test(getFieldValue('url'))) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error('The file supports only .csv and .json formats'),
+                    );
+                  },
+                }),
+              ]}
+            >
+              <Input
+                placeholder="your_path/file_name.ext"
+                addonBefore={`${protocol}://`}
+                {...DISABLE_AUTO_COMPLETE}
+              />
+            </Form.Item>
+            <div style={{ marginLeft: 80, color: '#888' }}>
+              <p>
+                <b>.ext</b>: only {csvTip} or {jsonTip} file formats are supported.
+              </p>
+            </div>
+          </div>
         )}
         {protocol === 'local' && (
           <Form.Item
             name="file"
             label="File"
             rules={[{ required: true, message: 'Please select a file!' }]}
-            style={{ height: 200 }}
+            style={{ height: 168 }}
           >
             <Upload.Dragger {...uploadOptions}>
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              <p className="ant-upload-hint">
+                Only {csvTip} or {jsonTip} file formats are supported.
               </p>
-              <p className="ant-upload-text">Click or drag file to this area to upload</p>
-              <p className="ant-upload-hint">Only .json or .csv files are supported.</p>
             </Upload.Dragger>
           </Form.Item>
         )}

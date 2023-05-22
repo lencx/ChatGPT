@@ -18,11 +18,21 @@ export default function useChatPrompt(key: string, file = CHAT_PROMPT_JSON) {
   const promptSet = async (data: Record<string, any>[] | Record<string, any>) => {
     const oData = clone(promptJson);
     oData[key] = data;
+
     await writeJSON(file, oData);
     setPromptJson(oData);
   };
 
-  return { promptJson, promptSet, promptData: promptJson?.[key] || [] };
+  const promptUpdate = async (id: string, field: string, value: any) => {
+    const oData = clone(promptJson);
+    const idx = oData[key].findIndex((v: any) => v.id === id);
+    oData[key][idx][field] = value;
+
+    await writeJSON(file, oData);
+    setPromptJson(oData);
+  };
+
+  return { promptJson, promptSet, promptUpdate, promptData: promptJson?.[key] || [] };
 }
 
 export function useCachePrompt(file = '') {

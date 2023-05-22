@@ -28,7 +28,11 @@ export default function SyncRecord() {
   const selectedItems = rowSelection.selectedRowKeys || [];
 
   useInit(async () => {
-    setFilePath(await getPath(state));
+    if (state.protocol === 'local') {
+      setFilePath('');
+    } else {
+      setFilePath(await getPath(state));
+    }
     setJsonPath(await path.join(await chatRoot(), 'cache_prompts', `${state?.id}.json`));
   });
 
