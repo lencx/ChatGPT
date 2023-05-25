@@ -74,6 +74,7 @@ export const EditRow: FC<EditRowProps> = ({ rowKey, row, actions }) => {
       onChange={handleChange}
       {...DISABLE_AUTO_COMPLETE}
       onPressEnter={handleSave}
+      onBlur={handleSave}
     />
   ) : (
     <div className="rowedit" onClick={handleEdit}>

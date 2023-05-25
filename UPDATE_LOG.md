@@ -13,6 +13,21 @@
 
 **New repository: https://github.com/lencx/nofwl**
 
+## v1.0.0
+
+Note: This version modifies some configuration files. It is recommended to backup the `~/.chatgpt` folder in advance to avoid loss of important configurations.
+
+Feat:
+
+- The synchronization method for prompts has been optimized, now supporting local file uploads
+- Scripts have been externalized, allowing for editing and synchronization
+- Removed the `Awesome` menu from `Control Center`
+
+Fix:
+
+- Chat history export is blank
+- Change the export files location to the `Download` directory
+
 ## v0.12.0
 
 Feat:

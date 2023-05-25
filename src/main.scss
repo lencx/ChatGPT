@@ -73,6 +73,11 @@ body,
   }
 }
 
+.action-btn,
+.file-path {
+  cursor: pointer;
+}
+
 .chat-file-path {
   font-size: 12px;
   font-weight: 500;
@@ -108,4 +113,30 @@ body,
   .ant-tag {
     cursor: pointer;
   }
+}
+
+.editor-task {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+
+  .ant-breadcrumb-link {
+    padding: 3px 5px;
+    transition: all 300ms ease;
+    border-radius: 4px;
+    &:hover {
+      color: rgba(120, 120, 90, 0.88);
+      background-color: rgba(40, 40, 40, 0.06);
+      cursor: pointer;
+    }
+  }
+
+  .editor-btn {
+    cursor: pointer;
+    margin-left: 5px;
+  }
+}
+
+.ant-message {
+  max-width: 500px;
 }

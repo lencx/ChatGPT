@@ -5,24 +5,22 @@ import {
   SyncOutlined,
   FileSyncOutlined,
   UserOutlined,
-  DownloadOutlined,
   FormOutlined,
-  GlobalOutlined,
   InfoCircleOutlined,
+  CodeOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 
 import Settings from '@/view/settings';
 import About from '@/view/about';
-import Awesome from '@/view/awesome';
-import UserCustom from '@/view/model/UserCustom';
-import SyncPrompts from '@/view/model/SyncPrompts';
-import SyncCustom from '@/view/model/SyncCustom';
-import SyncRecord from '@/view/model/SyncRecord';
-import Download from '@/view/download';
+import Scripts from '@/view/scripts';
+import ScriptsEditor from '@/view/scripts/Editor';
+import UserCustom from '@/view/prompts/UserCustom';
+import SyncPrompts from '@/view/prompts/SyncPrompts';
+import SyncCustom from '@/view/prompts/SyncCustom';
+import SyncRecord from '@/view/prompts/SyncRecord';
 import Notes from '@/view/notes';
 import Markdown from '@/view/markdown';
-import Dashboard from '@/view/dashboard';
 
 export type ChatRouteMetaObject = {
   label: string;
@@ -47,14 +45,6 @@ export const routes: Array<ChatRouteObject> = [
     },
   },
   {
-    path: '/awesome',
-    element: <Awesome />,
-    meta: {
-      label: 'Awesome',
-      icon: <GlobalOutlined />,
-    },
-  },
-  {
     path: '/notes',
     element: <Notes />,
     meta: {
@@ -68,9 +58,9 @@ export const routes: Array<ChatRouteObject> = [
     hideMenu: true,
   },
   {
-    path: '/model',
+    path: '/prompts',
     meta: {
-      label: 'Language Model',
+      label: 'Prompts',
       icon: <BulbOutlined />,
     },
     children: [
@@ -107,12 +97,17 @@ export const routes: Array<ChatRouteObject> = [
     ],
   },
   {
-    path: '/download',
-    element: <Download />,
+    path: '/scripts',
+    element: <Scripts />,
     meta: {
-      label: 'Download',
-      icon: <DownloadOutlined />,
+      label: 'Scripts',
+      icon: <CodeOutlined />,
     },
+  },
+  {
+    path: '/scripts/:id',
+    element: <ScriptsEditor />,
+    hideMenu: true,
   },
   {
     path: '/about',
@@ -124,8 +119,7 @@ export const routes: Array<ChatRouteObject> = [
   },
   {
     path: '/',
-    element: <Dashboard />,
-    hideMenu: true,
+    element: <Settings />,
   },
 ];
 

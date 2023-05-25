@@ -16,7 +16,8 @@ const FilePath: FC<FilePathProps> = ({ className, label = 'PATH', paths = '', ur
   const [filePath, setPath] = useState('');
 
   useEffect(() => {
-    if (!path && !url) return;
+    if (!(paths || url)) return;
+
     (async () => {
       if (url) {
         setPath(url);

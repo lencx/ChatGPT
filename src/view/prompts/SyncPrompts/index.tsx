@@ -6,38 +6,39 @@ import useInit from '@/hooks/useInit';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
 import FilePath from '@/components/FilePath';
-import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
+import useChatPrompt, { useCachePrompt } from '@/hooks/useChatPrompt';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { fmtDate, chatRoot } from '@/utils';
 import { syncColumns } from './config';
 import './index.scss';
 
-const promptsURL = 'https://github.com/f/awesome-chatgpt-prompts/blob/main/prompts.csv';
+// const promptsURL = 'https://github.com/f/awesome-chatgpt-prompts/blob/main/prompts.csv';
+const promptsURL = 'https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv';
 
 export default function SyncPrompts() {
   const { rowSelection, selectedRowIDs } = useTableRowSelection();
   const [jsonPath, setJsonPath] = useState('');
-  const { modelJson, modelSet } = useChatModel('sync_prompts');
-  const { modelCacheJson, modelCacheSet } = useCacheModel(jsonPath);
+  const { promptJson, promptSet } = useChatPrompt('sync_prompts');
+  const { promptCacheJson, promptCacheSet } = useCachePrompt(jsonPath);
   const { opData, opInit, opReplace, opReplaceItems, opSafeKey } = useData([]);
   const { columns, ...opInfo } = useColumns(syncColumns());
-  const lastUpdated = modelJson?.sync_prompts?.last_updated;
+  const lastUpdated = promptJson?.sync_prompts?.last_updated;
   const selectedItems = rowSelection.selectedRowKeys || [];
 
   useInit(async () => {
-    setJsonPath(await path.join(await chatRoot(), 'cache_model', 'chatgpt_prompts.json'));
+    setJsonPath(await path.join(await chatRoot(), 'cache_prompts', 'chatgpt_prompts.json'));
   });
 
   useEffect(() => {
-    if (modelCacheJson.length <= 0) return;
-    opInit(modelCacheJson);
-  }, [modelCacheJson.length]);
+    if (promptCacheJson.length <= 0) return;
+    opInit(promptCacheJson);
+  }, [promptCacheJson.length]);
 
   const handleSync = async () => {
     const data = await invoke('sync_prompts', { time: Date.now() });
     if (data) {
       opInit(data as any[]);
-      modelSet({
+      promptSet({
         id: 'chatgpt_prompts',
         last_updated: Date.now(),
       });
@@ -47,13 +48,13 @@ export default function SyncPrompts() {
   useEffect(() => {
     if (opInfo.opType === 'enable') {
       const data = opReplace(opInfo?.opRecord?.[opSafeKey], opInfo?.opRecord);
-      modelCacheSet(data);
+      promptCacheSet(data);
     }
   }, [opInfo.opTime]);
 
   const handleEnable = (isEnable: boolean) => {
     const data = opReplaceItems(selectedRowIDs, { enable: isEnable });
-    modelCacheSet(data);
+    promptCacheSet(data);
   };
 
   return (
@@ -83,8 +84,8 @@ export default function SyncPrompts() {
       </div>
       <div className="chat-table-tip">
         <div className="chat-sync-path">
-          <FilePath url={promptsURL} content="f/awesome-chatgpt-prompts/prompts.csv" />
-          <FilePath label="CACHE" paths="cache_model/chatgpt_prompts.json" />
+          <FilePath label="URL" url={promptsURL} content="f/awesome-chatgpt-prompts/prompts.csv" />
+          <FilePath label="CACHE" paths="cache_prompts/chatgpt_prompts.json" />
         </div>
         {lastUpdated && (
           <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>

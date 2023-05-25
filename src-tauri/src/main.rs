@@ -7,7 +7,7 @@ mod app;
 mod conf;
 mod utils;
 
-use app::{cmd, fs_extra, gpt, menu, setup, window};
+use app::{cmd, fs_extra, gpt, menu, script, setup, window};
 use conf::AppConf;
 use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::{
@@ -55,13 +55,14 @@ async fn main() {
     .invoke_handler(tauri::generate_handler![
       cmd::drag_window,
       cmd::fullscreen,
-      cmd::download,
       cmd::save_file,
       cmd::open_link,
       cmd::run_check_update,
       cmd::open_file,
+      cmd::download_file,
       cmd::get_data,
-      gpt::get_chat_model_cmd,
+      cmd::fetch_image,
+      gpt::get_chat_prompt_cmd,
       gpt::parse_prompt,
       gpt::sync_prompts,
       gpt::sync_user_prompts,
@@ -75,6 +76,8 @@ async fn main() {
       conf::cmd::form_confirm,
       conf::cmd::form_cancel,
       conf::cmd::form_msg,
+      script::cmd::sync_scripts,
+      script::cmd::get_script_info,
       window::cmd::wa_window,
       window::cmd::control_window,
       window::cmd::window_reload,

@@ -4,7 +4,7 @@ use regex::Regex;
 use serde_json::Value;
 use std::{
   collections::HashMap,
-  fs::{self, File},
+  fs,
   path::{Path, PathBuf},
   process::Command,
 };
@@ -25,44 +25,39 @@ pub fn exists(path: &Path) -> bool {
   Path::new(path).exists()
 }
 
-pub fn create_file(path: &Path) -> Result<File> {
-  if let Some(p) = path.parent() {
-    fs::create_dir_all(p)?
+pub fn create_file<P: AsRef<Path>>(filename: P) -> Result<()> {
+  let filename = filename.as_ref();
+  if let Some(parent) = filename.parent() {
+    if !parent.exists() {
+      fs::create_dir_all(parent)?;
+    }
   }
-  File::create(path).map_err(Into::into)
+  fs::File::create(filename)?;
+  Ok(())
 }
 
 pub fn create_chatgpt_prompts() {
-  let sync_file = app_root().join("cache_model").join("chatgpt_prompts.json");
+  let sync_file = app_root()
+    .join("cache_prompts")
+    .join("chatgpt_prompts.json");
   if !exists(&sync_file) {
     create_file(&sync_file).unwrap();
     fs::write(&sync_file, "[]").unwrap();
   }
 }
 
-pub fn script_path() -> PathBuf {
-  let script_file = app_root().join("main.js");
-  if !exists(&script_file) {
-    create_file(&script_file).unwrap();
-    fs::write(
-      &script_file,
-      format!(
-        "// *** ChatGPT User Script ***\n// @github: https://github.com/lencx/ChatGPT \n// @path: {}\n\nconsole.log('🤩 Hello ChatGPT!!!');",
-        &script_file.to_string_lossy()
-      ),
-    )
-    .unwrap();
-  }
-
-  script_file
-}
-
 pub fn user_script() -> String {
-  let user_script_content = fs::read_to_string(script_path()).unwrap_or_else(|_| "".to_string());
+  let user_script_file = app_root().join("scripts").join("main.js");
+  let user_script_content = fs::read_to_string(user_script_file).unwrap_or_else(|_| "".to_string());
   format!(
     "window.addEventListener('DOMContentLoaded', function() {{\n{}\n}})",
     user_script_content
   )
+}
+
+pub fn load_script(filename: &str) -> String {
+  let script_file = app_root().join("scripts").join(filename);
+  fs::read_to_string(script_file).unwrap_or_else(|_| "".to_string())
 }
 
 pub fn open_file(path: PathBuf) {

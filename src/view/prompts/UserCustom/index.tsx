@@ -6,32 +6,32 @@ import useInit from '@/hooks/useInit';
 import useData from '@/hooks/useData';
 import useColumns from '@/hooks/useColumns';
 import FilePath from '@/components/FilePath';
-import useChatModel, { useCacheModel } from '@/hooks/useChatModel';
+import useChatPrompt, { useCachePrompt } from '@/hooks/useChatPrompt';
 import { useTableRowSelection, TABLE_PAGINATION } from '@/hooks/useTable';
 import { chatRoot, fmtDate } from '@/utils';
-import { modelColumns } from './config';
+import { promptColumns } from './config';
 import UserCustomForm from './Form';
 
 export default function UserCustom() {
   const { rowSelection, selectedRowIDs } = useTableRowSelection();
   const [isVisible, setVisible] = useState(false);
   const [jsonPath, setJsonPath] = useState('');
-  const { modelJson, modelSet } = useChatModel('user_custom');
-  const { modelCacheJson, modelCacheSet } = useCacheModel(jsonPath);
+  const { promptJson, promptSet } = useChatPrompt('user_custom');
+  const { promptCacheJson, promptCacheSet } = useCachePrompt(jsonPath);
   const { opData, opInit, opReplaceItems, opAdd, opRemove, opReplace, opSafeKey } = useData([]);
-  const { columns, ...opInfo } = useColumns(modelColumns());
-  const lastUpdated = modelJson?.user_custom?.last_updated;
+  const { columns, ...opInfo } = useColumns(promptColumns());
+  const lastUpdated = promptJson?.user_custom?.last_updated;
   const selectedItems = rowSelection.selectedRowKeys || [];
   const formRef = useRef<any>(null);
 
   useInit(async () => {
-    setJsonPath(await path.join(await chatRoot(), 'cache_model', 'user_custom.json'));
+    setJsonPath(await path.join(await chatRoot(), 'cache_prompts', 'user_custom.json'));
   });
 
   useEffect(() => {
-    if (modelCacheJson.length <= 0) return;
-    opInit(modelCacheJson);
-  }, [modelCacheJson.length]);
+    if (promptCacheJson.length <= 0) return;
+    opInit(promptCacheJson);
+  }, [promptCacheJson.length]);
 
   useEffect(() => {
     if (!opInfo.opType) return;
@@ -40,7 +40,7 @@ export default function UserCustom() {
     }
     if (['delete'].includes(opInfo.opType)) {
       const data = opRemove(opInfo?.opRecord?.[opSafeKey]);
-      modelCacheSet(data);
+      promptCacheSet(data);
       opInfo.resetRecord();
     }
   }, [opInfo.opType, formRef]);
@@ -48,13 +48,13 @@ export default function UserCustom() {
   useEffect(() => {
     if (opInfo.opType === 'enable') {
       const data = opReplace(opInfo?.opRecord?.[opSafeKey], opInfo?.opRecord);
-      modelCacheSet(data);
+      promptCacheSet(data);
     }
   }, [opInfo.opTime]);
 
   const handleEnable = (isEnable: boolean) => {
     const data = opReplaceItems(selectedRowIDs, { enable: isEnable });
-    modelCacheSet(data);
+    promptCacheSet(data);
   };
 
   const hide = () => {
@@ -65,7 +65,7 @@ export default function UserCustom() {
   const handleOk = () => {
     formRef.current?.form?.validateFields().then(async (vals: Record<string, any>) => {
       if (
-        modelCacheJson.map((i: any) => i.cmd).includes(vals.cmd) &&
+        promptCacheJson.map((i: any) => i.cmd).includes(vals.cmd) &&
         opInfo?.opRecord?.cmd !== vals.cmd
       ) {
         message.warning(
@@ -84,9 +84,9 @@ export default function UserCustom() {
         default:
           break;
       }
-      await modelCacheSet(data);
+      await promptCacheSet(data);
       opInit(data);
-      modelSet({
+      promptSet({
         id: 'user_custom',
         last_updated: Date.now(),
       });
@@ -94,13 +94,13 @@ export default function UserCustom() {
     });
   };
 
-  const modalTitle = `${{ new: 'Create', edit: 'Edit' }[opInfo.opType]} Model`;
+  const modalTitle = `${{ new: 'Create', edit: 'Edit' }[opInfo.opType]} Prompt`;
 
   return (
     <div>
       <div className="chat-table-btns">
         <Button className="chat-add-btn" type="primary" onClick={opInfo.opNew}>
-          Add Model
+          Add Prompt
         </Button>
         <div>
           {selectedItems.length > 0 && (
@@ -115,7 +115,7 @@ export default function UserCustom() {
         </div>
       </div>
       <div className="chat-table-tip">
-        <FilePath label="CACHE" paths="cache_model/user_custom.json" />
+        <FilePath label="CACHE" paths="cache_prompts/user_custom.json" />
         {lastUpdated && (
           <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>
             Last updated on {fmtDate(lastUpdated)}

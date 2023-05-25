@@ -18,30 +18,31 @@ pub fn fullscreen(app: AppHandle) {
   }
 }
 
-#[command]
-pub fn download(app: AppHandle, name: String, blob: Vec<u8>) {
-  let win = app.app_handle().get_window("core");
-  let path = utils::app_root().join(PathBuf::from(name));
-  utils::create_file(&path).unwrap();
-  fs::write(&path, blob).unwrap();
-  tauri::api::dialog::message(
-    win.as_ref(),
-    "Save File",
-    format!("PATH: {}", path.display()),
-  );
-}
+// #[command]
+// pub fn download(app: AppHandle, name: String, blob: Vec<u8>) {
+//   let win = app.app_handle().get_window("core");
+//   let path = utils::app_root().join(PathBuf::from(name));
+//   utils::create_file(&path).unwrap();
+//   fs::write(&path, blob).unwrap();
+//   tauri::api::dialog::message(
+//     win.as_ref(),
+//     "Save File",
+//     format!("PATH: {}", path.display()),
+//   );
+// }
 
 #[command]
-pub fn save_file(app: AppHandle, name: String, content: String) {
-  let win = app.app_handle().get_window("core");
+pub fn save_file(_app: AppHandle, name: String, content: String) {
+  // let win = app.app_handle().get_window("core");
   let path = utils::app_root().join(PathBuf::from(name));
   utils::create_file(&path).unwrap();
   fs::write(&path, content).unwrap();
-  tauri::api::dialog::message(
-    win.as_ref(),
-    "Save File",
-    format!("PATH: {}", path.display()),
-  );
+  utils::open_file(path);
+  // tauri::api::dialog::message(
+  //   win.as_ref(),
+  //   "Save File",
+  //   format!("PATH: {}", path.display()),
+  // );
 }
 
 #[command]
@@ -60,6 +61,13 @@ pub fn open_file(path: PathBuf) {
 }
 
 #[command]
+pub fn download_file(name: String, blob: Vec<u8>) {
+  let file = tauri::api::path::download_dir().unwrap().join(name);
+  fs::write(&file, blob).unwrap();
+  utils::open_file(file);
+}
+
+#[command]
 pub async fn get_data(app: AppHandle, url: String, is_msg: Option<bool>) -> Option<String> {
   let is_msg = is_msg.unwrap_or(false);
   let res = if is_msg {
@@ -71,4 +79,11 @@ pub async fn get_data(app: AppHandle, url: String, is_msg: Option<bool>) -> Opti
     error!("chatgpt_client_http: {}", err);
     None
   })
+}
+
+#[tauri::command]
+pub async fn fetch_image(url: String) -> Vec<u8> {
+  let response = reqwest::get(url).await.unwrap();
+  let bytes = response.bytes().await.unwrap();
+  bytes.to_vec()
 }

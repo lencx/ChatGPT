@@ -4,7 +4,7 @@
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/popup.core.js
  */
 
-async function init() {
+async function popupCoreInit() {
   const chatConf = (await invoke('get_app_conf')) || {};
   if (!chatConf.popup_search) return;
   if (!window.FloatingUIDOM) return;
@@ -77,7 +77,7 @@ async function init() {
 }
 
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  init();
+  popupCoreInit();
 } else {
-  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('DOMContentLoaded', popupCoreInit);
 }

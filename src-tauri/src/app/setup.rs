@@ -1,18 +1,34 @@
-use crate::{app::window, conf::AppConf, utils};
+use crate::{
+  app,
+  conf::AppConf,
+  utils::{self, load_script},
+};
 use log::{error, info};
 use tauri::{utils::config::WindowUrl, window::WindowBuilder, App, GlobalShortcutManager, Manager};
 use wry::application::accelerator::Accelerator;
 
-pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
+pub fn init(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
   info!("stepup");
+
   let app_conf = AppConf::read();
   let url = app_conf.main_origin.to_string();
   let theme = AppConf::theme_mode();
-  let handle = app.app_handle();
 
+  app::template::Template::new(utils::app_root().join("scripts"));
+
+  let handle = app.app_handle();
+  tauri::async_runtime::spawn(async move {
+    app::script::init_script(handle)
+      .await
+      .unwrap_or_else(|err| {
+        error!("script_init_error: {}", err);
+      });
+  });
+
+  let handle = app.app_handle();
   tauri::async_runtime::spawn(async move {
     info!("stepup_tray");
-    window::tray_window(&handle);
+    app::window::tray_window(&handle);
   });
 
   if let Some(v) = app_conf.clone().global_shortcut {
@@ -52,13 +68,8 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
   } else {
     let app = app.handle();
     tauri::async_runtime::spawn(async move {
-      let link = if app_conf2.main_dashboard {
-        "index.html"
-      } else {
-        &url
-      };
-      info!("main_window: {}", link);
-      let mut main_win = WindowBuilder::new(&app, "core", WindowUrl::App(link.into()))
+      let url2 = &url;
+      let mut main_win = WindowBuilder::new(&app, "core", WindowUrl::App(url2.into()))
         .title("ChatGPT")
         .resizable(true)
         .fullscreen(false)
@@ -66,7 +77,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
         .theme(Some(theme))
         .always_on_top(app_conf2.stay_on_top)
         .initialization_script(&utils::user_script())
-        .initialization_script(include_str!("../scripts/core.js"))
+        .initialization_script(&load_script("core.js"))
         .user_agent(&app_conf2.ua_window);
 
       #[cfg(target_os = "macos")]
@@ -76,7 +87,7 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
           .hidden_title(true);
       }
 
-      if url == "https://chat.openai.com" && !app_conf2.main_dashboard {
+      if url == "https://chat.openai.com" {
         main_win = main_win
           .initialization_script(include_str!("../vendors/floating-ui-core.js"))
           .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
@@ -84,11 +95,11 @@ pub fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>
           .initialization_script(include_str!("../vendors/jspdf.js"))
           .initialization_script(include_str!("../vendors/turndown.js"))
           .initialization_script(include_str!("../vendors/turndown-plugin-gfm.js"))
-          .initialization_script(include_str!("../scripts/popup.core.js"))
-          .initialization_script(include_str!("../scripts/export.js"))
-          .initialization_script(include_str!("../scripts/markdown.export.js"))
-          .initialization_script(include_str!("../scripts/cmd.js"))
-          .initialization_script(include_str!("../scripts/chat.js"))
+          .initialization_script(&load_script("popup.core.js"))
+          .initialization_script(&load_script("export.js"))
+          .initialization_script(&load_script("markdown.export.js"))
+          .initialization_script(&load_script("cmd.js"))
+          .initialization_script(&load_script("chat.js"))
       }
 
       main_win.build().unwrap();

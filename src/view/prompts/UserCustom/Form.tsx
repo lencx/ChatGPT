@@ -45,18 +45,18 @@ const UserCustomForm: ForwardRefRenderFunction<FormProps, UserCustomFormProps> =
       >
         <Input placeholder="Please enter the Act" {...DISABLE_AUTO_COMPLETE} />
       </Form.Item>
-      <Form.Item label="Tags" name="tags">
-        <Tags value={record?.tags} />
-      </Form.Item>
-      <Form.Item label="Enable" name="enable" valuePropName="checked">
-        <Switch />
-      </Form.Item>
       <Form.Item
         label="Prompt"
         name="prompt"
         rules={[{ required: true, message: 'Please enter a prompt!' }]}
       >
         <Input.TextArea rows={4} placeholder="Please enter a prompt" {...DISABLE_AUTO_COMPLETE} />
+      </Form.Item>
+      <Form.Item label="Enable" name="enable" valuePropName="checked">
+        <Switch />
+      </Form.Item>
+      <Form.Item label="Tags" name="tags">
+        <Tags value={record?.tags} />
       </Form.Item>
     </Form>
   );

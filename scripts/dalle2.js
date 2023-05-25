@@ -4,7 +4,7 @@
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/dalle2.js
  */
 
-function init() {
+function dalle2Init() {
   document.addEventListener('click', (e) => {
     const origin = e.target.closest('a');
     if (!origin || !origin.target) return;
@@ -35,7 +35,7 @@ function init() {
 }
 
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  init();
+  dalle2Init();
 } else {
-  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('DOMContentLoaded', dalle2Init);
 }

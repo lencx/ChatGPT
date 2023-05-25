@@ -3,8 +3,8 @@ import { homeDir, join, dirname } from '@tauri-apps/api/path';
 import dayjs from 'dayjs';
 
 export const APP_CONF_JSON = 'chat.conf.json';
-export const CHAT_MODEL_JSON = 'chat.model.json';
-export const CHAT_MODEL_CMD_JSON = 'chat.model.cmd.json';
+export const CHAT_PROMPT_JSON = 'chat.prompt.json';
+export const CHAT_PROMPT_CMD_JSON = 'chat.prompt.cmd.json';
 export const CHAT_DOWNLOAD_JSON = 'chat.download.json';
 export const CHAT_AWESOME_JSON = 'chat.awesome.json';
 export const CHAT_NOTES_JSON = 'chat.notes.json';
@@ -23,8 +23,12 @@ export const chatRoot = async () => {
   return join(await homeDir(), '.chatgpt');
 };
 
-export const chatModelPath = async (): Promise<string> => {
-  return join(await chatRoot(), CHAT_MODEL_JSON);
+export const scriptRoot = async () => {
+  return join(await chatRoot(), 'scripts');
+};
+
+export const chatPromptPath = async (): Promise<string> => {
+  return join(await chatRoot(), CHAT_PROMPT_JSON);
 };
 
 export const chatPromptsPath = async (): Promise<string> => {

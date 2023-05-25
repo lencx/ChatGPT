@@ -6,20 +6,11 @@
 
 [![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](./README.md)
 [![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](./README-ZH_CN.md)\
-![visitor](https://visitor-badge.glitch.me/badge?page_id=lencx.chatgpt)
 [![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
 [![chat](https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord)](https://discord.gg/aPhCRf4zZr)
 [![lencx](https://img.shields.io/badge/follow-lencx__-blue?style=flat&logo=Twitter)](https://twitter.com/lencx_)
 
-<!-- [![lencx](https://img.shields.io/twitter/follow/lencx_.svg?style=social)](https://twitter.com/lencx_) -->
-
-<!-- [![中文版 badge](https://img.shields.io/badge/%E4%B8%AD%E6%96%87-Traditional%20Chinese-blue)](./README-ZH.md) -->
-
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
-
-**🛑 URGENT NOTICE: A hacker has been found to take advantage of the heat of `lencx/ChatGPT` to plant a Trojan horse after the fork project and rebuild the installer. If you have friends around you who are using this desktop application, please remind them not to download unknown links freely. Now the project will remove other installation ways and only provide this download link https://github.com/lencx/ChatGPT/releases**
-
-**🛑 紧急通知：目前发现有黑客利用 `lencx/ChatGPT` 的热度，在 fork 项目后植入木马，重新构建安装程序。如果你身边有朋友正在使用此桌面应用，请提醒 TA 们不要随意下载不明链接。现在项目将删除其他安装途径，仅提供此下载链接 https://github.com/lencx/ChatGPT/releases**
 
 ---
 
@@ -41,7 +32,7 @@
 
 ### Windows
 
-- [ChatGPT_0.12.0_windows_x86_64.msi](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_windows_x86_64.msi): Direct download installer
+- [ChatGPT_1.0.0_windows_x86_64.msi](https://github.com/lencx/ChatGPT/releases/download/v1.0.0/ChatGPT_1.0.0_windows_x86_64.msi): Direct download installer
 - Use [winget](https://winstall.app/apps/lencx.ChatGPT):
 
   ```bash
@@ -52,12 +43,12 @@
   winget install --id=lencx.ChatGPT -e --version 0.10.0
   ```
 
-**Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142#issuecomment-0.12.0))**
+**Note: If the installation path and application name are the same, it will lead to conflict ([#142](https://github.com/lencx/ChatGPT/issues/142))**
 
 ### Mac
 
-- [ChatGPT_0.12.0_macos_aarch64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_macos_aarch64.dmg): Direct download installer
-- [ChatGPT_0.12.0_macos_x86_64.dmg](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_macos_x86_64.dmg): Direct download installer
+- [ChatGPT_1.0.0_macos_aarch64.dmg](https://github.com/lencx/ChatGPT/releases/download/v1.0.0/ChatGPT_1.0.0_macos_aarch64.dmg): Direct download installer
+- [ChatGPT_1.0.0_macos_x86_64.dmg](https://github.com/lencx/ChatGPT/releases/download/v1.0.0/ChatGPT_1.0.0_macos_x86_64.dmg): Direct download installer
 - Homebrew \
   Or you can install with _[Homebrew](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
@@ -79,8 +70,8 @@ sudo xattr -r -d com.apple.quarantine /YOUR_PATH/ChatGPT.app
 
 ### Linux
 
-- [ChatGPT_0.12.0_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_linux_x86_64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
-- [ChatGPT_0.12.0_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v0.12.0/ChatGPT_0.12.0_linux_x86_64.AppImage.tar.gz): Works reliably, you can try it if `.deb` fails to run
+- [ChatGPT_1.0.0_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v1.0.0/ChatGPT_1.0.0_linux_x86_64.deb): Download `.deb` installer, advantage small size, disadvantage poor compatibility
+- [ChatGPT_1.0.0_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v1.0.0/ChatGPT_1.0.0_linux_x86_64.AppImage.tar.gz): Works reliably, you can try it if `.deb` fails to run
 
 <!-- tr-download-end -->
 
@@ -95,7 +86,6 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 - Multi-platform: `macOS` `Linux` `Windows`
 - Text-to-Speech
 - Export ChatGPT history (PNG, PDF and Markdown)
-- The main window and system tray support custom URLs to wrap any website into a desktop application
 - Automatic application upgrade notification
 - Common shortcut keys
 - System tray hover window

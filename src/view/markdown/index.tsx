@@ -8,7 +8,6 @@ import { fs, shell } from '@tauri-apps/api';
 import useInit from '@/hooks/useInit';
 import SplitIcon from '@/icons/SplitIcon';
 import { getPath } from '@/view/notes/config';
-import './index.scss';
 
 const modeMap: any = {
   0: 'split',
@@ -41,7 +40,7 @@ export default function Markdown() {
 
   return (
     <>
-      <div className="md-task">
+      <div className="editor-task">
         <Breadcrumb separator="">
           <Breadcrumb.Item onClick={() => history.go(-1)}>
             <ArrowLeftOutlined />

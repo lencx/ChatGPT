@@ -25,19 +25,19 @@ export default function General() {
       <Form.Item label="Stay On Top" name="stay_on_top" valuePropName="checked">
         <Switch />
       </Form.Item>
-      <Form.Item label="Save Window State" name="save_window_state" valuePropName="checked">
+      {/* <Form.Item label="Save Window State" name="save_window_state" valuePropName="checked">
         <Switch />
-      </Form.Item>
+      </Form.Item> */}
       {platformInfo === 'darwin' && (
         <Form.Item label="Titlebar" name="titlebar" valuePropName="checked">
           <Switch />
         </Form.Item>
       )}
-      {platformInfo === 'darwin' && (
+      {/* {platformInfo === 'darwin' && (
         <Form.Item label="Hide Dock Icon" name="hide_dock_icon" valuePropName="checked">
           <Switch />
         </Form.Item>
-      )}
+      )} */}
       <Form.Item label="Theme" name="theme">
         <Radio.Group>
           <Radio value="light">Light</Radio>
