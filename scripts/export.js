@@ -1,6 +1,6 @@
 /**
  * @name export.js
- * @version 0.1.0
+ * @version 0.1.1
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/export.js
  */
 
@@ -168,13 +168,13 @@ async function exportInit() {
     await invoke('download_list', { pathname: 'chat.notes.json', filename, id, dir: 'notes' });
   }
 
-  async function downloadThread({ asF = Format.PNG } = {}) {
+  async function downloadThread({ as = Format.PNG } = {}) {
     const { startLoading, stopLoading } = new window.__LoadingMask('Exporting in progress...');
     startLoading();
     const elements = new Elements();
     await elements.fixLocation();
     const pixelRatio = window.devicePixelRatio;
-    const minRatio = asF === Format.PDF ? 2 : 2.5;
+    const minRatio = as === Format.PDF ? 2 : 2.5;
     window.devicePixelRatio = Math.max(pixelRatio, minRatio);
 
     html2canvas(elements.thread, {
@@ -185,7 +185,7 @@ async function exportInit() {
       window.devicePixelRatio = pixelRatio;
       const imgData = canvas.toDataURL('image/png');
       requestAnimationFrame(async () => {
-        if (asF === Format.PDF) {
+        if (as === Format.PDF) {
           await handlePdf(imgData, canvas, pixelRatio);
         } else {
           await handleImg(imgData);
