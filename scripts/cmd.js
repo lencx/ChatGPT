@@ -1,6 +1,6 @@
 /**
  * @name cmd.js
- * @version 0.1.0
+ * @version 0.1.1
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/cmd.js
  */
 
@@ -72,24 +72,12 @@ function cmdInit() {
     color: #888;
   }
   .chatappico {
-    width: 20px;
-    height: 20px;
+    width: 1rem;
+    height: 1rem;
   }
-  .chatappico.pdf, .chatappico.md {
-    width: 22px;
-    height: 22px;
-  }
-  .chatappico.copy {
-    width: 16px;
-    height: 16px;
-  }
-  .chatappico.cpok {
-    width: 16px;
-    height: 16px;
-  }
-  .chatappico.refresh {
-    width: 22px;
-    height: 22px;
+  .chatappico.png {
+    width: 0.8rem;
+    height: 0.9rem;
   }
   #download-markdown-button,
   #download-png-button,
@@ -159,8 +147,17 @@ function cmdInit() {
         promptDom.style.bottom = '54px';
       }
 
+      const convertToSafeHtml = (v) => {
+        return JSON.stringify(v, null, 2)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      };
+
       const itemDom = (v) =>
-        `<div class="cmd-item" title="${v.prompt}" data-cmd="${
+        `<div class="cmd-item" title="${convertToSafeHtml(v.prompt)}" data-cmd="${
           v.cmd
         }" data-prompt="${encodeURIComponent(v.prompt)}"><b title="${v.cmd}">/${v.cmd}</b><i>${
           v.act

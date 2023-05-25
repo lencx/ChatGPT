@@ -10,7 +10,7 @@
     },
     {
       "name": "cmd.js",
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "name": "chat.js",
@@ -26,7 +26,7 @@
     },
     {
       "name": "export.js",
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     {
       "name": "markdown.export.js",
