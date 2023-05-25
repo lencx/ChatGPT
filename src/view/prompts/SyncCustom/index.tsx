@@ -154,7 +154,6 @@ export default function SyncCustom() {
           const file = vals?.file?.file?.originFileObj;
           const data = opAdd(vals);
           const parseData = await parseLocal(file);
-
           if (parseData[0]) {
             const id = data[0].id;
             const filePath = await path.join(await chatRoot(), 'cache_prompts', `${id}.json`);
@@ -164,6 +163,9 @@ export default function SyncCustom() {
             await promptCacheCmd();
             hide();
             message.success('Data added successfully');
+          } else {
+            opRemove(data?.[0]?.[opSafeKey]);
+            return;
           }
         }
       }

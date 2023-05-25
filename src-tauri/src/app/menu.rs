@@ -145,6 +145,8 @@ pub fn init() -> Menu {
         .into(),
       CustomMenuItem::new("clear_conf", "Clear Config").into(),
       MenuItem::Separator.into(),
+      CustomMenuItem::new("chatgpt_sponsors", "ChatGPT Sponsors").into(),
+      MenuItem::Separator.into(),
       CustomMenuItem::new("nofwl", "NoFWL Desktop Application").into(),
       CustomMenuItem::new("sponsor", "Sponsor Author").into(),
     ]),
@@ -245,6 +247,13 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
       None,
     ),
     "nofwl" => open(&app, conf::NOFWL_APP),
+    "chatgpt_sponsors" => window::cmd::wa_window(
+      app,
+      "chatgpt_sponsors".into(),
+      "Sponsors".into(),
+      conf::APP_SPONSORS.into(),
+      None,
+    ),
     "sponsor" => window::sponsor_window(app),
     "popup_search" => {
       let app_conf = AppConf::read();

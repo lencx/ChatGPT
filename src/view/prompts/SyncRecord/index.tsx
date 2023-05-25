@@ -73,7 +73,7 @@ export default function SyncRecord() {
       </div>
       <div className="chat-table-tip">
         <div className="chat-sync-path">
-          <FilePath label="URL" url={filePath} />
+          {filePath && <FilePath label="URL" url={filePath} />}
           <FilePath label="CACHE" paths={`cache_prompts/${state?.id}.json`} />
         </div>
         {state?.last_updated && (

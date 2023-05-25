@@ -58,9 +58,9 @@ const SyncForm: ForwardRefRenderFunction<FormProps, SyncFormProps> = ({ record }
     <Tooltip
       title={
         <pre>{`"cmd","act","prompt"
-"cmd","act","prompt"
-"cmd","act","prompt"
-"cmd","act","prompt"`}</pre>
+"a","aaa","aaa aaa"
+"b","bbb","bbb bbb"
+"c","ccc","ccc ccc"`}</pre>
       }
     >
       <a>.csv</a>

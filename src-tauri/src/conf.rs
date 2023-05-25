@@ -9,6 +9,7 @@ use tauri::TitleBarStyle;
 use crate::utils::{app_root, create_file, exists};
 
 pub const APP_WEBSITE: &str = "https://lencx.github.io/app/";
+pub const APP_SPONSORS: &str = "https://lencx.github.io/app/sponsors";
 pub const ISSUES_URL: &str = "https://github.com/lencx/ChatGPT/issues";
 pub const NOFWL_APP: &str = "https://github.com/lencx/nofwl";
 pub const UPDATE_LOG_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/UPDATE_LOG.md";

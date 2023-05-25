@@ -103,6 +103,11 @@
           "windows": ["core", "main", "tray"],
           "domain": "openai.com",
           "enableTauriAPI": true
+        },
+        {
+          "windows": ["chatgpt_sponsors", "app_website"],
+          "domain": "app.nofwl.com",
+          "enableTauriAPI": true
         }
       ]
     },
