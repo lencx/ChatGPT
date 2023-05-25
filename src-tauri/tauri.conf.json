@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "ChatGPT",
-    "version": "0.12.0"
+    "version": "1.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -90,22 +90,36 @@
       "csp": null,
       "dangerousRemoteDomainIpcAccess": [
         {
-          "windows": ["core", "main", "tray"],
+          "windows": [
+            "core",
+            "main",
+            "tray"
+          ],
           "domain": "chat.openai.com",
           "enableTauriAPI": true
         },
         {
-          "windows": ["core", "main"],
+          "windows": [
+            "core",
+            "main"
+          ],
           "domain": "labs.openai.com",
           "enableTauriAPI": true
         },
         {
-          "windows": ["core", "main", "tray"],
+          "windows": [
+            "core",
+            "main",
+            "tray"
+          ],
           "domain": "openai.com",
           "enableTauriAPI": true
         },
         {
-          "windows": ["chatgpt_sponsors", "app_website"],
+          "windows": [
+            "chatgpt_sponsors",
+            "app_website"
+          ],
           "domain": "app.nofwl.com",
           "enableTauriAPI": true
         }
