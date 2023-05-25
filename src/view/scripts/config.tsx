@@ -49,22 +49,11 @@ export const scriptColumns = ({ scriptsMap }: any) => [
     },
   },
   {
-    title: 'Created',
-    dataIndex: 'created',
-    key: 'created',
-    width: 150,
-    render: fmtDate,
-  },
-  {
     title: 'Action',
     fixed: 'right',
     width: 100,
     render: (_: any, row: any, actions: any) => {
       const isExternal = row.name === 'main.js';
-
-      const next = scriptsMap?.[row.name]?.next_version;
-      const curr = scriptsMap?.[row.name]?.curr_version;
-
       return (
         <Space>
           <Link
@@ -74,7 +63,7 @@ export const scriptColumns = ({ scriptsMap }: any) => [
           >
             Edit
           </Link>
-          {!isExternal && next && next !== curr && (
+          {!isExternal && (
             <Popconfirm
               placement="topLeft"
               title="Are you sure you want to synchronize? It will overwrite all previous modifications made to this file."

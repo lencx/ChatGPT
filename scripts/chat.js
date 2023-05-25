@@ -114,6 +114,8 @@ function chatInit() {
       currentIndex = -1;
     };
   }
+
+  init();
 }
 
 if (document.readyState === 'complete' || document.readyState === 'interactive') {

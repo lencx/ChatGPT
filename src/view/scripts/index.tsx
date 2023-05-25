@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Table } from 'antd';
+import { Table, message } from 'antd';
 import { path, fs, invoke } from '@tauri-apps/api';
 
 import useInit from '@/hooks/useInit';
@@ -53,6 +53,13 @@ export default function Scripts() {
         if (isOk) {
           await handleInit();
           opInfo.resetRecord();
+          message.success(
+            `The ${opInfo?.opRecord?.name} script has been synchronized successfully`,
+          );
+        } else {
+          message.error(
+            `The ${opInfo?.opRecord?.name} script synchronization failed. You can try editing the script and click the Remote File link to copy the source code.`,
+          );
         }
       }
     })();
