@@ -14,6 +14,7 @@ import type { MenuProps } from 'antd';
 import Settings from '@/view/settings';
 import About from '@/view/about';
 import Scripts from '@/view/scripts';
+import ScriptsEditor from '@/view/scripts/Editor';
 import UserCustom from '@/view/prompts/UserCustom';
 import SyncPrompts from '@/view/prompts/SyncPrompts';
 import SyncCustom from '@/view/prompts/SyncCustom';
@@ -102,6 +103,11 @@ export const routes: Array<ChatRouteObject> = [
       label: 'Scripts',
       icon: <CodeOutlined />,
     },
+  },
+  {
+    path: '/scripts/:id',
+    element: <ScriptsEditor />,
+    hideMenu: true,
   },
   {
     path: '/about',

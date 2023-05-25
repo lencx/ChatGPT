@@ -23,6 +23,10 @@ export const chatRoot = async () => {
   return join(await homeDir(), '.chatgpt');
 };
 
+export const scriptRoot = async () => {
+  return join(await chatRoot(), 'scripts');
+};
+
 export const chatPromptPath = async (): Promise<string> => {
   return join(await chatRoot(), CHAT_PROMPT_JSON);
 };

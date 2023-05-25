@@ -12,7 +12,8 @@ import { fmtDate, chatRoot } from '@/utils';
 import { syncColumns } from './config';
 import './index.scss';
 
-const promptsURL = 'https://github.com/f/awesome-chatgpt-prompts/blob/main/prompts.csv';
+// const promptsURL = 'https://github.com/f/awesome-chatgpt-prompts/blob/main/prompts.csv';
+const promptsURL = 'https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv';
 
 export default function SyncPrompts() {
   const { rowSelection, selectedRowIDs } = useTableRowSelection();
@@ -83,7 +84,7 @@ export default function SyncPrompts() {
       </div>
       <div className="chat-table-tip">
         <div className="chat-sync-path">
-          <FilePath url={promptsURL} content="f/awesome-chatgpt-prompts/prompts.csv" />
+          <FilePath label="URL" url={promptsURL} content="f/awesome-chatgpt-prompts/prompts.csv" />
           <FilePath label="CACHE" paths="cache_prompts/chatgpt_prompts.json" />
         </div>
         {lastUpdated && (

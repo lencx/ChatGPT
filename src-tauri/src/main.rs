@@ -7,7 +7,7 @@ mod app;
 mod conf;
 mod utils;
 
-use app::{cmd, fs_extra, gpt, menu, setup, window};
+use app::{cmd, fs_extra, gpt, menu, script, setup, window};
 use conf::AppConf;
 use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::{
@@ -76,6 +76,8 @@ async fn main() {
       conf::cmd::form_confirm,
       conf::cmd::form_cancel,
       conf::cmd::form_msg,
+      script::cmd::sync_scripts,
+      script::cmd::get_script_info,
       window::cmd::wa_window,
       window::cmd::control_window,
       window::cmd::window_reload,

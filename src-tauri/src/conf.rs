@@ -15,8 +15,7 @@ pub const UPDATE_LOG_URL: &str = "https://github.com/lencx/ChatGPT/blob/main/UPD
 // pub const BUY_COFFEE: &str = "https://www.buymeacoffee.com/lencx";
 pub const GITHUB_PROMPTS_CSV_URL: &str =
   "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv";
-pub const SCRIPTS_MANIFEST: &str =
-  "https://raw.githubusercontent.com/lencx/ChatGPT/main/scripts/manifest.json";
+pub const SCRIPTS_DIR: &str = "https://raw.githubusercontent.com/lencx/ChatGPT/main/scripts/";
 
 pub const APP_CONF_PATH: &str = "chat.conf.json";
 pub const CHATGPT_URL: &str = "https://chat.openai.com";

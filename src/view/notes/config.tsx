@@ -67,5 +67,5 @@ const RenderPath = ({ row }: any) => {
 };
 
 export const getPath = async (row: any) => {
-  return (await path.join(await chatRoot(), 'notes', row.id)) + `.${row.ext}`;
+  return await path.join(await chatRoot(), 'notes', `${row.id}.md`);
 };

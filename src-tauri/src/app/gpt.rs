@@ -9,8 +9,6 @@ use std::{collections::HashMap, fs, path::PathBuf, vec};
 use tauri::{api, command, AppHandle, Manager};
 use walkdir::WalkDir;
 
-use super::fs_extra::Error;
-
 #[command]
 pub fn get_chat_prompt_cmd() -> serde_json::Value {
   let path = utils::app_root().join("chat.prompt.cmd.json");
@@ -183,12 +181,10 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<PromptRecord>
           },
           act: i.act.clone(),
           prompt: i.prompt.clone(),
-          tags: vec!["chatgpt-prompts".to_string()],
+          tags: vec!["awesome-chatgpt-prompts".to_string()],
           enable: true,
         })
         .collect::<Vec<PromptRecord>>();
-
-      let data2 = transformed_data;
 
       let prompts = utils::app_root().join("chat.prompt.json");
       let prompt_cmd = utils::app_root().join("chat.prompt.cmd.json");
@@ -211,7 +207,7 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<PromptRecord>
       // chatgpt_prompts.json
       fs::write(
         chatgpt_prompts,
-        serde_json::to_string_pretty(&data).unwrap(),
+        serde_json::to_string_pretty(&transformed_data).unwrap(),
       )
       .unwrap();
       let cmd_data = cmd_list();
@@ -253,7 +249,7 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<PromptRecord>
       window::cmd::window_reload(app.clone(), "core");
       window::cmd::window_reload(app, "tray");
 
-      return Some(data2);
+      return Some(transformed_data);
     }
   }
 

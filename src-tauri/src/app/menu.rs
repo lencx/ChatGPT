@@ -93,9 +93,6 @@ pub fn init() -> Menu {
       #[cfg(target_os = "macos")]
       hide_dock_icon_menu.into(),
       system_tray_menu.into(),
-      CustomMenuItem::new("inject_script", "Inject Script")
-        .accelerator("CmdOrCtrl+J")
-        .into(),
       MenuItem::Separator.into(),
       Submenu::new(
         "Theme",
@@ -219,7 +216,6 @@ pub fn init() -> Menu {
 pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
   let win = Some(event.window()).unwrap();
   let app = win.app_handle();
-  let script_path = utils::script_path().to_string_lossy().to_string();
   let menu_id = event.menu_item_id();
   let menu_handle = win.menu_handle();
 
@@ -239,7 +235,6 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     // Preferences
     "control_center" => window::cmd::control_window(app, "control".into()),
     "restart" => tauri::api::process::restart(&app.env()),
-    "inject_script" => open(&app, &script_path),
     "go_conf" => utils::open_file(utils::app_root()),
     "clear_conf" => utils::clear_conf(&app),
     "app_website" => window::cmd::wa_window(

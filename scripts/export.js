@@ -4,7 +4,7 @@
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/export.js
  */
 
-async function init() {
+async function exportInit() {
   if (window.location.pathname === '/auth/login') return;
   const buttonOuterHTMLFallback = `<button class="btn flex justify-center gap-2 btn-neutral">Try Again</button>`;
   removeButtons();
@@ -303,7 +303,7 @@ async function init() {
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
-    const formattedDateTime = `${year}_${month}_${day}_${hours}_${minutes}_${seconds}`;
+    const formattedDateTime = `${year}_${month}_${day}-${hours}${minutes}${seconds}`;
     return formattedDateTime;
   }
 
@@ -315,10 +315,10 @@ async function init() {
   }
 }
 
-window.addEventListener('resize', init);
+window.addEventListener('resize', exportInit);
 
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  init();
+  exportInit();
 } else {
-  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('DOMContentLoaded', exportInit);
 }

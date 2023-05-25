@@ -4,7 +4,7 @@
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/core.js
  */
 
-var coreInit = (() => {
+function coreInit() {
   const uid = () => window.crypto.getRandomValues(new Uint32Array(1))[0];
   function transformCallback(callback = () => {}, once = false) {
     const identifier = uid();
@@ -21,6 +21,7 @@ var coreInit = (() => {
     });
     return identifier;
   }
+
   async function invoke(cmd, args) {
     return new Promise((resolve, reject) => {
       if (!window.__TAURI_POST_MESSAGE__) reject('__TAURI_POST_MESSAGE__ does not exist!');
@@ -226,11 +227,11 @@ var coreInit = (() => {
     return { startLoading, stopLoading };
   }
 
-  return { init };
-})();
+  init();
+}
 
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  coreInit.init();
+  coreInit();
 } else {
-  document.addEventListener('DOMContentLoaded', coreInit.init);
+  document.addEventListener('DOMContentLoaded', coreInit);
 }
