@@ -21,7 +21,9 @@
 
 **New repository: https://github.com/lencx/nofwl**
 
----
+## Live Demo
+
+- [ChatGPT Desktop Application v1.0.0](https://youtu.be/IIuuB5vFFAQ)
 
 ## 📦 Install
 

@@ -102,7 +102,9 @@ pub fn init(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
           .initialization_script(&load_script("chat.js"))
       }
 
-      main_win.build().unwrap();
+      if let Err(err) = main_win.build() {
+        error!("core_build_error: {}", err);
+      }
     });
   }
 
