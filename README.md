@@ -1,7 +1,7 @@
 <p align="center">
   <img width="180" src="./public/logo.png" alt="ChatGPT">
   <h1 align="center">ChatGPT</h1>
-  <p align="center">ChatGPT Desktop Application (Mac, Windows and Linux)</p>
+  <p align="center">ChatGPT Desktop Application (Available on Mac, Windows, and Linux)</p>
 </p>
 
 [![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](./README.md)
@@ -14,10 +14,10 @@
 
 ---
 
-**It is an unofficial project intended for personal learning and research purposes only. During the time that the ChatGPT desktop application was open-sourced, it received a lot of attention, and I would like to thank everyone for their support. However, as things have developed, there are two issues that seriously affect the project's next development plan:**
+**This is an unofficial project solely intended for personal learning and research. Since the ChatGPT desktop application was open-sourced, it has garnered a lot of attention, and I want to thank everyone for their support. However, as the project progressed, two issues have arisen that greatly impact its future development:**
 
-- **Some people have used it for repackaging and selling for profit.**
-- **The name and icon of ChatGPT may be involved in infringement issues.**
+- **Some individuals have repackaged and sold it for profit.**
+- **The name and icon of ChatGPT could potentially lead to infringement disputes.**
 
 **New repository: https://github.com/lencx/nofwl**
 
