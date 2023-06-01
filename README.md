@@ -24,6 +24,9 @@
 ## Live Demo
 
 - [ChatGPT Desktop Application v1.0.0](https://youtu.be/IIuuB5vFFAQ)
+- [How to use GPT-4-Mobile without restrictions in the ChatGPT desktop application?](https://youtu.be/AZSe3sHH9_M)
+
+![](https://github.com/lencx/ChatGPT/assets/16164244/2f490551-5379-41e7-8445-68eceb5d72a6)
 
 ## 📦 Install
 
