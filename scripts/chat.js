@@ -1,6 +1,6 @@
 /**
  * @name chat.js
- * @version 0.1.0
+ * @version 0.1.1
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/chat.js
  */
 
@@ -25,6 +25,7 @@ function chatInit() {
     });
 
     document.addEventListener('visibilitychange', focusOnInput);
+    gpt4Mobile();
   }
 
   function observeMutations(mutationsList) {
@@ -112,6 +113,38 @@ function chatInit() {
       saybtn.innerHTML = ICONS.voice;
       currentUtterance = null;
       currentIndex = -1;
+    };
+  }
+
+  function gpt4Mobile() {
+    const originFetch = fetch;
+    window.fetch = (url, options) => {
+      return originFetch(url, options).then(async (response) => {
+        if (url.indexOf('/backend-api/models') === -1) {
+          return response;
+        }
+        const responseClone = response.clone();
+        let res = await responseClone.json();
+        res.models = res.models.map((m) => {
+          m.tags = m.tags.filter((t) => {
+            return t !== 'mobile';
+          });
+          if (m.slug === 'gpt-4-mobile') {
+            res.categories.push({
+              browsing_model: null,
+              category: 'gpt_4',
+              code_interpreter_model: null,
+              default_model: 'gpt-4-mobile',
+              human_category_name: 'GPT-4-Mobile',
+              plugins_model: null,
+              subscription_level: 'plus',
+            });
+          }
+          return m;
+        });
+
+        return new Response(JSON.stringify(res), response);
+      });
     };
   }
 
