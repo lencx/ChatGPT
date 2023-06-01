@@ -5,15 +5,11 @@
   "url": "https://github.com/lencx/ChatGPT/tree/main/scripts",
   "scripts": [
     {
-      "name": "core.js",
-      "version": "0.1.0"
-    },
-    {
-      "name": "cmd.js",
+      "name": "chat.js",
       "version": "0.1.1"
     },
     {
-      "name": "chat.js",
+      "name": "cmd.js",
       "version": "0.1.1"
     },
     {
