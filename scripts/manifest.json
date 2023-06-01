@@ -6,7 +6,7 @@
   "scripts": [
     {
       "name": "core.js",
-      "version": "0.1.1"
+      "version": "0.1.0"
     },
     {
       "name": "cmd.js",
@@ -14,7 +14,7 @@
     },
     {
       "name": "chat.js",
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "name": "core.js",
