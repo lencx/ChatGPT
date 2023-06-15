@@ -484,7 +484,7 @@ pub fn tray_handler(handle: &AppHandle, event: SystemTrayEvent) {
           }
         };
       }
-      "quit" => std::process::exit(0),
+      "quit" => app.exit(0),
       _ => (),
     },
     _ => (),
