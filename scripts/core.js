@@ -94,10 +94,28 @@ function coreInit() {
               10,
             );
             const navStyleDom = document.createElement('style');
-            navStyleDom.innerHTML = `nav{padding-top:${
-              currentPaddingTop + topDom.clientHeight
-            }px !important}`;
+            navStyleDom.innerHTML = `nav{
+              padding-top:${currentPaddingTop + topDom.clientHeight}px !important
+            }
+            button[aria-label="Show sidebar"]{
+              margin-top:${topDom.clientHeight}px !important
+            }
+            `;
             document.head.appendChild(navStyleDom);
+          } else {
+            const navStyleDom = document.createElement('style');
+            navStyleDom.innerHTML = `nav{
+              padding-top:${topDom.clientHeight}px !important
+            }
+            button[aria-label="Show sidebar"]{
+              margin-top:${topDom.clientHeight}px !important
+            }
+            `;
+            document.head.appendChild(navStyleDom);
+            const main = document.querySelector('main');
+            if (main && main.parentElement.children.length > 1) {
+              main.parentElement.children[0].style.paddingTop = topDom.clientHeight + 'px';
+            }
           }
         }
 
