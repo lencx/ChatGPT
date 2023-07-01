@@ -99,13 +99,7 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 - Customize global shortcuts ([#108](https://github.com/lencx/ChatGPT/issues/108))
 - Pop-up Search ([#122](https://github.com/lencx/ChatGPT/issues/122) mouse selected content, no more than 400 characters): The application is built using Tauri, and due to its security restrictions, some of the action buttons will not work, so we recommend going to your browser.
 
-## ❤️ Sponsors
-
-### **ChatGPT-Powered Email Finding & Outreach at Scale**
-
-[FinalScout](https://finalscout.com/?utm_source=github&utm_medium=lencx&utm_campaign=chatgpt): Extract valid email addresses from LinkedIn & craft tailored emails based on LinkedIn profile with ChatGPT, guaranteeing up to 98% email deliverability. Scale your outreach efforts and connect with potential customers or clients like never before. [Begin automating your email finding and writing process](https://finalscout.com/?utm_source=github&utm_medium=lencx&utm_campaign=chatgpt)
-
-## Thanks
+## ❤️ Thanks
 
 - The core implementation of the share button code was copied from the [@liady](https://github.com/liady) extension with some modifications.
 - Thanks to the [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts) repository for inspiring the custom command function for this application.
