@@ -15,7 +15,7 @@ body:
       label: Non-ChatGPT bug
       options:
         - label: |
-            This issue does not occur on [chat.openai.com](https://chat.openai.com) and only occurs on this app.
+            This issue does not occur on chat.openai.com and only occurs on this app.
           required: true
   - type: markdown
     attributes:
