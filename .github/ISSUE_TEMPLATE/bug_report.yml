@@ -11,7 +11,7 @@ body:
       
       Please make sure to [search for existing issues](https://github.com/lencx/ChatGPT/issues) before filing a new one!
   - type: checkboxes
-      attributes:
+    attributes:
       label: Non-ChatGPT bug
       options:
         - label: >-
