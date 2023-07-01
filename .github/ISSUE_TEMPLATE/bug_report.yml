@@ -4,19 +4,19 @@ title: '[Bug]'
 labels:
   - 'bug'
 body:
- - type: markdown
-  attributes:
+  - type: markdown
+    attributes:
     value: >-
       Please **DO NOT** file issues here if you are having problems with ChatGPT itself. Issues should **ONLY** be created here for bugs that pertain to this package, [lencx/ChatGPT](https://github.com/lencx/ChatGPT). If you are experiencing an issue on [chat.openai.com](chat.openai.com), please contact **OpenAI** for support or submit feedback through ChatGPT itself. If you **only have an issue with this app** and do not have the issue on [chat.openai.com](https://chat.openai.com), please file an issue here.
       
       Please make sure to [search for existing issues](https://github.com/lencx/ChatGPT/issues) before filing a new one!
- - type: checkboxes
-  attributes:
-    label: Non-ChatGPT bug
-    options:
-    - label: >-
-        This issue does not occur on [chat.openai.com](https://chat.openai.com) and only occurs on this app.
-      required: true
+  - type: checkboxes
+      attributes:
+      label: Non-ChatGPT bug
+      options:
+        - label: >-
+            This issue does not occur on [chat.openai.com](https://chat.openai.com) and only occurs on this app.
+          required: true
   - type: markdown
     attributes:
       value: |
