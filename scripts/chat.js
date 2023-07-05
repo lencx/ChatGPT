@@ -1,6 +1,6 @@
 /**
  * @name chat.js
- * @version 0.1.1
+ * @version 0.1.2
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/chat.js
  */
 
@@ -26,6 +26,7 @@ function chatInit() {
 
     document.addEventListener('visibilitychange', focusOnInput);
     gpt4Mobile();
+    autoContinue();
   }
 
   function observeMutations(mutationsList) {
@@ -146,6 +147,35 @@ function chatInit() {
         return new Response(JSON.stringify(res), response);
       });
     };
+  }
+
+  function autoContinue() {
+    // Create an instance of the observer
+    const observer = new MutationObserver((mutationsList, observer) => {
+      for (let mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          const btn = [...mutation.target.querySelectorAll('button.btn')].find((btn) =>
+            btn.innerText.includes('Continue generating'),
+          );
+
+          if (btn) {
+            console.log("Found the button of 'Continue generating'");
+            setTimeout(() => {
+              console.log('Clicked it to continue generating after 1 second');
+              btn.click();
+            }, 1000);
+            return;
+          }
+        }
+      }
+    });
+
+    // Start observing the dom change of the form
+    observer.observe(document.forms[0], {
+      attributes: false,
+      childList: true,
+      subtree: true,
+    });
   }
 
   init();
