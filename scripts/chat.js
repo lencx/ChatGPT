@@ -1,6 +1,6 @@
 /**
  * @name chat.js
- * @version 0.1.2
+ * @version 0.1.3
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/chat.js
  */
 
@@ -151,10 +151,10 @@ function chatInit() {
 
   function autoContinue() {
     // Create an instance of the observer
-    const observer = new MutationObserver((mutationsList, observer) => {
+    const observer = new MutationObserver((mutationsList) => {
       for (let mutation of mutationsList) {
         if (mutation.type === 'childList') {
-          const btn = [...mutation.target.querySelectorAll('button.btn')].find((btn) =>
+          const btn = Array.from(mutation.target.querySelectorAll('button.btn')).find((btn) =>
             btn.innerText.includes('Continue generating'),
           );
 
@@ -170,19 +170,21 @@ function chatInit() {
       }
     });
 
-    // Start observing the dom change of the form
-    observer.observe(document.forms[0], {
-      attributes: false,
-      childList: true,
-      subtree: true,
-    });
+    // Wait until the form exists
+    const interval = setInterval(() => {
+      if (document.forms[0]) {
+        // Start observing the dom change of the form
+        observer.observe(document.forms[0], {
+          attributes: false,
+          childList: true,
+          subtree: true,
+        });
+        clearInterval(interval); // Stop checking when the form exists
+      }
+    }, 1000);
   }
 
   init();
 }
 
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  chatInit();
-} else {
-  document.addEventListener('DOMContentLoaded', chatInit);
-}
+document.addEventListener('DOMContentLoaded', chatInit);
