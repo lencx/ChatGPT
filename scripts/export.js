@@ -1,6 +1,6 @@
 /**
  * @name export.js
- * @version 0.1.2
+ * @version 0.1.3
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/export.js
  */
 
@@ -15,11 +15,16 @@ async function exportInit() {
 
   const chatConf = (await invoke('get_app_conf')) || {};
   window.buttonsInterval = setInterval(() => {
-    const actionsArea = document.querySelector('form>div>div>div');
-    const hasBtn = document.querySelector('form>div>div>div button');
-    if (!actionsArea || !hasBtn) {
+    const formArea = document.querySelector('form>div>div');
+    const textarea = formArea.querySelector('div textarea');
+    const textareaDiv = formArea.querySelector('div div.absolute');
+    const hasBtn = formArea.querySelector('div button');
+
+    if (!formArea || (textarea && textareaDiv) || !hasBtn) {
       return;
     }
+
+    const actionsArea = document.querySelector('form>div>div>div');
 
     if (shouldAddButtons(actionsArea)) {
       let TryAgainButton = actionsArea.querySelector('button');
