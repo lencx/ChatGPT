@@ -1,6 +1,6 @@
 /**
  * @name export.js
- * @version 0.1.3
+ * @version 0.1.4
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/export.js
  */
 
@@ -277,6 +277,7 @@ async function exportInit() {
         img.src = URL.createObjectURL(blob);
       });
       await Promise.all(chatImagePromises);
+      document.body.style.lineHeight = '0.5';
     }
     async restoreLocation() {
       this.hiddens.forEach((el) => {
