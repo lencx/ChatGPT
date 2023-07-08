@@ -19,12 +19,11 @@ async function exportInit() {
     const textarea = formArea.querySelector('div textarea');
     const textareaDiv = formArea.querySelector('div div.absolute');
     const hasBtn = formArea.querySelector('div button');
+    const actionsArea = document.querySelector('form>div>div>div');
 
-    if (!formArea || (textarea && textareaDiv) || !hasBtn) {
+    if (!formArea || !actionsArea || (textarea && textareaDiv) || !hasBtn) {
       return;
     }
-
-    const actionsArea = document.querySelector('form>div>div>div');
 
     if (shouldAddButtons(actionsArea)) {
       let TryAgainButton = actionsArea.querySelector('button');
@@ -53,7 +52,7 @@ async function exportInit() {
 
   function shouldAddButtons(actionsArea) {
     // first, check if there's a "Try Again" button and no other buttons
-    const buttons = actionsArea.querySelectorAll('button');
+    const buttons = actionsArea?.querySelectorAll('button');
 
     const hasTryAgainButton = Array.from(buttons).some((button) => {
       return !/download-/.test(button.id);
@@ -84,7 +83,7 @@ async function exportInit() {
 
     // check if the conversation is finished and there are no share buttons
     const finishedConversation = document.querySelector('form button>svg');
-    const hasShareButtons = actionsArea.querySelectorAll('button[share-ext]');
+    const hasShareButtons = actionsArea?.querySelectorAll('button[share-ext]');
     if (finishedConversation && !hasShareButtons.length) {
       return true;
     }
@@ -272,6 +271,7 @@ async function exportInit() {
       const chatImagePromises = this.chatImages.map(async (img) => {
         const src = img.getAttribute('src');
         if (!/^http/.test(src)) return;
+        if (['fileserviceuploadsperm.blob.core.windows.net'].includes(new URL(src)?.host)) return;
         const data = await invoke('fetch_image', { url: src });
         const blob = new Blob([new Uint8Array(data)], { type: 'image/png' });
         img.src = URL.createObjectURL(blob);
