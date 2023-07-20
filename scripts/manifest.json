@@ -6,7 +6,7 @@
   "scripts": [
     {
       "name": "chat.js",
-      "version": "0.1.3"
+      "version": "0.1.4"
     },
     {
       "name": "cmd.js",
