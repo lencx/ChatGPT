@@ -168,7 +168,13 @@ async function exportInit() {
     if (replaceInUserInput) {
       const userInputBlocks = j.querySelectorAll(USER_INPUT_SELECTOR);
       userInputBlocks.forEach((block) => {
-        block.innerHTML = block.innerHTML.replace(/\n/g, '<br/>').replace(/ /g, '&nbsp;');
+
+      //For quicker testing use js fiddle: https://jsfiddle.net/xtraeme/x34ao9jp/13/
+      block.innerHTML = block.innerHTML
+        .replace(/&nbsp;|\u00A0/g, ' ') //Replace =C2=A0 (nbsp non-breaking space) with breaking-space
+        .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;') // Replace tab with 4 non-breaking spaces
+        .replace(/^ +/gm, function(match) { return '&nbsp;'.repeat(match.length); }) //Add =C2=A0
+        .replace(/\n/g, '<br/>');
       });
     }
 
