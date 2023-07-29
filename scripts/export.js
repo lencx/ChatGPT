@@ -171,7 +171,7 @@ async function exportInit() {
 
       //For quicker testing use js fiddle: https://jsfiddle.net/xtraeme/x34ao9jp/13/
       block.innerHTML = block.innerHTML
-        .replace(/&nbsp;|\u00A0/g, ' ') //Replace =C2=A0 (nbsp non-breaking space) with breaking-space
+        .replace(/&nbsp;|\u00A0/g, ' ') //Replace =C2=A0 (nbsp non-breaking space) /w breaking-space
         .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;') // Replace tab with 4 non-breaking spaces
         .replace(/^ +/gm, function(match) { return '&nbsp;'.repeat(match.length); }) //Add =C2=A0
         .replace(/\n/g, '<br/>');
@@ -182,7 +182,18 @@ async function exportInit() {
   }
 
   async function exportMarkdown() {
-    const nodes = Array.from(document.querySelectorAll(SELECTOR));
+    const allBlocks = document.querySelectorAll(SELECTOR);
+    const nodes = Array.from(allBlocks);
+
+    //<code> blocks with leading spaces mess up ExportMD markdown conversion. ex/
+    // <code ...>     import package
+    //becomes (spaces are moved to the front of the ''' line)):
+    //      '''Python import package
+    //so we remove whitespace after <code> tags and add <br/> and/or \n
+    allBlocks.forEach((block) => {
+      block.innerHTML = block.innerHTML
+        .replace(/(<code[^>]*>)\s*/g, '$1<br\\/>\n'); // Add \n or <br/> after opening code tag
+    });
 
     const content = nodes.map(i => processNode(i)).join('');
     const updatedContent = nodes.map(i => processNode(i, true)).join('');
