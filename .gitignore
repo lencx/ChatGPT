@@ -4,6 +4,9 @@ node_modules/
 .yarn/*
 .pnp.*
 
+# Testing
+private/
+
 # rust
 target/
 

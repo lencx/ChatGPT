@@ -156,21 +156,58 @@ async function exportInit() {
     actionsArea.appendChild(refreshButton);
   }
 
-  async function exportMarkdown() {
-    const content = Array.from(document.querySelectorAll('main div.group'))
-      .map((i) => {
-        let j = i.cloneNode(true);
-        if (/dark\:bg-gray-800/.test(i.getAttribute('class'))) {
-          j.innerHTML = `<blockquote>${i.innerHTML}</blockquote>`;
-        }
-        return j.innerHTML;
-      })
-      .join('');
-    const data = ExportMD.turndown(content);
-    const { id, filename } = getName();
-    await invoke('save_file', { name: `notes/${id}.md`, content: data });
-    await invoke('download_list', { pathname: 'chat.notes.json', filename, id, dir: 'notes' });
+  const SELECTOR = 'main div.group';
+  const USER_INPUT_SELECTOR = 'div.empty\\:hidden';
+
+  function processNode(node, replaceInUserInput = false) {
+    let j = node.cloneNode(true);
+    if (/dark\:bg-gray-800/.test(node.getAttribute('class'))) {
+      j.innerHTML = `<blockquote>${node.innerHTML}</blockquote>`;
+    }
+
+    if (replaceInUserInput) {
+      const userInputBlocks = j.querySelectorAll(USER_INPUT_SELECTOR);
+      userInputBlocks.forEach((block) => {
+
+      //For quicker testing use js fiddle: https://jsfiddle.net/xtraeme/x34ao9jp/13/
+      block.innerHTML = block.innerHTML
+        .replace(/&nbsp;|\u00A0/g, ' ') //Replace =C2=A0 (nbsp non-breaking space) /w breaking-space
+        .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;') // Replace tab with 4 non-breaking spaces
+        .replace(/^ +/gm, function(match) { return '&nbsp;'.repeat(match.length); }) //Add =C2=A0
+        .replace(/\n/g, '<br/>');
+      });
+    }
+
+    return j.innerHTML;
   }
+
+  async function exportMarkdown() {
+    const allBlocks = document.querySelectorAll(SELECTOR);
+    const nodes = Array.from(allBlocks);
+
+    //<code> blocks with leading spaces mess up ExportMD markdown conversion. ex/
+    // <code ...>     import package
+    //becomes (spaces are moved to the front of the ''' line)):
+    //      '''Python import package
+    //so we remove whitespace after <code> tags and add <br/> and/or \n
+    allBlocks.forEach((block) => {
+      block.innerHTML = block.innerHTML
+        .replace(/(<code[^>]*>)\s*/g, '$1<br\\/>\n'); // Add \n or <br/> after opening code tag
+    });
+
+    const content = nodes.map(i => processNode(i)).join('');
+    const updatedContent = nodes.map(i => processNode(i, true)).join('');
+
+    const data = ExportMD.turndown(updatedContent);
+    const { id, filename } = getName();
+    final_filename = `${filename}`; //`${filename}_${id}`;
+
+    //await invoke('save_file', { name: `notes/${final_filename}_raw.txt`, content: content });
+    await invoke('save_file', { name: `notes/${id}.md`, content: data });
+    await invoke('download_list', { pathname: 'chat.notes.json', final_filename, id, dir: 'notes' });
+    //await invoke('download_list', { pathname: 'chat.notes.json', final_filename, final_filename, dir: 'notes' });
+  }
+
 
   async function downloadThread({ as = Format.PNG } = {}) {
     const { startLoading, stopLoading } = new window.__LoadingMask('Exporting in progress...');
@@ -313,11 +350,32 @@ async function exportInit() {
     return formattedDateTime;
   }
 
+  function sanitizeFilename(filename) {
+      if (!filename || filename === '') return '';
+
+      // Replace whitespaces with underscores
+      let sanitizedFilename = filename.replace(/\s/g, '_');
+
+      // Replace invalid filename characters with #
+      const invalidCharsRegex = /[<>:"/\\|?*\x00-\x1F]/g;
+      sanitizedFilename = sanitizedFilename.replace(invalidCharsRegex, '#');
+
+      // Check for filenames ending with period or space (Windows)
+      if (sanitizedFilename && /[\s.]$/.test(sanitizedFilename)) {
+        sanitizedFilename = sanitizedFilename.slice(0, -1) + '#';
+    }
+    //console.log(sanitizedFilename);
+    return sanitizedFilename;
+  }
+
   function getName() {
     const id = window.crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
-    const name =
+    const name = 
       document.querySelector('nav .overflow-y-auto a.hover\\:bg-gray-800')?.innerText?.trim() || '';
-    return { filename: name ? name : id, id, pathname: 'chat.download.json' };
+    clean_name = sanitizeFilename(name);
+    return { filename: name ? name : id, 
+             id, 
+             pathname: 'chat.download.json' };
   }
 }
 
