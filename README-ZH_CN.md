@@ -32,7 +32,7 @@
 
 ### Windows
 
-- [ChatGPT_1.0.0_windows_x86_64.msi](https://github.com/lencx/ChatGPT/releases/download/v1.0.0/ChatGPT_1.0.0_windows_x86_64.msi)
+- [ChatGPT_1.1.0_windows_x86_64.msi](https://github.com/lencx/ChatGPT/releases/download/v1.1.0/ChatGPT_1.1.0_windows_x86_64.msi)
 - 使用 [winget](https://winstall.app/apps/lencx.ChatGPT):
 
   ```bash
@@ -47,8 +47,8 @@
 
 ### Mac
 
-- [ChatGPT_1.0.0_macos_aarch64.dmg](https://github.com/lencx/ChatGPT/releases/download/v1.0.0/ChatGPT_1.0.0_macos_aarch64.dmg)
-- [ChatGPT_1.0.0_macos_x86_64.dmg](https://github.com/lencx/ChatGPT/releases/download/v1.0.0/ChatGPT_1.0.0_macos_x86_64.dmg)
+- [ChatGPT_1.1.0_macos_aarch64.dmg](https://github.com/lencx/ChatGPT/releases/download/v1.1.0/ChatGPT_1.1.0_macos_aarch64.dmg)
+- [ChatGPT_1.1.0_macos_x86_64.dmg](https://github.com/lencx/ChatGPT/releases/download/v1.1.0/ChatGPT_1.1.0_macos_x86_64.dmg)
 - Homebrew \
   _[Homebrew 快捷安装](https://brew.sh) ([Cask](https://docs.brew.sh/Cask-Cookbook)):_
   ```sh
@@ -70,8 +70,8 @@ sudo xattr -r -d com.apple.quarantine /YOUR_PATH/ChatGPT.app
 
 ### Linux
 
-- [ChatGPT_1.0.0_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v1.0.0/ChatGPT_1.0.0_linux_x86_64.deb)
-- [ChatGPT_1.0.0_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v1.0.0/ChatGPT_1.0.0_linux_x86_64.AppImage.tar.gz): **工作可靠，`.deb` 运行失败时可以尝试它**
+- [ChatGPT_1.1.0_linux_x86_64.deb](https://github.com/lencx/ChatGPT/releases/download/v1.1.0/ChatGPT_1.1.0_linux_x86_64.deb)
+- [ChatGPT_1.1.0_linux_x86_64.AppImage.tar.gz](https://github.com/lencx/ChatGPT/releases/download/v1.1.0/ChatGPT_1.1.0_linux_x86_64.AppImage.tar.gz): **工作可靠，`.deb` 运行失败时可以尝试它**
 
 <!-- tr-download-end -->
 

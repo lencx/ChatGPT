@@ -1,17 +1,18 @@
 # UPDATE LOG
 
-**🛑 URGENT NOTICE: A hacker has been found to take advantage of the heat of `lencx/ChatGPT` to plant a Trojan horse after the fork project and rebuild the installer. If you have friends around you who are using this desktop application, please remind them not to download unknown links freely. Now the project will remove other installation ways and only provide this download link https://github.com/lencx/ChatGPT/releases**
-
-**🛑 紧急通知：目前发现有黑客利用 `lencx/ChatGPT` 的热度，在 fork 项目后植入木马，重新构建安装程序。如果你身边有朋友正在使用此桌面应用，请提醒 TA 们不要随意下载不明链接。现在项目将删除其他安装途径，仅提供此下载链接 https://github.com/lencx/ChatGPT/releases**
-
----
-
 **It is an unofficial project intended for personal learning and research purposes only. During the time that the ChatGPT desktop application was open-sourced, it received a lot of attention, and I would like to thank everyone for their support. However, as things have developed, there are two issues that seriously affect the project's next development plan:**
 
 - **Some people have used it for repackaging and selling for profit.**
 - **The name and icon of ChatGPT may be involved in infringement issues.**
 
 **New repository: https://github.com/lencx/nofwl**
+
+## v1.1.0
+
+Fix:
+
+- Fixed the issue where the cmd slash command does not work in some cases.
+- Moved the export button to the sidebar to prevent layout conflicts.
 
 ## v1.0.0
 
