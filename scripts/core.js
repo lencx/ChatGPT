@@ -1,6 +1,6 @@
 /**
  * @name core.js
- * @version 0.1.1
+ * @version 0.1.2
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/core.js
  */
 
@@ -84,40 +84,13 @@ function coreInit() {
         document.body.appendChild(topDom);
 
         if (window.location.host === 'chat.openai.com') {
-          const nav = document.body.querySelector('nav');
-          const top = topDom.clientHeight + 5;
-          if (nav) {
-            const currentPaddingTop = parseInt(
-              window
-                .getComputedStyle(document.querySelector('nav'), null)
-                .getPropertyValue('padding-top')
-                .replace('px', ''),
-              10,
-            );
-            const navStyleDom = document.createElement('style');
-            navStyleDom.innerHTML = `nav{
-              padding-top:${currentPaddingTop + top}px !important
+          const intervalId = setInterval(function () {
+            const nav = document.body.querySelector('nav');
+            if (nav) {
+              nav.style.paddingTop = '25px';
+              clearInterval(intervalId);
             }
-            button[aria-label="Show sidebar"]{
-              margin-top:${top}px !important
-            }
-            `;
-            document.head.appendChild(navStyleDom);
-          } else {
-            const navStyleDom = document.createElement('style');
-            navStyleDom.innerHTML = `nav{
-              padding-top:${top}px !important
-            }
-            button[aria-label="Show sidebar"]{
-              margin-top:${top}px !important
-            }
-            `;
-            document.head.appendChild(navStyleDom);
-            const main = document.querySelector('main');
-            if (main && main.parentElement.children.length > 1) {
-              main.parentElement.children[0].style.paddingTop = top + 'px';
-            }
-          }
+          }, 1000);
         }
 
         topDom.addEventListener('mousedown', () => invoke('drag_window'));

@@ -38,6 +38,9 @@
       "os": {
         "all": true
       },
+      "dialog": {
+        "all": true
+      },
       "process": {
         "all": true,
         "exit": true,

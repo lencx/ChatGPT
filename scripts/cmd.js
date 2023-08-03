@@ -1,6 +1,6 @@
 /**
  * @name cmd.js
- * @version 0.1.1
+ * @version 0.1.2
  * @url https://github.com/lencx/ChatGPT/tree/main/scripts/cmd.js
  */
 
@@ -121,6 +121,32 @@ function cmdInit() {
               initDom();
             }
           });
+        }
+        if (mutation.type === 'childList' && mutation.removedNodes.length) {
+          for (let node of mutation.removedNodes) {
+            if (node.querySelector('form textarea')) {
+              initDom();
+              cmdTip();
+              (async function () {
+                async function platform() {
+                  return invoke('platform', {
+                    __tauriModule: 'Os',
+                    message: { cmd: 'platform' },
+                  });
+                }
+                if (__TAURI_METADATA__.__currentWindow.label !== 'tray') {
+                  const _platform = await platform();
+                  const chatConf = (await invoke('get_app_conf')) || {};
+                  if (/darwin/.test(_platform) && !chatConf.titlebar) {
+                    const nav = document.body.querySelector('nav');
+                    if (nav) {
+                      nav.style.paddingTop = '25px';
+                    }
+                  }
+                }
+              })();
+            }
+          }
         }
       }
     }).observe(document.body, {
