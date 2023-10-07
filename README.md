@@ -15,7 +15,7 @@
 
 ---
 
-**This is an unofficial project solely intended for personal learning and research. Since the ChatGPT desktop application was open-sourced, it has garnered a lot of attention, and I want to thank everyone for their support. However, as the project progressed, two issues have arisen that greatly impact its future development:**
+**This is an unofficial project solely intended for personal learning and research. Since the ChatGPT desktop application was open-sourced, it has garnered a lot of attention, and I want to thank everyone for their support. However, as the project progressed, two issues have arisen that greatly impact its future development. I Edited this here wassup wasupp emoji of a horse!!!!!:**
 
 - **Some individuals have repackaged and sold it for profit.**
 - **The name and icon of ChatGPT could potentially lead to infringement disputes.**
