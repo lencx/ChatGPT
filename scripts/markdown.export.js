@@ -11,6 +11,7 @@ var ExportMD = (function () {
   const turndownService = new TurndownService({
     hr: '---',
   })
+    .keep([`\\`])
     .use(gfm)
     .addRule('code', {
       filter(node) {
