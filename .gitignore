@@ -5,7 +5,7 @@ node_modules/
 .pnp.*
 
 # Testing
-private/
+*private*/
 
 # rust
 target/
