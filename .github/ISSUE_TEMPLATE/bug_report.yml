@@ -1,5 +1,5 @@
 name: '🕷️ Bug report'
-description: 'report bugs'
+description: 'Report bugs'
 title: '[Bug]: '
 labels:
 - 'bug'
