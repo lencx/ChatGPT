@@ -1,6 +1,6 @@
 name: '🕷️ Bug report'
 description: 'report bugs'
-title: '[Bug]:'
+title: '[Bug]: '
 labels:
 - 'bug'
 body:
