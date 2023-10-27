@@ -19,7 +19,7 @@ body:
     label: Checklist
     options:
     - label: |
-        This issue does not occur on chat.openai.com and only occurs on this app.
+        This issue does **not** occur on `chat.openai.com` and **only** occurs on this app.
       required: true
     - label: |
         I have given this issue a descriptive title starting with `[Bug]:` such as `[Bug]: Clicking OK closes the program`
