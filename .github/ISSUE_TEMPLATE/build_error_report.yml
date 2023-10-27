@@ -2,7 +2,7 @@ name: '❌ Build error'
 description: 'Report errors when building from source code'
 title: '[Build Error]: '
 labels:
-- 'build error'
+- 'build-error'
 body:
 - type: markdown
   attributes:
