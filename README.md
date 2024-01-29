@@ -13,14 +13,18 @@
 
 <a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
 
+
 ---
 
-**This is an unofficial project solely intended for personal learning and research. Since the ChatGPT desktop application was open-sourced, it has garnered a lot of attention, and I want to thank everyone for their support. However, as the project progressed, two issues have arisen that greatly impact its future development:**
+> [!NOTE]
+> **If you want to experience a more powerful AI wrapper application, you can try the Noi (https://github.com/lencx/Noi), which is a successor to the ChatGPT desktop application concept.**
 
-- **Some individuals have repackaged and sold it for profit.**
-- **The name and icon of ChatGPT could potentially lead to infringement disputes.**
+---
 
-**New repository: https://github.com/lencx/nofwl**
+This is an unofficial project solely intended for personal learning and research. Since the ChatGPT desktop application was open-sourced, it has garnered a lot of attention, and I want to thank everyone for their support. However, as the project progressed, two issues have arisen that greatly impact its future development:
+
+- Some individuals have repackaged and sold it for profit.
+- The name and icon of ChatGPT could potentially lead to infringement disputes.
 
 ## Live Demo
 
