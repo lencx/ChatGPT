@@ -1,34 +1,41 @@
-name: '⚠️ Security&Privacy issue'
+name: '⚠️ Security / privacy issue'
 description: 'Report security or privacy issues'
-title: '[Security]'
+title: '[Security]: '
 labels:
-  - 'security'
+- 'security'
 body:
-  - type: markdown
-    attributes:
-      value: 'Please make sure to [search for existing issues](https://github.com/lencx/ChatGPT/issues) before creating a new one.'
-  - type: textarea
-    id: security-description
-    attributes:
-      label: 'Description'
-      description: 'Describe the security or privacy issue.'
-    validations:
+- type: markdown
+  attributes:
+    value: 'Please make sure to [search for existing issues](https://github.com/lencx/ChatGPT/issues) before creating a new one.'
+- type: checkboxes
+  attributes:
+    label: Checklist
+    options:
+    - label: |
+        I have given this issue a descriptive title starting with `[Security]:` such as `[Security]: Vulnerability found in xyz.js`
       required: true
-  - type: textarea
-    id: motivation
-    attributes:
-      label: 'Motivation'
-      description: 'Describe the motivation for this security or privacy issue.'
-  - type: textarea
-    id: alternatives
-    attributes:
-      label: 'Alternatives'
-      description: "Describe any alternatives you've considered."
-  - type: textarea
-    id: additional-context
-    attributes:
-      label: 'Additional context'
-      description: 'Add any other context or screenshots about the security or privacy issue here.'
-  - type: markdown
-    attributes:
-      value: Please limit one request per issue.
+- type: textarea
+  id: security-description
+  attributes:
+    label: 'Description'
+    description: 'Describe the security or privacy issue.'
+  validations:
+    required: true
+- type: textarea
+  id: motivation
+  attributes:
+    label: 'Motivation'
+    description: 'Describe the motivation for this security or privacy issue.'
+- type: textarea
+  id: alternatives
+  attributes:
+    label: 'Alternatives'
+    description: "Describe any alternatives you've considered."
+- type: textarea
+  id: additional-context
+  attributes:
+    label: 'Additional context'
+    description: 'Add any other context or screenshots about the security or privacy issue here.'
+- type: markdown
+  attributes:
+    value: Please limit one request per issue.

@@ -1,19 +1,26 @@
-name: '📚 Documentation Issue'
-description: 'report documentation issues, typos welcome!'
-title: '[Doc]'
+name: '📚 Documentation issue'
+description: 'Report documentation issues, typos welcome!'
+title: '[Doc]: '
 labels:
-  - 'documentation'
+- 'documentation'
 body:
-  - type: markdown
-    attributes:
-      value: 'Please make sure to [search for existing issues](https://github.com/lencx/ChatGPT/issues) before creating a new one.'
-  - type: textarea
-    id: doc-description
-    attributes:
-      label: 'Provide a description of requested docs changes'
-      description: 'Briefly describe the requested docs changes.'
-    validations:
+- type: markdown
+  attributes:
+    value: 'Please make sure to [search for existing issues](https://github.com/lencx/ChatGPT/issues) before creating a new one.'
+- type: checkboxes
+  attributes:
+    label: Checklist
+    options:
+    - label: |
+        I have given this issue a descriptive title starting with `[Doc]:` such as `[Doc]: Misspelling in the README file`
       required: true
-  - type: markdown
-    attributes:
-      value: Please limit one request per issue.
+- type: textarea
+  id: doc-description
+  attributes:
+    label: 'Provide a description of requested docs changes'
+    description: 'Briefly describe the requested docs changes.'
+  validations:
+    required: true
+- type: markdown
+  attributes:
+    value: Please limit one request per issue.

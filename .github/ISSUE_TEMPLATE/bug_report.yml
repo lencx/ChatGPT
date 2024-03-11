@@ -1,53 +1,79 @@
 name: '🕷️ Bug report'
-description: 'report bugs'
-title: '[Bug]'
+description: 'Report bugs'
+title: '[Bug]: '
 labels:
-  - 'bug'
+- 'bug'
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Please **DO NOT** file issues here if you are having problems with ChatGPT itself. Issues should **ONLY** be created here for bugs that pertain to this package, [lencx/ChatGPT](https://github.com/lencx/ChatGPT). If you are experiencing an issue on [chat.openai.com](https://chat.openai.com), please contact **OpenAI** for support or submit feedback through ChatGPT itself. If you **only have an issue with this app** and do not have the issue on [chat.openai.com](https://chat.openai.com), please file an issue here.
-      
-        Please make sure to [search for existing issues](https://github.com/lencx/ChatGPT/issues) before filing a new one!
-  - type: checkboxes
-    attributes:
-      label: Non-ChatGPT bug
-      options:
-        - label: |
-            This issue does not occur on chat.openai.com and only occurs on this app.
-          required: true
-  - type: markdown
-    attributes:
-      value: |
-        ## Bug report
-        Please fill in the following information to help us reproduce the bug:
-  - type: input
-    id: version
-    attributes:
-      label: Version
-      description: 'Please specify the version of ChatGPT you are using, a newer version may have fixed the bug you encountered.Check the [UPDATE_LOG](https://github.com/lencx/ChatGPT/blob/main/UPDATE_LOG.md) for more information.'
-      placeholder: 'e.g. v0.1.0'
-    validations:
+- type: markdown
+  attributes:
+    value: |
+      Please **DO NOT** file issues here if you are having problems with ChatGPT itself. Issues should **ONLY** be created here for bugs that pertain to this package, [lencx/ChatGPT](https://github.com/lencx/ChatGPT). If you are experiencing an issue on [chat.openai.com](https://chat.openai.com), please contact **OpenAI** for support or submit feedback through ChatGPT itself. If you **only have an issue with this app** and do not have the issue on [chat.openai.com](https://chat.openai.com), please file an issue here.
+
+      Please make sure to [search for existing issues](https://github.com/lencx/ChatGPT/issues) before filing a new one!
+
+      **Name your issue appropriately:** give it a sentence that reads well enough for anyone seeing this in the release notes to know what it is.
+
+      When writing out the issue details, please ensure you are writing it as if you were explaining it to somebody else, even if you will be working on and resolving the issue yourself. This helps others to understand the reasons for the issue and for it to be searchable in the future.
+- type: checkboxes
+  attributes:
+    label: Checklist
+    options:
+    - label: |
+        This issue does **not** occur on `chat.openai.com` and **only** occurs on this app.
       required: true
-  - type: textarea
-    id: bug
-    attributes:
-      label: Bug description
-      description: |
-        Please describe the bug here,if possible, please provide a minimal example to reproduce the bug.The content of `~/.chatgpt/chatgpt.log` may be helpful if you encounter a crash.
-    validations:
+    - label: |
+        I have given this issue a descriptive title starting with `[Bug]:` such as `[Bug]: Clicking OK closes the program`
       required: true
-  - type: input
-    id: OS
-    attributes:
-      label: OS
-      description: 'Please specify the OS you are using.'
-      placeholder: 'e.g. Ubuntu 22.04'
-    validations:
-      required: true
-  - type: textarea
-    id: environment
-    attributes:
-      label: Environment
-      description: 'If you think your environment may be related to the problem, please describe it here.'
+- type: markdown
+  attributes:
+    value: |
+      ## Bug report
+      Please fill in the following information to help us reproduce the bug:
+- type: input
+  id: version
+  attributes:
+    label: Version
+    description: 'Specify the version of ChatGPT you are using, a newer version may have fixed the bug you encountered. Download the latest version in [Releases](https://github.com/lencx/ChatGPT/releases) and check the [UPDATE_LOG](https://github.com/lencx/ChatGPT/blob/main/UPDATE_LOG.md) for release note info.'
+    placeholder: 'v1.1.0'
+  validations:
+    required: true
+- type: textarea
+  id: bug
+  attributes:
+    label: Bug description
+    description: |
+      Describe the bug here.
+  validations:
+    required: true
+- type: textarea
+  id: how-to-reproduce
+  attributes:
+    label: How to reproduce
+    description: |
+      What are the steps to reproduce the issue?
+    placeholder: |
+      1. Click Preferences
+      2. Then click Control Center
+      3. Then change an option and click OK
+      4. etc
+  validations:
+    required: true
+- type: textarea
+  id: chatgpt-log
+  attributes:
+    label: chatgpt.log
+    description: |
+      If you encountered a crash, please drag `~/.chatgpt/chatgpt.log` into this textbox and it will upload the file. Please **do not** copy and paste the log as it could be quite long.
+- type: input
+  id: OS
+  attributes:
+    label: OS
+    description: 'Specify the OS version you are using.'
+    placeholder: 'Ubuntu 22.04, Windows 11 Pro'
+  validations:
+    required: true
+- type: textarea
+  id: environment
+  attributes:
+    label: Environment
+    description: 'If you think your environment may be related to the problem, please describe it here.'
