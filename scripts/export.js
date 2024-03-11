@@ -6,7 +6,7 @@
 
 async function exportInit() {
   const SELECTOR = 'main div.group';
-  const USER_INPUT_SELECTOR = 'div.empty\\:hidden';
+  const USER_INPUT_SELECTOR = 'div.relative.flex.w-\\[calc\\(100\\%-50px\\)\\].flex-col.gizmo\\:w-full.lg\\:w-\\[calc\\(100\\%-115px\\)\\].gizmo\\:text-gizmo-gray-600.gizmo\\:dark\\:text-gray-300';
   const Format = {
     PNG: 'png',
     PDF: 'pdf',
