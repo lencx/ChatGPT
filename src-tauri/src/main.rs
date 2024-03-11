@@ -9,6 +9,7 @@ mod utils;
 
 use app::{cmd, fs_extra, gpt, menu, script, setup, window};
 use conf::AppConf;
+use tauri::Manager;
 use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::{
   fern::colors::{Color, ColoredLevelConfig},
@@ -99,6 +100,7 @@ async fn main() {
     .on_system_tray_event(menu::tray_handler)
     .on_window_event(move |event| {
       if let tauri::WindowEvent::CloseRequested { api, .. } = event.event() {
+        let app_handle = event.window().app_handle().clone();
         let win = event.window().clone();
         let app_conf = AppConf::read();
         if win.label() == "core" {
@@ -112,14 +114,14 @@ async fn main() {
                   .amend(serde_json::json!({ "isinit" : false, "main_close": is_ok }))
                   .write();
                 if is_ok {
-                  std::process::exit(0);
+                  app_handle.exit(0);
                 } else {
                   win.minimize().unwrap();
                 }
               },
             );
           } else if app_conf.main_close {
-            std::process::exit(0);
+            app_handle.exit(0);
           } else {
             win.minimize().unwrap();
           }

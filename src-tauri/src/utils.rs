@@ -98,6 +98,7 @@ pub fn clear_conf(app: &tauri::AppHandle) {
     Note: The application will exit automatically after the configuration cleanup!",
     root.to_string_lossy()
   );
+  let app_clone = app.clone();
   tauri::api::dialog::ask(
     app.get_window("core").as_ref(),
     "Clear Config",
@@ -105,7 +106,7 @@ pub fn clear_conf(app: &tauri::AppHandle) {
     move |is_ok| {
       if is_ok {
         fs::remove_dir_all(root).unwrap();
-        std::process::exit(0);
+        app_clone.exit(0);
       }
     },
   );
