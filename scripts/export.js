@@ -111,7 +111,6 @@ async function exportInit() {
       this.init();
     }
     init() {
-      this.spacer = document.querySelector("main div[class*='h-'].flex-shrink-0");
       this.thread = document.querySelector(
         "[class*='react-scroll-to-bottom']>[class*='react-scroll-to-bottom']>div",
       );
@@ -140,7 +139,6 @@ async function exportInit() {
       this.hiddens.forEach((el) => {
         el.classList.remove('overflow-hidden');
       });
-      this.spacer.style.display = 'none';
       this.thread.style.maxWidth = '960px';
       this.thread.style.marginInline = 'auto';
       this.positionForm.style.display = 'none';
@@ -167,7 +165,6 @@ async function exportInit() {
       this.hiddens.forEach((el) => {
         el.classList.add('overflow-hidden');
       });
-      this.spacer.style.display = null;
       this.thread.style.maxWidth = null;
       this.thread.style.marginInline = null;
       this.positionForm.style.display = null;
@@ -208,12 +205,13 @@ async function exportInit() {
 
   function btnInit() {
     const intervalId = setInterval(function () {
-      const navActionArea = document.querySelector('nav .border-t > div');
+      const navActionArea = document.querySelector('nav .flex.flex-col.pt-2');
       const addArea = document.querySelector('#chatgpt-nav-action-area');
       if (!navActionArea || addArea) return;
       const cloneNode = document.createElement('div');
       cloneNode.id = 'chatgpt-nav-action-area';
       cloneNode.classList = `${navActionArea.className} border-b border-white/20 mb-2 pb-2`;
+      cloneNode.style.flexDirection = 'row'; // Override flex-direction
       cloneNode.appendChild(addBtn('png'));
       cloneNode.appendChild(addBtn('pdf'));
       cloneNode.appendChild(addBtn('md'));
