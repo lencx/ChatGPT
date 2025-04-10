@@ -12,7 +12,7 @@
   "dependencies": {
     "@tauri-apps/api": "2.0.0-beta.15",
     "@tauri-apps/plugin-os": "2.0.0-beta.7",
-    "@tauri-apps/plugin-shell": "2.0.0-beta.8",
+    "@tauri-apps/plugin-shell": "2.2.0",
     "clsx": "^2.1.1",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
