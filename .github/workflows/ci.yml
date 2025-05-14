@@ -14,6 +14,13 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3
 
+      - name: Mostrar estrutura do projeto
+        run: |
+          echo "Arquivos da raiz:"
+          ls -la
+          echo "Arquivos da pasta client:"
+          ls -la client || echo "Pasta client não encontrada"
+
       - name: Instalar PNPM
         uses: pnpm/action-setup@v2
         with:
@@ -37,7 +44,6 @@ jobs:
         working-directory: ./client
         run: pnpm build
 
-      # Se houver testes, adicione comandos aqui
-      - name: Rodar testes do server (exemplo)
+      - name: Rodar testes do server (se houver)
         working-directory: ./server
         run: pnpm test || echo "Sem testes configurados ainda"
