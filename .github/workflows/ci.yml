@@ -18,8 +18,10 @@ jobs:
         run: |
           echo "Arquivos da raiz:"
           ls -la
+          echo "Arquivos da subpasta ChatGPT-PLUS:"
+          ls -la ChatGPT-PLUS
           echo "Arquivos da pasta client:"
-          ls -la client || echo "Pasta client não encontrada"
+          ls -la ChatGPT-PLUS/client || echo "client/ não encontrada"
 
       - name: Instalar PNPM
         uses: pnpm/action-setup@v2
@@ -33,17 +35,17 @@ jobs:
           cache: 'pnpm'
 
       - name: Instalar dependências do client
-        working-directory: ./client
+        working-directory: ./ChatGPT-PLUS/client
         run: pnpm install
 
       - name: Instalar dependências do server
-        working-directory: ./server
+        working-directory: ./ChatGPT-PLUS/server
         run: pnpm install
 
       - name: Build do client
-        working-directory: ./client
+        working-directory: ./ChatGPT-PLUS/client
         run: pnpm build
 
       - name: Rodar testes do server (se houver)
-        working-directory: ./server
+        working-directory: ./ChatGPT-PLUS/server
         run: pnpm test || echo "Sem testes configurados ainda"
