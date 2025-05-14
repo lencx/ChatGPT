@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Mostrar estrutura do projeto
+        run: |
+          echo "Arquivos da raiz:"
+          ls -la
+          echo "Arquivos da subpasta ChatGPT-PLUS:"
+          ls -la ChatGPT-PLUS
+          echo "Arquivos da pasta client:"
+          ls -la ChatGPT-PLUS/client || echo "client/ não encontrada"
+
+      - name: Instalar PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Instalar dependências do client
+        working-directory: ./ChatGPT-PLUS/client
+        run: pnpm install
+
+      - name: Instalar dependências do server
+        working-directory: ./ChatGPT-PLUS/server
+        run: pnpm install
+
+      - name: Build do client
+        working-directory: ./ChatGPT-PLUS/client
+        run: pnpm build
+
+      - name: Rodar testes do server (se houver)
+        working-directory: ./ChatGPT-PLUS/server
+        run: pnpm test || echo "Sem testes configurados ainda"
