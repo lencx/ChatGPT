@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Instalar PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Instalar dependências do client
+        working-directory: ./client
+        run: pnpm install
+
+      - name: Instalar dependências do server
+        working-directory: ./server
+        run: pnpm install
+
+      - name: Build do client
+        working-directory: ./client
+        run: pnpm build
+
+      # Se houver testes, adicione comandos aqui
+      - name: Rodar testes do server (exemplo)
+        working-directory: ./server
+        run: pnpm test || echo "Sem testes configurados ainda"
