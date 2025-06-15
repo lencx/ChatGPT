@@ -22,3 +22,19 @@ If you want to learn about or download the previous version (v1.1.0), please cli
 I am currently looking for some differentiating features to develop version 2.0. If you are interested in this, please stay tuned.
 
 ![](./docs/static/chatgpt-v2.gif)
+Dual-License Notice
+--------------------
+
+This software is licensed under **a dual-license system**:
+
+1. **GNU General Public License v3.0**
+   - For open-source use with full compliance (free of charge)
+   - Must release source and follow GPLv3 rules
+
+2. **SUPERMAN LICENSE v1.0**
+   - For commercial, proprietary, emotional, private, or institutional use
+   - Requires a paid license and royalty agreement
+   - Enforced under U.S. Title 17, Title 28 §1746, Florida Statutes, and DNA-SHA256 verification
+
+Copyright (c) 2025 Joseph Thornton Jr.
+Okeechobee County, Florida – All Rights Reserved
