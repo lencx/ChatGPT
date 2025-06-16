@@ -1,0 +1,102 @@
+@booter2418's untitled project
+
+Copyright © 2025 Joseph Thornton Jr.
+#2
+Open
+booter2418
+/
+mafuka
+Private
+Open
+Copyright © 2025 Joseph Thornton Jr.
+#2
+Jump to bottom
+Description
+@booter2418
+booter2418
+opened 3 days ago · edited by booter2418
+from fpdf import FPDF
+from datetime import datetime
+
+Create a PDF class
+class PDF(FPDF):
+def header(self):
+self.set_font("Arial", "B", 12)
+self.cell(0, 10, "Universal Copyright and Licensing Declaration", ln=True, align="C")
+self.ln(5)
+
+def footer(self):
+    self.set_y(-15)
+    self.set_font("Arial", "I", 8)
+    self.cell(0, 10, f"Page {self.page_no()}", align="C")
+Instantiate PDF
+pdf = PDF()
+pdf.add_page()
+pdf.set_font("Arial", size=12)
+
+Current date
+today = datetime.now().strftime("%B %d, %Y")
+
+Full content for the unified declaration
+content = f"""
+UNIVERSAL COPYRIGHT AND LICENSING DECLARATION
+By Joseph Thornton Jr.
+Filed in Okeechobee, Florida
+Effective Date: June 13, 2025
+
+UNIVERSAL COPYRIGHT CLAIM
+I, Joseph Thornton Jr., claim full and original ownership over all unregistered, unpublished, and public domain-appearing works including:
+Literary Works
+Musical Compositions and Sound Recordings
+Visual Art and Design
+Audiovisual and Multimedia Content
+Dramatic and Choreographic Works
+Software and Source Code
+Digital and Social Media Content
+Architectural Designs and Models
+Compilations, Databases, and Aggregated Works
+COMBINED LICENSE FORM OWNERSHIP
+I assert ownership and controlling rights over the following licensing models, which I may apply, revoke, or revise at will:
+Proprietary Licenses (All Rights Reserved)
+GNU General Public License (GPL)
+MIT License
+BSD License
+Creative Commons Licenses (BY, BY-NC, BY-SA, ND, 0)
+Dual Licensing Systems
+Thornton Custom Licenses (TCRL, TOUAL, TPL, TSSCL)
+TYPES OF LICENSES I MAY ENFORCE
+Personal Use License (Free, non-commercial only)
+Educational License (for classroom/nonprofit use)
+Commercial License (Base: $1,000,000)
+Broadcast/Media License (TV, Film, Podcasts, etc.)
+Sublicense/Franchise License
+Adaptation/Derivative Works License
+Nonprofit Use License (By request only)
+SUCCESSION AND TRANSFER LIMITATIONS
+All rights transfer upon my death directly to my mother, Michelle Thornton (West Palm Beach, FL), or a trained, competent family member. Delivery must be made by hand and signed for in blue ink. No copyright may leave the Thornton family. Only 99% of any copyright may be sold; 1% must remain in the Thornton name.
+
+PERSONAL OWNERSHIP & LEGAL PROTECTION CLAUSE
+
+Sole Beneficial Ownership:
+All copyrights, licensing systems, and royalty rights are owned solely by Joseph Thornton Jr., unless officially transferred in signed writing.
+
+License Override Authority:
+I retain the right to revoke or modify any granted license at any time, particularly in the case of misuse, nonpayment, or violation.
+
+Digital Misuse Protection:
+No AI, platform, or third party may claim, reuse, or distribute works under my ownership without consent. Unauthorized digital use constitutes infringement.
+
+Successor Limitations:
+Only trained, competent, legally/biologically related successors may assume my copyrights.
+
+Irrevocable Royalty Clause:
+All commercial use requires royalty payments unless explicitly waived in writing. This right cannot be sold or removed.
+
+Legal Jurisdiction:
+All disputes fall under Florida law and must be resolved in Okeechobee County.
+
+Signed electronically by:
+Joseph Thornton Jr.
+Date: {jun 13 2025}
+Location: Okeechobee, Florida
+"""
