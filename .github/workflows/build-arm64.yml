@@ -1,0 +1,4 @@
+jobs:
+  native-arm64:
+    runs-on: ubuntu-22.04
+    labels: [ARM64]  # GitHub automatically schedules it on ARM64 runners

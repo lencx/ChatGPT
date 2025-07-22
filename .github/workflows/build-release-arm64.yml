@@ -1,0 +1,65 @@
+name: Native ARM64 Release Build for ChatGPT
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+
+jobs:
+  build-arm64:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+
+      - name: Install Rust toolchain
+        run: |
+          curl https://sh.rustup.rs -sSf | sh -s -- -y
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          ~/.cargo/bin/rustup target add aarch64-unknown-linux-gnu
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.0-dev \
+            build-essential \
+            libssl-dev libgtk-3-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            libglib2.0-dev \
+            libgdk-pixbuf2.0-dev \
+            cmake curl git \
+            pkg-config python3 \
+            nodejs npm
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Build ChatGPT with Tauri for ARM64
+        run: |
+          ~/.cargo/bin/cargo build --release --target aarch64-unknown-linux-gnu
+          npm run tauri build -- --target aarch64-unknown-linux-gnu
+
+      - name: Rename output files for release
+        run: |
+          mkdir -p release
+          cp src-tauri/target/aarch64-unknown-linux-gnu/release/bundle/appimage/*.AppImage release/chatgpt-${{ github.event.inputs.tag }}-arm64.AppImage
+          cp src-tauri/target/aarch64-unknown-linux-gnu/release/bundle/deb/*.deb release/chatgpt-${{ github.event.inputs.tag }}-arm64.deb
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.tag }}
+          files: release/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
