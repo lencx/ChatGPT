@@ -94,9 +94,15 @@ fi
 
 # Create useful aliases
 echo "🎯 Setting up development aliases..."
-echo "alias dev='pnpm tauri dev'" >> ~/.bashrc
+echo "alias dev='XDG_RUNTIME_DIR=/tmp/tauri-runtime TMPDIR=/tmp/tauri-runtime pnpm tauri dev'" >> ~/.bashrc
 echo "alias build='pnpm tauri build'" >> ~/.bashrc
 echo "alias install-deps='pnpm install'" >> ~/.bashrc
+
+# Create and configure Tauri runtime directory
+echo "📁 Setting up Tauri runtime directory..."
+sudo mkdir -p /tmp/tauri-runtime
+sudo chmod 777 /tmp/tauri-runtime
+sudo chown vscode:vscode /tmp/tauri-runtime
 
 echo ""
 echo "🎉 Development environment setup complete!"
