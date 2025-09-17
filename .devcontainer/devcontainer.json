@@ -3,6 +3,11 @@
   "image": "mcr.microsoft.com/devcontainers/rust:1-1-bookworm",
 
   "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {
+      "password": "vscode",
+      "webPort": "6080",
+      "vncPort": "5901"
+    },
     "ghcr.io/devcontainers/features/node:1": {
       "nodeGypDependencies": true,
       "version": "18"
@@ -68,7 +73,10 @@
     }
   },
 
-  "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+    "source=/tmp,target=/tmp,type=bind"
+  ],
 
   "remoteUser": "vscode",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=cached",
@@ -77,7 +85,6 @@
   "containerEnv": {
     "DISPLAY": "${localEnv:DISPLAY}",
     "WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
-    "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
     "PULSE_RUNTIME_PATH": "${localEnv:PULSE_RUNTIME_PATH}"
   },
 
