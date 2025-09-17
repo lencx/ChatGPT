@@ -1,6 +1,10 @@
 package-lock.json
 node_modules/
 
+# pnpm
+.pnpm-store/
+.pnpm-debug.log*
+
 .yarn/*
 .pnp.*
 
