@@ -66,7 +66,7 @@ export default function Scripts() {
   }, [opInfo.opType]);
 
   return (
-    <div className="chatgpt-script">
+    <div className="courtney-ai-script">
       <Table
         rowKey="name"
         scroll={{ x: 800 }}

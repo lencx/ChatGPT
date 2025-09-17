@@ -26,7 +26,7 @@ export default function SyncPrompts() {
   const selectedItems = rowSelection.selectedRowKeys || [];
 
   useInit(async () => {
-    setJsonPath(await path.join(await chatRoot(), 'cache_prompts', 'chatgpt_prompts.json'));
+    setJsonPath(await path.join(await chatRoot(), 'cache_prompts', 'courtney_ai_prompts.json'));
   });
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function SyncPrompts() {
     if (data) {
       opInit(data as any[]);
       promptSet({
-        id: 'chatgpt_prompts',
+        id: 'courtney_ai_prompts',
         last_updated: Date.now(),
       });
     }
@@ -85,7 +85,7 @@ export default function SyncPrompts() {
       <div className="chat-table-tip">
         <div className="chat-sync-path">
           <FilePath label="URL" url={promptsURL} content="f/awesome-chatgpt-prompts/prompts.csv" />
-          <FilePath label="CACHE" paths="cache_prompts/chatgpt_prompts.json" />
+          <FilePath label="CACHE" paths="cache_prompts/courtney_ai_prompts.json" />
         </div>
         {lastUpdated && (
           <span style={{ marginLeft: 10, color: '#888', fontSize: 12 }}>

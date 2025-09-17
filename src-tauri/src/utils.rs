@@ -12,7 +12,7 @@ use tauri::updater::UpdateResponse;
 use tauri::{utils::config::Config, AppHandle, Manager, Wry};
 
 pub fn app_root() -> PathBuf {
-  tauri::api::path::home_dir().unwrap().join(".chatgpt")
+  tauri::api::path::home_dir().unwrap().join(".courtney-ai")
 }
 
 pub fn get_tauri_conf() -> Option<Config> {
@@ -36,10 +36,10 @@ pub fn create_file<P: AsRef<Path>>(filename: P) -> Result<()> {
   Ok(())
 }
 
-pub fn create_chatgpt_prompts() {
+pub fn create_courtney_ai_prompts() {
   let sync_file = app_root()
     .join("cache_prompts")
-    .join("chatgpt_prompts.json");
+    .join("courtney_ai_prompts.json");
   if !exists(&sync_file) {
     create_file(&sync_file).unwrap();
     fs::write(&sync_file, "[]").unwrap();
@@ -94,7 +94,7 @@ pub fn clear_conf(app: &tauri::AppHandle) {
   let root = app_root();
   let msg = format!(
     "Path: {}\n
-    Are you sure you want to clear all ChatGPT configurations? Performing this operation data can not be restored, please back up in advance.\n
+    Are you sure you want to clear all Courtney AI configurations? Performing this operation data can not be restored, please back up in advance.\n
     Note: The application will exit automatically after the configuration cleanup!",
     root.to_string_lossy()
   );
@@ -140,9 +140,9 @@ pub async fn get_data(
   if is_ok {
     Ok(Some(body))
   } else {
-    error!("chatgpt_http: {}", body);
+    error!("courtney_ai_http: {}", body);
     if let Some(v) = app {
-      tauri::api::dialog::message(v.get_window("core").as_ref(), "ChatGPT HTTP", body);
+      tauri::api::dialog::message(v.get_window("core").as_ref(), "Courtney AI HTTP", body);
     }
     Ok(None)
   }
@@ -166,8 +166,8 @@ pub fn run_check_update(app: AppHandle<Wry>, silent: bool, has_msg: Option<bool>
         if v {
           tauri::api::dialog::message(
             app.app_handle().get_window("core").as_ref(),
-            "ChatGPT",
-            "Your ChatGPT is up to date",
+            "Courtney AI",
+            "Your Courtney AI is up to date",
           );
         }
       }

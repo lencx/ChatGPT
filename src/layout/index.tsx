@@ -105,8 +105,8 @@ export default function ChatLayout() {
               <Routes />
             </Content>
             <Footer style={{ textAlign: 'center' }}>
-              <a href="https://github.com/lencx/chatgpt" target="_blank">
-                ChatGPT Desktop Application
+              <a href="https://github.com/CourtneyAviation/Courtney_AI_Desktop" target="_blank">
+                Courtney AI Desktop Application
               </a>{' '}
               ©2022 Created by lencx
             </Footer>

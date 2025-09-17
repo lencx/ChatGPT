@@ -40,7 +40,7 @@ export default function Settings() {
     const chatData = await invoke('reset_app_conf');
     setChatConf(chatData);
     const isOk = await dialog.ask(`Configuration reset successfully, do you want to restart?`, {
-      title: 'ChatGPT Preferences',
+      title: 'Courtney AI Preferences',
     });
     if (isOk) {
       process.relaunch();
@@ -53,7 +53,7 @@ export default function Settings() {
     if (!isEqual(omit(chatConf, ['default_origin']), values)) {
       await invoke('form_confirm', { data: values, label: 'main' });
       const isOk = await dialog.ask(`Configuration saved successfully, do you want to restart?`, {
-        title: 'ChatGPT Preferences',
+        title: 'Courtney AI Preferences',
       });
       if (isOk) {
         process.relaunch();

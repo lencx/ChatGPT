@@ -70,7 +70,7 @@ pub fn init(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     tauri::async_runtime::spawn(async move {
       let url2 = &url;
       let mut main_win = WindowBuilder::new(&app, "core", WindowUrl::App(url2.into()))
-        .title("ChatGPT")
+        .title("Courtney AI")
         .resizable(true)
         .fullscreen(false)
         .inner_size(app_conf2.main_width, app_conf2.main_height)
@@ -87,7 +87,7 @@ pub fn init(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
           .hidden_title(true);
       }
 
-      if url == "https://chat.openai.com" {
+      if url == "http://172.30.30.111:8000" {
         main_win = main_win
           .initialization_script(include_str!("../vendors/floating-ui-core.js"))
           .initialization_script(include_str!("../vendors/floating-ui-dom.js"))

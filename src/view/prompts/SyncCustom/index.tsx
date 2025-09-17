@@ -34,7 +34,7 @@ export default function SyncCustom() {
   };
 
   useInit(async () => {
-    const filePath = await path.join(await chatRoot(), 'chatgpt.log');
+    const filePath = await path.join(await chatRoot(), 'courtney_ai.log');
     setLogPath(filePath);
   });
 

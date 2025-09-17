@@ -1,9 +1,9 @@
 [package]
-name = "chatgpt"
+name = "courtney-ai-desktop"
 version = "0.0.0"
 authors = ["lencx <cxin1314@gmail.com>"]
-description = "ChatGPT Desktop Application"
-repository = "https://github.com/lencx/ChatGPT"
+description = "Courtney AI Desktop Application"
+repository = "https://github.com/CourtneyAviation/Courtney_AI_Desktop"
 license = "MIT"
 edition = "2021"
 rust-version = "1.57"

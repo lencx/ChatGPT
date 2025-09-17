@@ -18,7 +18,7 @@ pub fn tray_window(handle: &tauri::AppHandle) {
       &app_conf.tray_origin
     };
     let mut tray_win = WindowBuilder::new(&app, "tray", WindowUrl::App(link.into()))
-      .title("ChatGPT")
+      .title("Courtney AI")
       .resizable(false)
       .fullscreen(false)
       .inner_size(app_conf.tray_width, app_conf.tray_height)
@@ -29,7 +29,7 @@ pub fn tray_window(handle: &tauri::AppHandle) {
       .initialization_script(&load_script("core.js"))
       .user_agent(&app_conf.ua_tray);
 
-    if app_conf.tray_origin == "https://chat.openai.com" && !app_conf.tray_dashboard {
+    if app_conf.tray_origin == "http://172.30.30.111:8000" && !app_conf.tray_dashboard {
       tray_win = tray_win
         .initialization_script(include_str!("../vendors/floating-ui-core.js"))
         .initialization_script(include_str!("../vendors/floating-ui-dom.js"))
@@ -53,7 +53,7 @@ pub fn dalle2_window(
   let app = handle.clone();
 
   let query = if query.is_some() {
-    format!("window.addEventListener('DOMContentLoaded', function() {{\nwindow.__CHATGPT_QUERY__='{}';\n}})", query.unwrap())
+    format!("window.addEventListener('DOMContentLoaded', function() {{\nwindow.__COURTNEY_AI_QUERY__='{}';\n}})", query.unwrap())
   } else {
     "".to_string()
   };
@@ -121,7 +121,7 @@ pub mod cmd {
     dalle2_window(
       &app.app_handle(),
       Some(query),
-      Some("ChatGPT & DALL·E 2".to_string()),
+      Some("Courtney AI & DALL·E 2".to_string()),
       None,
     );
   }

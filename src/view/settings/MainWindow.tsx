@@ -12,9 +12,9 @@ const PopupSearchLabel = () => {
         title={
           <div>
             <div style={{ marginBottom: 10 }}>
-              Generate images according to the content: Select the ChatGPT content with the mouse,
-              no more than 400 characters. the <b>DALL·E 2</b> button appears, and click to jump
-              (Note: because the search content filled by the script cannot trigger the event
+              Generate images according to the content: Select the Courtney AI content with the
+              mouse, no more than 400 characters. the <b>DALL·E 2</b> button appears, and click to
+              jump (Note: because the search content filled by the script cannot trigger the event
               directly, you need to enter a space in the input box to make the button clickable).
             </div>
             <div>

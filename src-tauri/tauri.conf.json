@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "ChatGPT",
+    "productName": "Courtney AI",
     "version": "1.1.0"
   },
   "tauri": {
@@ -28,7 +28,7 @@
         "removeFile": true,
         "removeDir": true,
         "scope": [
-          "$HOME/.chatgpt/**",
+          "$HOME/.courtney-ai/**",
           "$DOWNLOAD/**"
         ]
       },
@@ -68,8 +68,8 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.lencx.chatgpt",
-      "longDescription": "ChatGPT Desktop Application",
+      "identifier": "com.courtneyaviation.courtney-ai",
+      "longDescription": "Courtney AI Desktop Application",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
@@ -77,7 +77,7 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "shortDescription": "ChatGPT",
+      "shortDescription": "Courtney AI",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
@@ -98,7 +98,7 @@
             "main",
             "tray"
           ],
-          "domain": "chat.openai.com",
+          "domain": "172.30.30.111:8000",
           "enableTauriAPI": true
         },
         {
@@ -120,7 +120,7 @@
         },
         {
           "windows": [
-            "chatgpt_sponsors",
+            "courtney_ai_sponsors",
             "app_website"
           ],
           "domain": "app.nofwl.com",
@@ -132,7 +132,7 @@
       "active": true,
       "dialog": false,
       "endpoints": [
-        "https://lencx.github.io/ChatGPT/install.json"
+        "https://github.com/CourtneyAviation/Courtney_AI_Desktop/releases/latest/download/install.json"
       ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEIxMjY4OUI5MTVFNjBEMDUKUldRRkRlWVZ1WWttc1NGWEE0RFNSb0RqdnhsekRJZTkwK2hVLzhBZTZnaHExSEZ1ZEdzWkpXTHkK"
     }

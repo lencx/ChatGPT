@@ -108,7 +108,7 @@ function cmdInit() {
           cmdTip();
         }
         if (mutation.target.getAttribute('class') === 'chat-prompt-cmd-list') {
-          // The `chatgpt prompt` fill can be done by clicking on the event.
+          // The `courtney ai prompt` fill can be done by clicking on the event.
           const searchDom = document.querySelector('form .chat-prompt-cmd-list>div');
           const searchInput = document.querySelector('form textarea');
           if (!searchDom) return;
@@ -207,7 +207,7 @@ function cmdInit() {
       };
       const searchInput = document.querySelector('form textarea');
 
-      // Enter a command starting with `/` and press a space to automatically fill `chatgpt prompt`.
+      // Enter a command starting with `/` and press a space to automatically fill `courtney ai prompt`.
       // If more than one command appears in the search results, the first one will be used by default.
       function cmdKeydown(event) {
         if (!window.__CHAT_CMD_PROMPT__) {

@@ -21,7 +21,7 @@ pub async fn init_script(app: tauri::AppHandle) -> anyhow::Result<(), reqwest::E
     );
     if !compare {
       info!("update_scripts_manifest");
-      create_chatgpt_scripts("manifest.json".into(), body);
+      create_courtney_ai_scripts("manifest.json".into(), body);
 
       if let Some(v) = app.get_window("core") {
         tauri::api::dialog::ask(Some(&v), "Scripts Update", "There are new available scripts. Please go to 'Preferences -> Control Center -> Scripts' to check for updates.", |is_ok| {
@@ -36,7 +36,7 @@ pub async fn init_script(app: tauri::AppHandle) -> anyhow::Result<(), reqwest::E
       }
     }
   } else {
-    create_chatgpt_scripts("manifest.json".into(), body);
+    create_courtney_ai_scripts("manifest.json".into(), body);
   }
 
   Ok(())
@@ -86,7 +86,7 @@ pub fn exist_scripts(file: String) -> bool {
   exists(&script_file)
 }
 
-pub fn create_chatgpt_scripts(file: String, body: String) {
+pub fn create_courtney_ai_scripts(file: String, body: String) {
   let script_file = app_root().join("scripts").join(file);
   match create_file(&script_file) {
     Ok(_) => {
@@ -141,7 +141,7 @@ pub fn compare_json_objects(obj1: &Value, obj2: &Value) -> bool {
 }
 
 pub mod cmd {
-  use super::{create_chatgpt_scripts, parse_script};
+  use super::{create_courtney_ai_scripts, parse_script};
   use crate::conf::SCRIPTS_DIR;
   use log::{error, info};
   use tauri::Manager;
@@ -184,7 +184,7 @@ pub mod cmd {
       }
     };
 
-    create_chatgpt_scripts(name, body);
+    create_courtney_ai_scripts(name, body);
 
     true
   }

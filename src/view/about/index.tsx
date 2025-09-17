@@ -19,7 +19,7 @@ export default function About() {
     <div className="about">
       <Tabs
         items={[
-          { label: 'About ChatGPT', key: 'about', children: <AboutChatGPT /> },
+          { label: 'About Courtney AI', key: 'about', children: <AboutCourtneyAI /> },
           { label: 'Update Log', key: 'log', children: <LogTab content={logContent} /> },
         ]}
       />
@@ -27,27 +27,27 @@ export default function About() {
   );
 }
 
-const AboutChatGPT = () => {
+const AboutCourtneyAI = () => {
   return (
     <div className="about-tab">
-      <Tag>ChatGPT Desktop Application (Mac, Windows and Linux)</Tag>
+      <Tag>Courtney AI Desktop Application (Mac, Windows and Linux)</Tag>
       <p>
         🕒 History versions:{' '}
-        <a href="https://github.com/lencx/ChatGPT/releases" target="_blank">
-          lencx/ChatGPT/releases
+        <a href="https://github.com/CourtneyAviation/Courtney_AI_Desktop/releases" target="_blank">
+          CourtneyAviation/Courtney_AI_Desktop/releases
         </a>
       </p>
       <p>
         It is just a wrapper for the
-        <a href="https://chat.openai.com" target="_blank" title="https://chat.openai.com">
+        <a href="http://172.30.30.111:8000" target="_blank" title="http://172.30.30.111:8000">
           {' '}
-          OpenAI ChatGPT{' '}
+          OpenAI Chat Interface{' '}
         </a>
         website, no other data transfer exists (you can check the{' '}
         <a
-          href="https://github.com/lencx/ChatGPT"
-          target="_blank"
-          title="https://github.com/lencx/ChatGPT"
+          href="https://github.com/CourtneyAviation/Courtney_AI_Desktop"
+          className="link"
+          title="https://github.com/CourtneyAviation/Courtney_AI_Desktop"
         >
           {' '}
           source code{' '}
@@ -78,8 +78,11 @@ const LogTab = ({ content }: { content: string }) => {
     <div>
       <p>
         Ref:{' '}
-        <a href="https://github.com/lencx/ChatGPT/blob/main/UPDATE_LOG.md" target="_blank">
-          lencx/ChatGPT/UPDATE_LOG.md
+        <a
+          href="https://github.com/CourtneyAviation/Courtney_AI_Desktop/blob/main/UPDATE_LOG.md"
+          target="_blank"
+        >
+          CourtneyAviation/Courtney_AI_Desktop/UPDATE_LOG.md
         </a>
       </p>
       <Markdown className="log-tab" children={content} />

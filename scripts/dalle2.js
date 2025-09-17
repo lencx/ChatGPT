@@ -26,8 +26,8 @@ function dalle2Init() {
     if (searchInput) {
       clearInterval(window.searchInterval);
 
-      if (!window.__CHATGPT_QUERY__) return;
-      const query = decodeURIComponent(window.__CHATGPT_QUERY__);
+      if (!window.__COURTNEY_AI_QUERY__) return;
+      const query = decodeURIComponent(window.__COURTNEY_AI_QUERY__);
       searchInput.focus();
       searchInput.value = query;
     }

@@ -19,7 +19,7 @@ use tauri_plugin_log::{
 async fn main() {
   let app_conf = AppConf::read().write();
   // If the file does not exist, creating the file will block menu synchronization
-  utils::create_chatgpt_prompts();
+  utils::create_courtney_ai_prompts();
   let context = tauri::generate_context!();
 
   gpt::download_list("chat.download.json", "download", None, None);
@@ -28,7 +28,7 @@ async fn main() {
   let mut log = tauri_plugin_log::Builder::default()
     .targets([
       // LogTarget::LogDir,
-      // LOG PATH: ~/.chatgpt/ChatGPT.log
+      // LOG PATH: ~/.courtney-ai/Courtney_AI.log
       LogTarget::Folder(utils::app_root()),
       LogTarget::Stdout,
       LogTarget::Webview,
@@ -130,5 +130,5 @@ async fn main() {
       }
     })
     .run(context)
-    .expect("error while running ChatGPT application");
+    .expect("error while running Courtney AI application");
 }

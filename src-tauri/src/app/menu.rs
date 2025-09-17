@@ -15,14 +15,14 @@ use tauri::AboutMetadata;
 // --- Menu
 pub fn init() -> Menu {
   let app_conf = AppConf::read();
-  let name = "ChatGPT";
+  let name = "Courtney AI";
   let app_menu = Submenu::new(
     name,
     Menu::with_items([
       #[cfg(target_os = "macos")]
       MenuItem::About(name.into(), AboutMetadata::default()).into(),
       #[cfg(not(target_os = "macos"))]
-      CustomMenuItem::new("about", "About ChatGPT").into(),
+      CustomMenuItem::new("about", "About Courtney AI").into(),
       CustomMenuItem::new("check_update", "Check for Updates").into(),
       MenuItem::Services.into(),
       MenuItem::Hide.into(),
@@ -140,12 +140,12 @@ pub fn init() -> Menu {
       CustomMenuItem::new("go_conf", "Go to Config")
         .accelerator("CmdOrCtrl+Shift+G")
         .into(),
-      CustomMenuItem::new("restart", "Restart ChatGPT")
+      CustomMenuItem::new("restart", "Restart Courtney AI")
         .accelerator("CmdOrCtrl+Shift+R")
         .into(),
       CustomMenuItem::new("clear_conf", "Clear Config").into(),
       MenuItem::Separator.into(),
-      CustomMenuItem::new("chatgpt_sponsors", "ChatGPT Sponsors").into(),
+      CustomMenuItem::new("courtney_ai_sponsors", "Courtney AI Sponsors").into(),
       MenuItem::Separator.into(),
       CustomMenuItem::new("nofwl", "NoFWL Desktop Application").into(),
       CustomMenuItem::new("sponsor", "Sponsor Author").into(),
@@ -187,7 +187,10 @@ pub fn init() -> Menu {
   let window_menu = Submenu::new(
     "Window",
     Menu::new()
-      .add_item(CustomMenuItem::new("app_website", "ChatGPT User's Guide"))
+      .add_item(CustomMenuItem::new(
+        "app_website",
+        "Courtney AI User's Guide",
+      ))
       .add_item(CustomMenuItem::new("dalle2", "DALL·E 2"))
       .add_native_item(MenuItem::Separator)
       .add_native_item(MenuItem::Minimize)
@@ -197,7 +200,7 @@ pub fn init() -> Menu {
   let help_menu = Submenu::new(
     "Help",
     Menu::new()
-      .add_item(CustomMenuItem::new("chatgpt_log", "ChatGPT Log"))
+      .add_item(CustomMenuItem::new("courtney_ai_log", "Courtney AI Log"))
       .add_item(CustomMenuItem::new("update_log", "Update Log"))
       .add_item(CustomMenuItem::new("report_bug", "Report Bug"))
       .add_item(
@@ -227,7 +230,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
       let tauri_conf = utils::get_tauri_conf().unwrap();
       tauri::api::dialog::message(
         app.get_window("core").as_ref(),
-        "ChatGPT",
+        "Courtney AI",
         format!("Version {}", tauri_conf.package.version.unwrap()),
       );
     }
@@ -242,14 +245,14 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
     "app_website" => window::cmd::wa_window(
       app,
       "app_website".into(),
-      "ChatGPT User's Guide".into(),
+      "Courtney AI User's Guide".into(),
       conf::APP_WEBSITE.into(),
       None,
     ),
     "nofwl" => open(&app, conf::NOFWL_APP),
-    "chatgpt_sponsors" => window::cmd::wa_window(
+    "courtney_ai_sponsors" => window::cmd::wa_window(
       app,
-      "chatgpt_sponsors".into(),
+      "courtney_ai_sponsors".into(),
       "Sponsors".into(),
       conf::APP_SPONSORS.into(),
       None,
@@ -388,7 +391,7 @@ pub fn menu_handler(event: WindowMenuEvent<tauri::Wry>) {
       )
       .unwrap(),
     // Help
-    "chatgpt_log" => utils::open_file(utils::app_root().join("chatgpt.log")),
+    "courtney_ai_log" => utils::open_file(utils::app_root().join("courtney_ai.log")),
     "update_log" => open(&app, conf::UPDATE_LOG_URL),
     "report_bug" => open(&app, conf::ISSUES_URL),
     "dev_tools" => {

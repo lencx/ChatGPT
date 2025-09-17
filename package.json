@@ -1,6 +1,7 @@
 {
-  "name": "chatgpt",
-  "version": "0.0.0",
+  "name": "courtney-ai-desktop",
+  "private": true,
+  "version": "0.1.0",
   "scripts": {
     "dev:fe": "vite",
     "build:fe": "tsc && vite build",
@@ -22,7 +23,7 @@
   "license": "MIT",
   "author": "lencx <cxin1314@gmail.com>",
   "keywords": [
-    "chatgpt",
+    "courtney-ai",
     "app",
     "desktop",
     "tauri",
@@ -30,11 +31,11 @@
     "linux",
     "windows"
   ],
-  "homepage": "https://github.com/lencx/ChatGPT",
-  "bugs": "https://github.com/lencx/ChatGPT/issues",
+  "homepage": "https://github.com/CourtneyAviation/Courtney_AI_Desktop",
+  "bugs": "https://github.com/CourtneyAviation/Courtney_AI_Desktop/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lencx/ChatGPT"
+    "url": "https://github.com/CourtneyAviation/Courtney_AI_Desktop"
   },
   "dependencies": {
     "@ant-design/icons": "^4.8.0",

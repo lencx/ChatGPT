@@ -1,7 +1,7 @@
 {
-  "name": "ChatGPT Scripts",
+  "name": "Courtney AI Scripts",
   "author": "lencx",
-  "description": "ChatGPT Desktop Application Core Extension Scripts.",
+  "description": "Courtney AI Desktop Application Core Extension Scripts.",
   "url": "https://github.com/lencx/ChatGPT/tree/main/scripts",
   "scripts": [
     {

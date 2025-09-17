@@ -10,27 +10,27 @@ Transform the forked ChatGPT desktop app (v1.1.0) into a branded Courtney AI des
 
 #### 1.1 Setup Development Environment
 
-- [ ] **Review existing dev container** (`.devcontainer/devcontainer.json`)
-- [ ] **Install Rust toolchain** (for Tauri backend)
-- [ ] **Install Node.js dependencies** (`pnpm install`)
-- [ ] **Install Tauri CLI** (`cargo install tauri-cli`)
-- [ ] **Verify build tools** (Rust, Node.js, pnpm versions)
+- [x] **Review existing dev container** (`.devcontainer/devcontainer.json`)
+- [x] **Install Rust toolchain** (for Tauri backend)
+- [x] **Install Node.js dependencies** (`pnpm install`)
+- [x] **Install Tauri CLI** (`cargo install tauri-cli`)
+- [x] **Verify build tools** (Rust, Node.js, pnpm versions)
 
 #### 1.2 Test Baseline Application
 
-- [ ] **Build development version** (`pnpm tauri dev`)
-- [ ] **Test original ChatGPT functionality** (with OpenAI API)
-- [ ] **Document current features** and UI components
-- [ ] **Identify potential issues** or outdated dependencies
-- [ ] **Screenshot baseline interface** for comparison
+- [x] **Build development version** (`pnpm tauri dev`)
+- [x] **Test original ChatGPT functionality** (with OpenAI API)
+- [x] **Document current features** and UI components
+- [x] **Identify potential issues** or outdated dependencies
+- [x] **Screenshot baseline interface** for comparison
 
 #### 1.3 Update Development Container (if needed)
 
-- [ ] **Update Node.js version** to latest LTS
-- [ ] **Update Rust toolchain** to stable
-- [ ] **Fix any dependency conflicts**
-- [ ] **Optimize container for Tauri development**
-- [ ] **Test build process** in updated environment
+- [x] **Update Node.js version** to latest LTS
+- [x] **Update Rust toolchain** to stable
+- [x] **Fix any dependency conflicts**
+- [x] **Optimize container for Tauri development**
+- [x] **Test build process** in updated environment
 
 ---
 
@@ -38,11 +38,11 @@ Transform the forked ChatGPT desktop app (v1.1.0) into a branded Courtney AI des
 
 #### 2.1 Application Metadata
 
-- [ ] **Update `package.json`** (name, description, author)
-- [ ] **Update `Cargo.toml`** (package name, description)
-- [ ] **Update `tauri.conf.json`** (app name, identifier, version)
-- [ ] **Update window titles** and system tray text
-- [ ] **Update about dialog** information
+- [x] **Update `package.json`** (name, description, author)
+- [x] **Update `Cargo.toml`** (package name, description)
+- [x] **Update `tauri.conf.json`** (app name, identifier, version)
+- [x] **Update window titles** and system tray text
+- [x] **Update about dialog** information
 
 #### 2.2 Visual Branding
 
@@ -63,6 +63,32 @@ Transform the forked ChatGPT desktop app (v1.1.0) into a branded Courtney AI des
 - [ ] **Update README** and documentation
 
 ---
+
+### 2.4 Credential entry & secure storage (UI + Backend)
+
+Add a user-facing API key entry and a secure storage flow so the desktop app can authenticate to the Courtney AI security proxy without exposing secrets in the renderer or bundles.
+
+Tasks:
+
+- [ ] Add Settings UI component to enter the QWEN API key (masked input, show/hide, Save/Clear/Test buttons).
+- [ ] Implement a Tauri backend command set to store/retrieve/clear the API key using the OS keychain (recommend `keyring` crate) and to test the key against the proxy health endpoint.
+- [ ] Provide a `proxy_request` Tauri command that attaches the stored Authorization header and forwards requests to `http://127.0.0.1:8001` (recommended centralization of outgoing proxy calls).
+- [ ] Add a development fallback that reads `QWEN_API_KEY` from environment only in dev mode with a clear warning in the UI.
+
+Acceptance criteria:
+
+- User can save/clear the API key in Settings and the key persists across app restarts via OS keychain.
+- The app never stores the raw key in renderer-local storage or build artifacts.
+- Test action validates the key by calling the proxy health endpoint and reports success/failure in UI.
+- Core network calls to the security proxy are routed through the backend so raw keys are never exposed to the renderer.
+
+Files/areas to modify:
+
+- `src/components/Settings/ApiKeyForm.tsx` (new UI component)
+- `src/view/settings/*` (include the new form)
+- `src-tauri/Cargo.toml` (add `keyring` or preferred keychain crate)
+- `src-tauri/src/main.rs` and a helper `src-tauri/src/keychain.rs` (implement Tauri commands)
+- Refactor places in `src/` that call the proxy directly to use `invoke('proxy_request', ...)` or a thin backend wrapper.
 
 ### **Phase 3: API Integration** (Days 5-6)
 

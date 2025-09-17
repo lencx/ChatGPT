@@ -188,25 +188,25 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<PromptRecord>
 
       let prompts = utils::app_root().join("chat.prompt.json");
       let prompt_cmd = utils::app_root().join("chat.prompt.cmd.json");
-      let chatgpt_prompts = utils::app_root()
+      let courtney_ai_prompts = utils::app_root()
         .join("cache_prompts")
-        .join("chatgpt_prompts.json");
+        .join("courtney_ai_prompts.json");
 
       if !utils::exists(&prompts) {
         fs::write(
           &prompts,
           serde_json::json!({
-            "name": "ChatGPT Prompts",
-            "link": "https://github.com/lencx/ChatGPT"
+            "name": "Courtney AI Prompts",
+            "link": "https://github.com/CourtneyAviation/Courtney_AI_Desktop"
           })
           .to_string(),
         )
         .unwrap();
       }
 
-      // chatgpt_prompts.json
+      // courtney_ai_prompts.json
       fs::write(
-        chatgpt_prompts,
+        courtney_ai_prompts,
         serde_json::to_string_pretty(&transformed_data).unwrap(),
       )
       .unwrap();
@@ -216,7 +216,7 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<PromptRecord>
       fs::write(
         prompt_cmd,
         serde_json::to_string_pretty(&serde_json::json!({
-          "name": "ChatGPT CMD",
+          "name": "Courtney AI CMD",
           "last_updated": time,
           "data": cmd_data,
         }))
@@ -226,7 +226,7 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<PromptRecord>
       let mut kv = HashMap::new();
       kv.insert(
         "sync_prompts".to_string(),
-        serde_json::json!({ "id": "chatgpt_prompts", "last_updated": time }),
+        serde_json::json!({ "id": "courtney_ai_prompts", "last_updated": time }),
       );
       let prompts_data = utils::merge(
         &serde_json::from_str(&fs::read_to_string(&prompts).unwrap()).unwrap(),
@@ -260,25 +260,25 @@ pub async fn sync_prompts(app: AppHandle, time: u64) -> Option<Vec<PromptRecord>
 pub async fn sync_user_prompts(url: String, data_type: String) -> Option<Vec<PromptRecord>> {
   info!("sync_user_prompts: url => {}", url);
   let res = utils::get_data(&url, None).await.unwrap_or_else(|err| {
-    error!("chatgpt_http: {}", err);
+    error!("courtney_ai_http: {}", err);
     None
   });
 
   if let Some(v) = res {
     let data: Option<Vec<PromptBaseRecord>> = if data_type == "csv" {
-      info!("chatgpt_http_csv_parse");
+      info!("courtney_ai_http_csv_parse");
       parse_prompt(v)
     } else if data_type == "json" {
-      info!("chatgpt_http_json_parse");
+      info!("courtney_ai_http_json_parse");
       match serde_json::from_str::<Vec<PromptBaseRecord>>(&v) {
         Ok(parsed) => Some(parsed),
         Err(err) => {
-          error!("chatgpt_http_json_parse: {}", err);
+          error!("courtney_ai_http_json_parse: {}", err);
           None
         }
       }
     } else {
-      error!("chatgpt_http_unknown_type");
+      error!("courtney_ai_http_unknown_type");
       None
     };
 

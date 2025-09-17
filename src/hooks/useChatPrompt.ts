@@ -10,7 +10,7 @@ export default function useChatPrompt(key: string, file = CHAT_PROMPT_JSON) {
 
   useInit(async () => {
     const data = await readJSON(file, {
-      defaultVal: { name: 'ChatGPT Prompts', [key]: null },
+      defaultVal: { name: 'Courtney AI Prompts', [key]: null },
     });
     setPromptJson(data);
   });
@@ -56,7 +56,7 @@ export function useCachePrompt(file = '') {
     // Generate the `chat.prompt.cmd.json` file and refresh the page for the slash command to take effect.
     const list = await invoke('cmd_list');
     await writeJSON(CHAT_PROMPT_CMD_JSON, {
-      name: 'ChatGPT CMD',
+      name: 'Courtney AI CMD',
       last_updated: Date.now(),
       data: list,
     });
