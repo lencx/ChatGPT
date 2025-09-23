@@ -10,8 +10,9 @@ export const CHAT_AWESOME_JSON = 'chat.awesome.json';
 export const CHAT_NOTES_JSON = 'chat.notes.json';
 export const CHAT_PROMPTS_CSV = 'chat.prompts.csv';
 export const GITHUB_PROMPTS_CSV_URL =
-  'https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv';
-export const GITHUB_LOG_URL = 'https://raw.githubusercontent.com/lencx/ChatGPT/main/UPDATE_LOG.md';
+  'https://raw.githubusercontent.com/CourtneyAviation/awesome-courtney-prompts/main/prompts.csv';
+export const GITHUB_LOG_URL =
+  'https://raw.githubusercontent.com/CourtneyAviation/Courtney_AI_Desktop/main/UPDATE_LOG.md';
 
 export const DISABLE_AUTO_COMPLETE = {
   autoCapitalize: 'off',
@@ -20,7 +21,7 @@ export const DISABLE_AUTO_COMPLETE = {
 };
 
 export const chatRoot = async () => {
-  return join(await homeDir(), '.chatgpt');
+  return join(await homeDir(), '.courtney-ai');
 };
 
 export const scriptRoot = async () => {
@@ -55,8 +56,8 @@ export const readJSON = async (path: string, opts: readJSONOpts = {}) => {
         ? '[]'
         : JSON.stringify(
             {
-              name: 'ChatGPT',
-              link: 'https://github.com/lencx/ChatGPT',
+              name: 'Courtney AI',
+              link: 'https://github.com/CourtneyAviation/Courtney_AI_Desktop',
               ...defaultVal,
             },
             null,

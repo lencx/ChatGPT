@@ -6,89 +6,94 @@ Transform the forked ChatGPT desktop app (v1.1.0) into a branded Courtney AI des
 
 ## 📋 **Development Phases**
 
-### **Phase 1: Environment Setup & Baseline Testing** (Days 1-2)
+### **Phase 1: Environment Setup & Baseline Testing** (Days 1-2) ✅ **COMPLETED**
 
 #### 1.1 Setup Development Environment
 
-- [ ] **Review existing dev container** (`.devcontainer/devcontainer.json`)
-- [ ] **Install Rust toolchain** (for Tauri backend)
-- [ ] **Install Node.js dependencies** (`pnpm install`)
-- [ ] **Install Tauri CLI** (`cargo install tauri-cli`)
-- [ ] **Verify build tools** (Rust, Node.js, pnpm versions)
+- [x] **Review existing dev container** (`.devcontainer/devcontainer.json`)
+- [x] **Install Rust toolchain** (for Tauri backend)
+- [x] **Install Node.js dependencies** (`pnpm install`)
+- [x] **Install Tauri CLI** (`cargo install tauri-cli`)
+- [x] **Verify build tools** (Rust, Node.js, pnpm versions)
 
 #### 1.2 Test Baseline Application
 
-- [ ] **Build development version** (`pnpm tauri dev`)
-- [ ] **Test original ChatGPT functionality** (with OpenAI API)
-- [ ] **Document current features** and UI components
-- [ ] **Identify potential issues** or outdated dependencies
-- [ ] **Screenshot baseline interface** for comparison
+- [x] **Build development version** (`pnpm tauri dev`)
+- [x] **Test original ChatGPT functionality** (with OpenAI API)
+- [x] **Document current features** and UI components
+- [x] **Identify potential issues** or outdated dependencies
+- [x] **Screenshot baseline interface** for comparison
 
 #### 1.3 Update Development Container (if needed)
 
-- [ ] **Update Node.js version** to latest LTS
-- [ ] **Update Rust toolchain** to stable
-- [ ] **Fix any dependency conflicts**
-- [ ] **Optimize container for Tauri development**
-- [ ] **Test build process** in updated environment
+- [x] **Update Node.js version** to latest LTS
+- [x] **Update Rust toolchain** to stable
+- [x] **Fix any dependency conflicts**
+- [x] **Optimize container for Tauri development**
+- [x] **Test build process** in updated environment
 
 ---
 
-### **Phase 2: Branding & Identity Update** (Days 3-4)
+### **Phase 2: Branding & Identity Update** (Days 3-4) ✅ **COMPLETED**
 
 #### 2.1 Application Metadata
 
-- [ ] **Update `package.json`** (name, description, author)
-- [ ] **Update `Cargo.toml`** (package name, description)
-- [ ] **Update `tauri.conf.json`** (app name, identifier, version)
-- [ ] **Update window titles** and system tray text
-- [ ] **Update about dialog** information
+- [x] **Update `package.json`** (name, description, author)
+- [x] **Update `Cargo.toml`** (package name, description)
+- [x] **Update `tauri.conf.json`** (app name, identifier, version)
+- [x] **Update window titles** and system tray text
+- [x] **Update about dialog** information
 
 #### 2.2 Visual Branding
 
-- [ ] **Replace app icons** (`src-tauri/icons/`)
+- [x] **Replace app icons** (`src-tauri/icons/`)
   - Desktop icon (`.ico`, `.icns`, `.png`)
   - System tray icons (`tray-icon.png`, `tray-icon-light.png`)
   - Windows Store assets (various Square logos)
-- [ ] **Update splash screen** and loading graphics
-- [ ] **Replace logo in UI** (`public/logo.png`)
-- [ ] **Update favicon** and web assets
+- [x] **Update splash screen** and loading graphics
+- [x] **Replace logo in UI** (`public/logo.png`)
+- [x] **Update favicon** and web assets
 
 #### 2.3 Text & Copy Updates
 
-- [ ] **Update all "ChatGPT" references** to "Courtney AI"
-- [ ] **Update menu items** and context menus
-- [ ] **Update error messages** and notifications
-- [ ] **Update help text** and tooltips
-- [ ] **Update README** and documentation
+- [x] **Update all "ChatGPT" references** to "Courtney AI"
+- [x] **Update menu items** and context menus
+- [x] **Update error messages** and notifications
+- [x] **Update help text** and tooltips
+- [x] **Update README** and documentation
 
 ---
 
-### **Phase 3: API Integration** (Days 5-6)
+### **Phase 3: API Integration** (Days 5-6) ✅ **MOSTLY COMPLETED**
 
-#### 3.1 Identify API Integration Points
+#### 3.1 AGX Orin Server Configuration
 
-- [ ] **Audit codebase** for OpenAI API calls
-- [ ] **Locate configuration files** for API endpoints
-- [ ] **Document request/response formats** currently used
-- [ ] **Test AGX Orin API compatibility** with OpenAI format
-- [ ] **Identify authentication differences**
+- [x] **Update base URL** in `src-tauri/src/conf.rs`
+  - Change from `https://chat.openai.com` to `http://172.30.30.111:8080`
+- [x] **Configure API endpoints** for llama.cpp server
+  - Chat completion: `http://172.30.30.111:8001/v1/chat/completions`
+  - Models list: `http://172.30.30.111:8001/v1/models`
+- [x] **Implement authentication** using API keys
+  - Format: `qwen_a7b508f9afcbc4a9:LlkN4Hshm9G88vr7MVGjW1-FOrwf9noiDHJLXy9ECBM`
+  - Secure storage in OS keychain
 
-#### 3.2 Replace API Endpoints
+#### 3.2 Request/Response Handling
 
-- [ ] **Update base URL** from OpenAI to `172.30.30.111:8000`
-- [ ] **Remove OpenAI API key** requirements
-- [ ] **Update request headers** and authentication
-- [ ] **Test basic chat functionality** with AGX Orin
-- [ ] **Handle API response differences**
+- [x] **Update API calls** to match llama.cpp format
+- [x] **Add direct API integration** via Tauri commands
+  - `api_chat_completion`
+  - `api_list_models`
+  - `api_proxy_request`
+- [x] **Handle authentication headers** (`Authorization: Bearer`)
+- [ ] **Error handling** for connection issues
+- [ ] **Retry logic** for failed requests
 
-#### 3.3 API Error Handling
+#### 3.3 Feature Compatibility
 
-- [ ] **Update error messages** for local server
-- [ ] **Add connection status** monitoring
-- [ ] **Implement retry logic** for server downtime
-- [ ] **Add server health checks**
-- [ ] **Handle network connectivity** issues
+- [x] **Chat interface** compatibility with OpenAI format
+- [ ] **Code highlighting** optimization for Qwen3-Coder
+- [ ] **Remove DALL-E functionality** (not supported)
+- [ ] **Update export features** for new response format
 
 ---
 
@@ -104,6 +109,11 @@ Transform the forked ChatGPT desktop app (v1.1.0) into a branded Courtney AI des
 
 #### 4.2 Feature Enhancements
 
+- [ ] **Remove DALL-E functionality** - Local LLM doesn't support image generation
+  - Remove DALL-E 2 button from pop-up search
+  - Remove image generation UI components
+  - Clean up DALL-E related scripts and menu items
+  - Update help text and tooltips to remove image generation references
 - [ ] **Add connection status** indicator
 - [ ] **Add server configuration** options
 - [ ] **Improve code export** functionality

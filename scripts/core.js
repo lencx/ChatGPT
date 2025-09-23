@@ -1,7 +1,7 @@
 /**
  * @name core.js
  * @version 0.1.2
- * @url https://github.com/lencx/ChatGPT/tree/main/scripts/core.js
+ * @url https://github.com/CourtneyAviation/Courtney_AI_Desktop/tree/main/scripts/core.js
  */
 
 function coreInit() {
@@ -77,13 +77,13 @@ function coreInit() {
       const chatConf = (await invoke('get_app_conf')) || {};
       if (/darwin/.test(_platform) && !chatConf.titlebar) {
         const topStyleDom = document.createElement('style');
-        topStyleDom.innerHTML = `#chatgpt-app-window-top{position:fixed;top:0;z-index:999999999;width:100%;height:24px;background:transparent;cursor:grab;cursor:-webkit-grab;user-select:none;-webkit-user-select:none;}#chatgpt-app-window-top:active {cursor:grabbing;cursor:-webkit-grabbing;}`;
+        topStyleDom.innerHTML = `#courtney-app-window-top{position:fixed;top:0;z-index:999999999;width:100%;height:24px;background:transparent;cursor:grab;cursor:-webkit-grab;user-select:none;-webkit-user-select:none;}#courtney-app-window-top:active {cursor:grabbing;cursor:-webkit-grabbing;}`;
         document.head.appendChild(topStyleDom);
         const topDom = document.createElement('div');
-        topDom.id = 'chatgpt-app-window-top';
+        topDom.id = 'courtney-app-window-top';
         document.body.appendChild(topDom);
 
-        if (window.location.host === 'chat.openai.com') {
+        if (window.location.host === '172.30.30.111:8080') {
           const intervalId = setInterval(function () {
             const nav = document.body.querySelector('nav');
             if (nav) {
@@ -116,7 +116,7 @@ function coreInit() {
       true,
     );
 
-    if (window.location.host === 'chat.openai.com') {
+    if (window.location.host === '172.30.30.111:8080') {
       window.__sync_prompts = async function () {
         await invoke('sync_prompts', { time: Date.now() });
       };

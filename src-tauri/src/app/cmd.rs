@@ -76,7 +76,7 @@ pub async fn get_data(app: AppHandle, url: String, is_msg: Option<bool>) -> Opti
     utils::get_data(&url, None).await
   };
   res.unwrap_or_else(|err| {
-    error!("chatgpt_client_http: {}", err);
+    error!("courtney_ai_client_http: {}", err);
     None
   })
 }

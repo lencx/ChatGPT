@@ -94,23 +94,6 @@ pub fn dalle2_window(
   }
 }
 
-pub fn sponsor_window(handle: tauri::AppHandle) {
-  tauri::async_runtime::spawn(async move {
-    if let Some(win) = handle.get_window("sponsor") {
-      win.show().unwrap()
-    } else {
-      WindowBuilder::new(&handle, "sponsor", WindowUrl::App("sponsor.html".into()))
-        .title("Sponsor")
-        .resizable(true)
-        .fullscreen(false)
-        .inner_size(600.0, 600.0)
-        .min_inner_size(600.0, 600.0)
-        .build()
-        .unwrap();
-    }
-  });
-}
-
 pub mod cmd {
   use super::*;
   use log::info;

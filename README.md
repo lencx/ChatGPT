@@ -1,39 +1,143 @@
 <p align="center">
-  <img width="180" src="./public/logo.png" alt="ChatGPT">
-  <h1 align="center">ChatGPT</h1>
-  <p align="center">ChatGPT Desktop Application (Available on Mac, Windows, and Linux)</p>
+  <img width="180" src="./assets/courtney-logo-only.png" alt="Courtney AI">
+  <h1 align="center">Courtney AI Desktop</h1>
+  <p align="center">Courtney AI Desktop Application (Available on Mac, Windows, and Linux)</p>
 </p>
 
-[![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](./README.md)
-[![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](./README-ZH_CN.md)\
-[![ChatGPT downloads](https://img.shields.io/github/downloads/lencx/ChatGPT/total.svg?style=flat-square)](https://github.com/lencx/ChatGPT/releases)
-[![chat](https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord)](https://discord.gg/aPhCRf4zZr)
-[![twitter](https://img.shields.io/badge/follow-lencx__-blue?style=flat&logo=Twitter)](https://twitter.com/lencx_)
-[![youtube](https://img.shields.io/youtube/channel/subscribers/UC__gTZL-OZKDPic7s_6Ntgg?style=social)](https://www.youtube.com/@lencx)
-
-<a href="https://www.buymeacoffee.com/lencx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
+[![Courtney Aviation](https://img.shields.io/badge/Powered%20by-Courtney%20Aviation-blue)](https://github.com/CourtneyAviation)
+[![Discord](https://img.shields.io/discord/your-discord-id?style=flat&logo=discord&label=Join%20Discord)](https://discord.gg/your-invite)
+[![GitHub](https://img.shields.io/github/stars/CourtneyAviation/Courtney_AI_Desktop?style=social)](https://github.com/CourtneyAviation/Courtney_AI_Desktop)
 
 ---
 
-> [!NOTE]
-> **If you want to experience a more powerful AI wrapper application, you can try the Noi (https://github.com/lencx/Noi), which is a successor to the ChatGPT desktop application concept.**
+> [!IMPORTANT] > **Courtney AI Desktop** is a specialized AI assistant application designed for aviation professionals and enthusiasts. Built on the AGX Orin platform at 172.30.30.111, it provides advanced AI capabilities specifically tailored for the aviation industry.
 
 ---
 
-This is an unofficial project solely intended for personal learning and research. Since the ChatGPT desktop application was open-sourced, it has garnered a lot of attention, and I want to thank everyone for their support. However, as the project progressed, two issues have arisen that greatly impact its future development:
+# Courtney AI Desktop
 
-- Some individuals have repackaged and sold it for profit.
-- The name and icon of ChatGPT could potentially lead to infringement disputes.
+## 🚁 Overview
 
-## Live Demo
+**Courtney AI Desktop** is a specialized AI assistant application designed for aviation professionals and enthusiasts. This cross-platform desktop application (Linux, Windows, Mac) provides advanced AI capabilities specifically tailored for the aviation industry.
 
-- [ChatGPT Desktop Application v1.0.0](https://youtu.be/IIuuB5vFFAQ)
-- [ChatGPT automatically performs the "Continue generating" button, freeing up your hands.](https://youtu.be/bbL5cPmiGig)
+### 🏗️ Architecture
 
-## 📦 Install
+- **Frontend:** React 18 + TypeScript + Vite + Ant Design
+- **Backend:** Rust (Tauri) for desktop integration
+- **AI Server:** AGX Orin at `172.30.30.111:8080` (WebUI) and `172.30.30.111:8001` (API)
+- **Base:** Forked from ChatGPT Desktop v1.1.0 and fully rebranded
 
-- [📝 Update Log](./UPDATE_LOG.md)
-- [🕒 History versions...](https://github.com/lencx/ChatGPT/releases)
+## 🚀 Features
+
+- ✈️ **Aviation-Specific AI:** Tailored for pilots, mechanics, and aviation enthusiasts
+- 🖥️ **Cross-Platform:** Available on Linux, Windows, and macOS
+- 🔗 **Local Server Integration:** Connects to AGX Orin server infrastructure
+- 📝 **Rich Text Support:** Markdown rendering with syntax highlighting
+- 💾 **Prompt Management:** Save and organize aviation-specific prompts
+- 🎨 **Custom Scripts:** Extensible with JavaScript injection scripts
+- 🔐 **Secure Storage:** API keys stored in OS keychain
+- 📊 **Export Features:** Save conversations and data
+
+## 📦 Installation
+
+### Development Setup
+
+1. **Prerequisites:**
+
+   ```bash
+   # Install Node.js (^14.18||^16||^18) and pnpm
+   npm install -g pnpm
+
+   # Install Rust and Tauri CLI
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   cargo install tauri-cli
+   ```
+
+2. **Clone and Install:**
+
+   ```bash
+   git clone https://github.com/CourtneyAviation/Courtney_AI_Desktop.git
+   cd Courtney_AI_Desktop
+   pnpm install
+   ```
+
+3. **Development Run:**
+
+   ```bash
+   pnpm tauri dev    # Full app with Tauri window
+   pnpm dev:fe      # Frontend only (browser)
+   ```
+
+4. **Production Build:**
+   ```bash
+   pnpm tauri build  # Creates platform-specific installers
+   ```
+
+### Configuration
+
+The app connects to AGX Orin server at `172.30.30.111:8080` by default. Configuration files are stored in:
+
+- **Linux/macOS:** `~/.courtney-ai/`
+- **Windows:** `%USERPROFILE%\.courtney-ai\`
+
+## 🛠️ Development
+
+### Key Commands
+
+- `pnpm prettier` - Format TypeScript/JavaScript/Markdown
+- `pnpm fmt:rs` - Format Rust code
+- `cargo check` - Check Rust compilation
+- `cargo test` - Run Rust tests
+
+### Project Structure
+
+```
+src/              # React frontend (TypeScript)
+src-tauri/        # Rust backend (Tauri)
+scripts/          # JavaScript injection scripts
+assets/           # Images and icons
+public/           # Static web assets
+```
+
+### API Integration
+
+Direct API access is available through Tauri commands:
+
+- `api_chat_completion` - Send chat requests to AGX Orin
+- `api_list_models` - Get available AI models
+- `store_api_key` / `get_api_key` - Secure credential management
+
+## 🧑‍✈️ Aviation Use Cases
+
+- **Flight Planning:** AI-assisted route optimization and weather analysis
+- **Maintenance:** Technical documentation and troubleshooting support
+- **Training:** Interactive learning for pilots and mechanics
+- **Regulations:** FAA/ICAO regulation queries and compliance checking
+- **Safety:** Incident analysis and safety management support
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## � Roadmap
+
+See [COURTNEY_AI_DESKTOP_ROADMAP.md](./COURTNEY_AI_DESKTOP_ROADMAP.md) for development status and upcoming features.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## ✈️ About Courtney Aviation
+
+Courtney Aviation specializes in advanced AI solutions for the aviation industry. For more information about our products and services, visit our GitHub organization.
+
+---
+
+**Built with ❤️ for the Aviation Community**
 
 <!-- tr-download-start -->
 
@@ -112,8 +216,8 @@ You can look at **[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt
 
 ## 中国用户
 
-> [!NOTE]
-> **如果你喜欢 ChatGPT 桌面应用，也可以关注一下 [lencx/Noi](https://github.com/lencx/Noi)，它是一个定制化的 AI 浏览器。这里有两篇使用文档，对 Noi 的理念和插件系统做了详细介绍：**
+> [!NOTE] > **如果你喜欢 ChatGPT 桌面应用，也可以关注一下 [lencx/Noi](https://github.com/lencx/Noi)，它是一个定制化的 AI 浏览器。这里有两篇使用文档，对 Noi 的理念和插件系统做了详细介绍：**
+>
 > - [Noi：跨平台定制化浏览器，最得力 AI 助手](https://mp.weixin.qq.com/s/dAN7LOw7mH609HdAyEvXfg)
 > - [Noi：插件介绍](https://mp.weixin.qq.com/s/M6gO6MdK5obCvs2LIBZA3w)
 

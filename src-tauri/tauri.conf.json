@@ -6,8 +6,8 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "ChatGPT",
-    "version": "1.1.0"
+    "productName": "Courtney AI",
+    "version": "1.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -28,7 +28,7 @@
         "removeFile": true,
         "removeDir": true,
         "scope": [
-          "$HOME/.chatgpt/**",
+          "$HOME/.courtney-ai/**",
           "$DOWNLOAD/**"
         ]
       },
@@ -68,8 +68,8 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.lencx.chatgpt",
-      "longDescription": "ChatGPT Desktop Application",
+      "identifier": "com.courtneyaviation.courtney-ai",
+      "longDescription": "Courtney AI Desktop Application - AI-powered chat interface with local LLM integration",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
@@ -77,7 +77,7 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "shortDescription": "ChatGPT",
+      "shortDescription": "Courtney AI",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
@@ -95,10 +95,9 @@
         {
           "windows": [
             "core",
-            "main",
-            "tray"
+            "main"
           ],
-          "domain": "chat.openai.com",
+          "domain": "172.30.30.111",
           "enableTauriAPI": true
         },
         {
@@ -106,21 +105,11 @@
             "core",
             "main"
           ],
-          "domain": "labs.openai.com",
+          "domain": "localhost",
           "enableTauriAPI": true
         },
         {
           "windows": [
-            "core",
-            "main",
-            "tray"
-          ],
-          "domain": "openai.com",
-          "enableTauriAPI": true
-        },
-        {
-          "windows": [
-            "chatgpt_sponsors",
             "app_website"
           ],
           "domain": "app.nofwl.com",
@@ -129,10 +118,10 @@
       ]
     },
     "updater": {
-      "active": true,
+      "active": false,
       "dialog": false,
       "endpoints": [
-        "https://lencx.github.io/ChatGPT/install.json"
+        "https://courtneyaviation.github.io/Courtney_AI_Desktop/install.json"
       ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEIxMjY4OUI5MTVFNjBEMDUKUldRRkRlWVZ1WWttc1NGWEE0RFNSb0RqdnhsekRJZTkwK2hVLzhBZTZnaHExSEZ1ZEdzWkpXTHkK"
     }
