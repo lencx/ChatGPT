@@ -23,4 +23,4 @@ I am currently looking for some differentiating features to develop version 2.0.
 
 ![](./docs/static/chatgpt-v2.gif)
 
-Updated By Sanchit
+Updated By Sanchit in new Branch
