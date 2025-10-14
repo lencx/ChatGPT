@@ -22,3 +22,5 @@ If you want to learn about or download the previous version (v1.1.0), please cli
 I am currently looking for some differentiating features to develop version 2.0. If you are interested in this, please stay tuned.
 
 ![](./docs/static/chatgpt-v2.gif)
+
+Updated By Sanchit
