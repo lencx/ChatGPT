@@ -5,6 +5,9 @@ mod core;
 use core::{cmd, setup, window};
 
 fn main() {
+    // Load .env file if present
+    dotenv::dotenv().ok();
+
     tauri::Builder::default()
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_shell::init())
@@ -20,6 +23,13 @@ fn main() {
             cmd::ask_sync,
             cmd::ask_send,
             cmd::set_theme,
+            cmd::set_api_key,
+            cmd::has_api_key,
+            cmd::delete_api_key,
+            cmd::send_api_message,
+            cmd::set_api_mode,
+            cmd::set_api_model,
+            cmd::set_api_max_tokens,
             window::open_settings,
         ])
         .setup(setup::init)

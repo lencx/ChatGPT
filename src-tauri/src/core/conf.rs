@@ -15,6 +15,20 @@ pub struct AppConf {
     pub stay_on_top: bool,
     pub ask_mode: bool,
     pub mac_titlebar_hidden: bool,
+    #[serde(default)]
+    pub api_mode: bool,
+    #[serde(default = "default_model")]
+    pub api_model: String,
+    #[serde(default = "default_max_tokens")]
+    pub api_max_tokens: u32,
+}
+
+fn default_model() -> String {
+    "claude-3-5-sonnet-20241022".to_string()
+}
+
+fn default_max_tokens() -> u32 {
+    4096
 }
 
 impl AppConf {
@@ -27,6 +41,9 @@ impl AppConf {
             mac_titlebar_hidden: true,
             #[cfg(not(target_os = "macos"))]
             mac_titlebar_hidden: false,
+            api_mode: false,
+            api_model: default_model(),
+            api_max_tokens: default_max_tokens(),
         }
     }
 

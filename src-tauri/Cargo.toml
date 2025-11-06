@@ -15,7 +15,7 @@ tauri-build = { version = "2.0.0-beta", features = [] }
 
 [dependencies]
 tauri = { version = "2.0.0-beta", features = ["unstable", "devtools"] }
-tokio = { version = "1.37.0", features = ["macros"] }
+tokio = { version = "1.37.0", features = ["macros", "rt-multi-thread"] }
 tauri-plugin-shell = "2.0.0-beta"
 tauri-plugin-dialog = "2.0.0-beta"
 serde = { version = "1", features = ["derive"] }
@@ -27,3 +27,11 @@ dark-light = "1.1.1"
 regex = "1.10.4"
 semver = "1.0.23"
 tauri-plugin-os = "2.0.0-beta.4"
+# API and HTTP client
+reqwest = { version = "0.12", features = ["json", "stream"] }
+# Environment variables
+dotenv = "0.15"
+# Secure credential storage
+keyring = "2.3"
+# Async streams
+futures = "0.3"

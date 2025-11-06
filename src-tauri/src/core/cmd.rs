@@ -1,6 +1,7 @@
 use tauri::{command, AppHandle, LogicalPosition, Manager, PhysicalSize};
 
 use crate::core::{
+    api::{self, AnthropicClient, Message},
     conf::AppConf,
     constant::{ASK_HEIGHT, TITLEBAR_HEIGHT},
 };
@@ -189,4 +190,79 @@ pub fn set_view_ask(app: AppHandle, enabled: bool) {
             PhysicalSize::new(win_size.width, ask_height),
         );
     }
+}
+
+// API-related commands
+
+#[command]
+pub fn set_api_key(api_key: String) -> Result<(), String> {
+    api::validate_api_key(&api_key).map_err(|e| e.to_string())?;
+    api::store_api_key(&api_key).map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+#[command]
+pub fn has_api_key() -> bool {
+    api::has_api_key()
+}
+
+#[command]
+pub fn delete_api_key() -> Result<(), String> {
+    api::delete_api_key().map_err(|e| e.to_string())
+}
+
+#[command]
+pub async fn send_api_message(
+    app: AppHandle,
+    messages: Vec<Message>,
+) -> Result<String, String> {
+    let api_key = api::get_api_key().map_err(|e| e.to_string())?;
+    let conf = AppConf::load(&app).unwrap();
+
+    let client = AnthropicClient::new(api_key).map_err(|e| e.to_string())?;
+
+    let response = client
+        .send_message(messages, &conf.api_model, conf.api_max_tokens)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    // Extract text from response
+    let text = response
+        .content
+        .iter()
+        .filter_map(|block| block.text.clone())
+        .collect::<Vec<_>>()
+        .join("\n");
+
+    Ok(text)
+}
+
+#[command]
+pub fn set_api_mode(app: AppHandle, enabled: bool) -> Result<(), String> {
+    let conf = AppConf::load(&app).map_err(|e| e.to_string())?;
+    conf.amend(serde_json::json!({"api_mode": enabled}))
+        .map_err(|e| e.to_string())?
+        .save(&app)
+        .map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+#[command]
+pub fn set_api_model(app: AppHandle, model: String) -> Result<(), String> {
+    let conf = AppConf::load(&app).map_err(|e| e.to_string())?;
+    conf.amend(serde_json::json!({"api_model": model}))
+        .map_err(|e| e.to_string())?
+        .save(&app)
+        .map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+#[command]
+pub fn set_api_max_tokens(app: AppHandle, max_tokens: u32) -> Result<(), String> {
+    let conf = AppConf::load(&app).map_err(|e| e.to_string())?;
+    conf.amend(serde_json::json!({"api_max_tokens": max_tokens}))
+        .map_err(|e| e.to_string())?
+        .save(&app)
+        .map_err(|e| e.to_string())?;
+    Ok(())
 }
