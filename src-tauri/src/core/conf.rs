@@ -15,6 +15,12 @@ pub struct AppConf {
     pub stay_on_top: bool,
     pub ask_mode: bool,
     pub mac_titlebar_hidden: bool,
+    #[serde(default)]
+    pub provider: String, // "chatgpt" or "claude"
+    #[serde(default)]
+    pub anthropic_api_key: String,
+    #[serde(default)]
+    pub use_extended_context: bool, // Enable 1M context beta
 }
 
 impl AppConf {
@@ -27,6 +33,9 @@ impl AppConf {
             mac_titlebar_hidden: true,
             #[cfg(not(target_os = "macos"))]
             mac_titlebar_hidden: false,
+            provider: "chatgpt".to_string(),
+            anthropic_api_key: String::new(),
+            use_extended_context: false,
         }
     }
 
