@@ -53,10 +53,18 @@ pub fn init(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
             // Wrap the window in Arc<Mutex<_>> to manage ownership across threads
             let window = Arc::new(Mutex::new(core_window));
 
-            let main_view =
-                WebviewBuilder::new("main", WebviewUrl::App("https://chatgpt.com".into()))
-                    .auto_resize()
-                    .on_download({
+            // Determine the URL based on provider configuration
+            let main_url = if conf.provider == "claude" {
+                WebviewUrl::App("claude-chat.html".into())
+            } else {
+                WebviewUrl::App("https://chatgpt.com".into())
+            };
+
+            let mut main_view_builder = WebviewBuilder::new("main", main_url).auto_resize();
+
+            // Only add download handler and scripts for ChatGPT
+            if conf.provider != "claude" {
+                main_view_builder = main_view_builder.on_download({
                         let app_handle = handle.clone();
                         let download_path = Arc::new(Mutex::new(PathBuf::new()));
                         move |_, event| {
@@ -92,6 +100,9 @@ pub fn init(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                     })
                     .initialization_script(&AppConf::load_script(&handle, "ask.js"))
                     .initialization_script(INIT_SCRIPT);
+            }
+
+            let main_view = main_view_builder;
 
             let titlebar_view = WebviewBuilder::new(
                 "titlebar",

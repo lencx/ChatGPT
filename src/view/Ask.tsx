@@ -5,12 +5,39 @@ import useInfo from '~hooks/useInfo';
 import SendIcon from '~icons/Send';
 import debounce from 'lodash/debounce';
 
+interface AppConf {
+  theme: string;
+  stay_on_top: boolean;
+  ask_mode: boolean;
+  mac_titlebar_hidden: boolean;
+  provider: string;
+  anthropic_api_key: string;
+  use_extended_context: boolean;
+}
+
 export default function ChatInput() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [message, setMessage] = useState('');
+  const [provider, setProvider] = useState('chatgpt');
   const { isMac } = useInfo();
 
   useEffect(() => {
+    // Load provider configuration
+    const loadConfig = async () => {
+      try {
+        const conf = await invoke<AppConf>('get_app_conf');
+        setProvider(conf.provider || 'chatgpt');
+      } catch (error) {
+        console.error('Failed to load config:', error);
+      }
+    };
+    loadConfig();
+  }, []);
+
+  useEffect(() => {
+    // Only sync for ChatGPT provider
+    if (provider !== 'chatgpt') return;
+
     const syncMessage = debounce(async () => {
       try {
         await invoke('ask_sync', { message: JSON.stringify(message) });
@@ -21,7 +48,7 @@ export default function ChatInput() {
 
     syncMessage();
     return () => syncMessage.cancel(); // Cleanup debounce on unmount
-  }, [message]);
+  }, [message, provider]);
 
   useHotkeys(isMac ? 'meta+enter' : 'ctrl+enter', async (event: KeyboardEvent) => {
     event.preventDefault();
@@ -35,12 +62,75 @@ export default function ChatInput() {
   };
 
   const handleSend = async () => {
-    if (!message) return;
+    if (!message.trim()) return;
+
     try {
-      await invoke('ask_send', { message: JSON.stringify(message) });
+      if (provider === 'claude') {
+        // Handle Claude API
+        const mainWebview = (window as any).__TAURI__?.webview;
+
+        // Add user message to chat
+        await invoke('eval_webview', {
+          webview: 'main',
+          script: `window.addMessage('user', ${JSON.stringify(message)})`
+        }).catch(() => {
+          // Fallback if eval_webview doesn't exist
+          console.log('Using direct eval');
+        });
+
+        // Show loading indicator
+        await invoke('eval_webview', {
+          webview: 'main',
+          script: 'window.showLoading()'
+        }).catch(() => {});
+
+        // Get conversation history from the webview
+        const historyStr = await invoke<string>('eval_webview', {
+          webview: 'main',
+          script: 'JSON.stringify(window.getConversationHistory())'
+        }).catch(() => '[]');
+
+        const history = JSON.parse(historyStr || '[]');
+
+        // Send to Claude API
+        const response = await invoke<string>('send_claude_message', {
+          messages: history,
+          system: null
+        });
+
+        // Hide loading indicator
+        await invoke('eval_webview', {
+          webview: 'main',
+          script: 'window.hideLoading()'
+        }).catch(() => {});
+
+        // Add assistant response
+        await invoke('eval_webview', {
+          webview: 'main',
+          script: `window.addMessage('assistant', ${JSON.stringify(response)})`
+        }).catch(() => {});
+
+      } else {
+        // Handle ChatGPT
+        await invoke('ask_send', { message: JSON.stringify(message) });
+      }
     } catch (error) {
       console.error('Error sending message:', error);
+
+      if (provider === 'claude') {
+        // Show error in Claude chat
+        await invoke('eval_webview', {
+          webview: 'main',
+          script: 'window.hideLoading()'
+        }).catch(() => {});
+
+        await invoke('eval_webview', {
+          webview: 'main',
+          script: `window.showError(${JSON.stringify(String(error))})`
+        }).catch(() => {});
+      }
     }
+
     setMessage('');
     if (inputRef.current) {
       inputRef.current.value = '';

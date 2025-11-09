@@ -1,6 +1,7 @@
 use tauri::{command, AppHandle, LogicalPosition, Manager, PhysicalSize};
 
 use crate::core::{
+    claude::{ClaudeClient, ClaudeMessage},
     conf::AppConf,
     constant::{ASK_HEIGHT, TITLEBAR_HEIGHT},
 };
@@ -189,4 +190,67 @@ pub fn set_view_ask(app: AppHandle, enabled: bool) {
             PhysicalSize::new(win_size.width, ask_height),
         );
     }
+}
+
+#[command]
+pub fn set_provider(app: AppHandle, provider: String) -> Result<(), String> {
+    let conf = AppConf::load(&app).map_err(|e| e.to_string())?;
+    conf.amend(serde_json::json!({"provider": provider}))
+        .map_err(|e| e.to_string())?
+        .save(&app)
+        .map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+#[command]
+pub fn set_anthropic_api_key(app: AppHandle, api_key: String) -> Result<(), String> {
+    let conf = AppConf::load(&app).map_err(|e| e.to_string())?;
+    conf.amend(serde_json::json!({"anthropic_api_key": api_key}))
+        .map_err(|e| e.to_string())?
+        .save(&app)
+        .map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+#[command]
+pub fn set_extended_context(app: AppHandle, enabled: bool) -> Result<(), String> {
+    let conf = AppConf::load(&app).map_err(|e| e.to_string())?;
+    conf.amend(serde_json::json!({"use_extended_context": enabled}))
+        .map_err(|e| e.to_string())?
+        .save(&app)
+        .map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+#[command]
+pub async fn send_claude_message(
+    app: AppHandle,
+    messages: Vec<ClaudeMessage>,
+    system: Option<String>,
+) -> Result<String, String> {
+    let conf = AppConf::load(&app).map_err(|e| e.to_string())?;
+
+    if conf.anthropic_api_key.is_empty() {
+        return Err("Anthropic API key not configured".to_string());
+    }
+
+    let client = ClaudeClient::new(conf.anthropic_api_key, conf.use_extended_context)
+        .map_err(|e| e.to_string())?;
+
+    let response = client
+        .create_message(messages, system)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    let text = ClaudeClient::extract_text_from_response(&response);
+    Ok(text)
+}
+
+#[command]
+pub fn eval_webview(app: AppHandle, webview: String, script: String) -> Result<String, String> {
+    let win = app.get_window("core").ok_or("Window not found")?;
+    let view = win.get_webview(&webview).ok_or("Webview not found")?;
+
+    view.eval(&script).map_err(|e| e.to_string())?;
+    Ok("Success".to_string())
 }

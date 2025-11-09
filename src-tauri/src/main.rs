@@ -20,6 +20,11 @@ fn main() {
             cmd::ask_sync,
             cmd::ask_send,
             cmd::set_theme,
+            cmd::set_provider,
+            cmd::set_anthropic_api_key,
+            cmd::set_extended_context,
+            cmd::send_claude_message,
+            cmd::eval_webview,
             window::open_settings,
         ])
         .setup(setup::init)
