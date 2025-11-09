@@ -4,7 +4,8 @@ use std::time::Duration;
 
 const ANTHROPIC_API_URL: &str = "https://api.anthropic.com/v1/messages";
 const ANTHROPIC_VERSION: &str = "2023-06-01";
-const DEFAULT_MODEL: &str = "claude-sonnet-4-5";
+const DEFAULT_MODEL: &str = "claude-sonnet-4-5-20250514";
+const DEFAULT_MAX_TOKENS: u32 = 8192;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ClaudeMessage {
@@ -89,7 +90,7 @@ impl ClaudeClient {
     ) -> Result<CreateMessageResponse> {
         let request = CreateMessageRequest {
             model: DEFAULT_MODEL.to_string(),
-            max_tokens: 1024,
+            max_tokens: DEFAULT_MAX_TOKENS,
             messages,
             system,
         };
